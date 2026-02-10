@@ -1406,7 +1406,7 @@ function parseVoiceMove(transcript) {
   let tl = t.toLowerCase();
 
   // Castling — be very generous with matching
-  if (/castl|kastle|kassel/i.test(tl)) {
+  if (/castl|kastle|kassel|tassels?|car\s*sale|casal/i.test(tl)) {
     if (/queen|long|q\s*side/i.test(tl)) return 'O-O-O';
     return 'O-O';
   }
@@ -1497,6 +1497,9 @@ function parseVoiceMove(transcript) {
   t = t.replace(/^([NBRQK]?)([A-H])/, (m, piece, file) => piece + file.toLowerCase());
   if (/^[A-H][1-8]$/.test(t)) t = t.toLowerCase();
   t = t.replace(/([x])([A-H])/g, (m, x, file) => x + file.toLowerCase());
+
+  // Fix doubled letters: "hh3" → "h3", "ee4" → "e4"
+  t = t.replace(/^([NBRQK]?)([a-h])\2/,  (m, piece, file) => piece + file);
 
   return t;
 }
