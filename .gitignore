@@ -1,0 +1,11 @@
+.vercel
+node_modules
+.DS_Store
+
+# Added by setup script
+.env
+.env.local
+__pycache__/
+venv/
+.idea/
+.vscode/

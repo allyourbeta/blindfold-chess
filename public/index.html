@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>♚ Blindfold Chess Trainer</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1a1510">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Blindfold">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<style>
+  :root {
+    --bg-deep: #e8f0f8;
+    --bg-mid: #dce8f4;
+    --bg-card: rgba(200,218,240,0.5);
+    --border: #b0c4de;
+    --border-active: #3a6fa0;
+    --gold: #2c5f8a;
+    --gold-dim: #6889a8;
+    --text: #1a2a3a;
+    --text-dim: #3a5060;
+    --green: #2a8a50;
+    --orange: #c07020;
+    --red: #c04040;
+    --blue: #2860a0;
+    --sq-light: #e8d5b0;
+    --sq-dark: #b08860;
+    --sq-hl-light: #a8d8ea;
+    --sq-hl-dark: #6ab0d0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: linear-gradient(145deg, var(--bg-deep) 0%, var(--bg-mid) 40%, var(--bg-deep) 100%);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  input::placeholder { color: #90a8b8; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .header {
+    text-align: center;
+    padding: 24px 0 16px;
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+    background: linear-gradient(180deg, var(--bg-mid) 0%, transparent 100%);
+  }
+  .header h1 {
+    font-size: 36px; font-weight: 400; letter-spacing: 3px;
+    color: var(--gold);
+    text-shadow: 0 1px 4px rgba(44,95,138,0.15);
+  }
+  .header .sub { font-size: 13px; color: var(--gold-dim); letter-spacing: 2px; text-transform: uppercase; margin-top: 6px; }
+
+  .btn {
+    padding: 10px 20px; border: 1px solid var(--border); border-radius: 6px; cursor: pointer;
+    font-family: 'Crimson Pro', serif; font-size: 14px; transition: all 0.2s;
+    background: linear-gradient(180deg, #ffffff 0%, #eaf2fa 100%); color: var(--text);
+  }
+  .btn:hover { border-color: var(--border-active); }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+  .btn.active { background: linear-gradient(180deg, #c8ddf0 0%, #b0cce6 100%); border-color: var(--border-active); }
+  .btn.primary {
+    background: linear-gradient(180deg, #4a8abf 0%, #3a6fa0 100%);
+    border-color: var(--border-active); color: #fff; font-weight: 600;
+  }
+  .btn.primary:hover { filter: brightness(1.1); }
+  .btn.danger { background: linear-gradient(180deg, #e8a0a0 0%, #d08080 100%); border-color: #c04040; color: #5a1a1a; }
+
+  .label { font-size: 13px; color: var(--gold-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; }
+
+  /* SCREENS */
+  .screen { display: none; width: 100%; max-width: 520px; padding: 32px 24px; }
+  .screen.visible { display: flex; flex-direction: column; }
+
+  /* MENU */
+  #menu .color-row, #menu .action-row { display: flex; gap: 10px; margin-bottom: 20px; }
+  #menu .color-row .btn { flex: 1; }
+  #menu .skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+  #menu .skill-grid .btn { font-size: 12px; padding: 8px 12px; }
+  #menu .action-row { flex-direction: column; gap: 12px; }
+  #menu .instructions {
+    margin-top: 24px; padding: 20px; border: 1px solid var(--border);
+    border-radius: 8px; background: var(--bg-card);
+  }
+  #menu .instructions h3 { font-size: 14px; color: var(--border-active); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  #menu .instructions p { font-size: 13px; color: var(--gold-dim); line-height: 1.7; margin-bottom: 4px; }
+  #menu .instructions .cmd { color: var(--text-dim); }
+  .checkbox-row { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; cursor: pointer; font-size: 14px; color: var(--text-dim); }
+  .checkbox-row input { accent-color: var(--border-active); }
+
+  /* SETUP */
+  #setup .palette { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-bottom: 16px; }
+  #setup .palette-group { display: flex; gap: 6px; }
+  #setup .palette-btn {
+    width: 40px; height: 40px; font-size: 24px; border: 1px solid var(--border);
+    border-radius: 4px; cursor: pointer; display: flex; align-items: center;
+    justify-content: center; background: #fff;
+  }
+  #setup .palette-btn.active { background: #c8ddf0; border-color: var(--border-active); }
+  #setup .board-wrap { display: flex; justify-content: center; margin-bottom: 16px; }
+  #setup .turn-row { display: flex; align-items: center; gap: 12px; justify-content: center; margin-bottom: 16px; }
+  #setup .turn-row span { font-size: 13px; color: var(--gold-dim); }
+  #setup .turn-row .btn { font-size: 12px; padding: 6px 14px; }
+  #setup .fen-row { display: flex; gap: 8px; margin-bottom: 16px; }
+  #setup .fen-row input {
+    flex: 1; padding: 8px 12px; background: #fff; border: 1px solid var(--border);
+    border-radius: 4px; color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  }
+  #setup .fen-row .btn { font-size: 12px; padding: 8px 12px; }
+  #setup .setup-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+  /* BOARD RENDERING */
+  .board { display: inline-block; border: 2px solid #8a7a6a; border-radius: 4px; }
+  .board-row { display: flex; }
+  .rank-label {
+    width: 20px; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--gold-dim); font-family: 'JetBrains Mono', monospace;
+  }
+  .square {
+    width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+    font-size: 30px; user-select: none; transition: background-color 0.15s;
+  }
+  .square.interactive { cursor: pointer; }
+  .square.interactive:hover { filter: brightness(1.1); }
+  .file-labels { display: flex; padding-left: 20px; }
+  .file-label {
+    width: 48px; text-align: center; font-size: 11px; color: var(--gold-dim);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* BLINDFOLD PLAY */
+  #play .play-header {
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  }
+  #play .play-header .title { font-size: 14px; color: var(--gold); letter-spacing: 2px; }
+  #play .play-header .controls { display: flex; gap: 8px; }
+  #play .play-header .btn { font-size: 12px; padding: 6px 14px; }
+  #play .peek-board {
+    padding: 16px; display: flex; justify-content: center;
+    background: rgba(220,232,244,0.95); border-radius: 8px; margin-bottom: 12px;
+    border: 1px solid var(--border-active); animation: fadeIn 0.2s ease;
+  }
+  #play .move-list {
+    padding: 12px 16px; background: var(--bg-card); border-radius: 6px;
+    border: 1px solid var(--border); font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--text-dim); line-height: 1.6;
+    min-height: 36px; margin-bottom: 8px; word-wrap: break-word;
+  }
+  #play .move-list .empty { color: #90a8b8; font-style: italic; font-family: 'Crimson Pro', serif; }
+  #play .messages {
+    flex: 1; overflow-y: auto; min-height: 200px; max-height: 400px;
+    margin-bottom: 8px; padding: 4px 0;
+  }
+  #play .msg {
+    padding: 6px 12px; margin: 3px 0; border-radius: 4px; font-size: 13px;
+  }
+  #play .msg.system { color: var(--gold-dim); }
+  #play .msg.player { color: var(--green); font-family: 'JetBrains Mono', monospace; }
+  #play .msg.engine { color: var(--orange); font-family: 'JetBrains Mono', monospace; }
+  #play .msg.error { color: var(--red); background: rgba(180,60,60,0.1); }
+  #play .msg.voice { color: var(--blue); }
+  #play .msg.thinking { color: var(--orange); font-style: italic; }
+  #play .input-row { display: flex; gap: 8px; }
+  #play .input-row input {
+    flex: 1; padding: 12px 16px; background: #fff;
+    border: 1px solid var(--border); border-radius: 6px; color: var(--text);
+    font-family: 'JetBrains Mono', monospace; font-size: 15px; outline: none;
+  }
+  #play .input-row input:focus { border-color: var(--border-active); }
+  #play .game-over {
+    text-align: center; padding: 16px; margin-top: 12px;
+    background: rgba(220,232,244,0.9); border-radius: 8px; border: 1px solid var(--border-active);
+  }
+  #play .game-over p { font-size: 16px; color: var(--gold); margin-bottom: 12px; }
+
+  #play .status-line {
+    text-align: center; padding: 8px; font-size: 13px; color: var(--gold);
+    font-weight: 500; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border); margin-bottom: 0;
+  }
+  #play .peek-counter {
+    text-align: center; padding: 4px; font-size: 11px; color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 4px;
+  }
+  #play .action-bar {
+    display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; justify-content: center;
+  }
+  #play .action-bar .btn { font-size: 12px; padding: 7px 14px; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+
+<!-- ==================== MENU SCREEN ==================== -->
+<div id="menu" class="screen visible">
+  <div class="header">
+    <h1>♚ BLINDFOLD</h1>
+    <p class="sub">Chess Visualization Trainer</p>
+  </div>
+  <div style="padding-top: 28px;">
+    <span class="label">Play as</span>
+    <div class="color-row">
+      <button class="btn active" id="colorW" onclick="setColor('w')">♔ White</button>
+      <button class="btn" id="colorB" onclick="setColor('b')">♚ Black</button>
+    </div>
+
+    <span class="label">Engine Strength</span>
+    <div class="skill-grid" id="skillGrid"></div>
+
+    <label class="checkbox-row">
+      <input type="checkbox" id="voiceToggle" checked>
+      🔊 Speak engine moves aloud
+    </label>
+
+    <div class="action-row">
+      <button class="btn primary" id="startBtn" onclick="startNewGame()">⏳ Loading Stockfish...</button>
+      <button class="btn" onclick="showSetup()">♟ Setup Position &amp; Play</button>
+    </div>
+
+    <div class="instructions">
+      <h3>How to Play</h3>
+      <p>Type moves in standard algebraic notation:</p>
+      <p><span class="cmd">e4</span> — pawn to e4</p>
+      <p><span class="cmd">Nf3</span> — knight to f3</p>
+      <p><span class="cmd">Bxe5</span> — bishop captures on e5</p>
+      <p><span class="cmd">O-O</span> — castle kingside</p>
+      <p><span class="cmd">e8=Q</span> — pawn promotes to queen</p>
+      <p style="margin-top:8px;">
+        <span class="cmd">peek</span> or <b>Spacebar</b> — see the board for 3 seconds<br>
+        <span class="cmd">hint</span> — show legal moves<br>
+        <span class="cmd">history</span> — view past games &amp; stats
+      </p>
+      <p style="margin-top:8px;">🎤 Voice: say moves naturally, or use NATO letters (Alpha, Bravo, Charlie...)</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SETUP SCREEN ==================== -->
+<div id="setup" class="screen">
+  <div class="header">
+    <h1 style="font-size:24px;">♟ Position Setup</h1>
+    <p class="sub">Click piece, then click board. Click occupied square to remove.</p>
+  </div>
+  <div style="padding-top: 20px;">
+    <div class="palette" id="palette"></div>
+    <div class="board-wrap" id="setupBoardWrap"></div>
+    <div class="turn-row">
+      <span>Side to move:</span>
+      <button class="btn active" id="turnW" onclick="setSetupTurn('w')">White</button>
+      <button class="btn" id="turnB" onclick="setSetupTurn('b')">Black</button>
+    </div>
+    <div class="fen-row">
+      <input type="text" id="fenInput" placeholder="Paste FEN string...">
+      <button class="btn" onclick="loadFEN()">Load</button>
+    </div>
+    <div class="setup-actions">
+      <button class="btn" onclick="resetSetupBoard()">Reset Standard</button>
+      <button class="btn" onclick="clearSetupBoard()">Clear Board</button>
+      <button class="btn" onclick="showMenu()">← Back</button>
+      <button class="btn primary" onclick="startFromSetup()">▶ Play Blindfold</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PLAY SCREEN ==================== -->
+<div id="play" class="screen">
+  <div class="play-header">
+    <button class="btn" onclick="showMenu()">← Menu</button>
+    <div class="title">♚ BLINDFOLD</div>
+    <div class="controls">
+      <button class="btn" id="peekBtn" onclick="doPeek()">👁 Peek</button>
+      <button class="btn" id="voiceBtn" onclick="toggleListening()">🎤 Off</button>
+    </div>
+  </div>
+  <div id="statusLine" class="status-line">Move 1 · White to play</div>
+  <div id="peekCounter" class="peek-counter">Peeks: 0</div>
+  <div id="peekArea" style="display:none;" class="peek-board"></div>
+  <div class="move-list" id="moveList"><span class="empty">No moves yet</span></div>
+  <div class="messages" id="messages"></div>
+  <form class="input-row" onsubmit="handleSubmit(event)">
+    <input type="text" id="moveInput" placeholder="Your move... (Space to peek)" autocomplete="off">
+    <button type="submit" class="btn primary" id="submitBtn">→</button>
+  </form>
+  <div class="action-bar" id="actionBar">
+    <button class="btn" onclick="doTakeback()" id="takebackBtn" title="Undo last move pair">↩ Takeback</button>
+    <button class="btn" onclick="showHint()" id="hintBtn" title="Show legal moves">💡 Hint</button>
+    <button class="btn" onclick="doResign()" id="resignBtn">⚑ Resign</button>
+    <button class="btn" onclick="startNewGame()" id="newGameBtn">↻ New Game</button>
+    <button class="btn" onclick="copyPGN()" id="pgnBtn" title="Copy game notation">📋 PGN</button>
+  </div>
+  <div id="gameOverPanel" class="game-over" style="display:none;">
+    <p id="gameOverText"></p>
+    <button class="btn primary" onclick="showMenu()">New Game</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const PIECE_BASE = 'https://raw.githubusercontent.com/lichess-org/lila/master/public/piece/cburnett/';
+const PIECE_URLS = {
+  K: PIECE_BASE + 'wK.svg', Q: PIECE_BASE + 'wQ.svg', R: PIECE_BASE + 'wR.svg',
+  B: PIECE_BASE + 'wB.svg', N: PIECE_BASE + 'wN.svg', P: PIECE_BASE + 'wP.svg',
+  k: PIECE_BASE + 'bK.svg', q: PIECE_BASE + 'bQ.svg', r: PIECE_BASE + 'bR.svg',
+  b: PIECE_BASE + 'bB.svg', n: PIECE_BASE + 'bN.svg', p: PIECE_BASE + 'bP.svg',
+};
+// Keep unicode as fallback for palette buttons
+const PIECES_UNICODE = { K:'♔',Q:'♕',R:'♖',B:'♗',N:'♘',P:'♙', k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟' };
+const FILES = 'abcdefgh';
+const STARTING_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+const SKILL_LEVELS = [
+  { label: 'Beginner (~800)', depth: 1, skill: 0 },
+  { label: 'Casual (~1200)', depth: 3, skill: 5 },
+  { label: 'Club (~1500)', depth: 5, skill: 8 },
+  { label: 'Intermediate (~1800)', depth: 8, skill: 12 },
+  { label: 'Strong (~2000)', depth: 10, skill: 15 },
+  { label: 'Expert (~2200)', depth: 12, skill: 18 },
+  { label: 'Master (~2500)', depth: 15, skill: 20 },
+  { label: 'Full Strength', depth: 18, skill: 20 },
+];
+
+let playerColor = 'w';
+let skillIdx = 2;
+let chess = null; // chess.js instance
+let stockfish = null;
+let engineReady = false;
+let isThinking = false;
+let isPeeking = false;
+let peekTimer = null;
+let isListening = false;
+let isSpeaking = false;
+let speakEndTime = 0;
+let speakCount = 0;  // increments each new utterance, prevents stale onend callbacks
+let recognition = null;
+let gameOverFlag = false;
+let moveHistoryArr = [];
+let lastMoveFrom = null;
+let lastMoveTo = null;
+let peekCount = 0;
+let gameStartTime = null;
+let gameStartFen = null;
+
+// Audio context for confirmation sounds
+let audioCtx = null;
+function playMoveSound() {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = 'sine';
+    osc.frequency.value = 600;
+    gain.gain.value = 0.12;
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.12);
+  } catch(e) {}
+}
+function playCaptureSound() {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = 'sine';
+    osc.frequency.value = 440;
+    gain.gain.value = 0.15;
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.18);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.18);
+  } catch(e) {}
+}
+function playErrorSound() {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    // Two-tone descending buzz for errors
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = 'square';
+    osc.frequency.value = 300;
+    osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+    osc.frequency.setValueAtTime(200, audioCtx.currentTime + 0.1);
+    gain.gain.value = 0.08;
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.25);
+  } catch(e) {}
+}
+function speakError(msg) {
+  playErrorSound();
+  if (!window.speechSynthesis || !document.getElementById('voiceToggle').checked) return;
+  speechSynthesis.cancel();
+  isSpeaking = true;
+  speakCount++;
+  const thisSpeak = speakCount;
+  const utter = new SpeechSynthesisUtterance(msg);
+  if (selectedVoice) utter.voice = selectedVoice;
+  utter.lang = 'en-US';
+  utter.rate = 1.1;
+  utter.pitch = 1.0;
+  utter.onend = () => { if (thisSpeak === speakCount) { isSpeaking = false; speakEndTime = Date.now(); } };
+  utter.onerror = () => { if (thisSpeak === speakCount) { isSpeaking = false; speakEndTime = Date.now(); } };
+  speechSynthesis.speak(utter);
+}
+
+// Setup state
+let setupBoard = null; // 8x8 array
+let setupPiece = 'P';
+let setupTurn = 'w';
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  buildSkillGrid();
+  buildPalette();
+  initStockfish();
+  initVoices();
+}
+
+// Preload voices — Chrome loads them asynchronously
+let selectedVoice = null;
+function initVoices() {
+  if (!window.speechSynthesis) return;
+
+  function pickVoice() {
+    const voices = speechSynthesis.getVoices();
+    if (!voices.length) return;
+
+    // Preference order: natural-sounding English voices
+    const prefs = [
+      'Google UK English Female', 'Google UK English Male',
+      'Google US English', 'Samantha', 'Karen', 'Daniel',
+      'Microsoft Zira', 'Microsoft David',
+      'Alex', 'Moira', 'Tessa',
+    ];
+    for (const name of prefs) {
+      const v = voices.find(v => v.name.includes(name));
+      if (v) { selectedVoice = v; return; }
+    }
+    // Fallback: first English voice that isn't the squeaky default
+    const english = voices.filter(v => v.lang.startsWith('en'));
+    if (english.length > 1) {
+      selectedVoice = english[1]; // skip the first (often the bad default)
+    } else if (english.length > 0) {
+      selectedVoice = english[0];
+    }
+  }
+
+  // Try immediately (works in Safari/Firefox)
+  pickVoice();
+  // Also listen for async load (Chrome/Brave)
+  speechSynthesis.onvoiceschanged = pickVoice;
+  // Force trigger in Chrome
+  speechSynthesis.getVoices();
+}
+
+function buildSkillGrid() {
+  const grid = document.getElementById('skillGrid');
+  SKILL_LEVELS.forEach((sl, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn' + (i === skillIdx ? ' active' : '');
+    btn.textContent = sl.label;
+    btn.onclick = () => setSkill(i);
+    btn.id = 'skill' + i;
+    grid.appendChild(btn);
+  });
+}
+
+function buildPalette() {
+  const pal = document.getElementById('palette');
+  [['K','Q','R','B','N','P'], ['k','q','r','b','n','p']].forEach(group => {
+    const div = document.createElement('div');
+    div.className = 'palette-group';
+    group.forEach(p => {
+      const btn = document.createElement('button');
+      btn.className = 'palette-btn' + (p === setupPiece ? ' active' : '');
+      btn.textContent = PIECES_UNICODE[p];
+      btn.id = 'pal_' + p;
+      btn.onclick = () => selectSetupPiece(p);
+      div.appendChild(btn);
+    });
+    pal.appendChild(div);
+  });
+}
+
+function initStockfish() {
+  const SF_URL = 'https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/stockfish.js';
+
+  // Fetch the script text, then create a Blob Worker
+  // This avoids the cross-origin Worker restriction
+  fetch(SF_URL)
+    .then(res => {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.text();
+    })
+    .then(scriptText => {
+      const blob = new Blob([scriptText], { type: 'application/javascript' });
+      const blobURL = URL.createObjectURL(blob);
+      stockfish = new Worker(blobURL);
+      stockfish.onmessage = function(e) {
+        const line = typeof e.data === 'string' ? e.data : '';
+        if (line.includes('uciok')) {
+          engineReady = true;
+          document.getElementById('startBtn').textContent = '▶ New Game (Standard Position)';
+          document.getElementById('startBtn').disabled = false;
+        }
+        if (line.startsWith('bestmove')) {
+          const parts = line.split(' ');
+          const move = parts[1];
+          isThinking = false;
+          removeThinkingMsg();
+          if (move && move !== '(none)') {
+            applyEngineMove(move);
+          }
+        }
+      };
+      stockfish.onerror = function(e) {
+        console.error('Stockfish worker error:', e);
+        addMsg('system', '⚠ Stockfish encountered an error.');
+      };
+      stockfish.postMessage('uci');
+    })
+    .catch(e => {
+      console.error('Failed to load Stockfish:', e);
+      addMsg('system', '⚠ Failed to load Stockfish (' + e.message + '). Check your internet connection.');
+      document.getElementById('startBtn').textContent = '⚠ Engine Failed — Retry';
+      document.getElementById('startBtn').onclick = initStockfish;
+      document.getElementById('startBtn').disabled = false;
+    });
+}
+
+// ============================================================
+// SCREEN MANAGEMENT
+// ============================================================
+function showScreen(id) {
+  ['menu','setup','play'].forEach(s => {
+    document.getElementById(s).classList.toggle('visible', s === id);
+  });
+}
+function showMenu() { showScreen('menu'); stopListening(); }
+function showSetup() {
+  setupBoard = fenToBoard(STARTING_FEN);
+  setupTurn = 'w';
+  renderSetupBoard();
+  showScreen('setup');
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function setColor(c) {
+  playerColor = c;
+  document.getElementById('colorW').classList.toggle('active', c === 'w');
+  document.getElementById('colorB').classList.toggle('active', c === 'b');
+}
+function setSkill(i) {
+  skillIdx = i;
+  SKILL_LEVELS.forEach((_, j) => {
+    document.getElementById('skill' + j).classList.toggle('active', j === i);
+  });
+}
+
+// ============================================================
+// SETUP BOARD
+// ============================================================
+function fenToBoard(fen) {
+  const rows = fen.split(' ')[0].split('/');
+  const board = [];
+  for (let r = 0; r < 8; r++) {
+    board[r] = [];
+    let c = 0;
+    for (const ch of rows[r]) {
+      if ('12345678'.includes(ch)) { for (let x = 0; x < parseInt(ch); x++) board[r][c++] = null; }
+      else { board[r][c++] = ch; }
+    }
+  }
+  return board;
+}
+
+function boardToFEN(board, turn) {
+  let fen = '';
+  for (let r = 0; r < 8; r++) {
+    let empty = 0;
+    for (let c = 0; c < 8; c++) {
+      if (board[r][c]) {
+        if (empty > 0) { fen += empty; empty = 0; }
+        fen += board[r][c];
+      } else empty++;
+    }
+    if (empty > 0) fen += empty;
+    if (r < 7) fen += '/';
+  }
+  return fen + ' ' + turn + ' KQkq - 0 1';
+}
+
+function selectSetupPiece(p) {
+  setupPiece = p;
+  document.querySelectorAll('.palette-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.id === 'pal_' + p);
+  });
+}
+
+function setSetupTurn(t) {
+  setupTurn = t;
+  document.getElementById('turnW').classList.toggle('active', t === 'w');
+  document.getElementById('turnB').classList.toggle('active', t === 'b');
+}
+
+function resetSetupBoard() { setupBoard = fenToBoard(STARTING_FEN); renderSetupBoard(); }
+function clearSetupBoard() { setupBoard = Array(8).fill(null).map(() => Array(8).fill(null)); renderSetupBoard(); }
+
+function loadFEN() {
+  const fen = document.getElementById('fenInput').value.trim();
+  if (!fen) return;
+  try {
+    const testChess = new Chess(fen);
+    setupBoard = fenToBoard(fen);
+    setupTurn = fen.split(' ')[1] || 'w';
+    setSetupTurn(setupTurn);
+    renderSetupBoard();
+  } catch(e) {
+    alert('Invalid FEN string.');
+  }
+}
+
+function handleSetupClick(r, c) {
+  if (setupBoard[r][c]) {
+    setupBoard[r][c] = null;
+  } else if (setupPiece) {
+    setupBoard[r][c] = setupPiece;
+  }
+  renderSetupBoard();
+}
+
+function renderSetupBoard() {
+  const wrap = document.getElementById('setupBoardWrap');
+  wrap.innerHTML = '';
+  wrap.appendChild(buildBoardDOM(setupBoard, true, playerColor === 'b'));
+}
+
+// ============================================================
+// BOARD DOM BUILDER
+// ============================================================
+function buildBoardDOM(board, interactive, flipped, hlFrom, hlTo) {
+  const container = document.createElement('div');
+  container.className = 'board';
+  const rows = flipped ? [7,6,5,4,3,2,1,0] : [0,1,2,3,4,5,6,7];
+  const cols = flipped ? [7,6,5,4,3,2,1,0] : [0,1,2,3,4,5,6,7];
+
+  rows.forEach(r => {
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'board-row';
+    const label = document.createElement('div');
+    label.className = 'rank-label';
+    label.textContent = 8 - r;
+    rowDiv.appendChild(label);
+
+    cols.forEach(c => {
+      const sq = document.createElement('div');
+      const isLight = (r + c) % 2 === 0;
+      const sqName = FILES[c] + (8 - r);
+      const isHL = (hlFrom && sqName === hlFrom) || (hlTo && sqName === hlTo);
+      sq.className = 'square' + (interactive ? ' interactive' : '');
+      sq.style.backgroundColor = isHL
+        ? (isLight ? 'var(--sq-hl-light)' : 'var(--sq-hl-dark)')
+        : (isLight ? 'var(--sq-light)' : 'var(--sq-dark)');
+      if (board[r][c]) {
+        const img = document.createElement('img');
+        img.src = PIECE_URLS[board[r][c]];
+        img.alt = board[r][c];
+        img.style.cssText = 'width:85%;height:85%;object-fit:contain;pointer-events:none;';
+        img.draggable = false;
+        sq.appendChild(img);
+      }
+      if (interactive) {
+        sq.onclick = () => handleSetupClick(r, c);
+      }
+      rowDiv.appendChild(sq);
+    });
+    container.appendChild(rowDiv);
+  });
+
+  const fileRow = document.createElement('div');
+  fileRow.className = 'file-labels';
+  cols.forEach(c => {
+    const fl = document.createElement('div');
+    fl.className = 'file-label';
+    fl.textContent = FILES[c];
+    fileRow.appendChild(fl);
+  });
+  container.appendChild(fileRow);
+  return container;
+}
+
+// ============================================================
+// GAME START
+// ============================================================
+function startNewGame() {
+  if (!engineReady) return;
+  startGame(STARTING_FEN);
+}
+
+function startFromSetup() {
+  const fen = boardToFEN(setupBoard, setupTurn);
+  try {
+    const test = new Chess(fen);
+    startGame(fen);
+  } catch(e) {
+    alert('Invalid position. Make sure both kings are on the board.');
+  }
+}
+
+function startGame(fen) {
+  chess = new Chess(fen);
+  moveHistoryArr = [];
+  gameOverFlag = false;
+  lastMoveFrom = null;
+  lastMoveTo = null;
+  peekCount = 0;
+  gameStartTime = Date.now();
+  gameStartFen = fen;
+
+  document.getElementById('messages').innerHTML = '';
+  document.getElementById('moveList').innerHTML = '<span class="empty">No moves yet</span>';
+  document.getElementById('gameOverPanel').style.display = 'none';
+  document.getElementById('peekArea').style.display = 'none';
+  document.getElementById('moveInput').disabled = false;
+  document.getElementById('takebackBtn').disabled = false;
+  document.getElementById('resignBtn').disabled = false;
+  document.getElementById('peekCounter').textContent = 'Peeks: 0';
+  isPeeking = false;
+
+  showScreen('play');
+  document.getElementById('moveInput').focus();
+  updateStatus();
+
+  const sl = SKILL_LEVELS[skillIdx];
+  addMsg('system', `Game started. You play ${playerColor === 'w' ? 'White' : 'Black'}. Strength: ${sl.label}`);
+  addMsg('system', 'Type moves (e4, Nf3, O-O). Commands: peek, hint, takeback, fen, pgn, history. Spacebar to peek.');
+
+  // If engine moves first
+  if (chess.turn() !== playerColor) {
+    requestEngineMove();
+  }
+}
+
+// ============================================================
+// PLAYER MOVE
+// ============================================================
+function handleSubmit(e) {
+  e.preventDefault();
+  const input = document.getElementById('moveInput');
+  const val = input.value.trim();
+  input.value = '';
+  if (!val) return;
+
+  const lower = val.toLowerCase();
+  if (lower === 'peek') { doPeek(); return; }
+  if (lower === 'resign') { doResign(); return; }
+  if (lower === 'takeback' || lower === 'undo') { doTakeback(); return; }
+  if (lower === 'hint' || lower === 'moves' || lower === 'help') { showHint(); return; }
+  if (lower === 'fen') {
+    addMsg('system', chess.fen());
+    return;
+  }
+  if (lower === 'pgn') { copyPGN(); return; }
+  if (lower === 'history' || lower === 'stats') { showGameHistory(); return; }
+
+  processPlayerMove(val);
+}
+
+function resolveDescriptiveMove(desc) {
+  // desc is like "pxp" (pawn takes pawn), "qxb" (queen takes bishop), "nxr" (knight takes rook)
+  if (!chess) return null;
+  const match = desc.match(/^([pnbrqk])x([pnbrqk])$/);
+  if (!match) return null;
+
+  const attackerType = match[1]; // p, n, b, r, q, k
+  const targetType = match[2];
+
+  // Map piece type to chess.js piece characters
+  const moves = chess.moves({ verbose: true });
+
+  // Filter: attacker piece type matches, it's a capture, and captured piece type matches
+  const candidates = moves.filter(m =>
+    m.piece === attackerType &&
+    m.captured &&
+    m.captured === targetType
+  );
+
+  if (candidates.length === 1) {
+    return candidates[0].san;
+  }
+  if (candidates.length > 1) {
+    // Multiple matches — ambiguous. Return null to ask for clarification.
+    return null;
+  }
+  return null;
+}
+
+function resolvePartialMove(partial) {
+  if (!chess) return null;
+  const moves = chess.moves();
+  const p = partial.toLowerCase();
+
+  // Try exact case-insensitive match first
+  const exact = moves.find(m => m.toLowerCase() === p);
+  if (exact) return exact;
+
+  // "exd" → find the only legal "exd?" move
+  // "Nxe" → find the only legal "Nxe?" move
+  const startsWith = moves.filter(m => m.toLowerCase().startsWith(p));
+  if (startsWith.length === 1) return startsWith[0];
+
+  // Try matching just the file+action pattern: "ed" could mean "exd5"
+  // Pattern: file "x" file (missing rank)
+  const captureNoRank = p.match(/^([a-h])x([a-h])$/);
+  if (captureNoRank) {
+    const [, fromFile, toFile] = captureNoRank;
+    const matches = moves.filter(m => {
+      const ml = m.toLowerCase();
+      return ml.startsWith(fromFile) && ml.includes('x') && ml.includes(toFile);
+    });
+    if (matches.length === 1) return matches[0];
+  }
+
+  // Piece + file (missing rank): "Nd" could mean "Nd4" if only one legal
+  const pieceFile = p.match(/^([nbrqk])([a-h])$/);
+  if (pieceFile) {
+    const [, piece, file] = pieceFile;
+    const matches = moves.filter(m =>
+      m[0].toLowerCase() === piece && m.toLowerCase().includes(file)
+    );
+    if (matches.length === 1) return matches[0];
+  }
+
+  return null;
+}
+
+function processPlayerMove(moveText) {
+  if (!chess || gameOverFlag) return;
+  if (chess.turn() !== playerColor) {
+    addMsg('system', "It's not your turn.");
+    speakError("Not your turn");
+    return;
+  }
+
+  // Handle descriptive notation: "DESC:pxp" → resolve against legal moves
+  if (moveText.startsWith('DESC:')) {
+    const desc = moveText.slice(5); // e.g. "pxp", "qxb", "nxp"
+    const resolved = resolveDescriptiveMove(desc);
+    if (resolved) {
+      moveText = resolved;
+    } else {
+      addMsg('error', 'Ambiguous or illegal descriptive move. Try specifying the square (e.g., "queen takes g4").');
+      speakError('Ambiguous move');
+      return;
+    }
+  }
+
+  // Normalize input: NF3→Nf3, E4→e4, BXE5→Bxe5, etc.
+  let move = moveText.trim();
+  // Castling variants
+  move = move.replace(/^[oO0]-[oO0]-[oO0]$/, 'O-O-O').replace(/^[oO0]-[oO0]$/, 'O-O');
+  if (move !== 'O-O' && move !== 'O-O-O') {
+    // Uppercase piece letter if present, lowercase everything else
+    move = move.replace(/^([NBRQK]?)(.+)$/, (m, piece, rest) => {
+      return (piece || '') + rest.toLowerCase();
+    });
+    // Also handle fully uppercase like "NF3" — first char is a piece if in NBRQK
+    if (/^[nbrqk]/i.test(move) && move.length >= 3) {
+      const first = move[0].toUpperCase();
+      if ('NBRQK'.includes(first)) {
+        move = first + move.slice(1).toLowerCase();
+      }
+    }
+  }
+
+  const result = chess.move(move, { sloppy: true });
+  if (!result) {
+    // Smart resolution: try to match incomplete moves against legal moves
+    // e.g. "exd" matches "exd5" if that's the only exd capture available
+    const resolved = resolvePartialMove(move);
+    if (resolved) {
+      const result2 = chess.move(resolved, { sloppy: true });
+      if (result2) {
+        lastMoveFrom = result2.from;
+        lastMoveTo = result2.to;
+        moveHistoryArr.push(result2.san);
+        updateMoveList();
+        if (result2.captured) { playCaptureSound(); } else { playMoveSound(); }
+        const colorName = playerColor === 'w' ? 'White' : 'Black';
+        addMsg('player', `${colorName}: ${result2.san}`);
+        if (document.getElementById('voiceToggle').checked) {
+          speakMove(result2.san);
+        }
+        if (checkGameOver()) return;
+        requestEngineMove();
+        return;
+      }
+    }
+    // Try fuzzy match (handles UCI, phonetic garbage, partial destinations)
+    const fuzzy = fuzzyMatchMove(move);
+    if (fuzzy) {
+      const result3 = chess.move(fuzzy, { sloppy: true });
+      if (result3) {
+        lastMoveFrom = result3.from;
+        lastMoveTo = result3.to;
+        moveHistoryArr.push(result3.san);
+        updateMoveList();
+        if (result3.captured) { playCaptureSound(); } else { playMoveSound(); }
+        const colorName = playerColor === 'w' ? 'White' : 'Black';
+        addMsg('player', `${colorName}: ${result3.san}`);
+        if (document.getElementById('voiceToggle').checked) {
+          speakMove(result3.san);
+        }
+        if (checkGameOver()) return;
+        requestEngineMove();
+        return;
+      }
+    }
+    addMsg('error', `Illegal or unrecognized move: "${move}". Try again.`);
+    speakError('Illegal move');
+    return;
+  }
+
+  lastMoveFrom = result.from;
+  lastMoveTo = result.to;
+  moveHistoryArr.push(result.san);
+  updateMoveList();
+
+  // Confirmation sound
+  if (result.captured) { playCaptureSound(); } else { playMoveSound(); }
+
+  const colorName = playerColor === 'w' ? 'White' : 'Black';
+  addMsg('player', `${colorName}: ${result.san}`);
+
+  // Speak player's own move back for confirmation
+  if (document.getElementById('voiceToggle').checked) {
+    speakMove(result.san);
+  }
+
+  if (checkGameOver()) return;
+  requestEngineMove();
+}
+
+// ============================================================
+// ENGINE MOVE
+// ============================================================
+function requestEngineMove() {
+  if (!stockfish || !engineReady || gameOverFlag) return;
+  isThinking = true;
+  document.getElementById('moveInput').placeholder = 'Engine thinking...';
+  addThinkingMsg();
+
+  const sl = SKILL_LEVELS[skillIdx];
+  stockfish.postMessage('setoption name Skill Level value ' + sl.skill);
+  stockfish.postMessage('position fen ' + chess.fen());
+  stockfish.postMessage('go depth ' + sl.depth);
+}
+
+function applyEngineMove(uci) {
+  // UCI format: e2e4 or e7e8q
+  const from = uci.slice(0, 2);
+  const to = uci.slice(2, 4);
+  const promotion = uci[4] || undefined;
+
+  const moveObj = { from, to };
+  if (promotion) moveObj.promotion = promotion;
+
+  const result = chess.move(moveObj);
+  if (!result) {
+    addMsg('error', 'Engine returned invalid move: ' + uci);
+    return;
+  }
+
+  lastMoveFrom = result.from;
+  lastMoveTo = result.to;
+  moveHistoryArr.push(result.san);
+  updateMoveList();
+
+  // Sound
+  if (result.captured) { playCaptureSound(); } else { playMoveSound(); }
+
+  const colorName = chess.turn() === playerColor ? '' : '';
+  const engineColor = playerColor === 'w' ? 'Black' : 'White';
+  addMsg('engine', `${engineColor}: ${result.san}`);
+
+  // Voice
+  if (document.getElementById('voiceToggle').checked) {
+    speakMove(result.san);
+  }
+
+  document.getElementById('moveInput').placeholder = 'Your move...';
+  document.getElementById('moveInput').focus();
+
+  checkGameOver();
+}
+
+// ============================================================
+// GAME OVER DETECTION
+// ============================================================
+function checkGameOver() {
+  if (chess.in_checkmate()) {
+    const winner = chess.turn() === 'w' ? 'Black' : 'White';
+    endGame(`Checkmate! ${winner} wins.`);
+    return true;
+  }
+  if (chess.in_stalemate()) { endGame('Stalemate. Draw.'); return true; }
+  if (chess.in_threefold_repetition()) { endGame('Threefold repetition. Draw.'); return true; }
+  if (chess.insufficient_material()) { endGame('Insufficient material. Draw.'); return true; }
+  if (chess.in_draw()) { endGame('Draw (50-move rule).'); return true; }
+  return false;
+}
+
+function endGame(text) {
+  gameOverFlag = true;
+  addMsg('system', text);
+  document.getElementById('gameOverText').textContent = text;
+  document.getElementById('gameOverPanel').style.display = '';
+  document.getElementById('moveInput').disabled = true;
+  document.getElementById('takebackBtn').disabled = true;
+  document.getElementById('resignBtn').disabled = true;
+  document.getElementById('statusLine').textContent = text;
+
+  // Determine result for history
+  let result = text;
+  if (text.includes('Checkmate')) {
+    const youWin = (chess.turn() !== playerColor);
+    result = youWin ? 'Win (checkmate)' : 'Loss (checkmate)';
+  } else if (text.includes('resigned')) {
+    result = 'Loss (resigned)';
+  } else if (text.includes('Draw') || text.includes('Stalemate')) {
+    result = 'Draw';
+  }
+  saveGameToHistory(result);
+}
+
+// ============================================================
+// PEEK
+// ============================================================
+function doPeek() {
+  if (!chess) return;
+  if (peekTimer) clearTimeout(peekTimer);
+  isPeeking = true;
+  peekCount++;
+  document.getElementById('peekCounter').textContent = `Peeks: ${peekCount}`;
+
+  const area = document.getElementById('peekArea');
+  area.style.display = '';
+  area.innerHTML = '';
+
+  const board = fenToBoard(chess.fen());
+  area.appendChild(buildBoardDOM(board, false, playerColor === 'b', lastMoveFrom, lastMoveTo));
+
+  document.getElementById('peekBtn').textContent = '👁 Peeking...';
+  document.getElementById('peekBtn').classList.add('active');
+
+  peekTimer = setTimeout(() => {
+    area.style.display = 'none';
+    isPeeking = false;
+    document.getElementById('peekBtn').textContent = '👁 Peek';
+    document.getElementById('peekBtn').classList.remove('active');
+  }, 3000);
+}
+
+// ============================================================
+// MOVE LIST
+// ============================================================
+function updateMoveList() {
+  const el = document.getElementById('moveList');
+  const pairs = [];
+  for (let i = 0; i < moveHistoryArr.length; i += 2) {
+    const num = Math.floor(i / 2) + 1;
+    const w = moveHistoryArr[i] || '';
+    const b = moveHistoryArr[i + 1] || '';
+    pairs.push(num + '. ' + w + (b ? ' ' + b : ''));
+  }
+  el.textContent = pairs.join('  ');
+  el.scrollLeft = el.scrollWidth;
+  updateStatus();
+}
+
+function updateStatus() {
+  const el = document.getElementById('statusLine');
+  if (!chess || gameOverFlag) return;
+  const moveNum = Math.floor(moveHistoryArr.length / 2) + 1;
+  const turn = chess.turn() === 'w' ? 'White' : 'Black';
+  const youOrEngine = chess.turn() === playerColor ? 'Your move' : 'Engine thinking';
+  el.textContent = `Move ${moveNum} · ${turn} to play · ${youOrEngine}`;
+}
+
+function doTakeback() {
+  if (!chess || gameOverFlag || moveHistoryArr.length === 0) return;
+  if (isThinking) {
+    addMsg('system', 'Wait for the engine to finish.');
+    return;
+  }
+
+  // Undo engine's last move + your last move (a full pair)
+  // If it's currently your turn, the last two moves are: yours, then engine's
+  // If it's engine's turn, just undo the engine's pending... but engine shouldn't be pending here
+  let undone = 0;
+  // Undo until it's the player's turn again, up to 2 moves
+  while (undone < 2 && moveHistoryArr.length > 0) {
+    const result = chess.undo();
+    if (!result) break;
+    moveHistoryArr.pop();
+    undone++;
+    if (chess.turn() === playerColor) break;
+  }
+
+  if (undone > 0) {
+    lastMoveFrom = null;
+    lastMoveTo = null;
+    updateMoveList();
+    addMsg('system', `Took back ${undone} move${undone > 1 ? 's' : ''}.`);
+    document.getElementById('moveInput').focus();
+  }
+}
+
+function doResign() {
+  if (!chess || gameOverFlag) return;
+  endGame('You resigned.');
+}
+
+function copyPGN() {
+  if (!moveHistoryArr.length) {
+    addMsg('system', 'No moves to copy.');
+    return;
+  }
+  const pairs = [];
+  for (let i = 0; i < moveHistoryArr.length; i += 2) {
+    const num = Math.floor(i / 2) + 1;
+    const w = moveHistoryArr[i] || '';
+    const b = moveHistoryArr[i + 1] || '';
+    pairs.push(num + '. ' + w + (b ? ' ' + b : ''));
+  }
+  const pgn = pairs.join(' ');
+  navigator.clipboard.writeText(pgn).then(() => {
+    addMsg('system', '📋 PGN copied to clipboard.');
+  }).catch(() => {
+    addMsg('system', pgn);
+  });
+}
+
+function showHint() {
+  if (!chess || gameOverFlag) return;
+  if (chess.turn() !== playerColor) {
+    addMsg('system', "Wait for the engine's move.");
+    return;
+  }
+  const moves = chess.moves();
+  if (moves.length === 0) return;
+  // Group by piece type for readability
+  const pieces = { pawn: [], N: [], B: [], R: [], Q: [], K: [], castle: [] };
+  moves.forEach(m => {
+    if (m === 'O-O' || m === 'O-O-O') pieces.castle.push(m);
+    else if (/^[NBRQK]/.test(m)) pieces[m[0]].push(m);
+    else pieces.pawn.push(m);
+  });
+  let hint = `${moves.length} legal moves: `;
+  if (pieces.pawn.length) hint += pieces.pawn.join(', ') + ' · ';
+  ['N','B','R','Q','K'].forEach(p => {
+    if (pieces[p].length) hint += pieces[p].join(', ') + ' · ';
+  });
+  if (pieces.castle.length) hint += pieces.castle.join(', ');
+  addMsg('system', hint.replace(/ · $/, ''));
+}
+
+// Spacebar shortcut for peek (only when input is not focused)
+document.addEventListener('keydown', function(e) {
+  if (e.code === 'Space' && document.activeElement !== document.getElementById('moveInput')
+      && document.activeElement !== document.getElementById('fenInput')) {
+    e.preventDefault();
+    doPeek();
+  }
+});
+
+// ============================================================
+// GAME HISTORY (localStorage)
+// ============================================================
+function saveGameToHistory(result) {
+  try {
+    const history = JSON.parse(localStorage.getItem('blindfoldHistory') || '[]');
+    const pairs = [];
+    for (let i = 0; i < moveHistoryArr.length; i += 2) {
+      const num = Math.floor(i / 2) + 1;
+      const w = moveHistoryArr[i] || '';
+      const b = moveHistoryArr[i + 1] || '';
+      pairs.push(num + '. ' + w + (b ? ' ' + b : ''));
+    }
+    history.push({
+      date: new Date().toISOString(),
+      result: result,
+      color: playerColor === 'w' ? 'White' : 'Black',
+      difficulty: SKILL_LEVELS[skillIdx].label,
+      moves: moveHistoryArr.length,
+      peeks: peekCount,
+      pgn: pairs.join(' '),
+      fen: gameStartFen,
+      durationSec: Math.round((Date.now() - gameStartTime) / 1000),
+    });
+    // Keep last 100 games
+    if (history.length > 100) history.splice(0, history.length - 100);
+    localStorage.setItem('blindfoldHistory', JSON.stringify(history));
+  } catch(e) {}
+}
+
+function getGameHistory() {
+  try {
+    return JSON.parse(localStorage.getItem('blindfoldHistory') || '[]');
+  } catch(e) { return []; }
+}
+
+function showGameHistory() {
+  const history = getGameHistory();
+  if (!history.length) {
+    addMsg('system', 'No games played yet.');
+    return;
+  }
+  const recent = history.slice(-5).reverse();
+  let text = '📊 Recent games:\n';
+  recent.forEach((g, i) => {
+    const date = new Date(g.date).toLocaleDateString();
+    const mins = Math.floor(g.durationSec / 60);
+    text += `  ${date} · ${g.color} · ${g.difficulty} · ${g.moves} moves · ${g.peeks} peeks · ${mins}m · ${g.result}\n`;
+  });
+  const totalGames = history.length;
+  const wins = history.filter(g => g.result.includes('win') || g.result.includes('Win')).length;
+  const avgPeeks = (history.reduce((s, g) => s + g.peeks, 0) / totalGames).toFixed(1);
+  text += `\n  Totals: ${totalGames} games · ${wins} wins · avg ${avgPeeks} peeks/game`;
+  addMsg('system', text);
+}
+
+// ============================================================
+// MESSAGES
+// ============================================================
+function addMsg(type, text) {
+  const el = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + type;
+  div.textContent = text;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+}
+function addThinkingMsg() {
+  const el = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg thinking';
+  div.id = 'thinkingMsg';
+  div.textContent = 'Stockfish thinking...';
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+}
+function removeThinkingMsg() {
+  const el = document.getElementById('thinkingMsg');
+  if (el) el.remove();
+}
+
+// ============================================================
+// VOICE
+// ============================================================
+function speakMove(san) {
+  if (!window.speechSynthesis) return;
+  const text = san
+    .replace(/O-O-O/g, 'castles queenside')
+    .replace(/O-O/g, 'castles kingside')
+    .replace(/N/g, 'Knight ')
+    .replace(/B(?=[a-h1-8x])/g, 'Bishop ')
+    .replace(/R/g, 'Rook ')
+    .replace(/Q/g, 'Queen ')
+    .replace(/K/g, 'King ')
+    .replace(/x/g, ' takes ')
+    .replace(/\+/g, ' check')
+    .replace(/#/g, ' checkmate')
+    .replace(/=/g, ' promotes to ');
+  speechSynthesis.cancel();
+  isSpeaking = true;
+  speakCount++;
+  const thisSpeak = speakCount;
+  const utter = new SpeechSynthesisUtterance(text);
+  if (selectedVoice) utter.voice = selectedVoice;
+  utter.lang = 'en-US';
+  utter.rate = 1.0;
+  utter.pitch = 1.0;
+  utter.onend = () => {
+    // Only clear isSpeaking if this is the most recent utterance
+    if (thisSpeak === speakCount) {
+      isSpeaking = false;
+      speakEndTime = Date.now();
+    }
+  };
+  utter.onerror = () => {
+    if (thisSpeak === speakCount) {
+      isSpeaking = false;
+      speakEndTime = Date.now();
+    }
+  };
+  speechSynthesis.speak(utter);
+}
+
+function toggleListening() {
+  if (isListening) { stopListening(); return; }
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    addMsg('system', 'Voice input not supported. Try Chrome.');
+    return;
+  }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.continuous = true;
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
+  recognition.maxAlternatives = 5;
+
+  recognition.onresult = function(event) {
+    const last = event.results[event.results.length - 1];
+    if (last.isFinal) {
+      // Don't process our own speech output or echoes shortly after
+      if (isSpeaking) return;
+      if (Date.now() - speakEndTime < 1500) return; // 1.5s cooldown after speaking
+
+      // Check all alternatives for the best chess move match
+      let bestTranscript = '';
+      let bestParsed = '';
+      let bestScore = -1;
+
+      for (let i = 0; i < last.length; i++) {
+        const t = last[i].transcript.trim();
+        const conf = last[i].confidence;
+        if (!t || t.length < 2 || conf < 0.1) continue;
+
+        const p = parseVoiceMove(t);
+        if (!p || p.length < 2) continue;
+
+        // Score: longer parsed result = more words captured = better
+        // Bonus for containing piece letters or 'x' (captures)
+        let score = p.length + (conf * 2);
+        if (/[NBRQK]/.test(p)) score += 3;  // has a piece letter
+        if (p.includes('x')) score += 2;      // has a capture
+        if (/^[NBRQK]?[a-h]?x?[a-h][1-8]/.test(p)) score += 5; // looks like a valid move
+
+        if (score > bestScore) {
+          bestScore = score;
+          bestTranscript = t;
+          bestParsed = p;
+        }
+      }
+
+      if (!bestParsed || bestParsed.length < 2) return;
+
+      const displayParsed = bestParsed.startsWith('DESC:') ? bestParsed.slice(5).replace(/x/, ' takes ') : bestParsed;
+      addMsg('voice', `🎤 Heard: "${bestTranscript}" → ${displayParsed}`);
+      const cmd = bestParsed.toLowerCase();
+      if (cmd === 'peek') { doPeek(); }
+      else if (cmd === 'takeback') { doTakeback(); }
+      else if (cmd === 'resign') { doResign(); }
+      else if (cmd === 'hint') { showHint(); }
+      else { processPlayerMove(bestParsed); }
+    }
+  };
+  recognition.onerror = function(e) {
+    if (e.error !== 'no-speech') addMsg('system', 'Voice error: ' + e.error);
+  };
+  recognition.onend = function() {
+    if (isListening) { try { recognition.start(); } catch(e) {} }
+  };
+
+  recognition.start();
+  isListening = true;
+  document.getElementById('voiceBtn').textContent = '🎤 ON';
+  document.getElementById('voiceBtn').classList.add('danger');
+  addMsg('system', '🎤 Listening... Speak your moves.');
+}
+
+function stopListening() {
+  isListening = false;
+  if (recognition) { try { recognition.stop(); } catch(e) {} }
+  document.getElementById('voiceBtn').textContent = '🎤 Off';
+  document.getElementById('voiceBtn').classList.remove('danger');
+}
+
+function parseVoiceMove(transcript) {
+  let t = transcript.trim();
+  if (!t) return '';
+  
+  let tl = t.toLowerCase();
+
+  // Castling — be very generous with matching
+  if (/castl|kastle|kassel/i.test(tl)) {
+    if (/queen|long|q\s*side/i.test(tl)) return 'O-O-O';
+    return 'O-O';
+  }
+
+  if (tl.includes('peek') || tl.includes('peak')) return 'peek';
+  if (tl === 'resign') return 'resign';
+  if (/^take\s*back$|^undo$/i.test(tl)) return 'takeback';
+  if (/^hint$|^help$|^moves$/i.test(tl)) return 'hint';
+
+  // === DESCRIPTIVE NOTATION PATH ===
+  const pieceWords = {
+    'pawn': 'p', 'pond': 'p', 'porn': 'p', 'prawn': 'p', 'pon': 'p', 'pong': 'p',
+    'knight': 'n', 'night': 'n', 'nite': 'n', 'nice': 'n',
+    'bishop': 'b', 'special': 'b',  // Chrome hears "bishop" as "special" sometimes!
+    'rook': 'r', 'rock': 'r', 'roque': 'r', 'ruck': 'r', 'roof': 'r',
+    'queen': 'q', 'ween': 'q', 'quean': 'q',
+    'king': 'k',
+  };
+
+  // Very generous "takes" matching for descriptive notation
+  const descMatch = tl.match(/(\w+)\s+(?:takes?|captures?|texan|text|tex|x)\s+(\w+)/);
+  if (descMatch) {
+    const attacker = pieceWords[descMatch[1]];
+    const target = pieceWords[descMatch[2]];
+    if (attacker && target) {
+      return 'DESC:' + attacker + 'x' + target;
+    }
+  }
+
+  // === ALGEBRAIC NOTATION PATH ===
+  // Number words → digits
+  t = t.replace(/\bone\b/gi, '1').replace(/\btwo\b/gi, '2').replace(/\bthree\b/gi, '3')
+    .replace(/\bfour\b/gi, '4').replace(/\bfive\b/gi, '5').replace(/\bsix\b/gi, '6')
+    .replace(/\bseven\b/gi, '7').replace(/\beight\b/gi, '8');
+
+  // Phonetic letter → file letter (Chrome hears "see" for "c", "bee" for "b", etc.)
+  t = t.replace(/\bsee\b/gi, 'c').replace(/\bsea\b/gi, 'c')
+    .replace(/\bbee\b/gi, 'b').replace(/\btoo\b/gi, '2')
+    .replace(/\bfor\b/gi, '4').replace(/\bfore\b/gi, '4')
+    .replace(/\bate\b/gi, '8').replace(/\baye\b/gi, 'a')
+    .replace(/\bay\b/gi, 'a').replace(/\bdee\b/gi, 'd')
+    .replace(/\bjee\b/gi, 'g').replace(/\bgee\b/gi, 'g')
+    .replace(/\beff\b/gi, 'f').replace(/\baitch\b/gi, 'h');
+
+  // NATO phonetic alphabet
+  t = t.replace(/\balpha\b/gi, 'a')
+    .replace(/\bbravo\b/gi, 'b')
+    .replace(/\bcharlie\b/gi, 'c')
+    .replace(/\bdelta\b/gi, 'd')
+    .replace(/\becho\b/gi, 'e')
+    .replace(/\bfoxtrot\b/gi, 'f')
+    .replace(/\bgolf\b/gi, 'g')
+    .replace(/\bhotel\b/gi, 'h');
+
+  // Chrome mishearings of "takes"
+  t = t.replace(/\btext\b/gi, 'takes')
+    .replace(/\btex\b/gi, 'takes')
+    .replace(/\btake\b/gi, 'takes')
+    .replace(/\btexts?\b/gi, 'takes');
+
+  // Piece word → letter
+  t = t.replace(/\bknight\b/gi, 'N')
+    .replace(/\bnight\b/gi, 'N')
+    .replace(/\bnite\b/gi, 'N')
+    .replace(/\bbishop\b/gi, 'B')
+    .replace(/\brook\b/gi, 'R')
+    .replace(/\brock\b/gi, 'R')
+    .replace(/\bqueen\b/gi, 'Q')
+    .replace(/\bking\b/gi, 'K')
+    .replace(/\bpawn\b/gi, '')
+    .replace(/\bpond?\b/gi, '')
+    .replace(/\bprawn\b/gi, '');
+
+  // Strip "to" as preposition (NOT as number 2)
+  t = t.replace(/\bto\b/gi, '');
+
+  // Action words
+  t = t.replace(/\btakes\b/gi, 'x')
+    .replace(/\bcaptures?\b/gi, 'x')
+    .replace(/\bcheckmate\b/gi, '#')
+    .replace(/\bcheck\b/gi, '+')
+    .replace(/\bpromotes?\s*to\b/gi, '=');
+
+  // Remove all spaces
+  t = t.replace(/\s+/g, '');
+
+  // Fix casing: piece letters uppercase, file letters lowercase
+  t = t.replace(/^([NBRQK]?)([A-H])/, (m, piece, file) => piece + file.toLowerCase());
+  if (/^[A-H][1-8]$/.test(t)) t = t.toLowerCase();
+  t = t.replace(/([x])([A-H])/g, (m, x, file) => x + file.toLowerCase());
+
+  return t;
+}
+
+// Fuzzy match against legal moves when exact parsing fails
+function fuzzyMatchMove(parsed) {
+  if (!chess || !parsed) return null;
+  const moves = chess.moves({ verbose: true });
+  const p = parsed.toLowerCase().replace(/[+#]/g, '');
+
+  // Strategy 1: exact SAN match (case-insensitive)
+  const exactSan = moves.find(m => m.san.toLowerCase().replace(/[+#]/g, '') === p);
+  if (exactSan) return exactSan.san;
+
+  // Strategy 2: UCI match (e.g. "b1c3" → Nc3, "e2e4" → e4)
+  if (/^[a-h][1-8][a-h][1-8][nbrq]?$/.test(p)) {
+    const from = p.slice(0, 2);
+    const to = p.slice(2, 4);
+    const promo = p[4] || undefined;
+    const uciMatch = moves.find(m => m.from === from && m.to === to && (!promo || m.promotion === promo));
+    if (uciMatch) return uciMatch.san;
+  }
+
+  // Strategy 3: starts-with (e.g. "Nc" → "Nc3" if only one)
+  const startMatches = moves.filter(m => m.san.toLowerCase().replace(/[+#]/g, '').startsWith(p));
+  if (startMatches.length === 1) return startMatches[0].san;
+
+  // Strategy 4: pawn destination (e.g. "e4" when there's only one pawn move to e4)
+  if (/^[a-h][1-8]$/.test(p)) {
+    const destMatches = moves.filter(m => m.to === p && m.piece === 'p');
+    if (destMatches.length === 1) return destMatches[0].san;
+  }
+
+  // Strategy 5: piece + destination (e.g. "nc3" → Nc3)
+  const pdMatch = p.match(/^([nbrqk])([a-h][1-8])$/);
+  if (pdMatch) {
+    const [, piece, dest] = pdMatch;
+    const matches = moves.filter(m => m.piece === piece && m.to === dest);
+    if (matches.length === 1) return matches[0].san;
+  }
+
+  // Strategy 6: piece + capture + destination (e.g. "qxg4" → Qxg4)
+  const pcMatch = p.match(/^([nbrqk])x([a-h][1-8])$/);
+  if (pcMatch) {
+    const [, piece, dest] = pcMatch;
+    const matches = moves.filter(m => m.piece === piece && m.to === dest && m.captured);
+    if (matches.length === 1) return matches[0].san;
+  }
+
+  // Strategy 7: pawn capture with optional rank
+  const pawnCap = p.match(/^([a-h])x([a-h])([1-8])?$/);
+  if (pawnCap) {
+    const [, fromFile, toFile, rank] = pawnCap;
+    const matches = moves.filter(m => {
+      if (m.piece !== 'p' || !m.captured) return false;
+      if (m.from[0] !== fromFile || m.to[0] !== toFile) return false;
+      if (rank && m.to[1] !== rank) return false;
+      return true;
+    });
+    if (matches.length === 1) return matches[0].san;
+  }
+
+  // Strategy 8: destination square somewhere in noise — only if unique
+  const destInNoise = p.match(/([a-h][1-8])/);
+  if (destInNoise) {
+    const dest = destInNoise[1];
+    const matches = moves.filter(m => m.to === dest);
+    if (matches.length === 1) return matches[0].san;
+  }
+
+  return null;
+}
+
+// ============================================================
+// SERVICE WORKER REGISTRATION
+// ============================================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('[PWA] Service Worker registered:', reg.scope))
+      .catch(err => console.log('[PWA] SW registration failed:', err));
+  });
+}
+
+// ============================================================
+// INIT ON LOAD
+// ============================================================
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
