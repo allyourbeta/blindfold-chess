@@ -35,6 +35,8 @@ export type GameAudioEvent =
   | { kind: "illegal-move"; spoken: string; source: MoveSource }
   /** A voice move that was understood but can't be played. Spoken from clips. */
   | { kind: "rejected-move"; piece: PieceSymbol; to: string; reason: "illegal" | "ambiguous"; source: MoveSource }
+  /** Speech was heard but matched nothing — not a command, not a move shape. */
+  | { kind: "not-understood"; heard: string }
   | { kind: "game-end"; reason: GameEndReason };
 
 export interface GameState {
@@ -142,7 +144,14 @@ export const useGameStore = create<GameState>((set, get) => {
     submitVoiceMatch: (match: TranscriptMatch) => {
       const s = get();
       if (match.type === "none") {
+        // Silence here is indistinguishable from success, so say so out loud.
+        // Only when something was actually heard — empty transcripts are the
+        // recognizer misfiring, and announcing those would be constant noise.
         useSpeechStore.getState().setLastHeard(match.heard, null);
+        if (match.heard) {
+          flow.addMessage("error", `Didn't understand: "${match.heard}"`);
+          set({ audioEvent: { kind: "not-understood", heard: match.heard } });
+        }
         return;
       }
       if (match.type === "command") {

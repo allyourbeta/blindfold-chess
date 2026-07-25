@@ -43,6 +43,7 @@ CLIPS=(
   # Spoken move rejections — built from clips so Tessa says them too, rather
   # than falling through to the browser's default synthesiser.
   "not-legal:is not legal" "ambiguous:is ambiguous. Say which one."
+  "not-understood:Sorry, I did not catch that."
 )
 
 echo "Generating ${#CLIPS[@]} clips with voice '$VOICE' at ${RATE}wpm into $OUT_DIR ..."

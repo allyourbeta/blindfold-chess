@@ -11,7 +11,7 @@ function findVerbose(chess: Chess, san: string) {
 describe("movePhraseParts", () => {
   it("quiet pawn move", () => {
     const chess = new Chess();
-    expect(movePhraseParts(findVerbose(chess, "e4"))).toEqual(["pawn", "to", "e", "4"]);
+    expect(movePhraseParts(findVerbose(chess, "e4"))).toEqual(["pawn", "e", "4"]);
   });
 
   it("pawn capture", () => {
@@ -33,7 +33,6 @@ describe("movePhraseParts", () => {
     const chess = new Chess("8/4P3/8/8/8/8/k7/4K3 w - - 0 1");
     expect(movePhraseParts(findVerbose(chess, "e8=Q"))).toEqual([
       "pawn",
-      "to",
       "e",
       "8",
       "promotes-to",
@@ -47,7 +46,6 @@ describe("movePhraseParts", () => {
       "knight",
       "from",
       "b",
-      "to",
       "d",
       "2",
     ]);
@@ -57,7 +55,7 @@ describe("movePhraseParts", () => {
     const chess = new Chess();
     chess.move("e4");
     chess.move("d5");
-    expect(movePhraseParts(findVerbose(chess, "Bb5+"))).toEqual(["bishop", "to", "b", "5", "check"]);
+    expect(movePhraseParts(findVerbose(chess, "Bb5+"))).toEqual(["bishop", "b", "5", "check"]);
   });
 
   it("checkmate", () => {
@@ -66,7 +64,7 @@ describe("movePhraseParts", () => {
     chess.move("e5");
     chess.move("g4");
     const mateMove = findVerbose(chess, "Qh4#");
-    expect(movePhraseParts(mateMove)).toEqual(["queen", "to", "h", "4", "checkmate"]);
+    expect(movePhraseParts(mateMove)).toEqual(["queen", "h", "4", "checkmate"]);
     chess.move(mateMove.san);
     expect(chess.isCheckmate()).toBe(true);
   });

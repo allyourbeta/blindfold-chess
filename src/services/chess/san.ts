@@ -40,6 +40,7 @@ export type SpokenPart =
   | "stalemate"
   | "not-legal"
   | "ambiguous"
+  | "not-understood"
   | "draw";
 
 export const PIECE_WORDS: Record<PieceSymbol, SpokenPart> = {
@@ -106,7 +107,9 @@ export function movePhraseParts(move: Move): SpokenPart[] {
           parts.push(ch as SpokenPart);
         }
       }
-      parts.push(move.isCapture() ? "takes" : "to");
+      // Quiet moves get no connector — chess players say "knight f3", not
+      // "knight to f3". Captures keep "takes"; it carries information.
+      if (move.isCapture()) parts.push("takes");
     }
 
     parts.push(fileOf(move.to));

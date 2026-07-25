@@ -1,6 +1,6 @@
 // Bump this whenever the app shell / precache list changes so browsers
 // pick up a fresh install instead of reusing a stale cache.
-const CACHE_NAME = 'blindfold-chess-v5';
+const CACHE_NAME = 'blindfold-chess-v7';
 
 const PIECE_FILES = [
   'wK', 'wQ', 'wR', 'wB', 'wN', 'wP',
@@ -15,7 +15,7 @@ const AUDIO_CLIPS = [
   'takes', 'to', 'from', 'check', 'checkmate',
   'castles-kingside', 'castles-queenside',
   'promotes-to', 'en-passant', 'stalemate', 'draw',
-  'not-legal', 'ambiguous',
+  'not-legal', 'ambiguous', 'not-understood',
 ].map((id) => `/audio/${id}.wav`);
 
 const APP_SHELL = [
@@ -49,8 +49,47 @@ self.addEventListener('activate', (event) => {
   })());
 });
 
+/**
+ * Navigations go to the network first, everything else to the cache first.
+ *
+ * The app shell is served from '/', which never changes name between deploys.
+ * Cache-first on that would pin every visitor to whichever build they happened
+ * to load first, until CACHE_NAME was bumped by hand. Vite's asset filenames
+ * are content-hashed, so cache-first is exactly right for them.
+ */
+async function networkFirst(request) {
+  try {
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const cache = await caches.open(CACHE_NAME);
+      await cache.put(request, response.clone());
+    }
+    return response;
+  } catch (error) {
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    throw error;
+  }
+}
+
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+
+  if (event.request.mode === 'navigate') {
+    event.respondWith((async () => {
+      try {
+        return await networkFirst(event.request);
+      } catch {
+        const fallback = await caches.match('/');
+        if (fallback) return fallback;
+        return new Response(
+          '<h1>Offline</h1><p>Open Blindfold Chess once while connected so it can be cached for offline play.</p>',
+          { headers: { 'Content-Type': 'text/html; charset=utf-8' }, status: 503 },
+        );
+      }
+    })());
+    return;
+  }
 
   event.respondWith((async () => {
     const cached = await caches.match(event.request);
@@ -66,14 +105,6 @@ self.addEventListener('fetch', (event) => {
       }
       return response;
     } catch (error) {
-      if (event.request.mode === 'navigate') {
-        const fallback = await caches.match('/');
-        if (fallback) return fallback;
-        return new Response(
-          '<h1>Offline</h1><p>Open Blindfold Chess once while connected so it can be cached for offline play.</p>',
-          { headers: { 'Content-Type': 'text/html; charset=utf-8' }, status: 503 },
-        );
-      }
       return new Response('', { status: 503, statusText: 'Offline' });
     }
   })());

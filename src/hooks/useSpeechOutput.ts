@@ -185,6 +185,9 @@ export function useSpeechOutput() {
         );
         enqueueSpeech({ clips, text: clips.join(" ") });
       }
+    } else if (audioEvent.kind === "not-understood") {
+      playErrorTone(ctx);
+      enqueueSpeech({ clips: ["not-understood"], text: "Sorry, I did not catch that." });
     } else if (audioEvent.kind === "game-end") {
       if (speechMode !== "silent") {
         const clips = gameEndPhraseClips(audioEvent.reason);

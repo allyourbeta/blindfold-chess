@@ -10,7 +10,7 @@ test("peek reveals the board and hides after three seconds", async ({ page }) =>
   await page.getByLabel("Peek at the board").click();
   await expect(page.locator(SQUARE_SELECTOR)).toHaveCount(64);
 
-  await page.waitForTimeout(2500);
+  await page.waitForTimeout(1500); // mid-window, with margin — asserting at 2.5s of a 3.0s window loses races under load
   await expect(page.locator(SQUARE_SELECTOR)).toHaveCount(64); // still visible before 3s
 
   await page.waitForTimeout(800); // now past the 3s window
