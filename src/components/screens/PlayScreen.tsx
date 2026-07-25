@@ -1,4 +1,4 @@
-import { ArrowLeft, Mic, MicOff } from "lucide-react";
+import { ArrowLeft, Mic } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { StatusLine } from "@/components/play/StatusLine";
 import { PeekPanel } from "@/components/play/PeekPanel";
@@ -32,17 +32,21 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
       <Button
         type="button"
         size="icon"
+        className="h-12 w-12 shrink-0"
         variant={speech.isListening ? "primary" : "secondary"}
         active={speech.isListening}
         onClick={speech.toggleListening}
         aria-label={speech.isListening ? "Stop listening" : "Start listening"}
       >
-        {speech.isListening ? <Mic className="h-4 w-4" /> : <MicOff className="h-4 w-4" />}
+        {/* Always a plain mic — a crossed-out mic reads as "unavailable",
+            not "tap to start". Listening state shows through the variant. */}
+        <Mic className="h-5 w-5" />
       </Button>
     ) : speech.mode === "push-to-talk" ? (
       <Button
         type="button"
         size="icon"
+        className="h-12 w-12 shrink-0"
         variant={speech.isListening ? "primary" : "secondary"}
         active={speech.isListening}
         onPointerDown={speech.startPushToTalk}
@@ -50,7 +54,7 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
         onPointerLeave={speech.stopPushToTalk}
         aria-label="Hold to speak a move"
       >
-        {speech.isListening ? <Mic className="h-4 w-4" /> : <MicOff className="h-4 w-4" />}
+        <Mic className="h-5 w-5" />
       </Button>
     ) : null;
 

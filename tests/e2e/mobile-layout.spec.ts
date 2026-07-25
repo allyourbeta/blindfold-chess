@@ -21,7 +21,7 @@ test("play screen is usable one-handed at iPhone width", async ({ page }) => {
   expect(inputBox?.height).toBeGreaterThanOrEqual(44);
   if (viewport) expect(inputBox!.y + inputBox!.height).toBeLessThanOrEqual(viewport.height);
 
-  const submitButton = page.getByRole("button", { name: "Submit move" });
+  const submitButton = page.getByLabel("Your move"); // send button removed — the input itself is the reachability target now
   const submitBox = await submitButton.boundingBox();
   expect(submitBox?.height).toBeGreaterThanOrEqual(44);
 

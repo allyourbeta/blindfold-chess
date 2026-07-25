@@ -1,6 +1,4 @@
 import { useState, type FormEvent } from "react";
-import { Send } from "lucide-react";
-import { Button } from "@/components/ui/Button";
 import { useGameStore } from "@/state/gameStore";
 
 /** The mic sits in this row, not the header: it's an input method, not an action. */
@@ -30,9 +28,10 @@ export function MoveInput({ mic }: { mic?: React.ReactNode }) {
         className="min-h-11 flex-1 rounded-xl border border-border-default bg-bg-surface px-4 text-base text-text-primary placeholder:text-text-muted focus:border-border-active focus:outline-none disabled:opacity-60"
       />
       {mic}
-      <Button type="submit" size="icon" aria-label="Submit move" disabled={gameOverFlag}>
-        <Send className="h-4 w-4" />
-      </Button>
+      {/* No send button: Enter (or the keyboard's Go key) submits the
+          single-input form, and the freed corner makes the mic a real
+          thumb target instead of a precision tap. */}
+      <button type="submit" hidden aria-hidden tabIndex={-1} />
     </form>
   );
 }

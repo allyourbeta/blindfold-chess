@@ -27,6 +27,8 @@ export function ActionBar() {
   const startNewGame = useGameStore((s) => s.startNewGame);
   const copyPgn = useGameStore((s) => s.copyPgn);
   const speechMode = useSettingsStore((s) => s.speechMode);
+  const fileNaming = useSettingsStore((s) => s.fileNaming);
+  const setFileNaming = useSettingsStore((s) => s.setFileNaming);
   const cycleSpeechMode = useSettingsStore((s) => s.cycleSpeechMode);
 
   return (
@@ -52,6 +54,16 @@ export function ActionBar() {
         <Button variant="ghost" size="sm" onClick={cycleSpeechMode} title="Silent · engine moves · engine moves and yours">
           <Volume2 className="h-4 w-4" /> Speech: {SPEECH_LABEL[speechMode]}
         </Button>
+        {speechMode !== "silent" && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setFileNaming(fileNaming === "nato" ? "letters" : "nato")}
+            title="How spoken file letters are pronounced"
+          >
+            Files: {fileNaming === "nato" ? "Echo 4" : "e4"}
+          </Button>
+        )}
         <Button variant="ghost" size="sm" onClick={() => void copyPgn()} title="Copy game notation">
           <ClipboardCopy className="h-4 w-4" /> PGN
         </Button>
