@@ -1,65 +1,80 @@
-const CACHE_NAME = 'blindfold-chess-v2';
-const PIECE_BASE = 'https://raw.githubusercontent.com/lichess-org/lila/master/public/piece/cburnett/';
-const PIECE_NAMES = ['wK','wQ','wR','wB','wN','wP','bK','bQ','bR','bB','bN','bP'];
-const ASSETS_TO_CACHE = [
+// Bump this whenever the app shell / precache list changes so browsers
+// pick up a fresh install instead of reusing a stale cache.
+const CACHE_NAME = 'blindfold-chess-v5';
+
+const PIECE_FILES = [
+  'wK', 'wQ', 'wR', 'wB', 'wN', 'wP',
+  'bK', 'bQ', 'bR', 'bB', 'bN', 'bP',
+].map((p) => `/pieces/${p}.svg`);
+
+const AUDIO_CLIPS = [
+  'king', 'queen', 'rook', 'bishop', 'knight', 'pawn',
+  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+  'nato-a', 'nato-b', 'nato-c', 'nato-d', 'nato-e', 'nato-f', 'nato-g', 'nato-h',
+  '1', '2', '3', '4', '5', '6', '7', '8',
+  'takes', 'to', 'from', 'check', 'checkmate',
+  'castles-kingside', 'castles-queenside',
+  'promotes-to', 'en-passant', 'stalemate', 'draw',
+  'not-legal', 'ambiguous',
+].map((id) => `/audio/${id}.wav`);
+
+const APP_SHELL = [
   '/',
-  '/index.html',
   '/manifest.json',
-  'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:wght@400;500;600&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/stockfish.js',
-  ...PIECE_NAMES.map(p => PIECE_BASE + p + '.svg'),
+  '/icons/icon-192.png',
+  '/icons/icon-512.png',
+  '/icons/icon-maskable-512.png',
+  '/icons/apple-touch-icon.png',
+  '/engine/stockfish.js',
+  '/fonts/nunito-variable.woff2',
+  ...AUDIO_CLIPS,
+  ...PIECE_FILES,
 ];
 
-// Install: cache all core assets
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('[SW] Caching core assets');
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
-  );
-  // Activate immediately, don't wait for old SW to die
-  self.skipWaiting();
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    // Best-effort: a single missing/slow asset shouldn't block install —
+    // everything still gets cached opportunistically as it's fetched.
+    await Promise.allSettled(APP_SHELL.map((url) => cache.add(url)));
+    await self.skipWaiting();
+  })());
 });
 
-// Activate: clean up old caches
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-      );
-    })
-  );
-  // Take control of all open tabs immediately
-  self.clients.claim();
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)));
+    await self.clients.claim();
+  })());
 });
 
-// Fetch: serve from cache first, fall back to network
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
+  if (event.request.method !== 'GET') return;
 
-      return fetch(event.request).then((response) => {
-        // Cache successful GET responses for future offline use
-        if (response.ok && event.request.method === 'GET') {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, clone);
-          });
-        }
-        return response;
-      }).catch(() => {
-        // Offline and not cached — return a friendly error for navigation
-        if (event.request.mode === 'navigate') {
-          return new Response(
-            '<h1>Offline</h1><p>Blindfold Chess is not yet cached. Connect to the internet and reload.</p>',
-            { headers: { 'Content-Type': 'text/html' } }
-          );
-        }
-      });
-    })
-  );
+  event.respondWith((async () => {
+    const cached = await caches.match(event.request);
+    if (cached) return cached;
+
+    try {
+      const response = await fetch(event.request);
+      // Only cache complete (200) responses — a 206 Partial Content reply
+      // (audio elements issue Range requests) throws in Cache.put().
+      if (response.status === 200) {
+        const cache = await caches.open(CACHE_NAME);
+        await cache.put(event.request, response.clone());
+      }
+      return response;
+    } catch (error) {
+      if (event.request.mode === 'navigate') {
+        const fallback = await caches.match('/');
+        if (fallback) return fallback;
+        return new Response(
+          '<h1>Offline</h1><p>Open Blindfold Chess once while connected so it can be cached for offline play.</p>',
+          { headers: { 'Content-Type': 'text/html; charset=utf-8' }, status: 503 },
+        );
+      }
+      return new Response('', { status: 503, statusText: 'Offline' });
+    }
+  })());
 });

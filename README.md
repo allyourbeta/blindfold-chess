@@ -1,53 +1,107 @@
 # ♚ Blindfold Chess Trainer
 
-A browser-based blindfold chess training app. Play against Stockfish without seeing the board — using typed or voice-controlled algebraic notation. Installable as a PWA for offline play.
+A blindfold-chess trainer built with React, TypeScript, and Vite. Play
+against a self-hosted Stockfish without seeing the board, using typed or
+spoken algebraic notation. Peek for three seconds when you need to rebuild
+the position in your head.
 
 ## Features
 
-- **Blindfold play** — No board visible. Enter moves via keyboard or voice.
-- **Voice I/O** — Speak moves ("knight f3", "castle kingside") and hear engine responses (Chrome recommended).
-- **Peek** — Briefly reveal the board for 3 seconds.
-- **Position setup** — Arrange any position visually or paste a FEN, then play blindfold from there.
-- **Adjustable difficulty** — 8 levels from Beginner (~800) to Full Strength.
-- **Offline play (PWA)** — Install to your home screen. After first visit, works without internet.
-- **Zero backend** — Everything runs in the browser (Stockfish via WASM, chess.js for validation).
+- Play White or Black against eight Stockfish strength levels.
+- Enter moves such as `e4`, `Nf3`, `Bxe5`, `O-O`, and `e8=Q` — plus
+  descriptive captures (`NxB`), partial input, and fuzzy fallback.
+- Voice input that matches what you say against the actual legal moves,
+  with push-to-talk degrade on devices where continuous recognition is
+  unreliable (notably iOS).
+- Spoken move confirmation from generated audio clips (offline-friendly,
+  no `speechSynthesis` dependency in the common case).
+- Three-second board peek with a peek counter.
+- Takeback, legal-move hint, resign, FEN display, and PGN copying.
+- Visual custom-position editor, FEN import, and explicit castling-right
+  controls with automatic sanitization.
+- Local game history and simple statistics.
+- Installable PWA with full offline play after the first successful load.
+- Light and dark themes. No backend, account, or database.
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+The dev server needs internet access once to fetch npm packages; after
+`npm run build`, the app (including the vendored Stockfish engine and all
+audio clips) is fully self-contained and works offline.
+
+## Build & preview
+
+```bash
+npm run build      # tsc -b && vite build -> dist/
+npm run preview    # serve dist/ locally
+```
+
+## Testing
+
+```bash
+npm run test:all   # typecheck -> build -> vitest -> playwright
+```
+
+Individually:
+
+```bash
+npm run typecheck
+npm run test:unit        # vitest — chess & speech services
+npm run test:e2e         # playwright — full game flows, desktop + iPhone viewport
+```
+
+## Generating assets
+
+Icons already exist in `public/icons/`. Speech clips are generated with the
+macOS `say` command and committed to `public/audio/`:
+
+```bash
+bash scripts/generate-speech-clips.sh
+```
 
 ## Deploy to Vercel
 
-```bash
-cd blindfold-chess
-vercel
-```
+Push to `main`. `vercel.json` builds with `npm run build`, serves `dist/`,
+and long-caches `public/engine/` and `public/audio/` as immutable.
 
-## Local Development
+## Project structure
 
-```bash
-cd blindfold-chess/public
-python3 -m http.server 8080
-# Open http://localhost:8080
-```
-
-## Project Structure
-
-```
-blindfold-chess/
+```text
+.
+├── src/
+│   ├── services/       chess + speech, pure functions, unit tested
+│   ├── engine/          EngineAdapter interface + Stockfish adapter
+│   ├── state/            Zustand stores (game, settings, speech)
+│   ├── api/               the one file that touches localStorage
+│   ├── components/         ui / board / screens / play
+│   └── hooks/               speech recognition, speech output, theme
 ├── public/
-│   ├── index.html        # The entire app (HTML + CSS + JS)
-│   ├── manifest.json     # PWA manifest
-│   ├── sw.js             # Service worker (caching for offline)
+│   ├── engine/          vendored Stockfish 10.0.2 (asm.js)
+│   ├── audio/            generated speech clips
 │   └── icons/
-│       ├── icon-192.png
-│       ├── icon-512.png
-│       └── icon-maskable-512.png
-├── vercel.json           # Vercel config (static site)
-├── .gitignore
-└── README.md
+├── scripts/
+│   └── generate-speech-clips.sh
+├── tests/
+│   └── e2e/              Playwright specs (unit tests live next to their services)
+├── vercel.json
+└── docs/BACKLOG.md
 ```
 
-## Tech Stack
+## Browser notes
 
-- **chess.js** (0.10.3) — Move validation, game state, check/checkmate detection
-- **Stockfish.js** (10.0.2) — Chess engine running as a Web Worker via WASM
-- **Web Speech API** — SpeechRecognition (input) + SpeechSynthesis (output)
-- **Service Worker** — Cache-first strategy for offline play
-- Pure HTML/CSS/JS — no build step, no framework
+Typed play works in all modern browsers. Voice input uses the Web Speech
+API (`SpeechRecognition`); Chrome has the most complete support. On iOS,
+continuous recognition is unreliable — the app detects this and degrades to
+press-and-hold. If the API isn't available at all, the microphone control
+is hidden and typed play remains fully functional.
+
+## Credits
+
+Board pieces are the cburnett set by Colin M. L. Burnett, used under
+CC BY-SA 3.0. The SVGs are vendored in `public/pieces/` so the app works
+offline.

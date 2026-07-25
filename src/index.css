@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/*
+ * Nunito, self-hosted rather than pulled from Google Fonts, so the app still
+ * renders correctly offline. Variable weight axis, latin subset only (~39KB).
+ */
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url("/fonts/nunito-variable.woff2") format("woff2-variations");
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Stone (warm neutral) + Amber (accent) — matches timeboxxer/intabyu */
+  --color-stone-50: #fafaf9;
+  --color-stone-100: #f5f5f4;
+  --color-stone-200: #e7e5e4;
+  --color-stone-300: #d6d3d1;
+  --color-stone-400: #a8a29e;
+  --color-stone-500: #78716c;
+  --color-stone-600: #57534e;
+  --color-stone-700: #44403c;
+  --color-stone-800: #292524;
+  --color-stone-900: #1c1917;
+  --color-stone-950: #0c0a09;
+
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #78350f;
+
+  /* Semantic tokens — swap these, not the raw scales, when theming */
+  --color-bg-base: #f3efe9;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-alt: var(--color-stone-100);
+  --color-bg-muted: var(--color-stone-200);
+  --color-bg-primary: var(--color-amber-500);
+  --color-bg-primary-hover: var(--color-amber-600);
+  --color-bg-primary-soft: var(--color-amber-100);
+  --color-bg-danger: #dc2626;
+  --color-bg-danger-hover: #b91c1c;
+
+  --color-text-primary: var(--color-stone-900);
+  --color-text-secondary: var(--color-stone-600);
+  --color-text-muted: var(--color-stone-400);
+  --color-text-accent: var(--color-amber-600);
+  --color-text-on-primary: var(--color-stone-900);
+  --color-text-on-dark: #ffffff;
+
+  --color-border-default: var(--color-stone-200);
+  --color-border-emphasis: var(--color-stone-300);
+  --color-border-active: var(--color-amber-500);
+
+  --color-ring-focus: var(--color-amber-500);
+
+  --color-text-success: #16a34a;
+  --color-text-info: #2563eb;
+  --color-text-error: #dc2626;
+  --color-bg-error-soft: #fef2f2;
+
+  /* Board */
+  --color-sq-light: #e8d5b0;
+  --color-sq-dark: #b08860;
+  --color-sq-hl-light: #a8d8a0;
+  --color-sq-hl-dark: #6ab070;
+
+  --font-sans: "Nunito", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+}
+
+:root.dark {
+  --color-bg-base: #171412;
+  --color-bg-surface: #24201d;
+  --color-bg-surface-alt: #2b2622;
+  --color-bg-muted: #3a332e;
+  --color-bg-primary-soft: #4a3418;
+
+  --color-text-primary: var(--color-stone-100);
+  --color-text-secondary: var(--color-stone-400);
+  --color-text-muted: var(--color-stone-500);
+  --color-text-on-primary: var(--color-stone-900);
+
+  --color-border-default: #3a332e;
+  --color-border-emphasis: #4a4139;
+
+  --color-text-success: #4ade80;
+  --color-text-info: #60a5fa;
+  --color-text-error: #f87171;
+  --color-bg-error-soft: #3a1c1c;
+
+  --color-sq-light: #b89968;
+  --color-sq-dark: #7a5c3e;
+  --color-sq-hl-light: #7ba876;
+  --color-sq-hl-dark: #4a7a4e;
+}
+
+@layer base {
+  html,
+  body {
+    overscroll-behavior: none;
+  }
+
+  /* Everything sized in rem steps up with this. 17px reads noticeably
+     better than the browser default at arm's length on a laptop. */
+  html {
+    font-size: 17px;
+  }
+
+  body {
+    background-color: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-emphasis);
+    border-radius: 3px;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .animate-fade-in {
+    animation: fade-in 0.15s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
