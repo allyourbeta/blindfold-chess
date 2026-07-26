@@ -91,3 +91,26 @@ export async function waitForPlaybackRoute(timeoutMs: number): Promise<boolean> 
     await new Promise((resolve) => setTimeout(resolve, ROUTE_PROBE_INTERVAL_MS));
   }
 }
+
+const MIC_FLUSH_HOLD_MS = 150;
+
+/**
+ * Last-resort session reset. The OS speech recognizer leaves the audio
+ * session in a broken voice-processing state for the life of the page, and
+ * neither teardown nor the Audio Session API restores it. This briefly
+ * opens the microphone through the ordinary capture door (getUserMedia) —
+ * which forces iOS to rebuild the audio session from scratch — and then
+ * closes it cleanly, under our control, hoping the rebuilt session lands
+ * in a good state. Best-effort: any failure is logged and swallowed.
+ */
+export async function flushMicrophoneRoute(): Promise<void> {
+  if (!navigator.mediaDevices?.getUserMedia) return;
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    await new Promise((resolve) => setTimeout(resolve, MIC_FLUSH_HOLD_MS));
+    for (const track of stream.getTracks()) track.stop();
+    console.log("[audio] mic flush complete");
+  } catch (error) {
+    console.log("[audio] mic flush failed", error);
+  }
+}

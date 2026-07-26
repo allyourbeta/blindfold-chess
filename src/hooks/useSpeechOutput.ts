@@ -6,7 +6,7 @@ import { CLIP_IDS } from "@/services/speech/phrase";
 import { IS_IOS } from "@/services/speech/recognition";
 import { utteranceForEvent } from "@/services/speech/utteranceForEvent";
 import { playClipSequence, preloadClips } from "@/services/audio/clipPlayer";
-import { setAudioSessionType, waitForPlaybackRoute } from "@/services/audio/audioSession";
+import { flushMicrophoneRoute, setAudioSessionType, waitForPlaybackRoute } from "@/services/audio/audioSession";
 
 let audioCtx: AudioContext | null = null;
 
@@ -63,6 +63,9 @@ const ROUTE_RECOVERY_TIMEOUT_MS = 1500;
 async function waitForInputOutputHandoff(): Promise<void> {
   if (!IS_IOS) return;
   if (!useSpeechStore.getState().listeningEndedAt) return; // mic never used
+  // Order matters: rebuild the session via a brief clean capture first,
+  // then declare playback, then wait for the hardware to confirm it.
+  await flushMicrophoneRoute();
   setAudioSessionType("playback");
   await waitForPlaybackRoute(ROUTE_RECOVERY_TIMEOUT_MS);
 }
