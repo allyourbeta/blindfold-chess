@@ -83,14 +83,24 @@ export function MoveKeypad() {
         undoTap();
         return;
       }
-      const pieceLetter = KEY_TO_PIECE[event.key.toLowerCase()];
-      if (pieceLetter) {
+      // SAN's own case convention: uppercase letters are pieces, lowercase
+      // letters are files. This matters for "b", which is both a file and
+      // the bishop — lowercase b is ALWAYS the b-file (so 1. b4 is typable),
+      // Shift+B is the bishop. The other piece letters aren't files, so
+      // their lowercase forms map to pieces as a convenience.
+      if (/^[KQRBN]$/.test(event.key)) {
+        const pieceLetter = event.key as PieceLetter;
         if (entry.enabled.pieces[pieceLetter]) pushTap({ kind: "piece", value: pieceLetter });
         return;
       }
       if (/^[a-h]$/.test(event.key)) {
         const file = event.key as FileLetter;
         if (entry.enabled.files[file]) pushTap({ kind: "file", value: file });
+        return;
+      }
+      const pieceLetter = KEY_TO_PIECE[event.key];
+      if (pieceLetter) {
+        if (entry.enabled.pieces[pieceLetter]) pushTap({ kind: "piece", value: pieceLetter });
         return;
       }
       if (/^[1-8]$/.test(event.key)) {
