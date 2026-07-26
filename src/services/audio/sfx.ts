@@ -1,3 +1,5 @@
+import { getOutputNode } from "./master";
+
 /**
  * Confirmation tones generated with the Web Audio API — no audio files.
  * Each function takes an AudioContext rather than reaching for `window`
@@ -9,7 +11,7 @@ export function playMoveTone(ctx: AudioContext): void {
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.connect(gain);
-  gain.connect(ctx.destination);
+  gain.connect(getOutputNode(ctx));
   osc.type = "sine";
   osc.frequency.value = 600;
   gain.gain.value = 0.12;
@@ -22,7 +24,7 @@ export function playCaptureTone(ctx: AudioContext): void {
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.connect(gain);
-  gain.connect(ctx.destination);
+  gain.connect(getOutputNode(ctx));
   osc.type = "sine";
   osc.frequency.value = 440;
   gain.gain.value = 0.15;
@@ -35,7 +37,7 @@ export function playErrorTone(ctx: AudioContext): void {
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.connect(gain);
-  gain.connect(ctx.destination);
+  gain.connect(getOutputNode(ctx));
   osc.type = "square";
   osc.frequency.setValueAtTime(300, ctx.currentTime);
   osc.frequency.setValueAtTime(200, ctx.currentTime + 0.1);

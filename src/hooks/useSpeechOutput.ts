@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useGameStore, type MoveSource } from "@/state/gameStore";
 import { useSettingsStore } from "@/state/settingsStore";
 import type { SpeechMode } from "@/api/localStore";
@@ -100,6 +100,13 @@ function speakText(text: string): Promise<void> {
 // ---------------------------------------------------------------------------
 
 type Utterance = {
+  /**
+   * Confirmation tone played FIRST, inside the queue, so a beep for a new
+   * event can never land on top of words still being spoken. Firing tones
+   * immediately (the old way) overlapped them with queued speech on the one
+   * shared output, which on a phone speaker distorted into static.
+   */
+  tone: "move" | "capture" | "error" | null;
   clips: string[] | null;
   text: string;
   /**
@@ -139,6 +146,14 @@ async function drainQueue(): Promise<void> {
     let next = queue.shift();
     while (next) {
       if (next.remember) useSpeechStore.getState().rememberSpokenText(next.text);
+      if (next.tone) {
+        const ctx = getAudioContext();
+        if (next.tone === "move") playMoveTone(ctx);
+        else if (next.tone === "capture") playCaptureTone(ctx);
+        else playErrorTone(ctx);
+        // Let the tone ring before words start.
+        await new Promise((r) => setTimeout(r, 140));
+      }
       // No throw here — from a bad clip fetch to a browser speechSynthesis
       // quirk — may skip this `finally` and leave isSpeaking stuck true.
       try {
@@ -181,34 +196,40 @@ export function useSpeechOutput() {
   const audioEvent = useGameStore((s) => s.audioEvent);
   const speechMode = useSettingsStore((s) => s.speechMode);
   const fileNaming = useSettingsStore((s) => s.fileNaming);
+  const lastHandledRef = useRef<typeof audioEvent>(null);
 
   useEffect(() => {
+    // This effect also re-runs when speechMode/fileNaming change (they decide
+    // HOW a future event will sound). An already-handled event must not be
+    // replayed then — flipping Alpha/NATO used to repeat the last move aloud.
+    if (audioEvent === lastHandledRef.current) return;
+    lastHandledRef.current = audioEvent;
     if (!audioEvent) {
       resetSpeechQueue();
       return;
     }
-    const ctx = getAudioContext();
 
     if (audioEvent.kind === "move") {
       spokeNotUnderstoodLast = false;
-      if (audioEvent.move.isCapture()) playCaptureTone(ctx);
-      else playMoveTone(ctx);
+      const tone = audioEvent.move.isCapture() ? ("capture" as const) : ("move" as const);
       if (shouldSpeakMove(audioEvent.by, audioEvent.source, speechMode)) {
         const clips = movePhraseClips(audioEvent.move, fileNaming);
-        enqueueSpeech({ clips, text: clips.join(" "), remember: false });
+        enqueueSpeech({ tone, clips, text: clips.join(" "), remember: false });
+      } else {
+        enqueueSpeech({ tone, clips: null, text: "", remember: false });
       }
     } else if (audioEvent.kind === "illegal-move") {
-      playErrorTone(ctx);
       // A rejected voice move always speaks, even in Silent mode: if you're
       // playing by voice you may not be watching the screen, and silence is
       // indistinguishable from the move having been accepted. Typed rejections
       // stay quiet — the message log has it and you're already looking.
       if (audioEvent.source.kind === "voice") {
-        enqueueSpeech({ clips: null, text: audioEvent.spoken, remember: true });
+        enqueueSpeech({ tone: "error", clips: null, text: audioEvent.spoken, remember: true });
+      } else {
+        enqueueSpeech({ tone: "error", clips: null, text: "", remember: false });
       }
       spokeNotUnderstoodLast = false;
     } else if (audioEvent.kind === "rejected-move") {
-      playErrorTone(ctx);
       // Always spoken, even in Silent mode — see the illegal-move note above.
       if (audioEvent.source.kind === "voice") {
         const clips = rejectionPhraseClips(
@@ -217,19 +238,23 @@ export function useSpeechOutput() {
           audioEvent.reason,
           fileNaming,
         );
-        enqueueSpeech({ clips, text: clips.join(" "), remember: true });
+        enqueueSpeech({ tone: "error", clips, text: clips.join(" "), remember: true });
+      } else {
+        enqueueSpeech({ tone: "error", clips: null, text: "", remember: false });
       }
       spokeNotUnderstoodLast = false;
     } else if (audioEvent.kind === "not-understood") {
-      playErrorTone(ctx);
-      if (!spokeNotUnderstoodLast) {
-        enqueueSpeech({ clips: ["not-understood"], text: "Sorry, I did not catch that.", remember: true });
+      if (spokeNotUnderstoodLast) {
+        // Loop breaker: keep the beep, drop the repeated sentence.
+        enqueueSpeech({ tone: "error", clips: null, text: "", remember: false });
+      } else {
+        enqueueSpeech({ tone: "error", clips: ["not-understood"], text: "Sorry, I did not catch that.", remember: true });
         spokeNotUnderstoodLast = true;
       }
     } else if (audioEvent.kind === "game-end") {
       if (speechMode !== "silent") {
         const clips = gameEndPhraseClips(audioEvent.reason);
-        enqueueSpeech({ clips, text: clips.join(" "), remember: true });
+        enqueueSpeech({ tone: null, clips, text: clips.join(" "), remember: true });
       }
     }
   }, [audioEvent, speechMode, fileNaming]);

@@ -27,27 +27,26 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
     await startNewGame();
   }
 
-  // In tap mode this button IS the voice UX — one tap per move, all game
-  // long — so it's much larger than the continuous-mode toggle and sits at
-  // the bottom-right thumb corner next to the input.
+  // In tap mode this button IS the voice UX — one tap per move, for the
+  // whole game — so it gets its own centered row and is deliberately huge
+  // (112px). In a true blindfold game it's the only control in constant use.
   const isTap = speech.mode === "tap";
-  const micControl =
-    speech.mode === "unsupported" ? null : (
-      <Button
-        type="button"
-        size="icon"
-        className={isTap ? "h-20 w-20 shrink-0 rounded-full" : "h-12 w-12 shrink-0"}
-        variant={speech.isListening ? "primary" : "secondary"}
-        active={speech.isListening}
-        disabled={isTap && speech.isSpeaking}
-        onClick={speech.toggleListening}
-        aria-label={speech.isListening ? "Stop listening" : "Start listening"}
-      >
-        {/* Always a plain mic — a crossed-out mic reads as "unavailable",
-            not "tap to start". Listening state shows through the variant. */}
-        <Mic className={isTap ? "h-10 w-10" : "h-5 w-5"} />
-      </Button>
-    );
+  const micButton = (big: boolean) => (
+    <Button
+      type="button"
+      size="icon"
+      className={big ? "h-28 w-28 shrink-0 rounded-full" : "h-12 w-12 shrink-0"}
+      variant={speech.isListening ? "primary" : "secondary"}
+      active={speech.isListening}
+      disabled={big && speech.isSpeaking}
+      onClick={speech.toggleListening}
+      aria-label={speech.isListening ? "Stop listening" : "Start listening"}
+    >
+      {/* Always a plain mic — a crossed-out mic reads as "unavailable",
+          not "tap to start". Listening state shows through the variant. */}
+      <Mic className={big ? "h-12 w-12" : "h-5 w-5"} />
+    </Button>
+  );
 
   return (
     <div className="flex h-full w-full flex-col p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">
@@ -72,10 +71,11 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
       </div>
       <MessageLog />
       <div className="flex flex-col gap-2 pt-1">
-        <MoveInput mic={micControl} />
+        <MoveInput mic={speech.mode === "continuous" ? micButton(false) : undefined} />
+        {isTap && <div className="flex justify-center">{micButton(true)}</div>}
         <ActionBar />
       </div>
-      <GameOverPanel onNewGame={() => void handleNewGame()} />
+      <GameOverPanel onNewGame={() => void handleNewGame()} onMenu={handleMenu} />
     </div>
   );
 }

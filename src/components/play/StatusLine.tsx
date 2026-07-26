@@ -8,8 +8,12 @@ export function StatusLine() {
   const gameOverFlag = useGameStore((s) => s.gameOverFlag);
   const gameOverText = useGameStore((s) => s.gameOverOutcome?.text);
   const peekCount = useGameStore((s) => s.peekCount);
+  const skillLabel = useGameStore((s) => s.activeSkillLabel);
 
-  const text = gameOverFlag && gameOverText ? gameOverText : formatStatusLine(moveCount, turn, playerColor);
+  const text =
+    gameOverFlag && gameOverText
+      ? gameOverText
+      : formatStatusLine(moveCount, turn, playerColor) + (skillLabel ? ` \u00b7 ${skillLabel}` : "");
 
   return (
     <div className="border-b border-border-default pb-2">

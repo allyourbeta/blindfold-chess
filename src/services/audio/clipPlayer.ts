@@ -1,3 +1,5 @@
+import { getOutputNode } from "./master";
+
 /**
  * Plays word clips through a shared, already-unlocked AudioContext instead of
  * per-element `<audio>.play()` calls, which iOS blocks outside a user
@@ -67,7 +69,7 @@ export async function playClip(ctx: AudioContext, id: string): Promise<void> {
   return new Promise((resolve) => {
     const source = ctx.createBufferSource();
     source.buffer = buffer;
-    source.connect(ctx.destination);
+    source.connect(getOutputNode(ctx));
 
     let settled = false;
     const watchdog = setTimeout(() => {

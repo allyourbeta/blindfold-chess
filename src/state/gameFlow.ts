@@ -122,6 +122,7 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
       lastMove: null,
       gameOverFlag: false,
       gameOverOutcome: null,
+      activeSkillLabel: skill.label,
       isThinking: false,
       peekCount: 0,
       isPeeking: false,
