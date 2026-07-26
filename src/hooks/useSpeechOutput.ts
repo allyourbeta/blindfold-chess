@@ -147,6 +147,14 @@ async function drainQueue(): Promise<void> {
     while (next) {
       if (next.remember) useSpeechStore.getState().rememberSpokenText(next.text);
       if (next.tone) {
+        // Never beep over the player's own speech: if the mic is listening
+        // (a tap session in flight), hold the tone until it ends. The queue
+        // is serial, so everything behind it waits too. Capped just past the
+        // tap session's own 12s limit.
+        const waitStart = Date.now();
+        while (useSpeechStore.getState().isListening && Date.now() - waitStart < 13000) {
+          await new Promise((r) => setTimeout(r, 150));
+        }
         const ctx = getAudioContext();
         if (next.tone === "move") playMoveTone(ctx);
         else if (next.tone === "capture") playCaptureTone(ctx);
@@ -209,13 +217,18 @@ export function useSpeechOutput() {
       return;
     }
 
+    // Beeps exist for Silent mode, where they're the only audio feedback.
+    // In speaking modes the voice is the confirmation and the beep is just a
+    // collision waiting to happen — so no tones there at all.
+    const tonesOn = speechMode === "silent";
+
     if (audioEvent.kind === "move") {
       spokeNotUnderstoodLast = false;
-      const tone = audioEvent.move.isCapture() ? ("capture" as const) : ("move" as const);
+      const tone = tonesOn ? (audioEvent.move.isCapture() ? ("capture" as const) : ("move" as const)) : null;
       if (shouldSpeakMove(audioEvent.by, audioEvent.source, speechMode)) {
         const clips = movePhraseClips(audioEvent.move, fileNaming);
         enqueueSpeech({ tone, clips, text: clips.join(" "), remember: false });
-      } else {
+      } else if (tone) {
         enqueueSpeech({ tone, clips: null, text: "", remember: false });
       }
     } else if (audioEvent.kind === "illegal-move") {
@@ -224,8 +237,8 @@ export function useSpeechOutput() {
       // indistinguishable from the move having been accepted. Typed rejections
       // stay quiet — the message log has it and you're already looking.
       if (audioEvent.source.kind === "voice") {
-        enqueueSpeech({ tone: "error", clips: null, text: audioEvent.spoken, remember: true });
-      } else {
+        enqueueSpeech({ tone: tonesOn ? "error" : null, clips: null, text: audioEvent.spoken, remember: true });
+      } else if (tonesOn) {
         enqueueSpeech({ tone: "error", clips: null, text: "", remember: false });
       }
       spokeNotUnderstoodLast = false;
@@ -238,17 +251,17 @@ export function useSpeechOutput() {
           audioEvent.reason,
           fileNaming,
         );
-        enqueueSpeech({ tone: "error", clips, text: clips.join(" "), remember: true });
-      } else {
+        enqueueSpeech({ tone: tonesOn ? "error" : null, clips, text: clips.join(" "), remember: true });
+      } else if (tonesOn) {
         enqueueSpeech({ tone: "error", clips: null, text: "", remember: false });
       }
       spokeNotUnderstoodLast = false;
     } else if (audioEvent.kind === "not-understood") {
       if (spokeNotUnderstoodLast) {
-        // Loop breaker: keep the beep, drop the repeated sentence.
-        enqueueSpeech({ tone: "error", clips: null, text: "", remember: false });
+        // Loop breaker: drop the repeated sentence (beep only, Silent mode only).
+        if (tonesOn) enqueueSpeech({ tone: "error", clips: null, text: "", remember: false });
       } else {
-        enqueueSpeech({ tone: "error", clips: ["not-understood"], text: "Sorry, I did not catch that.", remember: true });
+        enqueueSpeech({ tone: tonesOn ? "error" : null, clips: ["not-understood"], text: "Sorry, I did not catch that.", remember: true });
         spokeNotUnderstoodLast = true;
       }
     } else if (audioEvent.kind === "game-end") {

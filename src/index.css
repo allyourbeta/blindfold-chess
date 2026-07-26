@@ -40,10 +40,14 @@
   --color-amber-900: #78350f;
 
   /* Semantic tokens — swap these, not the raw scales, when theming */
-  --color-bg-base: #f3efe9;
-  --color-bg-surface: #ffffff;
-  --color-bg-surface-alt: var(--color-stone-100);
-  --color-bg-muted: var(--color-stone-200);
+  /* Palette A: neutral warm surfaces, ONE accent (amber, mic + primary
+     actions only). The panel is ivory, not white; everyday buttons are a
+     quiet warm grey — clearly buttons, but colorless, so the accent means
+     "press me" again. */
+  --color-bg-base: #ece6dc;
+  --color-bg-surface: #faf7f1;
+  --color-bg-surface-alt: #efe9df;
+  --color-bg-muted: #e2dacb;
   --color-bg-primary: var(--color-amber-500);
   --color-bg-primary-hover: var(--color-amber-600);
   --color-bg-primary-soft: var(--color-amber-100);

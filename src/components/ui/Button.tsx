@@ -12,10 +12,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: "bg-bg-primary text-text-on-primary hover:bg-bg-primary-hover shadow-sm",
-        // Shaded, not white-on-white: the soft amber tint keeps every button
-        // visibly a button against the off-white base.
+        // Shaded, not white-on-white — but NEUTRAL. The amber tint clashed
+        // with the amber accent; quiet warm grey keeps buttons visible while
+        // the accent stays reserved for the mic and primary actions.
         secondary:
-          "bg-bg-primary-soft text-text-primary border border-border-emphasis hover:bg-bg-muted",
+          "bg-bg-surface-alt text-text-primary border border-border-emphasis hover:bg-bg-muted",
         destructive: "bg-bg-danger text-text-on-dark hover:bg-bg-danger-hover",
         ghost: "text-text-secondary hover:bg-bg-surface-alt hover:text-text-primary",
       },
