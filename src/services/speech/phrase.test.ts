@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { Chess } from "chess.js";
-import { movePhraseClips, gameEndPhraseClips, rejectionPhraseClips, CLIP_IDS } from "./phrase";
+import { movePhraseClips, gameEndPhraseClips, rejectionPhraseClips, speechTextForClips, CLIP_IDS } from "./phrase";
 import { PIECE_WORDS } from "../chess/san";
 
 describe("movePhraseClips", () => {
@@ -29,6 +29,16 @@ describe("movePhraseClips", () => {
     const singleSteps = chess.moves({ verbose: true }).filter((m) => m.piece === "p");
     const files = new Set(singleSteps.flatMap((m) => movePhraseClips(m, "nato")).filter((c) => c.startsWith("nato-")));
     expect(files.size).toBe(8);
+  });
+});
+
+describe("speechTextForClips", () => {
+  it("turns clip ids into natural text for native iPhone speech", () => {
+    expect(speechTextForClips(["knight", "nato-f", "3", "check"])).toBe(
+      "knight foxtrot 3 check",
+    );
+    expect(speechTextForClips(["castles-kingside"])).toBe("castles kingside");
+    expect(speechTextForClips(["not-understood"])).toBe("Sorry, I did not catch that.");
   });
 });
 

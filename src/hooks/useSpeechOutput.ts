@@ -18,12 +18,16 @@ function getAudioContext(): AudioContext {
 
 /** Unlocks audio playback on iOS — call this from a real user gesture (the New Game tap). */
 export function unlockAudioOutput(): void {
+  // iPhone playback now uses one native speech-synthesis utterance per phrase.
+  // Avoid creating a Web Audio output route there unless native speech fails
+  // and the clip fallback is actually needed.
+  if (IS_IOS) {
+    window.speechSynthesis?.resume();
+    return;
+  }
+
   const ctx = getAudioContext();
   if (ctx.state === "suspended") void ctx.resume();
-  // Also unblocks speechSynthesis on some iOS versions.
-  const unlockEl = new Audio();
-  unlockEl.muted = true;
-  unlockEl.play().catch(() => {}).finally(() => unlockEl.pause());
   preloadClips(ctx, CLIP_IDS);
 }
 
@@ -46,45 +50,50 @@ const SPEECH_START_TIMEOUT_MS = 2000;
 const SPEECH_ABSOLUTE_TIMEOUT_MS = 8000;
 
 /** Speaks text and resolves when it has actually finished, so the queue can't overlap it. */
-function speakText(text: string): Promise<void> {
+function speakText(text: string): Promise<boolean> {
   return new Promise((resolve) => {
     if (!window.speechSynthesis) {
-      resolve();
+      resolve(false);
       return;
     }
     const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    utterance.rate = 0.9;
+
     let settled = false;
+    let started = false;
     let startTimer: ReturnType<typeof setTimeout> | null = null;
 
     const clearTimers = () => {
       if (startTimer) clearTimeout(startTimer);
       clearTimeout(absoluteTimer);
     };
-    const settle = () => {
+    const settle = (didStart: boolean) => {
       if (settled) return;
       settled = true;
       clearTimers();
-      resolve();
+      resolve(didStart);
     };
 
     const absoluteTimer = setTimeout(() => {
       console.log(`[speech] speakText absolute timeout, cancelling: "${text}"`);
       window.speechSynthesis.cancel();
-      settle();
+      settle(started);
     }, SPEECH_ABSOLUTE_TIMEOUT_MS);
 
     startTimer = setTimeout(() => {
       console.log(`[speech] speakText never fired onstart, cancelling: "${text}"`);
       window.speechSynthesis.cancel();
-      settle();
+      settle(false);
     }, SPEECH_START_TIMEOUT_MS);
 
     utterance.onstart = () => {
+      started = true;
       if (startTimer) clearTimeout(startTimer);
       startTimer = null;
     };
-    utterance.onend = settle;
-    utterance.onerror = settle;
+    utterance.onend = () => settle(started);
+    utterance.onerror = () => settle(started);
     window.speechSynthesis.speak(utterance);
   });
 }
@@ -146,7 +155,15 @@ async function drainQueue(): Promise<void> {
       // quirk — may skip this `finally` and leave isSpeaking stuck true.
       try {
         await waitForInputOutputHandoff();
-        if (next.clips?.length) {
+        if (IS_IOS && next.text) {
+          // One native utterance avoids the many short WAV fragments that were
+          // producing audible static on iPhone. Retain the clips only as a
+          // reliability fallback if native speech never starts.
+          const nativeSpeechStarted = await speakText(next.text);
+          if (!nativeSpeechStarted && next.clips?.length) {
+            await playClipSequence(getAudioContext(), next.clips, CLIP_GAP_MS);
+          }
+        } else if (next.clips?.length) {
           try {
             await playClipSequence(getAudioContext(), next.clips, CLIP_GAP_MS);
           } catch {

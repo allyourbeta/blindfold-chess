@@ -46,9 +46,11 @@ describe("utteranceForEvent — voice rules", () => {
     expect(utteranceForEvent(MOVE, "engine", "letters", false).utterance).toBeNull();
   });
 
-  it("speaks an engine move in engine mode", () => {
+  it("speaks an engine move in engine mode with natural native-speech text", () => {
     const engineMove: GameAudioEvent = { ...MOVE, by: "engine", source: null };
-    expect(utteranceForEvent(engineMove, "engine", "letters", false).utterance?.clips).toEqual(["pawn", "e", "4"]);
+    const utterance = utteranceForEvent(engineMove, "engine", "letters", false).utterance;
+    expect(utterance?.clips).toEqual(["pawn", "e", "4"]);
+    expect(utterance?.text).toBe("pawn e 4");
   });
 
   it("suppresses a repeated not-understood sentence", () => {

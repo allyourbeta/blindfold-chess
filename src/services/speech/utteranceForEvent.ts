@@ -1,6 +1,6 @@
 import type { GameAudioEvent, MoveSource } from "@/state/gameStore";
 import type { FileNaming, SpeechMode } from "@/api/localStore";
-import { movePhraseClips, gameEndPhraseClips, rejectionPhraseClips } from "./phrase";
+import { movePhraseClips, gameEndPhraseClips, rejectionPhraseClips, speechTextForClips } from "./phrase";
 import { PIECE_WORDS } from "../chess/san";
 
 export interface SpokenUtterance {
@@ -33,7 +33,7 @@ export function utteranceForEvent(
       return { utterance: null, spokeNotUnderstoodLast: false };
     }
     const clips = movePhraseClips(event.move, fileNaming);
-    return { utterance: { clips, text: clips.join(" "), remember: false }, spokeNotUnderstoodLast: false };
+    return { utterance: { clips, text: speechTextForClips(clips), remember: false }, spokeNotUnderstoodLast: false };
   }
 
   if (event.kind === "illegal-move") {
@@ -48,7 +48,7 @@ export function utteranceForEvent(
     if (event.source.kind !== "voice") return { utterance: null, spokeNotUnderstoodLast: false };
     const clips = rejectionPhraseClips(PIECE_WORDS[event.piece], event.to, event.reason, fileNaming);
     return {
-      utterance: { clips, text: clips.join(" "), remember: true },
+      utterance: { clips, text: speechTextForClips(clips), remember: true },
       spokeNotUnderstoodLast: false,
     };
   }
@@ -58,7 +58,7 @@ export function utteranceForEvent(
     return {
       utterance: {
         clips: ["not-understood"],
-        text: "Sorry, I did not catch that.",
+        text: speechTextForClips(["not-understood"]),
         remember: true,
       },
       spokeNotUnderstoodLast: true,
@@ -68,5 +68,5 @@ export function utteranceForEvent(
   if (speechMode === "silent") return { utterance: null, spokeNotUnderstoodLast: false };
   const clips = gameEndPhraseClips(event.reason);
   if (!clips.length) return { utterance: null, spokeNotUnderstoodLast: false };
-  return { utterance: { clips, text: clips.join(" "), remember: true }, spokeNotUnderstoodLast: false };
+  return { utterance: { clips, text: speechTextForClips(clips), remember: true }, spokeNotUnderstoodLast: false };
 }

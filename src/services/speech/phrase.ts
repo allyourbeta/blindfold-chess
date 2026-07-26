@@ -47,6 +47,29 @@ export const CLIP_IDS: ClipId[] = [
   ...SPECIAL_PARTS,
 ];
 
+const CLIP_SPEECH_TEXT: Partial<Record<ClipId, string>> = {
+  "nato-a": "alpha",
+  "nato-b": "bravo",
+  "nato-c": "charlie",
+  "nato-d": "delta",
+  "nato-e": "echo",
+  "nato-f": "foxtrot",
+  "nato-g": "golf",
+  "nato-h": "hotel",
+  "castles-kingside": "castles kingside",
+  "castles-queenside": "castles queenside",
+  "promotes-to": "promotes to",
+  "en-passant": "en passant",
+  "not-legal": "is not legal",
+  ambiguous: "is ambiguous. Say which one.",
+  "not-understood": "Sorry, I did not catch that.",
+};
+
+/** Human-readable text for native speech synthesis; never exposes clip filenames. */
+export function speechTextForClips(ids: readonly ClipId[]): string {
+  return ids.map((id) => CLIP_SPEECH_TEXT[id] ?? id).join(" ");
+}
+
 function isFilePart(part: SpokenPart): part is FilePart {
   return (FILE_PARTS as readonly string[]).includes(part);
 }
