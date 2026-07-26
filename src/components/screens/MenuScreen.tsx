@@ -103,15 +103,15 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
       <main className="flex-1 overflow-y-auto px-6 pb-6">
         <section className="flex flex-col items-center text-center">
           <img
-            src="/brand-mark.svg"
+            src="/icons/icon-512.png"
             alt=""
             aria-hidden="true"
             className="h-28 w-28 rounded-[2rem] shadow-sm"
           />
           <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-text-accent">Mind's Eye</h1>
-          <p className="mt-1 text-lg font-semibold text-text-primary">See the board in your mind.</p>
-          <p className="mt-1 max-w-xs text-sm text-text-secondary">
-            Play a complete game without looking at the pieces.
+          <p className="mt-1 text-lg font-semibold text-text-primary">Ultimate brain visualization workout.</p>
+          <p className="mt-1 max-w-xs text-sm font-semibold text-text-secondary">
+            No chessboard? No problem!
           </p>
         </section>
 
@@ -237,7 +237,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
           )}
         </section>
 
-        <p className="mt-5 text-center text-xs text-text-muted">build {__BUILD_ID__}</p>
+        <p className="mt-5 text-center text-xs text-text-muted">build {__GIT_COMMIT__}</p>
       </main>
     </div>
   );

@@ -1,4 +1,4 @@
 /// <reference types="vite/client" />
 
-/** Build-time stamp injected by vite.config.ts's `define` — see MenuScreen's footer. */
-declare const __BUILD_ID__: string;
+/** Short Git commit injected by vite.config.ts — see MenuScreen's footer. */
+declare const __GIT_COMMIT__: string;

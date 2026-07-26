@@ -6,7 +6,9 @@ test("home screen prioritizes starting a game and progressively reveals details"
   await waitForEngineReady(page);
 
   await expect(page.getByRole("heading", { name: "Mind's Eye" })).toBeVisible();
-  await expect(page.getByText("See the board in your mind.")).toBeVisible();
+  await expect(page.getByText("Ultimate brain visualization workout.")).toBeVisible();
+  await expect(page.getByText("No chessboard? No problem!")).toBeVisible();
+  await expect(page.locator('img[src="/icons/icon-512.png"]')).toBeVisible();
   await expect(page.getByRole("button", { name: "New Game" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Change settings" })).toBeVisible();
 
