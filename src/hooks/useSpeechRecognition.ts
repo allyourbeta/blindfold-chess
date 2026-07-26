@@ -3,6 +3,7 @@ import { useGameStore } from "@/state/gameStore";
 import { useSpeechStore } from "@/state/speechStore";
 import { matchBestAlternative } from "@/services/speech/match";
 import { isOwnEcho } from "@/services/speech/echo";
+import { setAudioSessionType } from "@/services/audio/audioSession";
 import {
   getRecognitionCtor,
   IS_IOS,
@@ -146,27 +147,36 @@ export function useSpeechRecognition() {
   }, [isSpeaking]);
 
   const retireTapSession = useCallback(
-    (recognition: SpeechRecognition, stopRecognition = true) => {
+    (recognition: SpeechRecognition) => {
       const capTimer = tapCapTimersRef.current.get(recognition);
       if (capTimer) {
         clearTimeout(capTimer);
         tapCapTimersRef.current.delete(recognition);
       }
-      if (tapSessionRef.current === recognition) {
+      const wasCurrent = tapSessionRef.current === recognition;
+      if (wasCurrent) {
         tapSessionRef.current = null;
         setListening(false);
       }
-      if (stopRecognition) {
+      // Full teardown, every time. Leaving the recognizer alive with its
+      // handlers attached keeps iOS's capture session (and its
+      // voice-processing audio route) open, which is what made engine
+      // speech crackle after the microphone had been used.
+      recognition.onresult = null;
+      recognition.onerror = null;
+      recognition.onend = null;
+      try {
+        recognition.abort();
+      } catch {
         try {
-          recognition.abort();
+          recognition.stop();
         } catch {
-          try {
-            recognition.stop();
-          } catch {
-            // already stopped, or never started
-          }
+          // already stopped, or never started
         }
       }
+      // Hand the audio session back to plain playback as soon as capture is
+      // done, so the engine's reply is routed normally.
+      if (wasCurrent) setAudioSessionType("playback");
     },
     [setListening],
   );
@@ -213,14 +223,14 @@ export function useSpeechRecognition() {
       if (tapSessionRef.current !== recognition || cancelledTapSessionsRef.current.has(recognition)) return;
       console.log(`[speech] tap session error "${event.error}"`);
       setInputError(tapRecognitionErrorMessage(event.error));
-      retireTapSession(recognition, false);
+      retireTapSession(recognition);
     };
     recognition.onend = () => {
       const cancelled = cancelledTapSessionsRef.current.has(recognition);
       // Mark microphone capture as ended before submitting the move. The audio
       // output queue uses that timestamp to avoid the crackly iOS transition
       // from recognition capture to speaker playback.
-      retireTapSession(recognition, false);
+      retireTapSession(recognition);
       if (!cancelled) submitLatest();
       if (!submitted && !cancelled) {
         setInputError(tapRecognitionErrorMessage("ended-without-result"));
@@ -241,12 +251,15 @@ export function useSpeechRecognition() {
       }, TAP_SESSION_MAX_MS),
     );
     try {
+      // Declare intent to record BEFORE starting, so iOS switches routes on
+      // our terms instead of mid-session.
+      setAudioSessionType("play-and-record");
       recognition.start();
       setListening(true);
     } catch (error) {
       console.log("[speech] tap session failed to start", error);
       setInputError(tapRecognitionErrorMessage("start-failed"));
-      retireTapSession(recognition, false);
+      retireTapSession(recognition);
     }
   }, [retireTapSession, setInputError, setListening, submitAlternatives]);
 

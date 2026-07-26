@@ -6,25 +6,46 @@ import { CLIP_IDS } from "@/services/speech/phrase";
 import { IS_IOS } from "@/services/speech/recognition";
 import { utteranceForEvent } from "@/services/speech/utteranceForEvent";
 import { playClipSequence, preloadClips } from "@/services/audio/clipPlayer";
+import { setAudioSessionType, waitForPlaybackRoute } from "@/services/audio/audioSession";
 
 let audioCtx: AudioContext | null = null;
+
+const PLAYBACK_MIN_SAMPLE_RATE = 44100;
+
+function createContext(): AudioContext {
+  const Ctor = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+  return new Ctor();
+}
+
 function getAudioContext(): AudioContext {
-  if (!audioCtx) {
-    const Ctor = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-    audioCtx = new Ctor();
-  }
+  if (!audioCtx) audioCtx = createContext();
+  return audioCtx;
+}
+
+/**
+ * An AudioContext created (or left running) while iOS had the microphone
+ * route open can be pinned to a low voice-processing sample rate. Playing
+ * 22 kHz speech clips through that pinned context sounds like static.
+ * After the route is back to normal, a context reporting a voice rate is
+ * discarded and rebuilt on the clean route. Decoded clip buffers survive —
+ * they are cached independently of any context.
+ */
+function getPlaybackContext(): AudioContext {
+  const ctx = getAudioContext();
+  if (ctx.sampleRate >= PLAYBACK_MIN_SAMPLE_RATE) return ctx;
+  console.log(`[audio] discarding AudioContext pinned at ${ctx.sampleRate} Hz`);
+  void ctx.close().catch(() => {});
+  audioCtx = createContext();
   return audioCtx;
 }
 
 /** Unlocks audio playback on iOS — call this from a real user gesture (the New Game tap). */
 export function unlockAudioOutput(): void {
-  // iPhone playback now uses one native speech-synthesis utterance per phrase.
-  // Avoid creating a Web Audio output route there unless native speech fails
-  // and the clip fallback is actually needed.
-  if (IS_IOS) {
-    window.speechSynthesis?.resume();
-    return;
-  }
+  // Tessa clips are the voice everywhere again. The native-utterance
+  // experiment proved the static was not the clips' fault (native speech
+  // crackled identically after microphone use), so it is now only a
+  // fallback. See services/audio/audioSession.ts for the actual fix.
+  if (IS_IOS) window.speechSynthesis?.resume();
 
   const ctx = getAudioContext();
   if (ctx.state === "suspended") void ctx.resume();
@@ -32,14 +53,18 @@ export function unlockAudioOutput(): void {
 }
 
 const CLIP_GAP_MS = 90;
-const IOS_INPUT_OUTPUT_HANDOFF_MS = 240;
+const ROUTE_RECOVERY_TIMEOUT_MS = 1500;
 
+/**
+ * Before speaking on iOS after the microphone has been used, insist on the
+ * playback route and WAIT until the hardware actually reports it — a fixed
+ * delay guesses; the sample-rate probe verifies. See audioSession.ts.
+ */
 async function waitForInputOutputHandoff(): Promise<void> {
   if (!IS_IOS) return;
-  const listeningEndedAt = useSpeechStore.getState().listeningEndedAt;
-  if (!listeningEndedAt) return;
-  const remaining = IOS_INPUT_OUTPUT_HANDOFF_MS - (Date.now() - listeningEndedAt);
-  if (remaining > 0) await new Promise((resolve) => setTimeout(resolve, remaining));
+  if (!useSpeechStore.getState().listeningEndedAt) return; // mic never used
+  setAudioSessionType("playback");
+  await waitForPlaybackRoute(ROUTE_RECOVERY_TIMEOUT_MS);
 }
 
 // If speechSynthesis never fires onstart (common on iOS, where an utterance
@@ -155,17 +180,9 @@ async function drainQueue(): Promise<void> {
       // quirk — may skip this `finally` and leave isSpeaking stuck true.
       try {
         await waitForInputOutputHandoff();
-        if (IS_IOS && next.text) {
-          // One native utterance avoids the many short WAV fragments that were
-          // producing audible static on iPhone. Retain the clips only as a
-          // reliability fallback if native speech never starts.
-          const nativeSpeechStarted = await speakText(next.text);
-          if (!nativeSpeechStarted && next.clips?.length) {
-            await playClipSequence(getAudioContext(), next.clips, CLIP_GAP_MS);
-          }
-        } else if (next.clips?.length) {
+        if (next.clips?.length) {
           try {
-            await playClipSequence(getAudioContext(), next.clips, CLIP_GAP_MS);
+            await playClipSequence(getPlaybackContext(), next.clips, CLIP_GAP_MS);
           } catch {
             await speakText(next.text);
           }
