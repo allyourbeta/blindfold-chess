@@ -3,8 +3,9 @@ import { useGameStore } from "@/state/gameStore";
 import { useSettingsStore } from "@/state/settingsStore";
 import { useSpeechStore } from "@/state/speechStore";
 import { CLIP_IDS } from "@/services/speech/phrase";
+import { IS_IOS } from "@/services/speech/recognition";
 import { utteranceForEvent } from "@/services/speech/utteranceForEvent";
-import { preloadClips, playClip } from "@/services/audio/clipPlayer";
+import { playClipSequence, preloadClips } from "@/services/audio/clipPlayer";
 
 let audioCtx: AudioContext | null = null;
 function getAudioContext(): AudioContext {
@@ -27,13 +28,14 @@ export function unlockAudioOutput(): void {
 }
 
 const CLIP_GAP_MS = 90;
+const IOS_INPUT_OUTPUT_HANDOFF_MS = 240;
 
-async function playClipSequence(ids: string[]): Promise<void> {
-  const ctx = getAudioContext();
-  for (const id of ids) {
-    await playClip(ctx, id);
-    await new Promise((r) => setTimeout(r, CLIP_GAP_MS));
-  }
+async function waitForInputOutputHandoff(): Promise<void> {
+  if (!IS_IOS) return;
+  const listeningEndedAt = useSpeechStore.getState().listeningEndedAt;
+  if (!listeningEndedAt) return;
+  const remaining = IOS_INPUT_OUTPUT_HANDOFF_MS - (Date.now() - listeningEndedAt);
+  if (remaining > 0) await new Promise((resolve) => setTimeout(resolve, remaining));
 }
 
 // If speechSynthesis never fires onstart (common on iOS, where an utterance
@@ -143,9 +145,10 @@ async function drainQueue(): Promise<void> {
       // No throw here — from a bad clip fetch to a browser speechSynthesis
       // quirk — may skip this `finally` and leave isSpeaking stuck true.
       try {
+        await waitForInputOutputHandoff();
         if (next.clips?.length) {
           try {
-            await playClipSequence(next.clips);
+            await playClipSequence(getAudioContext(), next.clips, CLIP_GAP_MS);
           } catch {
             await speakText(next.text);
           }

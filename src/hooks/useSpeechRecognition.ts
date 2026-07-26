@@ -197,10 +197,15 @@ export function useSpeechRecognition() {
       if (!result) return;
       latestAlternatives = result.alternatives;
       if (result.isFinal) {
-        submitLatest();
-        // Let Safari finish naturally first. Forced stop/abort calls can add
-        // their own system cue; this fallback only runs if onend never comes.
-        setTimeout(() => retireTapSession(recognition), TAP_STOP_FALLBACK_MS);
+        // Do not submit while iOS still owns the microphone audio session.
+        // Normal submission happens from onend, after listening is retired.
+        // This fallback handles browsers that return a final result but never
+        // deliver onend.
+        setTimeout(() => {
+          if (tapSessionRef.current !== recognition) return;
+          retireTapSession(recognition);
+          submitLatest();
+        }, TAP_STOP_FALLBACK_MS);
       }
     };
     recognition.onerror = (event) => {
@@ -211,15 +216,15 @@ export function useSpeechRecognition() {
       retireTapSession(recognition, false);
     };
     recognition.onend = () => {
-      if (!cancelledTapSessionsRef.current.has(recognition)) submitLatest();
-      if (
-        !submitted &&
-        tapSessionRef.current === recognition &&
-        !cancelledTapSessionsRef.current.has(recognition)
-      ) {
+      const cancelled = cancelledTapSessionsRef.current.has(recognition);
+      // Mark microphone capture as ended before submitting the move. The audio
+      // output queue uses that timestamp to avoid the crackly iOS transition
+      // from recognition capture to speaker playback.
+      retireTapSession(recognition, false);
+      if (!cancelled) submitLatest();
+      if (!submitted && !cancelled) {
         setInputError(tapRecognitionErrorMessage("ended-without-result"));
       }
-      retireTapSession(recognition, false);
     };
 
     tapSessionRef.current = recognition;
@@ -228,11 +233,11 @@ export function useSpeechRecognition() {
       recognition,
       setTimeout(() => {
         console.log("[speech] tap session hit its absolute cap, retiring");
+        retireTapSession(recognition);
         submitLatest();
-        if (!submitted && tapSessionRef.current === recognition) {
+        if (!submitted) {
           setInputError(tapRecognitionErrorMessage("timeout"));
         }
-        retireTapSession(recognition);
       }, TAP_SESSION_MAX_MS),
     );
     try {

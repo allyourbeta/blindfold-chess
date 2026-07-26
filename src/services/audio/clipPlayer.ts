@@ -11,6 +11,8 @@ const inFlight = new Map<string, Promise<AudioBuffer>>();
 
 const LOAD_TIMEOUT_MS = 3000;
 const WATCHDOG_SLACK_MS = 1500;
+const SCHEDULE_LEAD_SECONDS = 0.035;
+const EDGE_FADE_SECONDS = 0.012;
 
 async function loadClip(ctx: AudioContext, id: string): Promise<AudioBuffer> {
   const cached = buffers.get(id);
@@ -18,7 +20,10 @@ async function loadClip(ctx: AudioContext, id: string): Promise<AudioBuffer> {
   let pending = inFlight.get(id);
   if (!pending) {
     pending = fetch(`/audio/${id}.wav`)
-      .then((res) => res.arrayBuffer())
+      .then((res) => {
+        if (!res.ok) throw new Error(`clip "${id}" failed to load (${res.status})`);
+        return res.arrayBuffer();
+      })
       .then((data) => ctx.decodeAudioData(data))
       .then((buffer) => {
         buffers.set(id, buffer);
@@ -58,34 +63,85 @@ function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promi
 }
 
 /**
- * Plays one clip and resolves when it's done — either `onended` fires, or a
- * watchdog (buffer duration + slack) times out first, whichever comes first.
- * Throws only when the buffer itself can't be obtained in time; the caller
- * falls back to `speakText`.
+ * Schedules a complete phrase on the AudioContext clock. Every clip gets a
+ * short gain ramp at both edges, which removes tiny discontinuities that can
+ * sound like clicks or static on an iPhone speaker. Scheduling the whole
+ * phrase in advance also avoids timer jitter between words.
  */
-export async function playClip(ctx: AudioContext, id: string): Promise<void> {
-  const buffer = await withTimeout(loadClip(ctx, id), LOAD_TIMEOUT_MS, `clip "${id}" did not load in time`);
+export async function playClipSequence(
+  ctx: AudioContext,
+  ids: readonly string[],
+  gapMs: number,
+): Promise<void> {
+  if (!ids.length) return;
 
-  return new Promise((resolve) => {
+  if (ctx.state === "suspended") {
+    try {
+      await ctx.resume();
+    } catch {
+      // The caller will still try playback; if iOS blocks it, the watchdog
+      // releases the queue and the next utterance can continue.
+    }
+  }
+
+  const loaded = await withTimeout(
+    Promise.all(ids.map((id) => loadClip(ctx, id))),
+    LOAD_TIMEOUT_MS,
+    "speech clips did not load in time",
+  );
+
+  const output = getOutputNode(ctx);
+  const gapSeconds = Math.max(0, gapMs) / 1000;
+  const sources: Array<{ source: AudioBufferSourceNode; gain: GainNode }> = [];
+  let cursor = ctx.currentTime + SCHEDULE_LEAD_SECONDS;
+
+  for (const buffer of loaded) {
     const source = ctx.createBufferSource();
+    const gain = ctx.createGain();
+    const startAt = cursor;
+    const endAt = startAt + buffer.duration;
+    const fadeSeconds = Math.min(EDGE_FADE_SECONDS, buffer.duration / 4);
+
     source.buffer = buffer;
-    source.connect(getOutputNode(ctx));
+    source.connect(gain);
+    gain.connect(output);
 
+    gain.gain.setValueAtTime(0, startAt);
+    gain.gain.linearRampToValueAtTime(1, startAt + fadeSeconds);
+    gain.gain.setValueAtTime(1, Math.max(startAt + fadeSeconds, endAt - fadeSeconds));
+    gain.gain.linearRampToValueAtTime(0, endAt);
+
+    source.start(startAt);
+    sources.push({ source, gain });
+    cursor = endAt + gapSeconds;
+  }
+
+  const finalEndAt = cursor - gapSeconds;
+  return new Promise((resolve) => {
     let settled = false;
-    const watchdog = setTimeout(() => {
-      if (settled) return;
-      settled = true;
-      console.log(`[audio] clip "${id}" watchdog fired before onended`);
-      resolve();
-    }, buffer.duration * 1000 + WATCHDOG_SLACK_MS);
-
-    source.onended = () => {
+    let remaining = sources.length;
+    const settle = () => {
       if (settled) return;
       settled = true;
       clearTimeout(watchdog);
+      for (const { source, gain } of sources) {
+        source.onended = null;
+        source.disconnect();
+        gain.disconnect();
+      }
       resolve();
     };
 
-    source.start();
+    const watchdog = setTimeout(
+      settle,
+      Math.max(0, finalEndAt - ctx.currentTime) * 1000 + WATCHDOG_SLACK_MS,
+    );
+
+    for (const { source } of sources) {
+      source.onended = () => {
+        remaining -= 1;
+        if (remaining === 0) settle();
+      };
+    }
   });
 }
