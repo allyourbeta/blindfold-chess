@@ -32,6 +32,17 @@ export default defineConfig({
   // local builds read it from the current repository.
   define: {
     __GIT_COMMIT__: JSON.stringify(resolveGitCommit()),
+    // Build moment in Pacific time, stamped at build time so the footer
+    // shows when this deployment was actually produced.
+    __BUILD_TIME__: JSON.stringify(
+      new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Los_Angeles",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+      }).format(new Date()) + " PT",
+    ),
   },
   test: {
     environment: "node",

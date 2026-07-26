@@ -237,7 +237,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
           )}
         </section>
 
-        <p className="mt-5 text-center text-xs text-text-muted">build {__GIT_COMMIT__}</p>
+        <p className="mt-5 text-center text-xs text-text-muted">build {__GIT_COMMIT__} · {__BUILD_TIME__}</p>
       </main>
     </div>
   );
