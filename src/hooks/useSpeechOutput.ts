@@ -3,8 +3,7 @@ import { useGameStore } from "@/state/gameStore";
 import { useSettingsStore } from "@/state/settingsStore";
 import { useSpeechStore } from "@/state/speechStore";
 import { CLIP_IDS } from "@/services/speech/phrase";
-import { utteranceForEvent, type ToneKind } from "@/services/speech/utteranceForEvent";
-import { playMoveTone, playCaptureTone, playErrorTone } from "@/services/audio/sfx";
+import { utteranceForEvent } from "@/services/speech/utteranceForEvent";
 import { preloadClips, playClip } from "@/services/audio/clipPlayer";
 
 let audioCtx: AudioContext | null = null;
@@ -99,14 +98,6 @@ function speakText(text: string): Promise<void> {
 // ---------------------------------------------------------------------------
 
 type Utterance = {
-  /**
-   * Confirmation tone requested for this event. Played FIRST, inside the
-   * queue, so a beep for a new event can never land on top of words still
-   * being spoken. Firing tones immediately (the old way) overlapped them
-   * with queued speech on the one shared output, which on a phone speaker
-   * distorted into static.
-   */
-  tone: ToneKind;
   clips: string[] | null;
   text: string;
   /**
@@ -148,26 +139,7 @@ async function drainQueue(): Promise<void> {
     let next = queue.shift();
     while (next) {
       if (next.remember) useSpeechStore.getState().rememberSpokenText(next.text);
-      // The ONLY place tones are ever played, and the gate below is read live
-      // right here — not baked in when the event was enqueued — so a mode
-      // switched while this item was waiting in the queue can't replay a
-      // stale "silent" decision into a speaking mode.
-      if (next.tone && useSettingsStore.getState().speechMode === "silent") {
-        // Never beep over the player's own speech: if the mic is listening
-        // (a tap session in flight), hold the tone until it ends. The queue
-        // is serial, so everything behind it waits too. Capped just past the
-        // tap session's own 12s limit.
-        const waitStart = Date.now();
-        while (useSpeechStore.getState().isListening && Date.now() - waitStart < 13000) {
-          await new Promise((r) => setTimeout(r, 150));
-        }
-        const ctx = getAudioContext();
-        if (next.tone === "move") playMoveTone(ctx);
-        else if (next.tone === "capture") playCaptureTone(ctx);
-        else playErrorTone(ctx);
-        // Let the tone ring before words start.
-        await new Promise((r) => setTimeout(r, 140));
-      }
+      // The app deliberately generates no confirmation tones.
       // No throw here — from a bad clip fetch to a browser speechSynthesis
       // quirk — may skip this `finally` and leave isSpeaking stuck true.
       try {
@@ -191,7 +163,7 @@ async function drainQueue(): Promise<void> {
   }
 }
 
-/** Reacts to gameStore's audioEvent: confirmation tones always, spoken moves when voice output is enabled. */
+/** Reacts to gameStore audio events and queues spoken feedback when enabled. */
 export function useSpeechOutput() {
   const audioEvent = useGameStore((s) => s.audioEvent);
   const speechMode = useSettingsStore((s) => s.speechMode);

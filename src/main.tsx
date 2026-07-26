@@ -11,8 +11,16 @@ createRoot(document.getElementById("root")!).render(
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js").catch(() => {
-      // Offline install still works without it; nothing actionable here.
+    const hadController = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker
+      .register("/sw.js", { updateViaCache: "none" })
+      .then((registration) => registration.update())
+      .catch(() => {
+        // Offline install still works without it; nothing actionable here.
+      });
+
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController) window.location.reload();
     });
   });
 }

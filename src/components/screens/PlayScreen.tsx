@@ -63,6 +63,11 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
           Voice input isn't available in this browser — typed moves still work.
         </p>
       )}
+      {speech.inputError && (
+        <p role="alert" className="mb-2 rounded-lg border border-border-default bg-bg-surface-alt px-3 py-2 text-center text-sm text-text-secondary">
+          {speech.inputError}
+        </p>
+      )}
 
       <StatusLine />
       <div className="mt-2">

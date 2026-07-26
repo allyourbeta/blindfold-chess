@@ -17,11 +17,13 @@ interface SpeechState {
   recentSpokenTexts: string[];
   lastHeard: string | null;
   lastResolvedText: string | null;
+  inputError: string | null;
   setMode(mode: SpeechMode): void;
   setListening(listening: boolean): void;
   setSpeaking(speaking: boolean): void;
   rememberSpokenText(text: string): void;
   setLastHeard(heard: string | null, resolvedText?: string | null): void;
+  setInputError(error: string | null): void;
 }
 
 export const useSpeechStore = create<SpeechState>((set) => ({
@@ -32,6 +34,7 @@ export const useSpeechStore = create<SpeechState>((set) => ({
   recentSpokenTexts: [],
   lastHeard: null,
   lastResolvedText: null,
+  inputError: null,
   setMode: (mode) => set({ mode }),
   setListening: (isListening) => set({ isListening }),
   setSpeaking: (isSpeaking) =>
@@ -39,4 +42,5 @@ export const useSpeechStore = create<SpeechState>((set) => ({
   rememberSpokenText: (text) =>
     set((s) => ({ recentSpokenTexts: [...s.recentSpokenTexts.slice(-3), text] })),
   setLastHeard: (heard, resolvedText = null) => set({ lastHeard: heard, lastResolvedText: resolvedText }),
+  setInputError: (inputError) => set({ inputError }),
 }));

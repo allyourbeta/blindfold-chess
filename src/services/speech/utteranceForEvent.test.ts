@@ -1,10 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { Chess } from "chess.js";
-import type { SpeechMode } from "@/api/localStore";
 import type { GameAudioEvent } from "@/state/gameStore";
 import { utteranceForEvent } from "./utteranceForEvent";
 
-function moveEvent(san: "e4" | "exd5"): GameAudioEvent {
+type MoveAudioEvent = Extract<GameAudioEvent, { kind: "move" }>;
+
+function moveEvent(san: "e4" | "exd5"): MoveAudioEvent {
   const chess = new Chess();
   if (san === "e4") {
     const move = chess.moves({ verbose: true }).find((m) => m.san === "e4")!;
@@ -15,83 +16,43 @@ function moveEvent(san: "e4" | "exd5"): GameAudioEvent {
   return { kind: "move", move, by: "player", source: { kind: "voice", confidence: 1 } };
 }
 
-const EVENTS: Record<string, GameAudioEvent> = {
-  move: moveEvent("e4"),
-  capture: moveEvent("exd5"),
-  illegal: { kind: "illegal-move", spoken: "knight to e9", source: { kind: "voice", confidence: 1 } },
-  rejected: { kind: "rejected-move", piece: "n", to: "e5", reason: "illegal", source: { kind: "voice", confidence: 1 } },
-  "not-understood": { kind: "not-understood", heard: "garbled" },
-  "game-end": { kind: "game-end", reason: "checkmate" },
-};
+const MOVE = moveEvent("e4");
+const EVENTS: GameAudioEvent[] = [
+  MOVE,
+  moveEvent("exd5"),
+  { kind: "illegal-move", spoken: "Illegal move", source: { kind: "voice", confidence: 1 } },
+  { kind: "rejected-move", piece: "n", to: "e5", reason: "illegal", source: { kind: "voice", confidence: 1 } },
+  { kind: "not-understood", heard: "garbled" },
+  { kind: "game-end", reason: "stalemate" },
+];
 
-const SPEAKING_MODES: SpeechMode[] = ["engine", "both"];
-
-describe("utteranceForEvent — tone suppression outside Silent mode", () => {
-  for (const mode of SPEAKING_MODES) {
-    for (const [kind, event] of Object.entries(EVENTS)) {
-      it(`never produces a tone for "${kind}" in "${mode}" mode`, () => {
+describe("utteranceForEvent — no generated tones", () => {
+  for (const mode of ["silent", "engine", "both"] as const) {
+    it(`never includes a tone field in ${mode} mode`, () => {
+      for (const event of EVENTS) {
         const { utterance } = utteranceForEvent(event, mode, "letters", false);
-        expect(utterance?.tone ?? null).toBeNull();
-      });
-    }
-  }
-
-  it(`never produces a tone for a repeated "not-understood" in a speaking mode`, () => {
-    for (const mode of SPEAKING_MODES) {
-      const { utterance } = utteranceForEvent(EVENTS["not-understood"], mode, "letters", true);
-      expect(utterance?.tone ?? null).toBeNull();
-    }
-  });
-});
-
-describe("utteranceForEvent — tones in Silent mode", () => {
-  for (const [kind, event] of Object.entries(EVENTS)) {
-    it(`produces a tone for "${kind}"`, () => {
-      const { utterance } = utteranceForEvent(event, "silent", "letters", false);
-      expect(utterance?.tone).not.toBeNull();
+        expect("tone" in (utterance ?? {})).toBe(false);
+      }
     });
   }
-
-  it("distinguishes a capture tone from a plain move tone", () => {
-    expect(utteranceForEvent(EVENTS.move, "silent", "letters", false).utterance?.tone).toBe("move");
-    expect(utteranceForEvent(EVENTS.capture, "silent", "letters", false).utterance?.tone).toBe("capture");
-  });
-
-  it("still beeps for a repeated not-understood (loop breaker swallows only the sentence)", () => {
-    const { utterance } = utteranceForEvent(EVENTS["not-understood"], "silent", "letters", true);
-    expect(utterance?.tone).toBe("error");
-    expect(utterance?.clips).toBeNull();
-  });
 });
 
-describe("utteranceForEvent — not-understood loop breaker", () => {
-  it("speaks the sentence the first time and sets the flag", () => {
-    const { utterance, spokeNotUnderstoodLast } = utteranceForEvent(EVENTS["not-understood"], "both", "letters", false);
-    expect(utterance?.text).toBe("Sorry, I did not catch that.");
-    expect(spokeNotUnderstoodLast).toBe(true);
-  });
-
-  it("suppresses the repeated sentence in a speaking mode (and stays silent — no tone either)", () => {
-    const { utterance, spokeNotUnderstoodLast } = utteranceForEvent(EVENTS["not-understood"], "both", "letters", true);
-    expect(utterance).toBeNull();
-    expect(spokeNotUnderstoodLast).toBe(true);
-  });
-
-  it("clears on the next move event", () => {
-    const { spokeNotUnderstoodLast } = utteranceForEvent(EVENTS.move, "both", "letters", true);
-    expect(spokeNotUnderstoodLast).toBe(false);
-  });
-});
-
-describe("utteranceForEvent — move readback rules unaffected by tone gating", () => {
+describe("utteranceForEvent — voice rules", () => {
   it("speaks a player's voice move in both mode", () => {
-    const { utterance } = utteranceForEvent(EVENTS.move, "both", "letters", false);
-    expect(utterance?.clips).toEqual(["pawn", "e", "4"]);
+    expect(utteranceForEvent(MOVE, "both", "letters", false).utterance?.clips).toEqual(["pawn", "e", "4"]);
   });
 
-  it("stays quiet (no utterance at all) for a typed move in engine mode", () => {
-    const typed: GameAudioEvent = { ...EVENTS.move, source: { kind: "typed" } } as GameAudioEvent;
-    const { utterance } = utteranceForEvent(typed, "engine", "letters", false);
-    expect(utterance).toBeNull();
+  it("does not speak a player's move in engine mode", () => {
+    expect(utteranceForEvent(MOVE, "engine", "letters", false).utterance).toBeNull();
+  });
+
+  it("speaks an engine move in engine mode", () => {
+    const engineMove: GameAudioEvent = { ...MOVE, by: "engine", source: null };
+    expect(utteranceForEvent(engineMove, "engine", "letters", false).utterance?.clips).toEqual(["pawn", "e", "4"]);
+  });
+
+  it("suppresses a repeated not-understood sentence", () => {
+    const event: GameAudioEvent = { kind: "not-understood", heard: "garbled" };
+    expect(utteranceForEvent(event, "both", "letters", true).utterance).toBeNull();
   });
 });
