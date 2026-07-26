@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { startGameAtSkill, submitMove } from "./helpers";
+import { startGameAtSkill, submitMove, keypad } from "./helpers";
 
 test("recovers after an initial Stockfish load failure", async ({ page }) => {
   let requestCount = 0;
@@ -20,7 +20,7 @@ test("recovers after an initial Stockfish load failure", async ({ page }) => {
 
   // New Game must actually work after a successful retry.
   await startButton.click();
-  await expect(page.getByLabel("Your move")).toBeVisible();
+  await expect(keypad(page)).toBeVisible();
   await submitMove(page, "e4");
   await expect(page.locator("div.font-mono.text-sm").first()).toHaveText(/^1\. e4/);
 });

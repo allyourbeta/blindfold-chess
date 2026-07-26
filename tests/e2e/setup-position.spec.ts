@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { waitForEngineReady, submitMove } from "./helpers";
+import { waitForEngineReady, keypad } from "./helpers";
 
 test("custom-position castling-right sanitation", async ({ page }) => {
   await page.goto("/");
@@ -11,9 +11,9 @@ test("custom-position castling-right sanitation", async ({ page }) => {
   await page.getByLabel("square h1").click();
 
   await page.getByRole("button", { name: "Play Blindfold" }).click();
-  await expect(page.getByLabel("Your move")).toBeVisible();
+  await expect(keypad(page)).toBeVisible();
 
-  await submitMove(page, "fen");
+  await page.getByRole("button", { name: /FEN/ }).click();
   const fenMessage = page.locator("text=/^\\S+ w /");
   await expect(fenMessage).toBeVisible();
   const fen = (await fenMessage.textContent()) ?? "";
@@ -33,8 +33,8 @@ test("importing a FEN preserves side-to-move, en passant, and move counters", as
   await page.getByRole("button", { name: "Load" }).click();
 
   await page.getByRole("button", { name: "Play Blindfold" }).click();
-  await expect(page.getByLabel("Your move")).toBeVisible();
+  await expect(keypad(page)).toBeVisible();
 
-  await submitMove(page, "fen");
+  await page.getByRole("button", { name: /FEN/ }).click();
   await expect(page.getByText(importedFen)).toBeVisible();
 });

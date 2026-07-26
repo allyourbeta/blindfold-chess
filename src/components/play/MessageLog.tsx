@@ -7,7 +7,6 @@ const TYPE_CLASSES: Record<MessageType, string> = {
   player: "font-mono text-text-success",
   engine: "font-mono text-text-accent",
   error: "rounded bg-bg-error-soft text-text-error",
-  voice: "text-text-info",
   thinking: "italic text-text-accent",
 };
 

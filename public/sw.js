@@ -1,6 +1,6 @@
 // Bump this whenever the app shell / precache list changes so browsers
 // pick up a fresh install instead of reusing a stale cache.
-const CACHE_NAME = 'blindfold-chess-v18';
+const CACHE_NAME = 'blindfold-chess-v19';
 
 const PIECE_FILES = [
   'wK', 'wQ', 'wR', 'wB', 'wN', 'wP',

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { startStandardGame } from "./helpers";
+import { startStandardGame, keypad } from "./helpers";
 
 test("play screen is usable one-handed at iPhone width", async ({ page }) => {
   await startStandardGame(page);
@@ -13,17 +13,24 @@ test("play screen is usable one-handed at iPhone width", async ({ page }) => {
   const viewport = page.viewportSize();
   expect(viewport).not.toBeNull();
 
-  // The move input and submit button must be visible and reachable without
-  // being covered, and every touch target must meet the 44px minimum.
-  const moveInput = page.getByLabel("Your move");
-  await expect(moveInput).toBeVisible();
-  const inputBox = await moveInput.boundingBox();
-  expect(inputBox?.height).toBeGreaterThanOrEqual(44);
-  if (viewport) expect(inputBox!.y + inputBox!.height).toBeLessThanOrEqual(viewport.height);
+  // The keypad is the primary control now — no text input, no mic pad —
+  // and it must be fully visible and reachable, every key meeting the 44px
+  // minimum touch target.
+  const pad = keypad(page);
+  await expect(pad).toBeVisible();
+  const padBox = await pad.boundingBox();
+  if (viewport) expect(padBox!.y + padBox!.height).toBeLessThanOrEqual(viewport.height);
 
-  const submitButton = page.getByLabel("Your move"); // send button removed — the input itself is the reachability target now
-  const submitBox = await submitButton.boundingBox();
-  expect(submitBox?.height).toBeGreaterThanOrEqual(44);
+  await expect(page.getByLabel("Your move")).toHaveCount(0);
+  await expect(page.getByLabel(/Start listening|Stop listening/)).toHaveCount(0);
+
+  const knightKey = pad.getByRole("button", { name: "Knight" });
+  const knightBox = await knightKey.boundingBox();
+  expect(knightBox?.height).toBeGreaterThanOrEqual(44);
+
+  const fileKey = pad.getByRole("button", { name: "e", exact: true });
+  const fileBox = await fileKey.boundingBox();
+  expect(fileBox?.height).toBeGreaterThanOrEqual(44);
 
   const peekButton = page.getByLabel("Peek at the board");
   const peekBox = await peekButton.boundingBox();

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { waitForEngineReady, submitMove } from "./helpers";
+import { waitForEngineReady, submitMove, keypad } from "./helpers";
 
 test("plays a full game offline after one online load", async ({ page, context }) => {
   await page.goto("/");
@@ -14,7 +14,7 @@ test("plays a full game offline after one online load", async ({ page, context }
   await context.setOffline(true);
 
   await page.getByRole("button", { name: /New Game/ }).click();
-  await expect(page.getByLabel("Your move")).toBeVisible();
+  await expect(keypad(page)).toBeVisible();
 
   await submitMove(page, "e4");
   await expect(page.locator("div.font-mono.text-sm").first()).toHaveText(/^1\. e4 \S+/, { timeout: 15_000 });

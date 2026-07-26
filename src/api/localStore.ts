@@ -72,17 +72,29 @@ export function setFileNaming(mode: FileNaming): void {
 }
 
 /**
- * How much the app says out loud.
- *   silent — nothing is spoken; you read the moves on screen
- *   engine — the engine's moves only
- *   both   — the engine's moves, and your own spoken move read back
+ * Whether the engine's moves are spoken aloud. There is no voice input
+ * anymore, so a player's own move is never read back regardless of this
+ * setting — see utteranceForEvent.ts.
  */
-export type SpeechMode = "silent" | "engine" | "both";
+export type SpeechMode = "off" | "on";
+
+/** Values this key held before voice input was removed and the three-way control collapsed to two states. */
+type LegacySpeechMode = "silent" | "engine" | "both";
+
+function migrateLegacySpeechMode(legacy: LegacySpeechMode): SpeechMode {
+  return legacy === "silent" ? "off" : "on";
+}
 
 export function getSpeechMode(): SpeechMode | null {
   try {
     const raw = localStorage.getItem(SPEECH_MODE_KEY);
-    return raw === "silent" || raw === "engine" || raw === "both" ? raw : null;
+    if (raw === "off" || raw === "on") return raw;
+    if (raw === "silent" || raw === "engine" || raw === "both") {
+      const migrated = migrateLegacySpeechMode(raw);
+      setSpeechMode(migrated);
+      return migrated;
+    }
+    return null;
   } catch {
     return null;
   }

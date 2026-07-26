@@ -5,56 +5,53 @@ import { utteranceForEvent } from "./utteranceForEvent";
 
 type MoveAudioEvent = Extract<GameAudioEvent, { kind: "move" }>;
 
-function moveEvent(san: "e4" | "exd5"): MoveAudioEvent {
+function moveEvent(by: "player" | "engine"): MoveAudioEvent {
   const chess = new Chess();
-  if (san === "e4") {
-    const move = chess.moves({ verbose: true }).find((m) => m.san === "e4")!;
-    return { kind: "move", move, by: "player", source: { kind: "voice", confidence: 1 } };
-  }
-  chess.load("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2");
-  const move = chess.moves({ verbose: true }).find((m) => m.san === "exd5")!;
-  return { kind: "move", move, by: "player", source: { kind: "voice", confidence: 1 } };
+  const move = chess.moves({ verbose: true }).find((m) => m.san === "e4")!;
+  return { kind: "move", move, by, source: by === "player" ? { kind: "typed" } : null };
 }
 
-const MOVE = moveEvent("e4");
-const EVENTS: GameAudioEvent[] = [
-  MOVE,
-  moveEvent("exd5"),
-  { kind: "illegal-move", spoken: "Illegal move", source: { kind: "voice", confidence: 1 } },
-  { kind: "rejected-move", piece: "n", to: "e5", reason: "illegal", source: { kind: "voice", confidence: 1 } },
-  { kind: "not-understood", heard: "garbled" },
-  { kind: "game-end", reason: "stalemate" },
-];
-
-describe("utteranceForEvent — no generated tones", () => {
-  for (const mode of ["silent", "engine", "both"] as const) {
-    it(`never includes a tone field in ${mode} mode`, () => {
-      for (const event of EVENTS) {
-        const { utterance } = utteranceForEvent(event, mode, "letters", false);
-        expect("tone" in (utterance ?? {})).toBe(false);
-      }
-    });
-  }
+describe("utteranceForEvent — speech off", () => {
+  it("never produces an utterance when speech is off", () => {
+    const events: GameAudioEvent[] = [
+      moveEvent("engine"),
+      moveEvent("player"),
+      { kind: "illegal-move", spoken: "Illegal move", source: { kind: "typed" } },
+      { kind: "game-end", reason: "stalemate" },
+    ];
+    for (const event of events) {
+      expect(utteranceForEvent(event, "off", "letters")).toBeNull();
+    }
+  });
 });
 
-describe("utteranceForEvent — voice rules", () => {
-  it("speaks a player's voice move in both mode", () => {
-    expect(utteranceForEvent(MOVE, "both", "letters", false).utterance?.clips).toEqual(["pawn", "e", "4"]);
-  });
-
-  it("does not speak a player's move in engine mode", () => {
-    expect(utteranceForEvent(MOVE, "engine", "letters", false).utterance).toBeNull();
-  });
-
-  it("speaks an engine move in engine mode with natural native-speech text", () => {
-    const engineMove: GameAudioEvent = { ...MOVE, by: "engine", source: null };
-    const utterance = utteranceForEvent(engineMove, "engine", "letters", false).utterance;
+describe("utteranceForEvent — moves", () => {
+  it("speaks the engine's move", () => {
+    const utterance = utteranceForEvent(moveEvent("engine"), "on", "letters");
     expect(utterance?.clips).toEqual(["pawn", "e", "4"]);
     expect(utterance?.text).toBe("pawn e 4");
   });
 
-  it("suppresses a repeated not-understood sentence", () => {
-    const event: GameAudioEvent = { kind: "not-understood", heard: "garbled" };
-    expect(utteranceForEvent(event, "both", "letters", true).utterance).toBeNull();
+  it("never speaks the player's own move — typed/keypad entries never read back", () => {
+    expect(utteranceForEvent(moveEvent("player"), "on", "letters")).toBeNull();
+  });
+});
+
+describe("utteranceForEvent — illegal moves", () => {
+  it("is never spoken, even when speech is on", () => {
+    const event: GameAudioEvent = { kind: "illegal-move", spoken: "Illegal move", source: { kind: "typed" } };
+    expect(utteranceForEvent(event, "on", "letters")).toBeNull();
+  });
+});
+
+describe("utteranceForEvent — game end", () => {
+  it("speaks a draw reason", () => {
+    const event: GameAudioEvent = { kind: "game-end", reason: "stalemate" };
+    expect(utteranceForEvent(event, "on", "letters")?.clips).toEqual(["stalemate"]);
+  });
+
+  it("has nothing extra to say for checkmate — the mating move's own clip already said it", () => {
+    const event: GameAudioEvent = { kind: "game-end", reason: "checkmate" };
+    expect(utteranceForEvent(event, "on", "letters")).toBeNull();
   });
 });

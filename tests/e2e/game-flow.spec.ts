@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { startStandardGame, submitMove } from "./helpers";
+import { startStandardGame, submitMove, keypad, tapKeypadKey } from "./helpers";
 
 test("normal game start, player move, engine reply", async ({ page }) => {
   await startStandardGame(page);
@@ -30,9 +30,18 @@ test("takeback restores the previous position", async ({ page }) => {
   await expect(page.locator("div.font-mono.text-sm").first()).toHaveText(/^1\. d4/);
 });
 
-test("illegal move is rejected without changing the position", async ({ page }) => {
+test("an illegal destination can't be entered — the keypad disables it — and the position doesn't change", async ({
+  page,
+}) => {
   await startStandardGame(page);
-  await submitMove(page, "e5"); // illegal for White's first move
-  await expect(page.getByText(/Illegal or unrecognized move/)).toBeVisible();
+  // White's first pawn move can't reach rank 5 — the key must be disabled,
+  // not merely refused after the fact, so tapping it is not an option at all.
+  await tapKeypadKey(page, "e");
+  await expect(keypad(page).getByRole("button", { name: "5", exact: true })).toBeDisabled();
   await expect(page.getByText("No moves yet")).toBeVisible();
+
+  // Undo the pending "e" tap before playing a real move, so the entry starts fresh.
+  await tapKeypadKey(page, "Undo last entry");
+  await submitMove(page, "e4");
+  await expect(page.getByText("White: e4")).toBeVisible();
 });

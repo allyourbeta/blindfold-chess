@@ -43,7 +43,6 @@ interface SettingsState {
   setFileNaming(mode: FileNaming): void;
   setSpeechMode(mode: SpeechMode): void;
   toggleBoardFlip(currentDefault: boolean): void;
-  cycleSpeechMode(): void;
   setTheme(theme: ThemePreference): void;
   toggleTheme(): void;
 }
@@ -59,7 +58,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   skillIndex: 2,
   // NATO by default: b/c/d/e/g are indistinguishable as bare letters.
   fileNaming: getFileNaming() ?? "letters",
-  speechMode: getSpeechMode() ?? "engine",
+  speechMode: getSpeechMode() ?? "on",
   boardFlipOverride: null,
   theme: initialTheme(),
   setPlayerColor: (color) => set({ playerColor: color, boardFlipOverride: null }),
@@ -76,12 +75,6 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   setSpeechMode: (mode) => {
     persistSpeechMode(mode);
     set({ speechMode: mode });
-  },
-  cycleSpeechMode: () => {
-    const order: SpeechMode[] = ["silent", "engine", "both"];
-    const next = order[(order.indexOf(get().speechMode) + 1) % order.length];
-    persistSpeechMode(next);
-    set({ speechMode: next });
   },
   setTheme: (theme) => {
     setThemePreference(theme);

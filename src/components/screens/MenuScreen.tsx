@@ -24,15 +24,13 @@ interface MenuScreenProps {
 
 /** One line under the speech control, so the choice explains itself. */
 const SPEECH_HINT = {
-  silent: "Nothing is spoken. Moves appear on screen.",
-  engine: "The engine's moves are spoken. Yours aren't.",
-  both: "The engine's moves are spoken, and your spoken move is read back.",
+  off: "Nothing is spoken. Moves appear on screen.",
+  on: "The engine's moves are spoken aloud.",
 } as const;
 
 const SPEECH_SUMMARY = {
-  silent: "Silent",
-  engine: "Engine speaks",
-  both: "Both sides spoken",
+  off: "Silent",
+  on: "Engine speaks",
 } as const;
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -188,21 +186,20 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
               </div>
             </Field>
 
-            <Field label="Spoken moves">
-              <SegmentedControl<"silent" | "engine" | "both">
-                aria-label="Spoken moves"
+            <Field label="Engine speaks">
+              <SegmentedControl<"off" | "on">
+                aria-label="Engine speaks"
                 value={speechMode}
                 onChange={setSpeechMode}
                 options={[
-                  { value: "silent", label: "Silent" },
-                  { value: "engine", label: "Engine" },
-                  { value: "both", label: "Both" },
+                  { value: "off", label: "Off" },
+                  { value: "on", label: "On" },
                 ]}
               />
               <p className="mt-2 text-sm text-text-muted">{SPEECH_HINT[speechMode]}</p>
             </Field>
 
-            {speechMode !== "silent" && (
+            {speechMode !== "off" && (
               <Field label="Say files as">
                 <SegmentedControl<"letters" | "nato">
                   aria-label="Say files as"

@@ -1,13 +1,7 @@
-import { Eye, Undo2, Lightbulb, Flag, RotateCcw, ClipboardCopy, Volume2 } from "lucide-react";
+import { Eye, Undo2, Lightbulb, Flag, RotateCcw, ClipboardCopy, Volume2, FileCode, History } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useGameStore } from "@/state/gameStore";
 import { useSettingsStore } from "@/state/settingsStore";
-
-const SPEECH_LABEL = {
-  silent: "Silent",
-  engine: "Engine",
-  both: "Both",
-} as const;
 
 /**
  * Two rows, on purpose.
@@ -26,10 +20,11 @@ export function ActionBar() {
   const doResign = useGameStore((s) => s.doResign);
   const startNewGame = useGameStore((s) => s.startNewGame);
   const copyPgn = useGameStore((s) => s.copyPgn);
+  const submitMoveText = useGameStore((s) => s.submitMoveText);
   const speechMode = useSettingsStore((s) => s.speechMode);
   const fileNaming = useSettingsStore((s) => s.fileNaming);
   const setFileNaming = useSettingsStore((s) => s.setFileNaming);
-  const cycleSpeechMode = useSettingsStore((s) => s.cycleSpeechMode);
+  const setSpeechMode = useSettingsStore((s) => s.setSpeechMode);
 
   return (
     <div className="flex flex-col gap-3 pt-1">
@@ -51,10 +46,15 @@ export function ActionBar() {
       </div>
 
       <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 border-t border-border-default pt-3">
-        <Button variant="secondary" size="sm" onClick={cycleSpeechMode} title="Silent · engine moves · engine moves and yours">
-          <Volume2 className="h-4 w-4" /> Speech: {SPEECH_LABEL[speechMode]}
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => setSpeechMode(speechMode === "on" ? "off" : "on")}
+          title="Whether the engine's moves are spoken aloud"
+        >
+          <Volume2 className="h-4 w-4" /> Engine speaks: {speechMode === "on" ? "On" : "Off"}
         </Button>
-        {speechMode !== "silent" && (
+        {speechMode === "on" && (
           <Button
             variant="secondary"
             size="sm"
@@ -66,6 +66,12 @@ export function ActionBar() {
         )}
         <Button variant="secondary" size="sm" onClick={() => void copyPgn()} title="Copy game notation">
           <ClipboardCopy className="h-4 w-4" /> PGN
+        </Button>
+        <Button variant="secondary" size="sm" onClick={() => submitMoveText("fen")} title="Show the current position's FEN">
+          <FileCode className="h-4 w-4" /> FEN
+        </Button>
+        <Button variant="secondary" size="sm" onClick={() => submitMoveText("history")} title="Past games and stats">
+          <History className="h-4 w-4" /> History
         </Button>
         <Button variant="secondary" size="sm" disabled={gameOverFlag} onClick={doResign}>
           <Flag className="h-4 w-4" /> Resign
