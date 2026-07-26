@@ -11,6 +11,11 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // A short build-time stamp so a phone's build can be confirmed at a glance
+  // instead of guessed at — see the footer on the menu screen.
+  define: {
+    __BUILD_ID__: JSON.stringify(new Date().toISOString().replace(/[-:]/g, "").slice(0, 13)),
+  },
   test: {
     environment: "node",
     include: ["src/**/*.test.ts"],

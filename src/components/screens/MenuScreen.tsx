@@ -151,6 +151,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
             Set Up a Position
           </Button>
         </div>
+        <p className="mt-3 text-center text-xs text-text-muted">build {__BUILD_ID__}</p>
       </div>
     </div>
   );

@@ -1,10 +1,9 @@
 import { useEffect, useRef } from "react";
-import { useGameStore, type MoveSource } from "@/state/gameStore";
+import { useGameStore } from "@/state/gameStore";
 import { useSettingsStore } from "@/state/settingsStore";
-import type { SpeechMode } from "@/api/localStore";
 import { useSpeechStore } from "@/state/speechStore";
-import { movePhraseClips, gameEndPhraseClips, rejectionPhraseClips, CLIP_IDS } from "@/services/speech/phrase";
-import { PIECE_WORDS } from "@/services/chess/san";
+import { CLIP_IDS } from "@/services/speech/phrase";
+import { utteranceForEvent, type ToneKind } from "@/services/speech/utteranceForEvent";
 import { playMoveTone, playCaptureTone, playErrorTone } from "@/services/audio/sfx";
 import { preloadClips, playClip } from "@/services/audio/clipPlayer";
 
@@ -101,12 +100,13 @@ function speakText(text: string): Promise<void> {
 
 type Utterance = {
   /**
-   * Confirmation tone played FIRST, inside the queue, so a beep for a new
-   * event can never land on top of words still being spoken. Firing tones
-   * immediately (the old way) overlapped them with queued speech on the one
-   * shared output, which on a phone speaker distorted into static.
+   * Confirmation tone requested for this event. Played FIRST, inside the
+   * queue, so a beep for a new event can never land on top of words still
+   * being spoken. Firing tones immediately (the old way) overlapped them
+   * with queued speech on the one shared output, which on a phone speaker
+   * distorted into static.
    */
-  tone: "move" | "capture" | "error" | null;
+  tone: ToneKind;
   clips: string[] | null;
   text: string;
   /**
@@ -121,18 +121,20 @@ type Utterance = {
 let queue: Utterance[] = [];
 let draining = false;
 
+// Loop breaker: if the last thing we said was "sorry, I did not catch that",
+// don't say it again for the very next failure — the screen message still
+// shows. Without this, one echo slipping through the filters can chain the
+// clip into an endless self-conversation. Persisted across events here (not
+// in the pure decision function) because it's sequencing state, not part of
+// any single event's inputs.
+let spokeNotUnderstoodLast = false;
+
 /** Drops anything queued but not yet spoken — used when a game starts or ends. */
 export function resetSpeechQueue(): void {
   queue = [];
   spokeNotUnderstoodLast = false;
   window.speechSynthesis?.cancel();
 }
-
-// Loop breaker: if the last thing we said was "sorry, I did not catch that",
-// don't say it again for the very next failure — the screen message still
-// shows. Without this, one echo slipping through the filters can chain the
-// clip into an endless self-conversation.
-let spokeNotUnderstoodLast = false;
 
 function enqueueSpeech(utterance: Utterance): void {
   queue.push(utterance);
@@ -146,7 +148,11 @@ async function drainQueue(): Promise<void> {
     let next = queue.shift();
     while (next) {
       if (next.remember) useSpeechStore.getState().rememberSpokenText(next.text);
-      if (next.tone) {
+      // The ONLY place tones are ever played, and the gate below is read live
+      // right here — not baked in when the event was enqueued — so a mode
+      // switched while this item was waiting in the queue can't replay a
+      // stale "silent" decision into a speaking mode.
+      if (next.tone && useSettingsStore.getState().speechMode === "silent") {
         // Never beep over the player's own speech: if the mic is listening
         // (a tap session in flight), hold the tone until it ends. The queue
         // is serial, so everything behind it waits too. Capped just past the
@@ -185,20 +191,6 @@ async function drainQueue(): Promise<void> {
   }
 }
 
-/**
- * In "both" mode your own move is read back only when you spoke it — a typed
- * move needs no confirmation, since you already know what you typed.
- */
-function shouldSpeakMove(
-  by: "player" | "engine",
-  source: MoveSource | null,
-  mode: SpeechMode,
-): boolean {
-  if (mode === "silent") return false;
-  if (by === "engine") return true;
-  return mode === "both" && source?.kind === "voice";
-}
-
 /** Reacts to gameStore's audioEvent: confirmation tones always, spoken moves when voice output is enabled. */
 export function useSpeechOutput() {
   const audioEvent = useGameStore((s) => s.audioEvent);
@@ -217,58 +209,8 @@ export function useSpeechOutput() {
       return;
     }
 
-    // Beeps exist for Silent mode, where they're the only audio feedback.
-    // In speaking modes the voice is the confirmation and the beep is just a
-    // collision waiting to happen — so no tones there at all.
-    const tonesOn = speechMode === "silent";
-
-    if (audioEvent.kind === "move") {
-      spokeNotUnderstoodLast = false;
-      const tone = tonesOn ? (audioEvent.move.isCapture() ? ("capture" as const) : ("move" as const)) : null;
-      if (shouldSpeakMove(audioEvent.by, audioEvent.source, speechMode)) {
-        const clips = movePhraseClips(audioEvent.move, fileNaming);
-        enqueueSpeech({ tone, clips, text: clips.join(" "), remember: false });
-      } else if (tone) {
-        enqueueSpeech({ tone, clips: null, text: "", remember: false });
-      }
-    } else if (audioEvent.kind === "illegal-move") {
-      // A rejected voice move always speaks, even in Silent mode: if you're
-      // playing by voice you may not be watching the screen, and silence is
-      // indistinguishable from the move having been accepted. Typed rejections
-      // stay quiet — the message log has it and you're already looking.
-      if (audioEvent.source.kind === "voice") {
-        enqueueSpeech({ tone: tonesOn ? "error" : null, clips: null, text: audioEvent.spoken, remember: true });
-      } else if (tonesOn) {
-        enqueueSpeech({ tone: "error", clips: null, text: "", remember: false });
-      }
-      spokeNotUnderstoodLast = false;
-    } else if (audioEvent.kind === "rejected-move") {
-      // Always spoken, even in Silent mode — see the illegal-move note above.
-      if (audioEvent.source.kind === "voice") {
-        const clips = rejectionPhraseClips(
-          PIECE_WORDS[audioEvent.piece],
-          audioEvent.to,
-          audioEvent.reason,
-          fileNaming,
-        );
-        enqueueSpeech({ tone: tonesOn ? "error" : null, clips, text: clips.join(" "), remember: true });
-      } else if (tonesOn) {
-        enqueueSpeech({ tone: "error", clips: null, text: "", remember: false });
-      }
-      spokeNotUnderstoodLast = false;
-    } else if (audioEvent.kind === "not-understood") {
-      if (spokeNotUnderstoodLast) {
-        // Loop breaker: drop the repeated sentence (beep only, Silent mode only).
-        if (tonesOn) enqueueSpeech({ tone: "error", clips: null, text: "", remember: false });
-      } else {
-        enqueueSpeech({ tone: tonesOn ? "error" : null, clips: ["not-understood"], text: "Sorry, I did not catch that.", remember: true });
-        spokeNotUnderstoodLast = true;
-      }
-    } else if (audioEvent.kind === "game-end") {
-      if (speechMode !== "silent") {
-        const clips = gameEndPhraseClips(audioEvent.reason);
-        enqueueSpeech({ tone: null, clips, text: clips.join(" "), remember: true });
-      }
-    }
+    const decision = utteranceForEvent(audioEvent, speechMode, fileNaming, spokeNotUnderstoodLast);
+    spokeNotUnderstoodLast = decision.spokeNotUnderstoodLast;
+    if (decision.utterance) enqueueSpeech(decision.utterance);
   }, [audioEvent, speechMode, fileNaming]);
 }
