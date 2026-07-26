@@ -128,8 +128,8 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
               value={fileNaming}
               onChange={setFileNaming}
               options={[
-                { value: "letters", label: "e4" },
-                { value: "nato", label: "Echo 4" },
+                { value: "letters", label: "Alpha" },
+                { value: "nato", label: "NATO" },
               ]}
             />
           </Field>

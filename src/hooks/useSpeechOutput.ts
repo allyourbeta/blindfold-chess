@@ -91,7 +91,17 @@ function speakText(text: string): Promise<void> {
 // keeps the "speaking" flag honest, which is what mutes the microphone.
 // ---------------------------------------------------------------------------
 
-type Utterance = { clips: string[] | null; text: string };
+type Utterance = {
+  clips: string[] | null;
+  text: string;
+  /**
+   * Whether the echo filter should remember this text. True for sentence
+   * phrases (rejections, "didn't catch that", game end); false for move
+   * announcements, which are too move-shaped to match against safely — their
+   * echoes are caught by the grace window instead. See services/speech/echo.ts.
+   */
+  remember: boolean;
+};
 
 let queue: Utterance[] = [];
 let draining = false;
@@ -99,8 +109,15 @@ let draining = false;
 /** Drops anything queued but not yet spoken — used when a game starts or ends. */
 export function resetSpeechQueue(): void {
   queue = [];
+  spokeNotUnderstoodLast = false;
   window.speechSynthesis?.cancel();
 }
+
+// Loop breaker: if the last thing we said was "sorry, I did not catch that",
+// don't say it again for the very next failure — the screen message still
+// shows. Without this, one echo slipping through the filters can chain the
+// clip into an endless self-conversation.
+let spokeNotUnderstoodLast = false;
 
 function enqueueSpeech(utterance: Utterance): void {
   queue.push(utterance);
@@ -113,6 +130,7 @@ async function drainQueue(): Promise<void> {
   try {
     let next = queue.shift();
     while (next) {
+      if (next.remember) useSpeechStore.getState().rememberSpokenText(next.text);
       if (next.clips?.length) {
         try {
           await playClipSequence(next.clips);
@@ -158,11 +176,12 @@ export function useSpeechOutput() {
     const ctx = getAudioContext();
 
     if (audioEvent.kind === "move") {
+      spokeNotUnderstoodLast = false;
       if (audioEvent.move.isCapture()) playCaptureTone(ctx);
       else playMoveTone(ctx);
       if (shouldSpeakMove(audioEvent.by, audioEvent.source, speechMode)) {
         const clips = movePhraseClips(audioEvent.move, fileNaming);
-        enqueueSpeech({ clips, text: clips.join(" ") });
+        enqueueSpeech({ clips, text: clips.join(" "), remember: false });
       }
     } else if (audioEvent.kind === "illegal-move") {
       playErrorTone(ctx);
@@ -171,8 +190,9 @@ export function useSpeechOutput() {
       // indistinguishable from the move having been accepted. Typed rejections
       // stay quiet — the message log has it and you're already looking.
       if (audioEvent.source.kind === "voice") {
-        enqueueSpeech({ clips: null, text: audioEvent.spoken });
+        enqueueSpeech({ clips: null, text: audioEvent.spoken, remember: true });
       }
+      spokeNotUnderstoodLast = false;
     } else if (audioEvent.kind === "rejected-move") {
       playErrorTone(ctx);
       // Always spoken, even in Silent mode — see the illegal-move note above.
@@ -183,15 +203,19 @@ export function useSpeechOutput() {
           audioEvent.reason,
           fileNaming,
         );
-        enqueueSpeech({ clips, text: clips.join(" ") });
+        enqueueSpeech({ clips, text: clips.join(" "), remember: true });
       }
+      spokeNotUnderstoodLast = false;
     } else if (audioEvent.kind === "not-understood") {
       playErrorTone(ctx);
-      enqueueSpeech({ clips: ["not-understood"], text: "Sorry, I did not catch that." });
+      if (!spokeNotUnderstoodLast) {
+        enqueueSpeech({ clips: ["not-understood"], text: "Sorry, I did not catch that.", remember: true });
+        spokeNotUnderstoodLast = true;
+      }
     } else if (audioEvent.kind === "game-end") {
       if (speechMode !== "silent") {
         const clips = gameEndPhraseClips(audioEvent.reason);
-        enqueueSpeech({ clips, text: clips.join(" ") });
+        enqueueSpeech({ clips, text: clips.join(" "), remember: true });
       }
     }
   }, [audioEvent, speechMode, fileNaming]);

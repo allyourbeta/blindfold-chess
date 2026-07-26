@@ -58,7 +58,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   playerColor: "w",
   skillIndex: 2,
   // NATO by default: b/c/d/e/g are indistinguishable as bare letters.
-  fileNaming: getFileNaming() ?? "nato",
+  fileNaming: getFileNaming() ?? "letters",
   speechMode: getSpeechMode() ?? "engine",
   boardFlipOverride: null,
   theme: initialTheme(),

@@ -27,12 +27,16 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
     await startNewGame();
   }
 
+  // In tap mode this button IS the voice UX — one tap per move, all game
+  // long — so it's much larger than the continuous-mode toggle and sits at
+  // the bottom-right thumb corner next to the input.
+  const isTap = speech.mode === "tap";
   const micControl =
-    speech.mode === "continuous" ? (
+    speech.mode === "unsupported" ? null : (
       <Button
         type="button"
         size="icon"
-        className="h-12 w-12 shrink-0"
+        className={isTap ? "h-16 w-16 shrink-0 rounded-full" : "h-12 w-12 shrink-0"}
         variant={speech.isListening ? "primary" : "secondary"}
         active={speech.isListening}
         onClick={speech.toggleListening}
@@ -40,23 +44,9 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
       >
         {/* Always a plain mic — a crossed-out mic reads as "unavailable",
             not "tap to start". Listening state shows through the variant. */}
-        <Mic className="h-5 w-5" />
+        <Mic className={isTap ? "h-8 w-8" : "h-5 w-5"} />
       </Button>
-    ) : speech.mode === "push-to-talk" ? (
-      <Button
-        type="button"
-        size="icon"
-        className="h-12 w-12 shrink-0"
-        variant={speech.isListening ? "primary" : "secondary"}
-        active={speech.isListening}
-        onPointerDown={speech.startPushToTalk}
-        onPointerUp={speech.stopPushToTalk}
-        onPointerLeave={speech.stopPushToTalk}
-        aria-label="Hold to speak a move"
-      >
-        <Mic className="h-5 w-5" />
-      </Button>
-    ) : null;
+    );
 
   return (
     <div className="flex h-full w-full flex-col p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">

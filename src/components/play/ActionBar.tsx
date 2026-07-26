@@ -59,9 +59,9 @@ export function ActionBar() {
             variant="ghost"
             size="sm"
             onClick={() => setFileNaming(fileNaming === "nato" ? "letters" : "nato")}
-            title="How spoken file letters are pronounced"
+            title="How letters are spoken — Alpha: b, d, e · NATO: Bravo, Delta, Echo"
           >
-            Files: {fileNaming === "nato" ? "Echo 4" : "e4"}
+            {fileNaming === "nato" ? "NATO" : "Alpha"}
           </Button>
         )}
         <Button variant="ghost" size="sm" onClick={() => void copyPgn()} title="Copy game notation">
