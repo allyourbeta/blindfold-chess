@@ -1,6 +1,6 @@
 // Bump this whenever the app shell / precache list changes so browsers
 // pick up a fresh install instead of reusing a stale cache.
-const CACHE_NAME = 'blindfold-chess-v12';
+const CACHE_NAME = 'blindfold-chess-v13';
 
 const PIECE_FILES = [
   'wK', 'wQ', 'wR', 'wB', 'wN', 'wP',
@@ -21,6 +21,7 @@ const AUDIO_CLIPS = [
 const APP_SHELL = [
   '/',
   '/manifest.json',
+  '/brand-mark.svg',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
   '/icons/icon-maskable-512.png',

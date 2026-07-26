@@ -17,6 +17,7 @@ export async function startStandardGame(page: Page) {
 export async function startGameAtSkill(page: Page, skillLabel: string) {
   await page.goto("/");
   await waitForEngineReady(page);
+  await page.getByRole("button", { name: "Change settings" }).click();
   await page.getByRole("button", { name: skillLabel, exact: true }).click();
   await page.getByRole("button", { name: /New Game/ }).click();
   await expect(page.getByLabel("Your move")).toBeVisible();

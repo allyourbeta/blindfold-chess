@@ -64,7 +64,10 @@ test("iOS tap mode submits the last interim transcript when recognition ends", a
   });
 
   await startStandardGame(page);
+  await expect(page.getByText("Tap to speak")).toBeVisible();
   await page.getByLabel("Start listening").click();
+  await expect(page.getByText("Listening…")).toBeVisible();
+  await expect(page.getByText("Say your move · tap to stop")).toBeVisible();
   await page.evaluate(() => {
     (window as unknown as { finishSpeechTest: (transcript: string) => void }).finishSpeechTest("e four");
   });

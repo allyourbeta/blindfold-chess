@@ -1,4 +1,4 @@
-import { ArrowLeft, Mic } from "lucide-react";
+import { ArrowLeft, Mic, Square, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { StatusLine } from "@/components/play/StatusLine";
 import { PeekPanel } from "@/components/play/PeekPanel";
@@ -27,26 +27,74 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
     await startNewGame();
   }
 
-  // In tap mode this is THE control of a blindfold game, so it's a full-width
-  // pad the size of a small billboard: input-width, 112px tall, amber at rest
-  // (darker than the shaded buttons — press me), pulsing red while listening.
   const isTap = speech.mode === "tap";
-  const micButton = (pad: boolean) => (
-    <Button
-      type="button"
-      size="icon"
-      className={pad ? `h-28 w-full ${speech.isListening ? "animate-pulse" : ""}` : "h-12 w-12 shrink-0"}
-      variant={pad ? (speech.isListening ? "destructive" : "primary") : speech.isListening ? "primary" : "secondary"}
-      active={!pad && speech.isListening}
-      disabled={pad && speech.isSpeaking}
-      onClick={speech.toggleListening}
-      aria-label={speech.isListening ? "Stop listening" : "Start listening"}
-    >
-      {/* Always a plain mic — a crossed-out mic reads as "unavailable",
-          not "tap to start". Listening state shows through color and pulse. */}
-      <Mic className={pad ? "h-12 w-12" : "h-5 w-5"} />
-    </Button>
-  );
+
+  function compactMicButton() {
+    const isUnavailable = speech.isSpeaking;
+    return (
+      <Button
+        type="button"
+        size="icon"
+        className="h-12 w-12 shrink-0"
+        variant={speech.isListening ? "primary" : "secondary"}
+        active={speech.isListening}
+        disabled={isUnavailable}
+        onClick={speech.toggleListening}
+        aria-label={speech.isListening ? "Stop listening" : "Start listening"}
+      >
+        {isUnavailable ? (
+          <Volume2 className="h-5 w-5" />
+        ) : speech.isListening ? (
+          <Square className="h-4 w-4 fill-current" />
+        ) : (
+          <Mic className="h-5 w-5" />
+        )}
+      </Button>
+    );
+  }
+
+  function tapMicPad() {
+    const state = speech.isSpeaking ? "speaking" : speech.isListening ? "listening" : "idle";
+    const variant = state === "listening" ? "destructive" : state === "speaking" ? "secondary" : "primary";
+
+    return (
+      <Button
+        type="button"
+        className="h-28 w-full flex-col gap-1.5 whitespace-normal px-4 text-center"
+        variant={variant}
+        disabled={state === "speaking"}
+        onClick={speech.toggleListening}
+        aria-label={state === "listening" ? "Stop listening" : state === "speaking" ? "Engine speaking" : "Start listening"}
+      >
+        {state === "idle" && (
+          <>
+            <Mic className="h-8 w-8" />
+            <span className="text-lg font-extrabold leading-none">Tap to speak</span>
+            <span className="text-sm font-semibold opacity-75">Say your move</span>
+          </>
+        )}
+
+        {state === "listening" && (
+          <>
+            <span className="flex items-center gap-2">
+              <span className="h-3 w-3 animate-pulse rounded-full bg-white" aria-hidden="true" />
+              <Square className="h-5 w-5 fill-current" />
+            </span>
+            <span className="text-lg font-extrabold leading-none">Listening…</span>
+            <span className="text-sm font-semibold opacity-90">Say your move · tap to stop</span>
+          </>
+        )}
+
+        {state === "speaking" && (
+          <>
+            <Volume2 className="h-8 w-8" />
+            <span className="text-lg font-extrabold leading-none">Engine speaking…</span>
+            <span className="text-sm font-semibold text-text-secondary">Microphone will be ready next</span>
+          </>
+        )}
+      </Button>
+    );
+  }
 
   return (
     <div className="flex h-full w-full flex-col p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">
@@ -76,8 +124,8 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
       </div>
       <MessageLog />
       <div className="flex flex-col gap-2 pt-1">
-        <MoveInput mic={speech.mode === "continuous" ? micButton(false) : undefined} />
-        {isTap && micButton(true)}
+        <MoveInput mic={speech.mode === "continuous" ? compactMicButton() : undefined} />
+        {isTap && tapMicPad()}
         <ActionBar />
       </div>
       <GameOverPanel onNewGame={() => void handleNewGame()} onMenu={handleMenu} />
