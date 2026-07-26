@@ -51,12 +51,12 @@ export function ActionBar() {
       </div>
 
       <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 border-t border-border-default pt-3">
-        <Button variant="ghost" size="sm" onClick={cycleSpeechMode} title="Silent · engine moves · engine moves and yours">
+        <Button variant="secondary" size="sm" onClick={cycleSpeechMode} title="Silent · engine moves · engine moves and yours">
           <Volume2 className="h-4 w-4" /> Speech: {SPEECH_LABEL[speechMode]}
         </Button>
         {speechMode !== "silent" && (
           <Button
-            variant="ghost"
+            variant="secondary"
             size="sm"
             onClick={() => setFileNaming(fileNaming === "nato" ? "letters" : "nato")}
             title="How letters are spoken — Alpha: b, d, e · NATO: Bravo, Delta, Echo"
@@ -64,13 +64,13 @@ export function ActionBar() {
             {fileNaming === "nato" ? "NATO" : "Alpha"}
           </Button>
         )}
-        <Button variant="ghost" size="sm" onClick={() => void copyPgn()} title="Copy game notation">
+        <Button variant="secondary" size="sm" onClick={() => void copyPgn()} title="Copy game notation">
           <ClipboardCopy className="h-4 w-4" /> PGN
         </Button>
-        <Button variant="ghost" size="sm" disabled={gameOverFlag} onClick={doResign}>
+        <Button variant="secondary" size="sm" disabled={gameOverFlag} onClick={doResign}>
           <Flag className="h-4 w-4" /> Resign
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => void startNewGame()}>
+        <Button variant="secondary" size="sm" onClick={() => void startNewGame()}>
           <RotateCcw className="h-4 w-4" /> New Game
         </Button>
       </div>

@@ -36,15 +36,16 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
       <Button
         type="button"
         size="icon"
-        className={isTap ? "h-16 w-16 shrink-0 rounded-full" : "h-12 w-12 shrink-0"}
+        className={isTap ? "h-20 w-20 shrink-0 rounded-full" : "h-12 w-12 shrink-0"}
         variant={speech.isListening ? "primary" : "secondary"}
         active={speech.isListening}
+        disabled={isTap && speech.isSpeaking}
         onClick={speech.toggleListening}
         aria-label={speech.isListening ? "Stop listening" : "Start listening"}
       >
         {/* Always a plain mic — a crossed-out mic reads as "unavailable",
             not "tap to start". Listening state shows through the variant. */}
-        <Mic className={isTap ? "h-8 w-8" : "h-5 w-5"} />
+        <Mic className={isTap ? "h-10 w-10" : "h-5 w-5"} />
       </Button>
     );
 

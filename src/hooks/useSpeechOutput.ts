@@ -3,9 +3,10 @@ import { useGameStore, type MoveSource } from "@/state/gameStore";
 import { useSettingsStore } from "@/state/settingsStore";
 import type { SpeechMode } from "@/api/localStore";
 import { useSpeechStore } from "@/state/speechStore";
-import { movePhraseClips, gameEndPhraseClips, rejectionPhraseClips } from "@/services/speech/phrase";
+import { movePhraseClips, gameEndPhraseClips, rejectionPhraseClips, CLIP_IDS } from "@/services/speech/phrase";
 import { PIECE_WORDS } from "@/services/chess/san";
 import { playMoveTone, playCaptureTone, playErrorTone } from "@/services/audio/sfx";
+import { preloadClips, playClip } from "@/services/audio/clipPlayer";
 
 let audioCtx: AudioContext | null = null;
 function getAudioContext(): AudioContext {
@@ -20,52 +21,29 @@ function getAudioContext(): AudioContext {
 export function unlockAudioOutput(): void {
   const ctx = getAudioContext();
   if (ctx.state === "suspended") void ctx.resume();
+  // Also unblocks speechSynthesis on some iOS versions.
   const unlockEl = new Audio();
   unlockEl.muted = true;
   unlockEl.play().catch(() => {}).finally(() => unlockEl.pause());
-}
-
-const clipCache = new Map<string, HTMLAudioElement>();
-function getClipElement(id: string): HTMLAudioElement {
-  let el = clipCache.get(id);
-  if (!el) {
-    el = new Audio(`/audio/${id}.wav`);
-    el.preload = "auto";
-    clipCache.set(id, el);
-  }
-  return el;
-}
-
-function playOneClip(id: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const el = getClipElement(id);
-    el.currentTime = 0;
-    const cleanup = () => {
-      el.removeEventListener("ended", onEnded);
-      el.removeEventListener("error", onError);
-    };
-    const onEnded = () => {
-      cleanup();
-      resolve();
-    };
-    const onError = () => {
-      cleanup();
-      reject(new Error(`clip "${id}" failed to play`));
-    };
-    el.addEventListener("ended", onEnded);
-    el.addEventListener("error", onError);
-    el.play().catch(onError);
-  });
+  preloadClips(ctx, CLIP_IDS);
 }
 
 const CLIP_GAP_MS = 90;
 
 async function playClipSequence(ids: string[]): Promise<void> {
+  const ctx = getAudioContext();
   for (const id of ids) {
-    await playOneClip(id);
+    await playClip(ctx, id);
     await new Promise((r) => setTimeout(r, CLIP_GAP_MS));
   }
 }
+
+// If speechSynthesis never fires onstart (common on iOS, where an utterance
+// can silently go nowhere), give up after this long rather than hang the
+// queue forever.
+const SPEECH_START_TIMEOUT_MS = 2000;
+// Absolute cap regardless of onstart, in case onend/onerror never fire either.
+const SPEECH_ABSOLUTE_TIMEOUT_MS = 8000;
 
 /** Speaks text and resolves when it has actually finished, so the queue can't overlap it. */
 function speakText(text: string): Promise<void> {
@@ -75,8 +53,38 @@ function speakText(text: string): Promise<void> {
       return;
     }
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.onend = () => resolve();
-    utterance.onerror = () => resolve();
+    let settled = false;
+    let startTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const clearTimers = () => {
+      if (startTimer) clearTimeout(startTimer);
+      clearTimeout(absoluteTimer);
+    };
+    const settle = () => {
+      if (settled) return;
+      settled = true;
+      clearTimers();
+      resolve();
+    };
+
+    const absoluteTimer = setTimeout(() => {
+      console.log(`[speech] speakText absolute timeout, cancelling: "${text}"`);
+      window.speechSynthesis.cancel();
+      settle();
+    }, SPEECH_ABSOLUTE_TIMEOUT_MS);
+
+    startTimer = setTimeout(() => {
+      console.log(`[speech] speakText never fired onstart, cancelling: "${text}"`);
+      window.speechSynthesis.cancel();
+      settle();
+    }, SPEECH_START_TIMEOUT_MS);
+
+    utterance.onstart = () => {
+      if (startTimer) clearTimeout(startTimer);
+      startTimer = null;
+    };
+    utterance.onend = settle;
+    utterance.onerror = settle;
     window.speechSynthesis.speak(utterance);
   });
 }
@@ -86,9 +94,9 @@ function speakText(text: string): Promise<void> {
 //
 // Every spoken thing goes through this one queue and plays strictly one at a
 // time. Without it a player-move readback and the engine's reply — which can
-// arrive well under a second later — start playing on top of each other, and
-// they fight over the same cached <audio> elements. Serialising here also
-// keeps the "speaking" flag honest, which is what mutes the microphone.
+// arrive well under a second later — start playing on top of each other.
+// Serialising here also keeps the "speaking" flag honest, which is what
+// mutes the microphone.
 // ---------------------------------------------------------------------------
 
 type Utterance = {
@@ -131,14 +139,20 @@ async function drainQueue(): Promise<void> {
     let next = queue.shift();
     while (next) {
       if (next.remember) useSpeechStore.getState().rememberSpokenText(next.text);
-      if (next.clips?.length) {
-        try {
-          await playClipSequence(next.clips);
-        } catch {
+      // No throw here — from a bad clip fetch to a browser speechSynthesis
+      // quirk — may skip this `finally` and leave isSpeaking stuck true.
+      try {
+        if (next.clips?.length) {
+          try {
+            await playClipSequence(next.clips);
+          } catch {
+            await speakText(next.text);
+          }
+        } else if (next.text) {
           await speakText(next.text);
         }
-      } else if (next.text) {
-        await speakText(next.text);
+      } catch {
+        // Give up on this utterance and move on to the next.
       }
       next = queue.shift();
     }

@@ -129,7 +129,6 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
       audioEvent: null,
     });
     addMessage("system", `Game started. You play ${color === "w" ? "White" : "Black"}. Strength: ${skill.label}`);
-    addMessage("system", "Type moves (e4, Nf3, O-O). Commands: peek, hint, takeback, fen, pgn, history. Spacebar to peek.");
     if (chess.turn() !== color) requestEngineMove();
   }
 

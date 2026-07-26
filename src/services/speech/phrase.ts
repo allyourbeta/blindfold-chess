@@ -1,5 +1,5 @@
 import type { Move } from "chess.js";
-import { movePhraseParts, type SpokenPart } from "../chess/san";
+import { movePhraseParts, PIECE_WORDS, type SpokenPart } from "../chess/san";
 import type { GameEndReason } from "../chess/gameSummary";
 import type { FileNaming } from "@/api/localStore";
 
@@ -11,6 +11,41 @@ export type ClipId = SpokenPart | NatoFileClip;
 
 const FILE_PARTS = ["a", "b", "c", "d", "e", "f", "g", "h"] as const;
 type FilePart = (typeof FILE_PARTS)[number];
+const RANK_PARTS = ["1", "2", "3", "4", "5", "6", "7", "8"] as const;
+const NATO_FILE_PARTS = FILE_PARTS.map((f) => `nato-${f}` as NatoFileClip);
+
+// Every non-piece, non-square "connector" word a move, rejection, or game-end
+// phrase can use. Kept in sync by scripts/generate-speech-clips.sh, which
+// generates exactly these ids plus the pieces/files/ranks/nato below.
+const SPECIAL_PARTS: SpokenPart[] = [
+  "takes",
+  "to",
+  "from",
+  "check",
+  "checkmate",
+  "castles-kingside",
+  "castles-queenside",
+  "promotes-to",
+  "en-passant",
+  "stalemate",
+  "draw",
+  "not-legal",
+  "ambiguous",
+  "not-understood",
+];
+
+/**
+ * Every audio clip id the app can ever play — the full ClipId space, derived
+ * from the same constants the phrase builders use rather than a separately
+ * maintained list, so it can't silently drift from what those builders emit.
+ */
+export const CLIP_IDS: ClipId[] = [
+  ...Object.values(PIECE_WORDS),
+  ...FILE_PARTS,
+  ...RANK_PARTS,
+  ...NATO_FILE_PARTS,
+  ...SPECIAL_PARTS,
+];
 
 function isFilePart(part: SpokenPart): part is FilePart {
   return (FILE_PARTS as readonly string[]).includes(part);

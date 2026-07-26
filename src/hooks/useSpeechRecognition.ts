@@ -16,6 +16,13 @@ const MAX_CONSECUTIVE_ERRORS = 3;
 // out the utterance plus a silence gap before delivering it.
 const ECHO_GRACE_MS = 1200;
 
+// Safari on iOS doesn't reliably fire `onend` after a tap session's work is
+// done, so a tap session is never allowed to outlive this long regardless.
+const TAP_SESSION_MAX_MS = 12000;
+// When the user taps to cancel a listening session, `stop()` should retire it
+// via `onend` — but if Safari ignores the call, this fallback does it anyway.
+const TAP_STOP_FALLBACK_MS = 800;
+
 // iPadOS reports itself as MacIntel; the touch-point check catches it.
 const IS_IOS =
   /iP(hone|od|ad)/.test(navigator.userAgent) ||
@@ -55,6 +62,9 @@ export function useSpeechRecognition() {
   const modeRef = useRef(mode);
   const isSpeakingRef = useRef(isSpeaking);
   const errorCountRef = useRef(0);
+  // Absolute session cap per tap instance — never trust onend alone, Safari
+  // does not reliably fire it.
+  const tapCapTimersRef = useRef(new Map<SpeechRecognition, ReturnType<typeof setTimeout>>());
 
   useEffect(() => {
     modeRef.current = mode;
@@ -156,6 +166,33 @@ export function useSpeechRecognition() {
 
   // ----- tap mode -----------------------------------------------------------
 
+  // Idempotent: safe to call more than once for the same session (onend,
+  // onerror, the session cap, and a manual cancel can all race to retire the
+  // same instance). Never trust onend alone — Safari does not reliably fire
+  // it, so this is also invoked directly wherever we know the session is done.
+  const retireTapSession = useCallback(
+    (recognition: SpeechRecognition) => {
+      const capTimer = tapCapTimersRef.current.get(recognition);
+      if (capTimer) {
+        clearTimeout(capTimer);
+        tapCapTimersRef.current.delete(recognition);
+      }
+      if (tapSessionRef.current === recognition) {
+        tapSessionRef.current = null;
+        // Only the *current* session may flip the button to idle. A stale
+        // session's late onend (Safari) must not lie about a newer session
+        // that is actively listening.
+        setListening(false);
+      }
+      try {
+        recognition.stop();
+      } catch {
+        // already stopped, or never started
+      }
+    },
+    [setListening],
+  );
+
   const startTapSession = useCallback(() => {
     const Ctor = getRecognitionCtor();
     if (!Ctor) return;
@@ -166,33 +203,46 @@ export function useSpeechRecognition() {
     recognition.interimResults = false;
     recognition.maxAlternatives = 5;
     recognition.lang = "en-US";
-    recognition.onresult = handleResult;
+    recognition.onresult = (event) => {
+      handleResult(event);
+      const last = event.results[event.results.length - 1];
+      if (last?.isFinal) retireTapSession(recognition);
+    };
     recognition.onerror = (e) => {
       console.log(`[speech] tap session error "${e.error}"`);
+      retireTapSession(recognition);
     };
-    recognition.onend = () => {
-      // One session per tap: whatever happened, the mic is now truly idle,
-      // and the button must say so.
-      if (tapSessionRef.current === recognition) tapSessionRef.current = null;
-      setListening(false);
-    };
+    recognition.onend = () => retireTapSession(recognition);
+
     tapSessionRef.current = recognition;
+    tapCapTimersRef.current.set(
+      recognition,
+      setTimeout(() => {
+        console.log("[speech] tap session hit its absolute cap, retiring");
+        retireTapSession(recognition);
+      }, TAP_SESSION_MAX_MS),
+    );
     try {
       recognition.start();
       setListening(true);
     } catch (err) {
       console.log("[speech] tap session failed to start", err);
-      tapSessionRef.current = null;
-      setListening(false);
+      retireTapSession(recognition);
     }
-  }, [handleResult, setListening]);
+  }, [handleResult, retireTapSession, setListening]);
 
   // ----- shared control -----------------------------------------------------
 
   const toggleListening = useCallback(() => {
     if (modeRef.current === "tap") {
-      if (tapSessionRef.current) {
-        tapSessionRef.current.stop(); // onend resets the state
+      if (isSpeakingRef.current) return; // button is disabled too; belt and suspenders
+      const current = tapSessionRef.current;
+      if (current) {
+        retireTapSession(current);
+        // retireTapSession is idempotent — this is only a backstop for the
+        // case where Safari ignores the stop() call above and the session
+        // (and its own onend/cap timers) linger regardless.
+        setTimeout(() => retireTapSession(current), TAP_STOP_FALLBACK_MS);
       } else {
         startTapSession();
       }
@@ -215,7 +265,7 @@ export function useSpeechRecognition() {
     } catch {
       // start() throws if already started — state is already correct
     }
-  }, [isListening, ensureRecognition, setListening, startTapSession]);
+  }, [isListening, ensureRecognition, setListening, startTapSession, retireTapSession]);
 
   useEffect(() => {
     return () => {
@@ -225,5 +275,5 @@ export function useSpeechRecognition() {
     };
   }, []);
 
-  return { mode, isListening, toggleListening };
+  return { mode, isListening, isSpeaking, toggleListening };
 }
