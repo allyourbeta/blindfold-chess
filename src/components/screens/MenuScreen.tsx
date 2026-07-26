@@ -60,7 +60,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
   return (
     <div className="flex h-full w-full flex-col">
       <header className="relative shrink-0 border-b border-border-default px-6 py-5 text-center">
-        <h1 className="text-4xl font-extrabold tracking-tight text-text-accent">Blindfold</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight text-text-accent">Mind's Eye</h1>
         <p className="mt-1 text-sm font-medium tracking-wide text-text-secondary">Chess Visualization Trainer</p>
         <button
           type="button"

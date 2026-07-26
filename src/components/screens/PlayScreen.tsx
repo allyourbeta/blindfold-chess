@@ -27,24 +27,24 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
     await startNewGame();
   }
 
-  // In tap mode this button IS the voice UX — one tap per move, for the
-  // whole game — so it gets its own centered row and is deliberately huge
-  // (112px). In a true blindfold game it's the only control in constant use.
+  // In tap mode this is THE control of a blindfold game, so it's a full-width
+  // pad the size of a small billboard: input-width, 112px tall, amber at rest
+  // (darker than the shaded buttons — press me), pulsing red while listening.
   const isTap = speech.mode === "tap";
-  const micButton = (big: boolean) => (
+  const micButton = (pad: boolean) => (
     <Button
       type="button"
       size="icon"
-      className={big ? "h-28 w-28 shrink-0 rounded-full" : "h-12 w-12 shrink-0"}
-      variant={speech.isListening ? "primary" : "secondary"}
-      active={speech.isListening}
-      disabled={big && speech.isSpeaking}
+      className={pad ? `h-28 w-full ${speech.isListening ? "animate-pulse" : ""}` : "h-12 w-12 shrink-0"}
+      variant={pad ? (speech.isListening ? "destructive" : "primary") : speech.isListening ? "primary" : "secondary"}
+      active={!pad && speech.isListening}
+      disabled={pad && speech.isSpeaking}
       onClick={speech.toggleListening}
       aria-label={speech.isListening ? "Stop listening" : "Start listening"}
     >
       {/* Always a plain mic — a crossed-out mic reads as "unavailable",
-          not "tap to start". Listening state shows through the variant. */}
-      <Mic className={big ? "h-12 w-12" : "h-5 w-5"} />
+          not "tap to start". Listening state shows through color and pulse. */}
+      <Mic className={pad ? "h-12 w-12" : "h-5 w-5"} />
     </Button>
   );
 
@@ -54,7 +54,7 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
         <button onClick={handleMenu} aria-label="Back to menu" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt">
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <div className="text-base font-extrabold tracking-widest text-text-accent">BLINDFOLD</div>
+        <div className="text-base font-extrabold tracking-widest text-text-accent">MIND'S EYE</div>
         <div className="h-11 w-11" aria-hidden />
       </div>
 
@@ -72,7 +72,7 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
       <MessageLog />
       <div className="flex flex-col gap-2 pt-1">
         <MoveInput mic={speech.mode === "continuous" ? micButton(false) : undefined} />
-        {isTap && <div className="flex justify-center">{micButton(true)}</div>}
+        {isTap && micButton(true)}
         <ActionBar />
       </div>
       <GameOverPanel onNewGame={() => void handleNewGame()} onMenu={handleMenu} />

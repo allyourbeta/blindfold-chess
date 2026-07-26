@@ -17,7 +17,7 @@ export function StatusLine() {
 
   return (
     <div className="border-b border-border-default pb-2">
-      <div className="text-center text-sm font-medium tracking-wide text-text-accent">{text}</div>
+      <div className="text-center text-base font-semibold tracking-wide text-text-accent">{text}</div>
       <div className="text-center font-mono text-xs text-text-muted">Peeks: {peekCount}</div>
     </div>
   );

@@ -12,8 +12,10 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: "bg-bg-primary text-text-on-primary hover:bg-bg-primary-hover shadow-sm",
+        // Shaded, not white-on-white: the soft amber tint keeps every button
+        // visibly a button against the off-white base.
         secondary:
-          "bg-bg-surface text-text-primary border border-border-default hover:bg-bg-surface-alt",
+          "bg-bg-primary-soft text-text-primary border border-border-emphasis hover:bg-bg-muted",
         destructive: "bg-bg-danger text-text-on-dark hover:bg-bg-danger-hover",
         ghost: "text-text-secondary hover:bg-bg-surface-alt hover:text-text-primary",
       },
