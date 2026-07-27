@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { waitForEngineReady, submitMove, keypad } from "./helpers";
+import { waitForEngineReady, submitMove, keypad, openApp } from "./helpers";
 
 test("plays a full game offline after one online load", async ({ page, context }) => {
-  await page.goto("/");
+  await openApp(page);
   await page.waitForFunction(() => !!navigator.serviceWorker.controller, { timeout: 15_000 });
   // Reload so the service worker actually controls this page (it never
   // controls the very first load that registered it), and give it a moment

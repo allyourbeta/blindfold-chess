@@ -4,7 +4,6 @@ import {
   detectGameOver,
   describeGameEnd,
   formatMovePairs,
-  formatStatusLine,
   formatHistorySummary,
   type StoredGame,
 } from "./gameSummary";
@@ -31,15 +30,6 @@ describe("formatMovePairs", () => {
   });
 });
 
-describe("formatStatusLine", () => {
-  it("shows the player's move when it's their turn", () => {
-    expect(formatStatusLine(0, "w", "w")).toBe("Move 1 · White to play · Your move");
-  });
-
-  it("shows the engine is thinking on the opponent's turn", () => {
-    expect(formatStatusLine(1, "b", "w")).toBe("Move 1 · Black to play · Engine thinking");
-  });
-});
 
 describe("formatHistorySummary", () => {
   it("reports no games when history is empty", () => {

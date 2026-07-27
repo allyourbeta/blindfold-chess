@@ -34,6 +34,8 @@ export interface EnabledKeys {
   castleQueenside: boolean;
 }
 
+export type AssistLevel = "assisted" | "strict";
+
 export interface EntryState {
   preview: string;
   enabled: EnabledKeys;
@@ -41,6 +43,8 @@ export interface EntryState {
   resolved: LegalMove | null;
   disambiguation: string[] | null;
   promotionPending: boolean;
+  /** Strict mode only: a syntactically complete entry that matches no legal move — submit it so the rejection is spoken. */
+  invalid: string | null;
 }
 
 /** Row order matches the keypad's Row 1 layout (♔ ♕ ♖ ♗ ♘). */
@@ -57,7 +61,7 @@ const PIECE_CHAR: Record<PieceLetter, LegalMove["piece"]> = {
   P: "p",
 };
 
-interface Slots {
+export interface Slots {
   committed: "piece" | "pawn" | "castle" | null;
   pieceLetter: PieceLetter | null;
   castle: CastleValue | null;
@@ -73,7 +77,7 @@ interface Slots {
  * "capture destination file" the second time it appears in a pawn entry.
  * Which one applies is decided here, once, rather than by tap position.
  */
-function reduceTaps(taps: readonly Tap[]): Slots {
+export function reduceTaps(taps: readonly Tap[]): Slots {
   const slots: Slots = {
     committed: null,
     pieceLetter: null,
@@ -120,7 +124,7 @@ function matchesSlots(move: LegalMove, slots: Slots): boolean {
   return true;
 }
 
-function candidatesFor(legalMoves: readonly LegalMove[], taps: readonly Tap[]): LegalMove[] {
+export function candidatesFor(legalMoves: readonly LegalMove[], taps: readonly Tap[]): LegalMove[] {
   const slots = reduceTaps(taps);
   return legalMoves.filter((m) => matchesSlots(m, slots));
 }
@@ -132,7 +136,7 @@ function candidatesFor(legalMoves: readonly LegalMove[], taps: readonly Tap[]): 
  * phantom d-file "capture". Without this rule the file reading stayed alive
  * on the pawn's own pushes and every same-key pawn push opened a chooser.
  */
-function fileTapAccepted(taps: readonly Tap[], file: FileLetter): boolean {
+export function fileTapAccepted(taps: readonly Tap[], file: FileLetter): boolean {
   const slots = reduceTaps(taps);
   if (slots.committed === "pawn" && slots.destFile === null && slots.originFile === file) return false;
   return true;
@@ -143,6 +147,39 @@ function buildPreview(taps: readonly Tap[], terminal: boolean): string {
   const shown = taps.map((t) => t.value as string);
   if (!terminal) shown.push("_");
   return shown.join(" ");
+}
+
+/**
+ * Strict enablement reveals NOTHING about the position: keys follow the
+ * grammar of the entry alone (a rank needs a file first; a piece or castle
+ * only starts an entry; a pawn can't "capture" its own file). Dimming here
+ * reflects what you've tapped, never what the position allows.
+ */
+function computeStrictEnabled(taps: readonly Tap[], terminal: boolean): EnabledKeys {
+  const slots = reduceTaps(taps);
+  const pieces = {} as Record<PieceLetter, boolean>;
+  const files = {} as Record<FileLetter, boolean>;
+  const ranks = {} as Record<RankDigit, boolean>;
+  const atStart = taps.length === 0;
+  const fileOpen =
+    !terminal &&
+    slots.committed !== "castle" &&
+    (slots.committed === "piece" ? slots.destFile === null : slots.destFile === null);
+  for (const p of PIECE_LETTERS) pieces[p] = atStart;
+  for (const f of FILE_LETTERS) files[f] = !terminal && fileOpen && fileTapAccepted(taps, f);
+  for (const r of RANK_DIGITS) {
+    ranks[r] = !terminal && slots.destRank === null && taps.some((t) => t.kind === "file");
+  }
+  return { pieces, files, ranks, castleKingside: atStart, castleQueenside: atStart };
+}
+
+function buildSanFromSlots(slots: Slots): string {
+  if (slots.committed === "castle") return slots.castle ?? "";
+  if (slots.committed === "piece") return `${slots.pieceLetter}${slots.destFile}${slots.destRank}`;
+  if (slots.originFile && slots.destFile && slots.originFile !== slots.destFile) {
+    return `${slots.originFile}x${slots.destFile}${slots.destRank}`;
+  }
+  return `${slots.destFile}${slots.destRank}`;
 }
 
 function computeEnabled(legalMoves: readonly LegalMove[], taps: readonly Tap[], terminal: boolean): EnabledKeys {
@@ -187,81 +224,41 @@ function computeEnabled(legalMoves: readonly LegalMove[], taps: readonly Tap[], 
  * regardless of how many keys the entry scheme "normally" expects, so a
  * piece+file (or a pawn capture's two files) can resolve before its rank.
  */
-export function computeEntryState(legalMoves: readonly LegalMove[], taps: readonly Tap[]): EntryState {
+export function computeEntryState(
+  legalMoves: readonly LegalMove[],
+  taps: readonly Tap[],
+  assist: AssistLevel = "assisted",
+): EntryState {
   const slots = reduceTaps(taps);
   const candidates = legalMoves.filter((m) => matchesSlots(m, slots));
 
   let resolved: LegalMove | null = null;
   let disambiguation: string[] | null = null;
   let promotionPending = false;
+  let invalid: string | null = null;
 
-  if (taps.length > 0 && candidates.length === 1) {
+  // Strict: nothing resolves early — an entry counts only once it's
+  // syntactically complete (castle, or a destination rank stated).
+  const complete = slots.committed === "castle" || slots.destRank !== null;
+
+  if (assist === "assisted" ? taps.length > 0 && candidates.length === 1 : complete && candidates.length === 1) {
     resolved = candidates[0];
-  } else if (slots.destRank !== null && candidates.length > 1) {
+  } else if ((assist === "assisted" ? slots.destRank !== null : complete) && candidates.length > 1) {
     if (candidates.every((c) => c.promotion)) promotionPending = true;
     else disambiguation = candidates.map((c) => c.san);
+  } else if (assist === "strict" && complete && candidates.length === 0) {
+    invalid = buildSanFromSlots(slots);
   }
 
-  const terminal = resolved !== null || disambiguation !== null || promotionPending;
+  const terminal = resolved !== null || disambiguation !== null || promotionPending || invalid !== null;
 
   return {
     preview: buildPreview(taps, terminal),
-    enabled: computeEnabled(legalMoves, taps, terminal),
+    enabled: assist === "strict" ? computeStrictEnabled(taps, terminal) : computeEnabled(legalMoves, taps, terminal),
     candidates,
     resolved,
     disambiguation,
     promotionPending,
+    invalid,
   };
-}
-
-/**
- * Novag-style dual keys: each of the eight square keys carries one file AND
- * one rank (a1, b2, … h8). A tap is read as whichever the entry can accept;
- * "both" is the rare genuinely-two-way case (e.g. after a pawn's origin
- * file, the d4 key can mean the d-file capture or rank 4) and the keypad
- * resolves it with a chooser built from `dualTapOptions`.
- */
-export type DualReading = "file" | "rank" | "both" | "none";
-
-function fileReadable(legalMoves: readonly LegalMove[], taps: readonly Tap[], file: FileLetter): boolean {
-  if (!fileTapAccepted(taps, file)) return false;
-  return candidatesFor(legalMoves, [...taps, { kind: "file", value: file }]).length > 0;
-}
-
-function rankReadable(legalMoves: readonly LegalMove[], taps: readonly Tap[], rank: RankDigit): boolean {
-  if (!taps.some((t) => t.kind === "file")) return false;
-  return candidatesFor(legalMoves, [...taps, { kind: "rank", value: rank }]).length > 0;
-}
-
-export function interpretDualTap(
-  legalMoves: readonly LegalMove[],
-  taps: readonly Tap[],
-  file: FileLetter,
-  rank: RankDigit,
-): DualReading {
-  const asFile = fileReadable(legalMoves, taps, file);
-  const asRank = rankReadable(legalMoves, taps, rank);
-  if (asFile && asRank) return "both";
-  if (asFile) return "file";
-  if (asRank) return "rank";
-  return "none";
-}
-
-/** SANs of every legal move reachable under either reading of a dual tap, file reading first, deduped. */
-export function dualTapOptions(
-  legalMoves: readonly LegalMove[],
-  taps: readonly Tap[],
-  file: FileLetter,
-  rank: RankDigit,
-): string[] {
-  const sans: string[] = [];
-  for (const tap of [
-    { kind: "file", value: file } as Tap,
-    { kind: "rank", value: rank } as Tap,
-  ]) {
-    for (const move of candidatesFor(legalMoves, [...taps, tap])) {
-      if (!sans.includes(move.san)) sans.push(move.san);
-    }
-  }
-  return sans;
 }

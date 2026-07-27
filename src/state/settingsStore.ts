@@ -6,9 +6,14 @@ import {
   setFileNaming as persistFileNaming,
   getSpeechMode,
   setSpeechMode as persistSpeechMode,
+  getShowTicker,
+  setShowTicker as persistShowTicker,
+  getAssistMode,
+  setAssistMode as persistAssistMode,
   type ThemePreference,
   type FileNaming,
   type SpeechMode,
+  type AssistMode,
 } from "@/api/localStore";
 import type { Color } from "chess.js";
 
@@ -38,7 +43,11 @@ interface SettingsState {
   boardFlipOverride: boolean | null;
   fileNaming: FileNaming;
   theme: ThemePreference;
+  showTicker: boolean;
+  assistMode: AssistMode;
   setPlayerColor(color: Color): void;
+  toggleTicker(): void;
+  setAssistMode(mode: AssistMode): void;
   setSkillIndex(index: number): void;
   setFileNaming(mode: FileNaming): void;
   setSpeechMode(mode: SpeechMode): void;
@@ -61,6 +70,17 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   speechMode: getSpeechMode() ?? "on",
   boardFlipOverride: null,
   theme: initialTheme(),
+  showTicker: getShowTicker(),
+  assistMode: getAssistMode(),
+  toggleTicker: () => {
+    const next = !get().showTicker;
+    persistShowTicker(next);
+    set({ showTicker: next });
+  },
+  setAssistMode: (mode) => {
+    persistAssistMode(mode);
+    set({ assistMode: mode });
+  },
   setPlayerColor: (color) => set({ playerColor: color, boardFlipOverride: null }),
   setSkillIndex: (index) => set({ skillIndex: index }),
   setFileNaming: (mode) => {

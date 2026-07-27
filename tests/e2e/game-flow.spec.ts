@@ -4,7 +4,7 @@ import { startStandardGame, submitMove, keypad, tapKeypadKey } from "./helpers";
 test("normal game start, player move, engine reply", async ({ page }) => {
   await startStandardGame(page);
 
-  await expect(page.getByText(/Move 1 · White to play/)).toBeVisible();
+  await expect(page.getByText(/Your move ·/)).toBeVisible();
   await submitMove(page, "e4");
 
   await expect(page.getByText("White: e4")).toBeVisible();
@@ -12,7 +12,8 @@ test("normal game start, player move, engine reply", async ({ page }) => {
 
   // Engine should reply with a second half-move within the pair.
   await expect(page.locator("div.font-mono.text-sm").first()).toHaveText(/^1\. e4 \S+/, { timeout: 15_000 });
-  await expect(page.getByText(/Move 2 ·/)).toBeVisible();
+  // After the engine's reply it's the player's turn again.
+  await expect(page.getByText(/Your move ·/)).toBeVisible();
 });
 
 test("takeback restores the previous position", async ({ page }) => {
@@ -23,7 +24,7 @@ test("takeback restores the previous position", async ({ page }) => {
   await page.getByRole("button", { name: /Takeback/ }).click();
 
   await expect(page.getByText("No moves yet")).toBeVisible();
-  await expect(page.getByText(/Move 1 · White to play/)).toBeVisible();
+  await expect(page.getByText(/Your move ·/)).toBeVisible();
 
   // The position is genuinely playable again, not just visually reset.
   await submitMove(page, "d4");

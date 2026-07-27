@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { startGameAtSkill, submitMove, keypad } from "./helpers";
+import { startGameAtSkill, submitMove, keypad, openApp } from "./helpers";
 
 test("recovers after an initial Stockfish load failure", async ({ page }) => {
   let requestCount = 0;
@@ -9,7 +9,7 @@ test("recovers after an initial Stockfish load failure", async ({ page }) => {
     return route.continue();
   });
 
-  await page.goto("/");
+  await openApp(page);
 
   const retryButton = page.getByRole("button", { name: /Engine failed — Retry/ });
   await expect(retryButton).toBeVisible({ timeout: 20_000 });

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { getSpeechMode, setSpeechMode } from "./localStore";
+import { getSpeechMode, setSpeechMode, getShowTicker, setShowTicker, getAssistMode, setAssistMode } from "./localStore";
 
 // This module runs under vitest's "node" environment, which has no global
 // localStorage — install a minimal in-memory stand-in so getSpeechMode's
@@ -53,5 +53,25 @@ describe("speech mode: legacy migration", () => {
     expect(getSpeechMode()).toBe("off");
     setSpeechMode("on");
     expect(getSpeechMode()).toBe("on");
+  });
+});
+
+describe("ticker and assist defaults", () => {
+  beforeEach(() => {
+    installFakeLocalStorage();
+  });
+
+  it("ticker defaults to hidden and round-trips", () => {
+    expect(getShowTicker()).toBe(false);
+    setShowTicker(true);
+    expect(getShowTicker()).toBe(true);
+  });
+
+  it("assist defaults to strict, round-trips, and rejects junk", () => {
+    expect(getAssistMode()).toBe("strict");
+    setAssistMode("assisted");
+    expect(getAssistMode()).toBe("assisted");
+    localStorage.setItem("blindfoldAssistMode", "banana");
+    expect(getAssistMode()).toBe("strict");
   });
 });

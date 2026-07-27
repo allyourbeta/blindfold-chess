@@ -8,9 +8,8 @@ import {
   type FileLetter,
   type RankDigit,
   type CastleValue,
-  interpretDualTap,
-  dualTapOptions,
 } from "./entry";
+import { interpretDualTap, dualTapOptions } from "./dual";
 
 function legalMoves(fen?: string): LegalMove[] {
   const chess = fen ? new Chess(fen) : new Chess();
@@ -240,5 +239,53 @@ describe("dual keys: same-file pawn pushes", () => {
 
   it("the e5 key is fully dead after e at the start: no e-file capture, no rank-5 push", () => {
     expect(interpretDualTap(legalMoves(), [{ kind: "file", value: "e" }], "e", "5")).toBe("none");
+  });
+});
+
+describe("strict mode", () => {
+  it("lights every piece and castle key at entry start regardless of the position", () => {
+    // Kings-only position: assisted would dim nearly everything.
+    const moves = legalMoves("4k3/8/8/8/8/8/8/4K3 w - - 0 1");
+    const state = computeEntryState(moves, [], "strict");
+    for (const enabled of Object.values(state.enabled.pieces)) expect(enabled).toBe(true);
+    expect(state.enabled.castleKingside).toBe(true);
+    expect(state.enabled.castleQueenside).toBe(true);
+  });
+
+  it("never resolves early: N,f stays open even when Nf3 is the only knight-to-f move", () => {
+    const state = computeEntryState(legalMoves(), [piece("N"), file("f")], "strict");
+    expect(state.resolved).toBeNull();
+    expect(state.invalid).toBeNull();
+  });
+
+  it("resolves only on a complete entry: N,f,3 plays Nf3", () => {
+    const state = computeEntryState(legalMoves(), [piece("N"), file("f"), rank("3")], "strict");
+    expect(state.resolved?.san).toBe("Nf3");
+  });
+
+  it("flags a complete entry that matches nothing as invalid with its SAN text", () => {
+    const state = computeEntryState(legalMoves(), [piece("N"), file("f"), rank("6")], "strict");
+    expect(state.resolved).toBeNull();
+    expect(state.invalid).toBe("Nf6");
+  });
+
+  it("builds capture SAN for an invalid pawn capture entry", () => {
+    const state = computeEntryState(legalMoves(), [file("e"), file("d"), rank("5")], "strict");
+    expect(state.invalid).toBe("exd5");
+  });
+
+  it("keeps SAN disambiguation even in strict — notation's own requirement", () => {
+    const moves = legalMoves("4k3/8/8/8/8/1N3N2/8/4K3 w - - 0 1");
+    const state = computeEntryState(moves, [piece("N"), file("d"), rank("2")], "strict");
+    expect(state.disambiguation).toEqual(["Nbd2", "Nfd2"]);
+  });
+
+  it("strict dual reading ignores the position: after N, the a1 key reads as its file", () => {
+    const moves = legalMoves();
+    expect(interpretDualTap(moves, [piece("N")], "a", "1", "strict")).toBe("file");
+  });
+
+  it("strict same-file rule still holds: second tap on the pawn's own key is the rank", () => {
+    expect(interpretDualTap(legalMoves(), [file("d")], "d", "4", "strict")).toBe("rank");
   });
 });

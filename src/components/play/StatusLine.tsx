@@ -1,10 +1,13 @@
 import { useGameStore } from "@/state/gameStore";
-import { formatStatusLine } from "@/services/chess/gameSummary";
 
+/**
+ * One line, deliberately spare. The move number is aid (counting done for
+ * you) and lives only in the ticker, which is opt-in. Whose turn it is
+ * stays: that's game state, not assistance.
+ */
 export function StatusLine() {
   const turn = useGameStore((s) => s.turn);
   const playerColor = useGameStore((s) => s.playerColor);
-  const moveCount = useGameStore((s) => s.moveHistory.length);
   const gameOverFlag = useGameStore((s) => s.gameOverFlag);
   const gameOverText = useGameStore((s) => s.gameOverOutcome?.text);
   const peekCount = useGameStore((s) => s.peekCount);
@@ -13,12 +16,13 @@ export function StatusLine() {
   const text =
     gameOverFlag && gameOverText
       ? gameOverText
-      : formatStatusLine(moveCount, turn, playerColor) + (skillLabel ? ` \u00b7 ${skillLabel}` : "");
+      : [turn === playerColor ? "Your move" : "Engine's move", skillLabel, `Peeks: ${peekCount}`]
+          .filter(Boolean)
+          .join(" \u00b7 ");
 
   return (
-    <div className="border-b border-border-default pb-2">
+    <div className="border-b border-border-default pb-1.5">
       <div className="text-center text-base font-semibold tracking-wide text-text-accent">{text}</div>
-      <div className="text-center font-mono text-xs text-text-muted">Peeks: {peekCount}</div>
     </div>
   );
 }

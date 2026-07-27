@@ -107,3 +107,49 @@ export function setSpeechMode(mode: SpeechMode): void {
     // ignore — preference just won't persist across reloads
   }
 }
+
+/** Whether the running move list (the ticker) is shown during play. Default: hidden — reading it back is aid. */
+const SHOW_TICKER_KEY = "blindfoldShowTicker";
+
+export function getShowTicker(): boolean {
+  try {
+    return localStorage.getItem(SHOW_TICKER_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+export function setShowTicker(show: boolean): void {
+  try {
+    localStorage.setItem(SHOW_TICKER_KEY, String(show));
+  } catch {
+    // ignore — the choice just won't persist
+  }
+}
+
+/**
+ * Keypad assistance. "assisted": keys dim against the legal moves and an
+ * entry auto-submits the moment it's unique. "strict": keys reveal nothing
+ * about the position, every entry is stated in full, and an illegal entry
+ * is rejected out loud. Default: strict.
+ */
+export type AssistMode = "assisted" | "strict";
+
+export function getAssistMode(): AssistMode {
+  try {
+    const raw = localStorage.getItem(ASSIST_MODE_KEY);
+    return raw === "assisted" || raw === "strict" ? raw : "strict";
+  } catch {
+    return "strict";
+  }
+}
+
+export function setAssistMode(mode: AssistMode): void {
+  try {
+    localStorage.setItem(ASSIST_MODE_KEY, mode);
+  } catch {
+    // ignore — the choice just won't persist
+  }
+}
+
+const ASSIST_MODE_KEY = "blindfoldAssistMode";

@@ -1,5 +1,18 @@
 import { expect, type Page } from "@playwright/test";
 
+/**
+ * Opens the app with the settings most e2e flows assume: ticker visible and
+ * assisted keypad. The production DEFAULTS are the opposite (ticker hidden,
+ * strict) — strict-ticker.spec.ts covers those explicitly with a bare goto.
+ */
+export async function openApp(page: Page) {
+  await page.addInitScript(() => {
+    localStorage.setItem("blindfoldShowTicker", "true");
+    localStorage.setItem("blindfoldAssistMode", "assisted");
+  });
+  await page.goto("/");
+}
+
 export async function waitForEngineReady(page: Page) {
   await expect(page.getByRole("button", { name: /New Game/ })).toBeVisible({
     timeout: 20_000,
@@ -11,7 +24,7 @@ export function keypad(page: Page) {
 }
 
 export async function startStandardGame(page: Page) {
-  await page.goto("/");
+  await openApp(page);
   await waitForEngineReady(page);
   await page.getByRole("button", { name: /New Game/ }).click();
   await expect(keypad(page)).toBeVisible();
@@ -19,7 +32,7 @@ export async function startStandardGame(page: Page) {
 
 /** Selects a skill level by its label on the menu screen before starting — use "Full Strength" for tests that need a slow, reliably in-flight search. */
 export async function startGameAtSkill(page: Page, skillLabel: string) {
-  await page.goto("/");
+  await openApp(page);
   await waitForEngineReady(page);
   await page.getByRole("button", { name: "Change settings" }).click();
   await page.getByRole("button", { name: skillLabel, exact: true }).click();

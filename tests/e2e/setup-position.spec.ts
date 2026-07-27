@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { waitForEngineReady, keypad } from "./helpers";
+import { waitForEngineReady, keypad, openApp } from "./helpers";
 
 test("custom-position castling-right sanitation", async ({ page }) => {
-  await page.goto("/");
+  await openApp(page);
   await waitForEngineReady(page);
   await page.getByRole("button", { name: /Set Up a Position/ }).click();
 
@@ -24,7 +24,7 @@ test("custom-position castling-right sanitation", async ({ page }) => {
 });
 
 test("importing a FEN preserves side-to-move, en passant, and move counters", async ({ page }) => {
-  await page.goto("/");
+  await openApp(page);
   await waitForEngineReady(page);
   await page.getByRole("button", { name: /Set Up a Position/ }).click();
 

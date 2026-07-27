@@ -76,12 +76,6 @@ export function formatMovePairs(moves: string[]): string {
   return pairs.join("  ");
 }
 
-export function formatStatusLine(moveCount: number, turn: Color, playerColor: Color): string {
-  const moveNum = Math.floor(moveCount / 2) + 1;
-  const turnName = turn === "w" ? "White" : "Black";
-  const youOrEngine = turn === playerColor ? "Your move" : "Engine thinking";
-  return `Move ${moveNum} · ${turnName} to play · ${youOrEngine}`;
-}
 
 /** Legal moves grouped by piece type, for the "hint" command. */
 export function formatHint(chess: Chess): string {

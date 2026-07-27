@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
-import { waitForEngineReady } from "./helpers";
+import { waitForEngineReady, openApp } from "./helpers";
 
 test("home screen prioritizes starting a game and progressively reveals details", async ({ page }) => {
-  await page.goto("/");
+  await openApp(page);
   await waitForEngineReady(page);
 
   await expect(page.getByRole("heading", { name: "Mind's Eye" })).toBeVisible();

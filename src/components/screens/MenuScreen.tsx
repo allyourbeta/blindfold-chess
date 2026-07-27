@@ -22,6 +22,11 @@ interface MenuScreenProps {
   onSetup(): void;
 }
 
+const ASSIST_HINT = {
+  strict: "All keys stay lit. State every move in full; illegal moves are rejected.",
+  assisted: "Keys dim to legal moves and entries complete as soon as they're unique.",
+} as const;
+
 /** One line under the speech control, so the choice explains itself. */
 const SPEECH_HINT = {
   off: "Nothing is spoken. Moves appear on screen.",
@@ -53,6 +58,8 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
   const fileNaming = useSettingsStore((s) => s.fileNaming);
   const setFileNaming = useSettingsStore((s) => s.setFileNaming);
   const speechMode = useSettingsStore((s) => s.speechMode);
+  const assistMode = useSettingsStore((s) => s.assistMode);
+  const setAssistMode = useSettingsStore((s) => s.setAssistMode);
   const setSpeechMode = useSettingsStore((s) => s.setSpeechMode);
 
   const engineStatus = useGameStore((s) => s.engineStatus);
@@ -197,6 +204,19 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
                 ]}
               />
               <p className="mt-2 text-sm text-text-muted">{SPEECH_HINT[speechMode]}</p>
+            </Field>
+
+            <Field label="Keypad assistance">
+              <SegmentedControl<"strict" | "assisted">
+                aria-label="Keypad assistance"
+                value={assistMode}
+                onChange={setAssistMode}
+                options={[
+                  { value: "strict", label: "Strict" },
+                  { value: "assisted", label: "Assisted" },
+                ]}
+              />
+              <p className="mt-2 text-sm text-text-muted">{ASSIST_HINT[assistMode]}</p>
             </Field>
 
             {speechMode !== "off" && (

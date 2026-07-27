@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { startStandardGame, waitForEngineReady, keypad, submitMove, tapKeypadKey } from "./helpers";
+import { startStandardGame, waitForEngineReady, keypad, submitMove, tapKeypadKey, openApp } from "./helpers";
 
 test("plays e4 by tapping e then 4", async ({ page }) => {
   await startStandardGame(page);
@@ -9,7 +9,7 @@ test("plays e4 by tapping e then 4", async ({ page }) => {
 });
 
 test("a knight ambiguity shows both SAN labels in the chooser, and tapping one plays it", async ({ page }) => {
-  await page.goto("/");
+  await openApp(page);
   await waitForEngineReady(page);
   await page.getByRole("button", { name: /Set Up a Position/ }).click();
 

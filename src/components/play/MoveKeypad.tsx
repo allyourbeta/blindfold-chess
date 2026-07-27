@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/Button";
 import { PieceGlyph } from "@/components/board/PieceGlyph";
 import { useGameStore } from "@/state/gameStore";
 import { useSpeechStore } from "@/state/speechStore";
+import { useSettingsStore } from "@/state/settingsStore";
+import { interpretDualTap, dualTapOptions, strictDualChoices, type StrictDualChoice } from "@/services/keypad/dual";
 import {
   computeEntryState,
-  interpretDualTap,
-  dualTapOptions,
   PIECE_LETTERS,
   FILE_LETTERS,
   RANK_DIGITS,
@@ -49,9 +49,11 @@ export function MoveKeypad() {
   const gameOverFlag = useGameStore((s) => s.gameOverFlag);
   const submitMoveText = useGameStore((s) => s.submitMoveText);
   const isSpeaking = useSpeechStore((s) => s.isSpeaking);
+  const assistMode = useSettingsStore((s) => s.assistMode);
 
   const [taps, setTaps] = useState<Tap[]>([]);
   const [dualChoices, setDualChoices] = useState<string[] | null>(null);
+  const [readingChoices, setReadingChoices] = useState<StrictDualChoice[] | null>(null);
   const isPlayersTurn = turn === playerColor;
   const inert = gameOverFlag || isSpeaking || !isPlayersTurn;
 
@@ -59,6 +61,7 @@ export function MoveKeypad() {
   useEffect(() => {
     setTaps([]);
     setDualChoices(null);
+    setReadingChoices(null);
   }, [fen]);
 
   const legalMoves = useMemo<LegalMove[]>(() => {
@@ -74,18 +77,24 @@ export function MoveKeypad() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fen, isPlayersTurn]);
 
-  const entry = useMemo(() => computeEntryState(legalMoves, taps), [legalMoves, taps]);
+  const entry = useMemo(() => computeEntryState(legalMoves, taps, assistMode), [legalMoves, taps, assistMode]);
 
   function play(san: string) {
     submitMoveText(san);
     setTaps([]);
     setDualChoices(null);
+    setReadingChoices(null);
   }
 
   function pushTap(tap: Tap) {
     if (inert) return;
-    const next = computeEntryState(legalMoves, [...taps, tap]);
+    setReadingChoices(null);
+    const next = computeEntryState(legalMoves, [...taps, tap], assistMode);
     if (next.resolved) play(next.resolved.san);
+    // Strict: a fully stated entry that matches nothing goes through the
+    // normal submission path so the rejection is spoken, exactly like the
+    // voice era's understood-but-illegal response.
+    else if (next.invalid) play(next.invalid);
     else setTaps((t) => [...t, tap]);
   }
 
@@ -95,16 +104,20 @@ export function MoveKeypad() {
 
   /** A dual key is its file when the entry wants a file, its rank when it wants a rank — the machine decides. */
   function pushDual(file: FileLetter, rank: RankDigit) {
-    if (inert || dualChoices) return;
-    const reading = interpretDualTap(legalMoves, taps, file, rank);
+    if (inert || dualChoices || readingChoices) return;
+    const reading = interpretDualTap(legalMoves, taps, file, rank, assistMode);
     if (reading === "file") pushTap({ kind: "file", value: file });
     else if (reading === "rank") pushTap({ kind: "rank", value: rank });
-    else if (reading === "both") setDualChoices(dualTapOptions(legalMoves, taps, file, rank));
+    else if (reading === "both") {
+      if (assistMode === "strict") setReadingChoices(strictDualChoices(taps, file, rank));
+      else setDualChoices(dualTapOptions(legalMoves, taps, file, rank));
+    }
   }
 
   function undoTap() {
-    if (dualChoices) {
+    if (dualChoices || readingChoices) {
       setDualChoices(null);
+      setReadingChoices(null);
       return;
     }
     setTaps((t) => t.slice(0, -1));
@@ -118,7 +131,7 @@ export function MoveKeypad() {
         undoTap();
         return;
       }
-      if (dualChoices) return;
+      if (dualChoices || readingChoices) return;
       // SAN's own case convention: uppercase letters are pieces, lowercase
       // letters are files. This matters for "b", which is both a file and
       // the bishop — lowercase b is ALWAYS the b-file (so 1. b4 is typable),
@@ -147,16 +160,33 @@ export function MoveKeypad() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [entry, inert, taps, dualChoices]);
+  }, [entry, inert, taps, dualChoices, readingChoices]);
 
   const chooser = dualChoices ?? entry.disambiguation;
+  const anyChooser = !!chooser || !!readingChoices;
   const statusText = isSpeaking ? "Engine speaking…" : !isPlayersTurn && !gameOverFlag ? "Engine thinking…" : null;
 
   return (
     <div role="group" aria-label="Move entry keypad" className="flex flex-col gap-2">
       <div className="flex items-stretch gap-2">
         <div className="flex h-12 flex-1 items-center justify-center overflow-x-auto rounded-xl border border-border-default bg-bg-surface-alt px-3">
-          {chooser ? (
+          {readingChoices ? (
+            <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
+              {readingChoices.map((choice) => (
+                <Button
+                  key={choice.label}
+                  type="button"
+                  size="sm"
+                  onClick={() => {
+                    setReadingChoices(null);
+                    pushTap(choice.tap);
+                  }}
+                >
+                  {choice.label}
+                </Button>
+              ))}
+            </div>
+          ) : chooser ? (
             <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
               {chooser.map((san) => (
                 <Button key={san} type="button" size="sm" onClick={() => play(san)}>
@@ -190,7 +220,7 @@ export function MoveKeypad() {
           variant="secondary"
           className="h-12 w-14 shrink-0 text-xl disabled:!opacity-30"
           aria-label="Undo last entry"
-          disabled={inert || (taps.length === 0 && !dualChoices)}
+          disabled={inert || (taps.length === 0 && !anyChooser)}
           onClick={undoTap}
         >
           ⌫
@@ -206,7 +236,7 @@ export function MoveKeypad() {
             variant="secondary"
             aria-label={PIECE_NAME[p]}
             className="disabled:!opacity-30"
-            disabled={inert || !!chooser || !entry.enabled.pieces[p]}
+            disabled={inert || anyChooser || !entry.enabled.pieces[p]}
             onClick={() => pushPiece(p)}
           >
             <PieceGlyph piece={playerColor === "w" ? p : p.toLowerCase()} />
@@ -219,7 +249,7 @@ export function MoveKeypad() {
           type="button"
           variant="secondary"
           className="h-11 disabled:!opacity-30"
-          disabled={inert || !!chooser || !entry.enabled.castleKingside}
+          disabled={inert || anyChooser || !entry.enabled.castleKingside}
           onClick={() => pushTap({ kind: "castle", value: "O-O" })}
         >
           O-O
@@ -228,7 +258,7 @@ export function MoveKeypad() {
           type="button"
           variant="secondary"
           className="h-11 disabled:!opacity-30"
-          disabled={inert || !!chooser || !entry.enabled.castleQueenside}
+          disabled={inert || anyChooser || !entry.enabled.castleQueenside}
           onClick={() => pushTap({ kind: "castle", value: "O-O-O" })}
         >
           O-O-O
@@ -244,7 +274,7 @@ export function MoveKeypad() {
             variant="secondary"
             aria-label={`${file}${rank}`}
             className="disabled:!opacity-30"
-            disabled={inert || !!chooser || !(entry.enabled.files[file] || entry.enabled.ranks[rank])}
+            disabled={inert || anyChooser || !(entry.enabled.files[file] || entry.enabled.ranks[rank])}
             onClick={() => pushDual(file, rank)}
           >
             <span className="flex items-baseline gap-1">
