@@ -33,7 +33,31 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     addMessage("thinking", "Stockfish thinking...");
     set({ isThinking: true });
     engineManager.setLevel(SKILL_LEVELS[useSettingsStore.getState().skillIndex]);
-    void engineManager.requestMove(get().chess.fen(), get().moveHistory, applyEngineMove);
+    void engineManager.requestMove(get().chess.fen(), get().moveHistory, applyEngineMove, (err) =>
+      handleEngineFailure(err.message),
+    );
+  }
+
+  /**
+   * The one place a real engine failure surfaces: clears the stuck
+   * "thinking" state, tells the player what happened, then attempts a
+   * single automatic restart so the game isn't lost. If the restart itself
+   * fails, that's the end of automatic recovery — leave a clear message
+   * rather than retrying forever.
+   */
+  function handleEngineFailure(reason: string) {
+    set({ isThinking: false });
+    removeThinkingMessage();
+    addMessage("error", `${reason} Restarting the engine.`);
+    void engineManager.restart().then(
+      () => {
+        const cur = get();
+        if (!cur.gameOverFlag && cur.chess.turn() !== cur.playerColor) requestEngineMove();
+      },
+      () => {
+        addMessage("error", "Engine restart failed. Start a new game or reload the app.");
+      },
+    );
   }
 
   function applyEngineMove(uci: string) {
@@ -46,12 +70,7 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     try {
       result = s.chess.move({ from, to, promotion });
     } catch {
-      addMessage("error", `Engine returned an invalid move: ${uci}. Restarting the engine.`);
-      set({ isThinking: false });
-      void engineManager.restart().then(() => {
-        const cur = get();
-        if (!cur.gameOverFlag && cur.chess.turn() !== cur.playerColor) requestEngineMove();
-      });
+      handleEngineFailure(`Engine returned an invalid move: ${uci}.`);
       return;
     }
     finishMove(result, "engine", null);
@@ -80,6 +99,8 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   }
 
   function finishGame(reason: GameEndReason) {
+    if (get().gameOverFlag) return; // already recorded — never append history twice
+    engineManager.abortSearch(); // no in-flight search may survive into whatever comes next
     const s = get();
     const outcome = describeGameEnd(reason, s.chess, s.playerColor);
     set({
@@ -104,7 +125,12 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   }
 
   async function beginGame(fen: string) {
+    // Unconditional: a prior game's search must never survive into this one,
+    // whether it's still running (isThinking) or was already ended (resign,
+    // checkmate) — relying on isThinking here was the bug, since finishGame
+    // clears it before a caller can ever reach this restart check.
     if (get().isThinking) await engineManager.restart();
+    else engineManager.abortSearch();
 
     const chess = new Chess(fen);
     const color = useSettingsStore.getState().playerColor;
@@ -130,6 +156,17 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
       audioEvent: null,
     });
     addMessage("system", `Game started. You play ${color === "w" ? "White" : "Black"}. Strength: ${skill.label}`);
+
+    // A set-up position can already be over (checkmate/stalemate loaded
+    // directly) — detect that here, before ever asking the engine for a
+    // move it cannot make. Skipping this either leaves the player with a
+    // legal-move-less turn and no game-over panel, or asks Stockfish for a
+    // move and gets back "(none)" forever.
+    const reason = detectGameOver(chess);
+    if (reason) {
+      finishGame(reason);
+      return;
+    }
     if (chess.turn() !== color) requestEngineMove();
   }
 

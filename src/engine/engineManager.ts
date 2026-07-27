@@ -52,25 +52,54 @@ export class EngineManager {
     await this.load();
   }
 
+  /**
+   * Invalidates any in-flight search without tearing down the engine: bumps
+   * `generation` (so a reply that arrives later is dropped as stale) and
+   * tells the adapter to stop searching. Call this whenever a game ends —
+   * resignation, checkmate, an already-over set-up position — so nothing
+   * from that game can ever be delivered to whatever comes next, and so the
+   * search doesn't keep burning CPU after nobody cares about its answer.
+   */
+  abortSearch(): void {
+    this.generation++;
+    this.adapter.stop();
+  }
+
   setLevel(level: EngineLevel): void {
     this.adapter.setLevel(level);
   }
 
   /**
-   * Requests a move for `fen`. If a restart happens before this resolves,
-   * or the engine errors, the reply is dropped here — `onMove` simply never
-   * fires, so callers don't need to re-check staleness themselves.
+   * Requests a move for `fen`. If a restart/abortSearch happens before this
+   * resolves, the reply (or failure) is superseded and dropped silently —
+   * `onMove`/`onError` simply never fire, so callers don't need to
+   * re-check staleness themselves. A genuine failure — the adapter rejects,
+   * or replies "(none)" for a position the caller believes is still live —
+   * invokes `onError` exactly once so the caller can surface it and recover.
    */
-  async requestMove(fen: string, moveHistory: string[], onMove: (uci: string) => void): Promise<void> {
+  async requestMove(
+    fen: string,
+    moveHistory: string[],
+    onMove: (uci: string) => void,
+    onError: (err: Error) => void,
+  ): Promise<void> {
     const requestGeneration = this.generation;
+    const stale = () => requestGeneration !== this.generation;
+
     let uci: string;
     try {
       uci = await this.adapter.requestMove(fen, moveHistory);
-    } catch {
+    } catch (err) {
+      if (stale()) return;
+      onError(err instanceof Error ? err : new Error(String(err)));
       return;
     }
-    if (requestGeneration !== this.generation) return;
-    if (uci && uci !== "(none)") onMove(uci);
+    if (stale()) return;
+    if (uci === "(none)") {
+      onError(new Error("Engine returned no move for a position that isn't over"));
+      return;
+    }
+    onMove(uci);
   }
 
   stop(): void {
