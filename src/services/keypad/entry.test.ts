@@ -289,3 +289,22 @@ describe("strict mode", () => {
     expect(interpretDualTap(legalMoves(), [file("d")], "d", "4", "strict")).toBe("rank");
   });
 });
+
+describe("strict mode: piece-first", () => {
+  it("square keys are dead until a piece starts the entry", () => {
+    const state = computeEntryState(legalMoves(), [], "strict");
+    for (const enabled of Object.values(state.enabled.files)) expect(enabled).toBe(false);
+    for (const enabled of Object.values(state.enabled.ranks)) expect(enabled).toBe(false);
+  });
+
+  it("the pawn key opens the files: P then e then 4 plays e4", () => {
+    const afterP = computeEntryState(legalMoves(), [piece("P")], "strict");
+    expect(afterP.enabled.files.e).toBe(true);
+    const state = computeEntryState(legalMoves(), [piece("P"), file("e"), rank("4")], "strict");
+    expect(state.resolved?.san).toBe("e4");
+  });
+
+  it("a dual tap at entry start reads as nothing in strict", () => {
+    expect(interpretDualTap(legalMoves(), [], "a", "1", "strict")).toBe("none");
+  });
+});

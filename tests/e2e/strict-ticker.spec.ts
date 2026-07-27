@@ -28,8 +28,11 @@ test("strict keypad: every key lit at the start, no early resolution, full entry
 
   // Rooks have no legal move at the start; strict must light the key anyway.
   await expect(keypad(page).getByRole("button", { name: "Rook" })).toBeEnabled();
+  // Piece-first: square keys stay dead until a piece starts the entry.
+  await expect(keypad(page).getByRole("button", { name: "a1", exact: true })).toBeDisabled();
 
   await tapKeypadKey(page, "Knight");
+  await expect(keypad(page).getByRole("button", { name: "a1", exact: true })).toBeEnabled();
   await tapKeypadKey(page, "f");
   // Assisted would have auto-submitted Nf3 here; strict waits for the rank.
   await expect(page.getByText("Moves hidden")).toBeVisible();

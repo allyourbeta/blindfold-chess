@@ -161,10 +161,14 @@ function computeStrictEnabled(taps: readonly Tap[], terminal: boolean): EnabledK
   const files = {} as Record<FileLetter, boolean>;
   const ranks = {} as Record<RankDigit, boolean>;
   const atStart = taps.length === 0;
+  // Piece-first: in strict, square keys wake only after a piece (or the
+  // pawn key) starts the entry — a bare letter can't wander you into a
+  // pawn move you didn't mean to start. Pawn moves are P, file, rank.
   const fileOpen =
     !terminal &&
+    slots.committed !== null &&
     slots.committed !== "castle" &&
-    (slots.committed === "piece" ? slots.destFile === null : slots.destFile === null);
+    slots.destFile === null;
   for (const p of PIECE_LETTERS) pieces[p] = atStart;
   for (const f of FILE_LETTERS) files[f] = !terminal && fileOpen && fileTapAccepted(taps, f);
   for (const r of RANK_DIGITS) {

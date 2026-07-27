@@ -43,7 +43,8 @@ function assistedRankReadable(legalMoves: readonly LegalMove[], taps: readonly T
 
 function strictFileReadable(taps: readonly Tap[], file: FileLetter): boolean {
   const slots = reduceTaps(taps);
-  if (slots.committed === "castle" || slots.destFile !== null) return false;
+  // Piece-first: no square tap means anything until a piece starts the entry.
+  if (slots.committed === null || slots.committed === "castle" || slots.destFile !== null) return false;
   return fileTapAccepted(taps, file);
 }
 

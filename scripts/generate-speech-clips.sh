@@ -30,7 +30,7 @@ fi
 # id:spoken text — id is also the output filename (id.wav).
 CLIPS=(
   "king:king" "queen:queen" "rook:rook" "bishop:bishop" "knight:knight" "pawn:pawn"
-  "a:Ay" "b:Bee" "c:See" "d:Dee" "e:e" "f:Eff" "g:Jee" "h:Aitch"
+  "a:Ay" "b:Bee" "c:See" "d:Dee" "e:e" "f:ef" "g:Jee" "h:Aitch"
   # NATO file names — used when the "Say files as" setting is set to NATO.
   # b/c/d/e/g are the classic confusable E-set; these are not confusable.
   "nato-a:Alpha" "nato-b:Bravo" "nato-c:Charlie" "nato-d:Delta"
