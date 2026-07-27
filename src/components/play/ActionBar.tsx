@@ -2,6 +2,7 @@ import { Eye, Undo2, Lightbulb, Flag, RotateCcw, ClipboardCopy, Volume2, FileCod
 import { Button } from "@/components/ui/Button";
 import { useGameStore } from "@/state/gameStore";
 import { useSettingsStore } from "@/state/settingsStore";
+import { unlockAudioOutput } from "@/hooks/useSpeechOutput";
 
 /**
  * Two rows, on purpose.
@@ -81,7 +82,14 @@ export function ActionBar() {
         <Button variant="secondary" size="sm" disabled={gameOverFlag} onClick={doResign}>
           <Flag className="h-4 w-4" /> Resign
         </Button>
-        <Button variant="secondary" size="sm" onClick={() => void startNewGame()}>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => {
+            unlockAudioOutput();
+            void startNewGame();
+          }}
+        >
           <RotateCcw className="h-4 w-4" /> New Game
         </Button>
         </div>

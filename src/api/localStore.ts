@@ -128,10 +128,11 @@ export function setShowTicker(show: boolean): void {
 }
 
 /**
- * Keypad assistance. "assisted": keys dim against the legal moves and an
- * entry auto-submits the moment it's unique. "strict": keys reveal nothing
- * about the position, every entry is stated in full, and an illegal entry
- * is rejected out loud. Default: strict.
+ * Keypad assistance. "assisted": keys dim against the legal moves, so you
+ * can't tap your way toward an illegal move. "strict": keys reveal nothing
+ * about the position and an illegal entry is rejected out loud. BOTH modes
+ * require the complete destination square and neither ever completes a
+ * partial entry for you. Default: strict.
  */
 export type AssistMode = "assisted" | "strict";
 

@@ -221,16 +221,31 @@ export function computeEntryState(
   let promotionPending = false;
   let invalid: string | null = null;
 
-  // Strict: nothing resolves early — an entry counts only once it's
-  // syntactically complete (castle, or a destination rank stated).
+  // NOTHING resolves early, in either mode. An entry counts only once it is
+  // syntactically complete: a castle (already a whole move), or a stated
+  // destination square. Assisted mode may GUIDE entry by dimming keys, but
+  // it must never guess an omitted rank: "knight, c" is not a move, and
+  // silently completing it to Nc3 makes it impossible to state Nc4 — or any
+  // illegal move — accurately. Assistance is not authorship.
   const complete = slots.committed === "castle" || slots.destRank !== null;
 
-  if (assist === "assisted" ? taps.length > 0 && candidates.length === 1 : complete && candidates.length === 1) {
+  if (complete && candidates.length === 1) {
     resolved = candidates[0];
-  } else if ((assist === "assisted" ? slots.destRank !== null : complete) && candidates.length > 1) {
-    if (candidates.every((c) => c.promotion)) promotionPending = true;
-    else disambiguation = candidates.map((c) => c.san);
-  } else if (assist === "strict" && complete && candidates.length === 0) {
+  } else if (complete && candidates.length > 1) {
+    // Promotions from a single pawn get the Q/R/B/N picker. Two pawns able
+    // to promote onto the same square (push + capture) must first say WHICH
+    // pawn — the standard SAN chooser, full promotion SANs and all —
+    // otherwise the picker would silently play whichever pawn came first.
+    if (candidates.every((c) => c.promotion)) {
+      if (new Set(candidates.map((c) => c.from)).size === 1) promotionPending = true;
+      else disambiguation = candidates.map((c) => c.san);
+    } else {
+      disambiguation = candidates.map((c) => c.san);
+    }
+  } else if (complete && candidates.length === 0) {
+    // Reachable by construction in strict; defensive in assisted, where
+    // dimming should prevent it. Either way: reject what was stated,
+    // never substitute something legal.
     invalid = buildSanFromSlots(slots);
   }
 

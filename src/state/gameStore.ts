@@ -26,8 +26,13 @@ export type MoveSource = { kind: "typed" };
 
 export type GameAudioEvent =
   | { kind: "move"; move: Move; by: "player" | "engine"; source: MoveSource | null }
-  /** A typed/keypad entry that didn't resolve to a legal move. Never spoken — see utteranceForEvent.ts. */
-  | { kind: "illegal-move"; spoken: string; source: MoveSource }
+  /**
+   * A keypad entry that didn't resolve to a legal move. `attempted` is the
+   * SAN-shaped text the player stated (null when there's nothing to name,
+   * e.g. "not your turn") — spoken back as "<move>, not legal" so a
+   * blindfolded player HEARS the rejection instead of a silent log line.
+   */
+  | { kind: "illegal-move"; spoken: string; attempted: string | null; source: MoveSource }
   | { kind: "game-end"; reason: GameEndReason };
 
 export interface GameState {

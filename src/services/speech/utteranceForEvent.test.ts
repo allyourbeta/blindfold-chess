@@ -16,7 +16,7 @@ describe("utteranceForEvent — speech off", () => {
     const events: GameAudioEvent[] = [
       moveEvent("engine"),
       moveEvent("player"),
-      { kind: "illegal-move", spoken: "Illegal move", source: { kind: "typed" } },
+      { kind: "illegal-move", spoken: "Illegal move", attempted: "Nf6", source: { kind: "typed" } },
       { kind: "game-end", reason: "stalemate" },
     ];
     for (const event of events) {
@@ -38,9 +38,9 @@ describe("utteranceForEvent — moves", () => {
 });
 
 describe("utteranceForEvent — illegal moves", () => {
-  it("is never spoken, even when speech is on", () => {
-    const event: GameAudioEvent = { kind: "illegal-move", spoken: "Illegal move", source: { kind: "typed" } };
-    expect(utteranceForEvent(event, "on", "letters")).toBeNull();
+  it("IS spoken when speech is on — the rejection is the app's whole answer in strict mode", () => {
+    const event: GameAudioEvent = { kind: "illegal-move", spoken: "Illegal move", attempted: "Nf6", source: { kind: "typed" } };
+    expect(utteranceForEvent(event, "on", "letters")).not.toBeNull();
   });
 });
 
@@ -53,5 +53,43 @@ describe("utteranceForEvent — game end", () => {
   it("has nothing extra to say for checkmate — the mating move's own clip already said it", () => {
     const event: GameAudioEvent = { kind: "game-end", reason: "checkmate" };
     expect(utteranceForEvent(event, "on", "letters")).toBeNull();
+  });
+});
+
+describe("utteranceForEvent — rejections speak", () => {
+  it("speaks a rejected piece entry back with its square and 'not legal'", () => {
+    const u = utteranceForEvent(
+      { kind: "illegal-move", spoken: "Illegal move", attempted: "Nf6", source: { kind: "typed" } },
+      "on",
+      "letters",
+    );
+    expect(u?.clips).toEqual(["knight", "f", "6", "not-legal"]);
+  });
+
+  it("speaks a rejected pawn entry as its square", () => {
+    const u = utteranceForEvent(
+      { kind: "illegal-move", spoken: "Illegal move", attempted: "e5", source: { kind: "typed" } },
+      "on",
+      "nato",
+    );
+    expect(u?.clips).toEqual(["nato-e", "5", "not-legal"]);
+  });
+
+  it("speaks a rejected castle", () => {
+    const u = utteranceForEvent(
+      { kind: "illegal-move", spoken: "Illegal move", attempted: "O-O", source: { kind: "typed" } },
+      "on",
+      "letters",
+    );
+    expect(u?.clips).toEqual(["castles-kingside", "not-legal"]);
+  });
+
+  it("stays silent when there is nothing to name", () => {
+    const u = utteranceForEvent(
+      { kind: "illegal-move", spoken: "Not your turn", attempted: null, source: { kind: "typed" } },
+      "on",
+      "letters",
+    );
+    expect(u).toBeNull();
   });
 });

@@ -24,7 +24,7 @@ interface MenuScreenProps {
 
 const ASSIST_HINT = {
   strict: "All keys stay lit. State every move in full; illegal moves are rejected.",
-  assisted: "Keys dim to legal moves and entries complete as soon as they're unique.",
+  assisted: "Keys dim to the legal moves, so you can't enter an impossible square.",
 } as const;
 
 /** One line under the speech control, so the choice explains itself. */

@@ -138,13 +138,13 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     if (!s.chess || s.gameOverFlag) return;
     if (s.chess.turn() !== s.playerColor) {
       addMessage("system", "It's not your turn.");
-      set({ audioEvent: { kind: "illegal-move", spoken: "Not your turn", source } });
+      set({ audioEvent: { kind: "illegal-move", spoken: "Not your turn", attempted: null, source } });
       return;
     }
     const result = resolveMoveInput(s.chess, raw);
     if (!result.ok) {
       if (result.error) addMessage("error", result.error);
-      set({ audioEvent: { kind: "illegal-move", spoken: "Illegal move", source } });
+      set({ audioEvent: { kind: "illegal-move", spoken: "Illegal move", attempted: raw, source } });
       return;
     }
     finishMove(s.chess.move(result.san), "player", source);

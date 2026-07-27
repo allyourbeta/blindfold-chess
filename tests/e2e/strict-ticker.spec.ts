@@ -34,7 +34,7 @@ test("strict keypad: every key lit at the start, no early resolution, full entry
   await tapKeypadKey(page, "Knight");
   await expect(keypad(page).getByRole("button", { name: "a1", exact: true })).toBeEnabled();
   await tapKeypadKey(page, "f");
-  // Assisted would have auto-submitted Nf3 here; strict waits for the rank.
+  // No mode completes a partial entry — the rank must be stated.
   await expect(page.getByText("Moves hidden")).toBeVisible();
 
   await tapKeypadKey(page, "3");

@@ -66,9 +66,18 @@ describe("computeEntryState: pawn moves", () => {
 });
 
 describe("computeEntryState: piece moves", () => {
-  it("auto-submits Nf3 once piece+file already narrows to one legal move", () => {
+  it("NEVER completes a partial entry: piece+file waits for the rank even when unique", () => {
+    // The bug this replaces: N,f auto-submitted Nf3, so "knight f4" was
+    // unstateable — the app answered a move the player never made.
     const state = computeEntryState(legalMoves(), [piece("N"), file("f")]);
-    expect(state.resolved?.san).toBe("Nf3");
+    expect(state.resolved).toBeNull();
+    expect(state.invalid).toBeNull();
+  });
+
+  it("a completed illegal knight move is rejected, not substituted", () => {
+    const state = computeEntryState(legalMoves(), [piece("N"), file("c"), rank("4")]);
+    expect(state.resolved).toBeNull();
+    expect(state.invalid).toBe("Nc4");
   });
 
   it("waits for the rank when piece+file still matches more than one legal move", () => {
@@ -308,5 +317,18 @@ describe("strict mode: piece-first", () => {
 
   it("a dual tap at entry start reads as nothing in strict", () => {
     expect(interpretDualTap(legalMoves(), [], "a", "1", "strict")).toBe("none");
+  });
+});
+
+describe("promotion with two source pawns", () => {
+  it("asks WHICH pawn via the SAN chooser instead of guessing", () => {
+    // Black rook on e8; white pawns d7 and f7 — dxe8 and fxe8 both promote.
+    const moves = legalMoves("4r2k/3P1P2/8/8/8/8/8/4K3 w - - 0 1");
+    const state = computeEntryState(moves, [piece("P"), file("e"), rank("8")], "strict");
+    expect(state.promotionPending).toBe(false);
+    expect(state.resolved).toBeNull();
+    expect(state.disambiguation?.length).toBe(8);
+    expect(state.disambiguation).toContain("dxe8=Q+");
+    expect(state.disambiguation).toContain("fxe8=Q+");
   });
 });

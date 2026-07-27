@@ -1,6 +1,23 @@
 import type { GameAudioEvent } from "@/state/gameStore";
 import type { FileNaming, SpeechMode } from "@/api/localStore";
-import { movePhraseClips, gameEndPhraseClips, speechTextForClips } from "./phrase";
+import { movePhraseClips, gameEndPhraseClips, speechTextForClips, type ClipId } from "./phrase";
+
+const PIECE_CLIP: Record<string, ClipId> = { N: "knight", B: "bishop", R: "rook", Q: "queen", K: "king" };
+
+/**
+ * Speaks a rejected keypad entry back as "<what you stated>, not legal".
+ * The attempted text is our own buildSanFromSlots output, so its shape is
+ * fully regular; anything else (defensive) is simply not spoken.
+ */
+function rejectionClips(attempted: string, fileNaming: FileNaming): ClipId[] | null {
+  if (attempted === "O-O") return ["castles-kingside", "not-legal"];
+  if (attempted === "O-O-O") return ["castles-queenside", "not-legal"];
+  const m = attempted.match(/^([NBRQK])?([a-h])([1-8])$/);
+  if (!m) return null;
+  const [, piece, file, rank] = m;
+  const fileClip = (fileNaming === "nato" ? `nato-${file}` : file) as ClipId;
+  return [...(piece ? [PIECE_CLIP[piece]] : []), fileClip, rank as ClipId, "not-legal"];
+}
 
 export interface SpokenUtterance {
   clips: string[] | null;
@@ -10,9 +27,10 @@ export interface SpokenUtterance {
 /**
  * Pure event-to-voice decision. The application generates no beeps.
  *
- * Player moves never speak — there is no voice input to read back, and
- * typed/keypad moves never read back by design. Illegal-move attempts are
- * shown in the message log, never spoken, for the same reason.
+ * Player moves never speak — typed/keypad moves never read back by design.
+ * Illegal ENTRIES do speak ("knight f six, not legal"): in strict mode the
+ * rejection is the app's whole answer, and a blindfolded player must hear
+ * it — a silent log line reads as a freeze.
  */
 export function utteranceForEvent(
   event: GameAudioEvent,
@@ -27,7 +45,12 @@ export function utteranceForEvent(
     return { clips, text: speechTextForClips(clips) };
   }
 
-  if (event.kind === "illegal-move") return null;
+  if (event.kind === "illegal-move") {
+    if (!event.attempted) return null;
+    const clips = rejectionClips(event.attempted, fileNaming);
+    if (!clips) return null;
+    return { clips, text: speechTextForClips(clips) };
+  }
 
   const clips = gameEndPhraseClips(event.reason);
   if (!clips.length) return null;
