@@ -1,6 +1,23 @@
 // Bump this whenever the app shell / precache list changes so browsers
 // pick up a fresh install instead of reusing a stale cache.
-const CACHE_NAME = 'blindfold-chess-v40';
+const CACHE_NAME = 'blindfold-chess-v41';
+
+/**
+ * Maia's model + WASM runtime live in their own cache, deliberately never
+ * touched by the `activate` cleanup below that wipes every non-CACHE_NAME
+ * cache on a version bump. Without this, bumping CACHE_NAME for an
+ * unrelated UI change would silently force a re-download of a multi-MB
+ * payload on the next load -- exactly the mobile-data cost this app is
+ * built to avoid. This cache is instead invalidated on its own terms: the
+ * model entry is content-checked against MODELS.md's sha256 below, and the
+ * runtime files change only when the onnxruntime-web dependency does (which
+ * ships as part of a real code change anyway).
+ */
+const MODEL_CACHE_NAME = 'blindfold-chess-maia-v1';
+const MODEL_URL = '/maia/models/maia_kdd_1900.onnx';
+// MODELS.md: maia_kdd_1900.onnx.
+const MODEL_SHA256 = '65ee89dcee614d2b7f5bf8fc5950e83050bf855ecb4d34f6e6214b09acc64572';
+const MAIA_RUNTIME_ASSETS = ['/maia/ort/ort-wasm-simd-threaded.wasm', '/maia/ort/ort-wasm-simd-threaded.mjs'];
 
 const PIECE_FILES = [
   'wK', 'wQ', 'wR', 'wB', 'wN', 'wP',
@@ -44,10 +61,65 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)));
+    await Promise.all(
+      keys.filter((key) => key !== CACHE_NAME && key !== MODEL_CACHE_NAME).map((key) => caches.delete(key)),
+    );
     await self.clients.claim();
   })());
 });
+
+async function sha256Hex(buffer) {
+  const digest = await crypto.subtle.digest('SHA-256', buffer);
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+/**
+ * Cache-first with a content check, not just a name check: on every read
+ * (cached or freshly fetched) the model's bytes are hashed and compared
+ * against MODELS.md's sha256. A cached entry that fails is evicted and
+ * refetched once; a freshly-fetched one that fails is neither served nor
+ * cached -- the model never runs unless its bytes are known-correct.
+ */
+async function handleModelRequest(request) {
+  const cache = await caches.open(MODEL_CACHE_NAME);
+  const cached = await cache.match(request);
+  if (cached) {
+    const hex = await sha256Hex(await cached.clone().arrayBuffer());
+    if (hex === MODEL_SHA256) return cached;
+    await cache.delete(request); // corrupt cache entry -- fall through to a fresh fetch
+  }
+
+  let response;
+  try {
+    response = await fetch(request);
+  } catch {
+    return new Response('', { status: 503, statusText: 'Offline' });
+  }
+  if (response.status !== 200) return response;
+
+  const hex = await sha256Hex(await response.clone().arrayBuffer());
+  if (hex !== MODEL_SHA256) {
+    return new Response('', { status: 502, statusText: 'Model checksum mismatch' });
+  }
+  await cache.put(request, response.clone());
+  return response;
+}
+
+/** Cache-first, no content check (MODELS.md has no hash for these) -- durable for the same reason the model is. */
+async function handleMaiaRuntimeAsset(request) {
+  const cache = await caches.open(MODEL_CACHE_NAME);
+  const cached = await cache.match(request);
+  if (cached) return cached;
+  try {
+    const response = await fetch(request);
+    if (response.status === 200) await cache.put(request, response.clone());
+    return response;
+  } catch {
+    return new Response('', { status: 503, statusText: 'Offline' });
+  }
+}
 
 /**
  * Navigations go to the network first, everything else to the cache first.
@@ -74,6 +146,16 @@ async function networkFirst(request) {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+
+  const path = new URL(event.request.url).pathname;
+  if (path === MODEL_URL) {
+    event.respondWith(handleModelRequest(event.request));
+    return;
+  }
+  if (MAIA_RUNTIME_ASSETS.includes(path)) {
+    event.respondWith(handleMaiaRuntimeAsset(event.request));
+    return;
+  }
 
   if (event.request.mode === 'navigate') {
     event.respondWith((async () => {

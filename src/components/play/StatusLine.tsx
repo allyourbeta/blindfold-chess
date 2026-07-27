@@ -11,12 +11,12 @@ export function StatusLine() {
   const gameOverFlag = useGameStore((s) => s.gameOverFlag);
   const gameOverText = useGameStore((s) => s.gameOverOutcome?.text);
   const peekCount = useGameStore((s) => s.peekCount);
-  const skillLabel = useGameStore((s) => s.activeSkillLabel);
+  const opponentLabel = useGameStore((s) => s.activeOpponentLabel);
 
   const text =
     gameOverFlag && gameOverText
       ? gameOverText
-      : [turn === playerColor ? "Your move" : "Engine's move", skillLabel, `Peeks: ${peekCount}`]
+      : [turn === playerColor ? "Your move" : "Engine's move", opponentLabel, `Peeks: ${peekCount}`]
           .filter(Boolean)
           .join(" \u00b7 ");
 

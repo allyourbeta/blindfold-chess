@@ -1,5 +1,14 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { getSpeechMode, setSpeechMode, getShowTicker, setShowTicker, getAssistMode, setAssistMode } from "./localStore";
+import {
+  getSpeechMode,
+  setSpeechMode,
+  getShowTicker,
+  setShowTicker,
+  getAssistMode,
+  setAssistMode,
+  getRandomness,
+  setRandomness,
+} from "./localStore";
 
 // This module runs under vitest's "node" environment, which has no global
 // localStorage — install a minimal in-memory stand-in so getSpeechMode's
@@ -73,5 +82,15 @@ describe("ticker and assist defaults", () => {
     expect(getAssistMode()).toBe("assisted");
     localStorage.setItem("blindfoldAssistMode", "banana");
     expect(getAssistMode()).toBe("strict");
+  });
+
+  it("randomness defaults to human, round-trips through every stop, and rejects junk", () => {
+    expect(getRandomness()).toBe("human");
+    for (const stop of ["predictable", "focused", "human", "loose", "wild"] as const) {
+      setRandomness(stop);
+      expect(getRandomness()).toBe(stop);
+    }
+    localStorage.setItem("blindfoldRandomness", "banana");
+    expect(getRandomness()).toBe("human");
   });
 });

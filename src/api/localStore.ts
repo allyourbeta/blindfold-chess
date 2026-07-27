@@ -1,4 +1,5 @@
 import type { StoredGame } from "@/services/chess/gameSummary";
+import type { RandomnessStop } from "@/engine/types";
 
 /**
  * The only module in the codebase allowed to touch localStorage. Everything
@@ -154,3 +155,23 @@ export function setAssistMode(mode: AssistMode): void {
 }
 
 const ASSIST_MODE_KEY = "blindfoldAssistMode";
+
+const RANDOMNESS_KEY = "blindfoldRandomness";
+const VALID_RANDOMNESS_STOPS: readonly RandomnessStop[] = ["predictable", "focused", "human", "loose", "wild"];
+
+export function getRandomness(): RandomnessStop {
+  try {
+    const raw = localStorage.getItem(RANDOMNESS_KEY);
+    return (VALID_RANDOMNESS_STOPS as readonly string[]).includes(raw ?? "") ? (raw as RandomnessStop) : "human";
+  } catch {
+    return "human";
+  }
+}
+
+export function setRandomness(stop: RandomnessStop): void {
+  try {
+    localStorage.setItem(RANDOMNESS_KEY, stop);
+  } catch {
+    // ignore — the choice just won't persist
+  }
+}

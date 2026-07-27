@@ -30,14 +30,19 @@ export async function startStandardGame(page: Page) {
   await expect(keypad(page)).toBeVisible();
 }
 
-/** Selects a skill level by its label on the menu screen before starting — use "Full Strength" for tests that need a slow, reliably in-flight search. */
-export async function startGameAtSkill(page: Page, skillLabel: string) {
-  await openApp(page);
-  await waitForEngineReady(page);
-  await page.getByRole("button", { name: "Change settings" }).click();
-  await page.getByRole("button", { name: skillLabel, exact: true }).click();
-  await page.getByRole("button", { name: /New Game/ }).click();
-  await expect(keypad(page)).toBeVisible();
+/**
+ * Slows the page's CPU (Chromium-only CDP), so a real Maia inference call
+ * takes long enough to reliably act on while it's still in flight. Unlike
+ * Stockfish's old adjustable search depth, Maia has no dial to make a
+ * single move request slower — this is the nearest equivalent for tests
+ * that want a wide, deterministic-ish window on an in-flight request.
+ * Throttles test-side action dispatch too (it's the whole renderer, not
+ * just JS), so callers should treat "the request happened to finish before
+ * I acted" as a valid outcome, not a bug — see engine-lifecycle.spec.ts.
+ */
+export async function throttleCpu(page: Page, rate: number) {
+  const client = await page.context().newCDPSession(page);
+  await client.send("Emulation.setCPUThrottlingRate", { rate });
 }
 
 const PIECE_NAME: Record<string, string> = { N: "Knight", B: "Bishop", R: "Rook", Q: "Queen", K: "King" };

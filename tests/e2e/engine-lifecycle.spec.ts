@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
-import { startGameAtSkill, submitMove, keypad, openApp, waitForEngineReady } from "./helpers";
+import { startStandardGame, submitMove, keypad, openApp, waitForEngineReady, throttleCpu } from "./helpers";
 
-test("recovers after an initial Stockfish load failure", async ({ page }) => {
+test("recovers after an initial Maia model load failure", async ({ page }) => {
   let requestCount = 0;
-  await page.route("**/engine/stockfish.js", (route) => {
+  await page.route("**/maia_kdd_1900.onnx", (route) => {
     requestCount++;
     if (requestCount === 1) return route.fulfill({ status: 500, body: "boom" });
     return route.continue();
@@ -25,50 +25,57 @@ test("recovers after an initial Stockfish load failure", async ({ page }) => {
   await expect(page.locator("div.font-mono.text-sm").first()).toHaveText(/^1\. e4/);
 });
 
-test("resign discards any in-flight engine reply", async ({ page }) => {
-  await startGameAtSkill(page, "Full Strength");
+/**
+ * These three tests exercise resign / New Game against a request that may
+ * still be in flight. Maia (unlike Stockfish) has no depth/skill dial to
+ * force a slow, reliably-observable search, so `throttleCpu` is a
+ * best-effort attempt to widen that window instead of a guarantee -- see
+ * its doc comment. Either outcome (the request was genuinely aborted, or it
+ * happened to finish first) is a PASS here: the property under test is "the
+ * app recovers cleanly and never strands the player", which holds in both
+ * cases. The narrower property "a stale reply never reaches onMove once
+ * superseded" already has a deterministic, timing-independent test at
+ * src/engine/engineManager.test.ts.
+ */
+test("resign always ends the game cleanly, whether or not Maia had already replied", async ({ page }) => {
+  await startStandardGame(page);
+  await throttleCpu(page, 20);
   await submitMove(page, "e4");
-  await expect(page.getByText("Stockfish thinking...")).toBeVisible({ timeout: 3000 });
-
   await page.getByRole("button", { name: /Resign/ }).click();
-  await expect(page.getByText("You resigned.").first()).toBeVisible();
 
-  // Give any in-flight deep search time to finish — its reply must never land.
+  await expect(page.getByText("You resigned.").first()).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByText(/error/i)).toHaveCount(0);
+
+  // Whatever was in flight must not still be running: give it time, then
+  // confirm nothing shows up as "thinking" or produces a further message.
   await page.waitForTimeout(4000);
-  await expect(page.getByText(/^Black: /)).toHaveCount(0);
+  await expect(page.getByText(/thinking/i)).toHaveCount(0);
 });
 
-test("starting a new game while the engine is thinking restarts it safely", async ({ page }) => {
-  await startGameAtSkill(page, "Full Strength");
+test("starting a new game while Maia might still be replying restarts it safely", async ({ page }) => {
+  await startStandardGame(page);
+  await throttleCpu(page, 20);
   await submitMove(page, "e4");
-  await expect(page.getByText("Stockfish thinking...")).toBeVisible({ timeout: 3000 });
-
   await page.getByRole("button", { name: /New Game/ }).click();
 
   await expect(page.getByText("No moves yet")).toBeVisible({ timeout: 15_000 });
-  await expect(page.getByText(/^Black: /)).toHaveCount(0);
+  await expect(page.getByText(/error/i)).toHaveCount(0);
 
-  // The restarted engine must still work correctly.
+  // The restarted engine must still work correctly, at full speed.
+  await throttleCpu(page, 1);
   await submitMove(page, "d4");
   await expect(page.locator("div.font-mono.text-sm").first()).toHaveText(/^1\. d4/);
 });
 
 test("resign then New Game recovers cleanly — a fresh move gets a sane reply, no error", async ({ page }) => {
-  // Full Strength (depth 18) reliably keeps a search in flight long enough
-  // to resign against it — the same reason the other resign test uses it.
-  await startGameAtSkill(page, "Full Strength");
+  await startStandardGame(page);
+  await throttleCpu(page, 20);
   await submitMove(page, "e4");
-  await expect(page.getByText("Stockfish thinking...")).toBeVisible({ timeout: 3000 });
-
   await page.getByRole("button", { name: /Resign/ }).click();
-  await expect(page.getByText("You resigned.").first()).toBeVisible();
+  await expect(page.getByText("You resigned.").first()).toBeVisible({ timeout: 15_000 });
 
-  // Back to the menu to drop to a fast skill level — otherwise the
-  // follow-up move's engine reply could take as long as the abandoned
-  // depth-18 search did, which isn't what this test is checking.
+  await throttleCpu(page, 1);
   await page.getByRole("dialog").getByRole("button", { name: "Menu" }).click();
-  await page.getByRole("button", { name: "Change settings" }).click();
-  await page.getByRole("button", { name: "Club (~1500)", exact: true }).click();
   await page.getByRole("button", { name: /New Game/ }).click();
   await expect(page.getByText("No moves yet")).toBeVisible({ timeout: 15_000 });
 

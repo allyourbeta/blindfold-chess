@@ -3,8 +3,17 @@ import { resolveMoveInput } from "@/services/chess/moveResolve";
 import { detectGameOver, describeGameEnd, formatMovePairs, type GameEndReason } from "@/services/chess/gameSummary";
 import { saveGameToHistory } from "@/api/localStore";
 import type { EngineManager } from "@/engine/engineManager";
-import { useSettingsStore, SKILL_LEVELS } from "./settingsStore";
+import { RANDOMNESS_STOPS } from "@/engine/maia/policy";
+import { useSettingsStore } from "./settingsStore";
 import type { GameState, MessageType, MoveSource } from "./gameStore";
+
+/** The model's name, not a strength promise -- see SPEC_maia_integrate.md. */
+const OPPONENT_LABEL = "Maia 1900";
+
+function randomnessLabel(): string {
+  const stop = useSettingsStore.getState().randomness;
+  return RANDOMNESS_STOPS.find((s) => s.value === stop)?.label ?? "Human";
+}
 
 type SetState = (partial: Partial<GameState> | ((s: GameState) => Partial<GameState>)) => void;
 type GetState = () => GameState;
@@ -19,7 +28,7 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   let messageIdCounter = 0;
   let gameStartTime = 0;
   let gameStartFen = "";
-  let skillLabelAtStart = "";
+  let opponentLabelAtStart = "";
 
   function addMessage(type: MessageType, text: string) {
     set((s) => ({ messages: [...s.messages, { id: ++messageIdCounter, type, text }] }));
@@ -30,9 +39,9 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   }
 
   function requestEngineMove() {
-    addMessage("thinking", "Stockfish thinking...");
+    addMessage("thinking", `${OPPONENT_LABEL} thinking...`);
     set({ isThinking: true });
-    engineManager.setLevel(SKILL_LEVELS[useSettingsStore.getState().skillIndex]);
+    engineManager.setLevel({ label: OPPONENT_LABEL, randomness: useSettingsStore.getState().randomness });
     void engineManager.requestMove(get().chess.fen(), get().moveHistory, applyEngineMove, (err) =>
       handleEngineFailure(err.message),
     );
@@ -115,7 +124,7 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
       date: new Date().toISOString(),
       result: outcome.historyResult,
       color: s.playerColor === "w" ? "White" : "Black",
-      difficulty: skillLabelAtStart,
+      difficulty: opponentLabelAtStart,
       moves: s.moveHistory.length,
       peeks: s.peekCount,
       pgn: formatMovePairs(s.moveHistory),
@@ -134,10 +143,9 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
 
     const chess = new Chess(fen);
     const color = useSettingsStore.getState().playerColor;
-    const skill = SKILL_LEVELS[useSettingsStore.getState().skillIndex];
     gameStartTime = Date.now();
     gameStartFen = fen;
-    skillLabelAtStart = skill.label;
+    opponentLabelAtStart = `${OPPONENT_LABEL} · ${randomnessLabel()}`;
 
     set({
       chess,
@@ -148,14 +156,17 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
       lastMove: null,
       gameOverFlag: false,
       gameOverOutcome: null,
-      activeSkillLabel: skill.label,
+      activeOpponentLabel: opponentLabelAtStart,
       isThinking: false,
       peekCount: 0,
       isPeeking: false,
       messages: [],
       audioEvent: null,
     });
-    addMessage("system", `Game started. You play ${color === "w" ? "White" : "Black"}. Strength: ${skill.label}`);
+    addMessage(
+      "system",
+      `Game started. You play ${color === "w" ? "White" : "Black"}. Opponent: ${opponentLabelAtStart}`,
+    );
 
     // A set-up position can already be over (checkmate/stalemate loaded
     // directly) — detect that here, before ever asking the engine for a

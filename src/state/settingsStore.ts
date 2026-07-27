@@ -10,34 +10,19 @@ import {
   setShowTicker as persistShowTicker,
   getAssistMode,
   setAssistMode as persistAssistMode,
+  getRandomness,
+  setRandomness as persistRandomness,
   type ThemePreference,
   type FileNaming,
   type SpeechMode,
   type AssistMode,
 } from "@/api/localStore";
 import type { Color } from "chess.js";
-
-export interface SkillLevel {
-  label: string;
-  depth: number;
-  skill: number;
-}
-
-/** Unchanged from the original app — depth/skill values must not drift. */
-export const SKILL_LEVELS: SkillLevel[] = [
-  { label: "Beginner (~800)", depth: 1, skill: 0 },
-  { label: "Casual (~1200)", depth: 3, skill: 5 },
-  { label: "Club (~1500)", depth: 5, skill: 8 },
-  { label: "Intermediate (~1800)", depth: 8, skill: 12 },
-  { label: "Strong (~2000)", depth: 10, skill: 15 },
-  { label: "Expert (~2200)", depth: 12, skill: 18 },
-  { label: "Master (~2500)", depth: 15, skill: 20 },
-  { label: "Full Strength", depth: 18, skill: 20 },
-];
+import type { RandomnessStop } from "@/engine/types";
 
 interface SettingsState {
   playerColor: Color;
-  skillIndex: number;
+  randomness: RandomnessStop;
   speechMode: SpeechMode;
   /** null = follow the side you're playing; true/false = you rotated it yourself. */
   boardFlipOverride: boolean | null;
@@ -48,7 +33,7 @@ interface SettingsState {
   setPlayerColor(color: Color): void;
   toggleTicker(): void;
   setAssistMode(mode: AssistMode): void;
-  setSkillIndex(index: number): void;
+  setRandomness(stop: RandomnessStop): void;
   setFileNaming(mode: FileNaming): void;
   setSpeechMode(mode: SpeechMode): void;
   toggleBoardFlip(currentDefault: boolean): void;
@@ -64,7 +49,7 @@ function initialTheme(): ThemePreference {
 
 export const useSettingsStore = create<SettingsState>((set, get) => ({
   playerColor: "w",
-  skillIndex: 2,
+  randomness: getRandomness(),
   // NATO by default: b/c/d/e/g are indistinguishable as bare letters.
   fileNaming: getFileNaming() ?? "letters",
   speechMode: getSpeechMode() ?? "on",
@@ -82,7 +67,10 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     set({ assistMode: mode });
   },
   setPlayerColor: (color) => set({ playerColor: color, boardFlipOverride: null }),
-  setSkillIndex: (index) => set({ skillIndex: index }),
+  setRandomness: (stop) => {
+    persistRandomness(stop);
+    set({ randomness: stop });
+  },
   setFileNaming: (mode) => {
     persistFileNaming(mode);
     set({ fileNaming: mode });

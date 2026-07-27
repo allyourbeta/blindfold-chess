@@ -194,26 +194,59 @@ function configTensorFromFen(fen: string, us: Side): Float32Array {
 const STARTPOS_BOARD_FIELD = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 
 /**
- * Builds the full 112-plane lc0 input tensor for a single FEN with no known
- * history. See the module-level comment for the fill rule this implements
- * and why -- it is read directly from lc0's encoder.cc, not from lczerolens.
+ * Builds the full 112-plane lc0 input tensor for `fen`, optionally with real
+ * prior history. `priorFens`, if given, is the game's actual position
+ * history strictly before `fen`, oldest first (e.g. `[startpos, afterMove1,
+ * ...]`) -- see `historyReconstruct.ts` for how the adapter decides whether
+ * it has this at all (only standard games do; custom-FEN games never do,
+ * since there's no way to know what came before an arbitrary FEN).
+ *
+ * Slot 0 is always the current position. Slots 1-7 take real prior
+ * positions, most recent first, for as many as are known. Once real history
+ * runs out, the OLDEST known position (real or, with no history at all, the
+ * current FEN itself) is repeated for the rest -- UNLESS that oldest known
+ * position is exactly the standard starting position, in which case the
+ * remaining slots are left at zero. That is lc0's own `fen_only`
+ * HistoryFill default, read directly from its C++ source (encoder.cc: once
+ * the history index goes negative it clamps to index 0 and keeps filling,
+ * breaking out -- leaving the rest zero -- only when that clamped position
+ * is the literal starting board) and cross-checked against `shared_params.cc`,
+ * which confirms `fen_only` is the option's actual default. This is also
+ * exactly what `lczerolens`' own from-scratch `to_input_tensor` does for the
+ * padding step, an independent implementation of the same rule (see
+ * SPEC_maia_integrate.md's report for the verification against it).
+ *
+ * Every slot is expressed from the CURRENT position's mover's perspective
+ * (`us`), never each historical position's own side to move -- matching
+ * both lc0's alternating-mirror bookkeeping and lczerolens' simpler
+ * "same `us` for every slot" approach, which are equivalent (verified
+ * below). Repetition (plane 12 of each 13-plane group) is left at 0 even
+ * when real history is available: genuine repetition detection needs full
+ * position equality (castling rights, en passant) across that history, not
+ * just piece placement, and is out of scope for this round -- see the
+ * original single-FEN reasoning above, which still applies.
  */
-export function boardToInputPlanes(fen: string): Float32Array {
+export function boardToInputPlanes(fen: string, priorFens: readonly string[] = []): Float32Array {
   const chess = new Chess(fen);
   const us: Side = chess.turn() === "w" ? "w" : "b";
   const them: Side = us === "w" ? "b" : "w";
 
   const tensor = new Float32Array(112 * 8 * 8);
-  const config = configTensorFromFen(fen, us);
-  const boardField = fen.split(" ")[0];
-  const isStartpos = boardField === STARTPOS_BOARD_FIELD;
 
-  // History planes 0..7 (13 planes each = 104 total). Slot 0 is always the
-  // current position; slots 1-7 repeat it too, unless this is the starting
-  // position (see module comment), matching real lc0's `fen_only` default.
-  const historySlots = isStartpos ? 1 : 8;
-  for (let slot = 0; slot < historySlots; slot++) {
-    tensor.set(config, slot * 13 * 64);
+  // Slot order: current position, then up to 7 real prior positions
+  // (most-recent-first -- `priorFens` is oldest-first, so take the last 7
+  // and reverse).
+  const knownFens = [fen, ...priorFens.slice(-7).reverse()];
+  const oldestKnownIsStartpos = knownFens[knownFens.length - 1].split(" ")[0] === STARTPOS_BOARD_FIELD;
+
+  for (let slot = 0; slot < 8; slot++) {
+    if (slot < knownFens.length) {
+      tensor.set(configTensorFromFen(knownFens[slot], us), slot * 13 * 64);
+    } else if (!oldestKnownIsStartpos) {
+      tensor.set(configTensorFromFen(knownFens[knownFens.length - 1], us), slot * 13 * 64);
+    }
+    // else: leave zero -- lc0's fen_only rule once the oldest known
+    // position is the starting position.
   }
 
   const auxBase = 104 * 64;

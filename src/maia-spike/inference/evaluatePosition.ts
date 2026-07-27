@@ -7,7 +7,7 @@
 
 import type { InferenceSession, Tensor as OrtTensor } from "onnxruntime-web";
 import { Chess } from "chess.js";
-import { boardToInputPlanes, encodeMove } from "../encoding/lc0Encoder";
+import { boardToInputPlanes, encodeMove } from "@/engine/maia/encoding/lc0Encoder";
 
 export interface MoveProbability {
   uci: string;

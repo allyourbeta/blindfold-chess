@@ -43,8 +43,8 @@ export interface GameState {
   moveHistory: string[];
   lastMove: { from: string; to: string } | null;
   gameOverFlag: boolean;
-  /** Label of the strength the current game was started at — shown in the status line. */
-  activeSkillLabel: string;
+  /** Opponent + randomness stop the current game was started with — shown in the status line. */
+  activeOpponentLabel: string;
   gameOverOutcome: GameEndOutcome | null;
   isThinking: boolean;
   engineStatus: EngineStatus;
@@ -84,7 +84,7 @@ export const useGameStore = create<GameState>((set, get) => {
     moveHistory: [],
     lastMove: null,
     gameOverFlag: false,
-    activeSkillLabel: "",
+    activeOpponentLabel: "",
     gameOverOutcome: null,
     isThinking: false,
     engineStatus: "idle",

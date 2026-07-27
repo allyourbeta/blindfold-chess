@@ -65,7 +65,7 @@ checkpoint).
 Standard lc0 `INPUT_CLASSICAL_112_PLANE` layout: 8 history slots x 13 planes
 (12 piece planes + 1 repetition plane) = 104, then 4 castling planes, 1
 side-to-move plane, 1 halfmove-clock plane, 1 unused zero plane, 1 all-ones
-plane = 112. See `src/maia-spike/encoding/lc0Encoder.ts` for the exact
+plane = 112. See `src/engine/maia/encoding/lc0Encoder.ts` for the exact
 per-plane layout and, importantly, the history-fill rule this app uses (it
 only ever has a single FEN, never real history).
 

@@ -5,7 +5,13 @@ and data from GPL-3.0 and MIT projects, isolated at the worker boundary the
 same way Stockfish already is. This file is the map: what was taken from
 where, under what license, and what changed. `LICENSE` points here.
 
-## Board encoding / move decoding (`src/maia-spike/encoding/`)
+## Board encoding / move decoding (`src/engine/maia/encoding/`)
+
+Moved here from `src/maia-spike/encoding/` once the spike was validated and
+the game needed the same code behind its own worker boundary
+(`src/engine/maia/maia.worker.ts`) — see SPEC_maia_integrate.md. The spike
+page still uses it too (`src/maia-spike/inference/evaluatePosition.ts`
+imports from the new location); nothing here was duplicated.
 
 **Source:** [`Xmaster6y/lczerolens`](https://github.com/Xmaster6y/lczerolens),
 commit `8b7f336c11b7df73f79fb78d65c9e23094527c90`, **MIT License**.

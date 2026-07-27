@@ -13,7 +13,8 @@ import { Card } from "@/components/ui/Card";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { HowToPlay } from "./HowToPlay";
 import { useGameStore } from "@/state/gameStore";
-import { useSettingsStore, SKILL_LEVELS } from "@/state/settingsStore";
+import { useSettingsStore } from "@/state/settingsStore";
+import { RANDOMNESS_STOPS } from "@/engine/maia/policy";
 import { useTheme } from "@/hooks/useTheme";
 import { unlockAudioOutput } from "@/hooks/useSpeechOutput";
 
@@ -53,8 +54,8 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
   const { theme, toggleTheme } = useTheme();
   const playerColor = useSettingsStore((s) => s.playerColor);
   const setPlayerColor = useSettingsStore((s) => s.setPlayerColor);
-  const skillIndex = useSettingsStore((s) => s.skillIndex);
-  const setSkillIndex = useSettingsStore((s) => s.setSkillIndex);
+  const randomness = useSettingsStore((s) => s.randomness);
+  const setRandomness = useSettingsStore((s) => s.setRandomness);
   const fileNaming = useSettingsStore((s) => s.fileNaming);
   const setFileNaming = useSettingsStore((s) => s.setFileNaming);
   const speechMode = useSettingsStore((s) => s.speechMode);
@@ -68,8 +69,8 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
 
   const engineReady = engineStatus === "ready";
   const engineFailed = engineStatus === "failed";
-  const selectedSkill = SKILL_LEVELS[skillIndex] ?? SKILL_LEVELS[0];
-  const setupSummary = `${playerColor === "w" ? "White" : "Black"} · ${selectedSkill.label} · ${SPEECH_SUMMARY[speechMode]}`;
+  const randomnessSummaryLabel = RANDOMNESS_STOPS.find((s) => s.value === randomness)?.label ?? "Human";
+  const setupSummary = `${playerColor === "w" ? "White" : "Black"} · Maia 1900 (${randomnessSummaryLabel}) · ${SPEECH_SUMMARY[speechMode]}`;
 
   async function handleStart() {
     unlockAudioOutput();
@@ -127,10 +128,10 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
             onClick={() => void handleStart()}
           >
             {engineStatus === "loading" && <LoaderCircle className="h-5 w-5 animate-spin" />}
-            {engineStatus === "loading" && "Loading Stockfish..."}
+            {engineStatus === "loading" && "Loading Maia 1900..."}
             {engineFailed && "Engine failed — Retry"}
             {engineReady && "New Game"}
-            {engineStatus === "idle" && "Loading Stockfish..."}
+            {engineStatus === "idle" && "Loading Maia 1900..."}
           </Button>
 
           <Card className="mt-3 p-4">
@@ -172,25 +173,28 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
               />
             </Field>
 
-            <Field label="Engine strength">
+            <Field label="Randomness">
               <div className="grid grid-cols-2 gap-2">
-                {SKILL_LEVELS.map((level, i) => (
+                {RANDOMNESS_STOPS.map((stop) => (
                   <button
-                    key={level.label}
+                    key={stop.value}
                     type="button"
-                    onClick={() => setSkillIndex(i)}
-                    aria-pressed={i === skillIndex}
+                    onClick={() => setRandomness(stop.value)}
+                    aria-pressed={stop.value === randomness}
                     className={
                       "min-h-11 rounded-xl border px-2 text-base font-semibold transition-colors " +
-                      (i === skillIndex
+                      (stop.value === randomness
                         ? "border-transparent bg-bg-primary text-text-on-primary"
                         : "border-border-default bg-bg-surface text-text-primary hover:bg-bg-surface-alt")
                     }
                   >
-                    {level.label}
+                    {stop.label}
                   </button>
                 ))}
               </div>
+              <p className="mt-2 text-base text-text-muted">
+                {RANDOMNESS_STOPS.find((s) => s.value === randomness)?.hint}
+              </p>
             </Field>
 
             <Field label="Engine speaks">

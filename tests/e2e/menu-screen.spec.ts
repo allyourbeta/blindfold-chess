@@ -14,13 +14,13 @@ test("home screen prioritizes starting a game and progressively reveals details"
 
   // Detailed controls and the notation guide should not compete with the main
   // action until the player asks for them.
-  await expect(page.getByRole("button", { name: "Full Strength", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Wild", exact: true })).toHaveCount(0);
   await expect(page.getByText("Tap moves on the keypad")).toHaveCount(0);
 
   await page.getByRole("button", { name: "Change settings" }).click();
-  await expect(page.getByRole("button", { name: "Full Strength", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Wild", exact: true })).toBeVisible();
 
   await page.getByRole("button", { name: "How to play" }).click();
   await expect(page.getByText("Tap moves on the keypad")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Full Strength", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Wild", exact: true })).toHaveCount(0);
 });
