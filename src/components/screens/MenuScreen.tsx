@@ -114,7 +114,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
             className="h-28 w-28 rounded-[2rem] shadow-sm"
           />
           <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-text-accent">Mind's Eye</h1>
-          <p className="mt-1 text-lg font-semibold text-text-primary">Ultimate test of cerebral fitness</p>
+          <p className="mt-1 text-lg font-semibold text-text-primary">The ultimate test of cerebral fitness</p>
           <p className="mt-1 max-w-xs text-base font-semibold text-text-secondary">
             No chessboard? No problem!
           </p>

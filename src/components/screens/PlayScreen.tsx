@@ -50,13 +50,13 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
           <PeekPanel />
           <MoveList />
         </div>
-        <div className="flex min-h-0 flex-col shortscape:col-start-1 shortscape:row-start-3">
+        <div className="flex min-h-0 flex-col overflow-hidden shortscape:col-start-1 shortscape:row-start-3">
           <MessageLog />
         </div>
-        <div className="pt-1 shortscape:col-start-2 shortscape:row-span-4 shortscape:row-start-1 shortscape:self-center shortscape:pt-0">
+        <div className="min-w-0 pt-1 shortscape:col-start-2 shortscape:row-span-4 shortscape:row-start-1 shortscape:self-center shortscape:pt-0">
           <MoveKeypad />
         </div>
-        <div className="mt-2 shortscape:col-start-1 shortscape:row-start-4 shortscape:mt-0">
+        <div className="mt-2 min-w-0 shortscape:col-start-1 shortscape:row-start-4 shortscape:mt-0">
           <ActionBar />
         </div>
       </div>

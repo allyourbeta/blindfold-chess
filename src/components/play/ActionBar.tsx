@@ -47,7 +47,7 @@ export function ActionBar() {
       </div>
 
       <div className="flex flex-col gap-2 border-t border-border-default pt-2">
-        <div className="flex justify-center gap-2">
+        <div className="flex flex-wrap justify-center gap-2">
         <Button
           variant="secondary"
           size="sm"
@@ -70,7 +70,7 @@ export function ActionBar() {
           <ClipboardCopy className="h-4 w-4" /> PGN
         </Button>
         </div>
-        <div className="flex justify-center gap-2">
+        <div className="flex flex-wrap justify-center gap-2">
         <Button variant="secondary" size="sm" onClick={() => submitMoveText("fen")} title="Show the current position's FEN">
           <FileCode className="h-4 w-4" /> FEN
         </Button>
@@ -78,7 +78,7 @@ export function ActionBar() {
           <History className="h-4 w-4" /> History
         </Button>
         </div>
-        <div className="flex justify-center gap-2">
+        <div className="flex flex-wrap justify-center gap-2">
         <Button variant="secondary" size="sm" disabled={gameOverFlag} onClick={doResign}>
           <Flag className="h-4 w-4" /> Resign
         </Button>
