@@ -149,11 +149,11 @@ export function MoveKeypad() {
   const statusText = isSpeaking ? "Engine speaking…" : !isPlayersTurn && !gameOverFlag ? "Engine thinking…" : null;
 
   return (
-    <div role="group" aria-label="Move entry keypad" className="flex flex-col gap-2">
+    <div role="group" aria-label="Move entry keypad" className="flex flex-col gap-2 shortscape:gap-1.5">
       {/* One slim line for everything transient: entry preview, the SAN /
           promotion choosers, and engine status. Idle = empty. The old
           full-height text-entry row is gone — this is all that remains. */}
-      <div className="flex h-8 items-center justify-center overflow-x-auto px-2">
+      <div className="flex h-8 items-center justify-center overflow-x-auto px-2 shortscape:h-7">
         {chooser ? (
           <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
             {chooser.map((san) => (
@@ -192,7 +192,7 @@ export function MoveKeypad() {
             size="keypadPiece"
             variant="secondary"
             aria-label={PIECE_NAME[p]}
-            className="disabled:!opacity-30"
+            className="shortscape:h-12 disabled:!opacity-30"
             disabled={inert || anyChooser || !entry.enabled.pieces[p]}
             onClick={() => pushPiece(p)}
           >
@@ -240,7 +240,7 @@ export function MoveKeypad() {
             size="keypadKey"
             variant="secondary"
             aria-label={`${file}${rank}`}
-            className="disabled:!opacity-30"
+            className="shortscape:h-12 disabled:!opacity-30"
             disabled={inert || anyChooser || !(entry.enabled.files[file] || entry.enabled.ranks[rank])}
             onClick={() => pushDual(file, rank)}
           >

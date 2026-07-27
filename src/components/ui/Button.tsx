@@ -22,7 +22,7 @@ const buttonVariants = cva(
       },
       size: {
         default: "h-11 px-4",
-        sm: "h-11 px-3 text-xs",
+        sm: "h-11 px-3 text-xs shortscape:h-9",
         icon: "h-11 w-11 shrink-0",
         // The move keypad's two key sizes — piece keys read as the primary
         // control, file/rank keys pack eight to a row on a phone width.

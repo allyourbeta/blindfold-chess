@@ -22,7 +22,7 @@ export function StatusLine() {
 
   return (
     <div className="border-b border-border-default pb-1.5">
-      <div className="text-center text-base font-semibold tracking-wide text-text-accent">{text}</div>
+      <div className="truncate text-center text-base font-semibold tracking-wide text-text-accent shortscape:text-sm">{text}</div>
     </div>
   );
 }

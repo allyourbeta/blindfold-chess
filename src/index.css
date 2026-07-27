@@ -14,6 +14,14 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * "Short landscape" — a phone on its side, not a desktop window. Plain
+ * `landscape:` would also catch every desktop browser (wider than tall),
+ * so the height ceiling is what makes this mean "the vertical stack has
+ * nowhere to go". Used by PlayScreen to switch to two columns.
+ */
+@custom-variant shortscape (@media (orientation: landscape) and (max-height: 560px));
+
 @theme {
   /* Stone (warm neutral) + Amber (accent) — matches timeboxxer/intabyu */
   --color-stone-50: #fafaf9;
