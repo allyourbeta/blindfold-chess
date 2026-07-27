@@ -41,7 +41,7 @@ const SPEECH_SUMMARY = {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <span className="mb-2 block text-sm font-semibold text-text-secondary">{label}</span>
+      <span className="mb-2 block text-base font-semibold text-text-secondary">{label}</span>
       {children}
     </div>
   );
@@ -105,7 +105,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
         </button>
       </header>
 
-      <main className="flex-1 overflow-y-auto px-6 pb-6">
+      <main className="flex flex-1 flex-col overflow-y-auto px-6 pb-6">
         <section className="flex flex-col items-center text-center">
           <img
             src="/icons/icon-512.png"
@@ -114,8 +114,8 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
             className="h-28 w-28 rounded-[2rem] shadow-sm"
           />
           <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-text-accent">Mind's Eye</h1>
-          <p className="mt-1 text-lg font-semibold text-text-primary">Ultimate brain visualization workout.</p>
-          <p className="mt-1 max-w-xs text-sm font-semibold text-text-secondary">
+          <p className="mt-1 text-lg font-semibold text-text-primary">Ultimate test of cerebral fitness</p>
+          <p className="mt-1 max-w-xs text-base font-semibold text-text-secondary">
             No chessboard? No problem!
           </p>
         </section>
@@ -134,13 +134,13 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
           </Button>
 
           <Card className="mt-3 p-4">
-            <p className="text-center text-sm font-semibold text-text-secondary">{setupSummary}</p>
+            <p className="text-center text-base font-semibold text-text-secondary">{setupSummary}</p>
             <button
               type="button"
               onClick={toggleSettings}
               aria-expanded={showSettings}
               aria-controls="game-settings"
-              className="mx-auto mt-2 flex min-h-11 items-center justify-center gap-2 rounded-xl px-3 text-sm font-bold text-text-accent hover:bg-bg-surface-alt"
+              className="mx-auto mt-2 flex min-h-11 items-center justify-center gap-2 rounded-xl px-3 text-base font-bold text-text-accent hover:bg-bg-surface-alt"
             >
               <SlidersHorizontal className="h-4 w-4" />
               Change settings
@@ -157,7 +157,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
           <Card id="game-settings" className="mt-5 space-y-6 p-5">
             <div>
               <h2 className="text-lg font-extrabold text-text-primary">Game settings</h2>
-              <p className="mt-1 text-sm text-text-secondary">These choices are remembered for your next game.</p>
+              <p className="mt-1 text-base text-text-secondary">These choices are remembered for your next game.</p>
             </div>
 
             <Field label="Play as">
@@ -181,7 +181,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
                     onClick={() => setSkillIndex(i)}
                     aria-pressed={i === skillIndex}
                     className={
-                      "min-h-11 rounded-xl border px-2 text-sm font-semibold transition-colors " +
+                      "min-h-11 rounded-xl border px-2 text-base font-semibold transition-colors " +
                       (i === skillIndex
                         ? "border-transparent bg-bg-primary text-text-on-primary"
                         : "border-border-default bg-bg-surface text-text-primary hover:bg-bg-surface-alt")
@@ -203,7 +203,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
                   { value: "on", label: "On" },
                 ]}
               />
-              <p className="mt-2 text-sm text-text-muted">{SPEECH_HINT[speechMode]}</p>
+              <p className="mt-2 text-base text-text-muted">{SPEECH_HINT[speechMode]}</p>
             </Field>
 
             <Field label="Keypad assistance">
@@ -216,7 +216,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
                   { value: "assisted", label: "Assisted" },
                 ]}
               />
-              <p className="mt-2 text-sm text-text-muted">{ASSIST_HINT[assistMode]}</p>
+              <p className="mt-2 text-base text-text-muted">{ASSIST_HINT[assistMode]}</p>
             </Field>
 
             {speechMode !== "off" && (
@@ -241,7 +241,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
             onClick={toggleHelp}
             aria-expanded={showHelp}
             aria-controls="how-to-play"
-            className="mx-auto flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 text-sm font-bold text-text-secondary hover:bg-bg-surface-alt hover:text-text-primary"
+            className="mx-auto flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 text-base font-bold text-text-secondary hover:bg-bg-surface-alt hover:text-text-primary"
           >
             <BookOpen className="h-4 w-4" />
             How to play
@@ -254,7 +254,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
           )}
         </section>
 
-        <p className="mt-5 text-center text-xs text-text-muted">build {__GIT_COMMIT__} · {__BUILD_TIME__}</p>
+        <p className="mt-auto pt-8 text-center text-sm text-text-muted">build {__GIT_COMMIT__} · {__BUILD_TIME__}</p>
       </main>
     </div>
   );
