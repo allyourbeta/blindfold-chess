@@ -6,6 +6,19 @@ import { getOutputNode } from "./master";
  * gesture. See docs/SPEC_ios_audio_ui.md Part A for the failure this fixes.
  */
 
+/**
+ * Bump when a clip's *contents* change (i.e. after `npm run audio:generate`
+ * alters one). `/audio/` is served with `Cache-Control: immutable,
+ * max-age=1 year`, so a regenerated clip at the same URL is never re-fetched
+ * — a device that heard the old "f" would go on hearing it forever, even
+ * after a service-worker version bump, because the refetch is answered from
+ * the browser's own disk cache. Changing the URL is the only reliable fix.
+ *
+ * v2: "f" regenerated from the spelling "ef" (was "Eff", which Tessa read
+ * aloud as the letters E-F-F).
+ */
+export const AUDIO_VERSION = 2;
+
 const buffers = new Map<string, AudioBuffer>();
 const inFlight = new Map<string, Promise<AudioBuffer>>();
 
@@ -19,7 +32,7 @@ async function loadClip(ctx: AudioContext, id: string): Promise<AudioBuffer> {
   if (cached) return cached;
   let pending = inFlight.get(id);
   if (!pending) {
-    pending = fetch(`/audio/${id}.wav`)
+    pending = fetch(`/audio/${id}.wav?v=${AUDIO_VERSION}`)
       .then((res) => {
         if (!res.ok) throw new Error(`clip "${id}" failed to load (${res.status})`);
         return res.arrayBuffer();
