@@ -150,47 +150,38 @@ export function MoveKeypad() {
 
   return (
     <div role="group" aria-label="Move entry keypad" className="flex flex-col gap-2">
-      <div className="flex items-stretch gap-2">
-        <div className="flex h-12 flex-1 items-center justify-center overflow-x-auto rounded-xl border border-border-default bg-bg-surface-alt px-3">
-          {chooser ? (
-            <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
-              {chooser.map((san) => (
-                <Button key={san} type="button" size="sm" onClick={() => play(san)}>
-                  {san}
+      {/* One slim line for everything transient: entry preview, the SAN /
+          promotion choosers, and engine status. Idle = empty. The old
+          full-height text-entry row is gone — this is all that remains. */}
+      <div className="flex h-8 items-center justify-center overflow-x-auto px-2">
+        {chooser ? (
+          <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
+            {chooser.map((san) => (
+              <Button key={san} type="button" size="sm" onClick={() => play(san)}>
+                {san}
+              </Button>
+            ))}
+          </div>
+        ) : entry.promotionPending ? (
+          <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
+            {PROMOTION_ORDER.map(({ promotion, label }) => {
+              const candidate = entry.candidates.find((c) => c.promotion === promotion);
+              if (!candidate) return null;
+              return (
+                <Button key={promotion} type="button" size="sm" onClick={() => play(candidate.san)}>
+                  {label}
                 </Button>
-              ))}
-            </div>
-          ) : entry.promotionPending ? (
-            <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
-              {PROMOTION_ORDER.map(({ promotion, label }) => {
-                const candidate = entry.candidates.find((c) => c.promotion === promotion);
-                if (!candidate) return null;
-                return (
-                  <Button key={promotion} type="button" size="sm" onClick={() => play(candidate.san)}>
-                    {label}
-                  </Button>
-                );
-              })}
-            </div>
-          ) : statusText ? (
-            <span className="flex items-center gap-2 text-sm font-semibold text-text-secondary">
-              {isSpeaking && <Volume2 className="h-4 w-4" />}
-              {statusText}
-            </span>
-          ) : (
-            <span className="font-mono text-xl tracking-wide">{entry.preview}</span>
-          )}
-        </div>
-        <Button
-          type="button"
-          variant="secondary"
-          className="h-12 w-14 shrink-0 text-xl disabled:!opacity-30"
-          aria-label="Undo last entry"
-          disabled={inert || taps.length === 0}
-          onClick={undoTap}
-        >
-          ⌫
-        </Button>
+              );
+            })}
+          </div>
+        ) : statusText ? (
+          <span className="flex items-center gap-2 text-sm font-semibold text-text-secondary">
+            {isSpeaking && <Volume2 className="h-4 w-4" />}
+            {statusText}
+          </span>
+        ) : (
+          <span className="font-mono text-lg tracking-wide">{entry.preview}</span>
+        )}
       </div>
 
       <div className="grid grid-cols-6 gap-1.5">
@@ -210,7 +201,7 @@ export function MoveKeypad() {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-1.5">
+      <div className="grid grid-cols-3 gap-1.5">
         <Button
           type="button"
           variant="secondary"
@@ -228,6 +219,16 @@ export function MoveKeypad() {
           onClick={() => pushTap({ kind: "castle", value: "O-O-O" })}
         >
           O-O-O
+        </Button>
+        <Button
+          type="button"
+          variant="secondary"
+          className="h-9 text-lg disabled:!opacity-30"
+          aria-label="Undo last entry"
+          disabled={inert || taps.length === 0}
+          onClick={undoTap}
+        >
+          ⌫
         </Button>
       </div>
 
