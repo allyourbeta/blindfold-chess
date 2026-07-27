@@ -42,7 +42,7 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
         (rather than reordering the markup) keeps portrait's source order
         authoritative: keypad above the action buttons.
       */}
-      <div className="grid min-h-0 flex-1 grid-cols-1 grid-rows-[auto_auto_minmax(0,1fr)_auto_auto] overflow-hidden shortscape:grid-cols-2 shortscape:grid-rows-[auto_auto_minmax(0,1fr)_auto] shortscape:gap-x-4">
+      <div className="grid min-h-0 flex-1 grid-cols-1 grid-rows-[auto_auto_minmax(0,1fr)_auto_auto] overflow-hidden shortscape:grid-cols-[3fr_2fr] shortscape:grid-rows-[auto_auto_minmax(3.5rem,1fr)_auto] shortscape:gap-x-4">
         <div className="shortscape:col-start-1 shortscape:row-start-1">
           <StatusLine />
         </div>

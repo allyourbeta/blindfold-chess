@@ -35,6 +35,19 @@ test("landscape: every control is fully inside the viewport", async ({ page }) =
   // is the only check that catches "this is ugly".
   await page.screenshot({ path: "test-results/landscape.png" });
 
+  for (const [label, locator] of [
+    ["status", page.getByText(/Your move ·/)],
+    ["ticker", page.getByRole("button", { name: /Move list/ })],
+    ["log", page.getByText(/Game started/)],
+    ["actionbar", page.getByRole("button", { name: /New Game/ })],
+    ["keypad", keypad(page)],
+  ] as const) {
+    const b = await locator.boundingBox();
+    console.log(
+      `[landscape] ${label}: y=${b?.y.toFixed(0)} h=${b?.height.toFixed(0)} bottom=${((b?.y ?? 0) + (b?.height ?? 0)).toFixed(0)}`,
+    );
+  }
+
   const boxes = await boxesOf(page);
   expect(boxes.length).toBeGreaterThan(10);
 
@@ -76,13 +89,32 @@ test("landscape: keys stay full size — the layout uses the width, it doesn't s
 test("landscape: the message log has real room to show moves", async ({ page }) => {
   await startStandardGame(page);
 
-  // The log collapsed to zero height in an earlier landscape layout while
-  // every other assertion passed — engine move text was simply invisible.
-  const log = page.getByText(/Game started/);
-  const box = await log.boundingBox();
-  expect(box, "the game-started message should be rendered").not.toBeNull();
-  expect(box!.y + box!.height).toBeLessThanOrEqual(H + 0.5);
-  expect(box!.height).toBeGreaterThan(10);
+  // A previous version of this test asked only whether the text had a
+  // bounding box — an element inside a clipped or zero-height parent still
+  // reports one, so the log could be invisible while the test passed. Ask
+  // the layout directly instead: is the container tall enough, and does the
+  // message actually fall inside its visible band?
+  const geometry = await page.evaluate(() => {
+    const line = Array.from(document.querySelectorAll("div")).find((d) =>
+      /Game started/.test(d.textContent ?? "") && d.children.length === 0,
+    );
+    if (!line) return null;
+    const scroller = line.closest("[class*='overflow-y-auto']");
+    const l = line.getBoundingClientRect();
+    const s = scroller?.getBoundingClientRect();
+    return {
+      line: { top: l.top, bottom: l.bottom, height: l.height },
+      container: s ? { top: s.top, bottom: s.bottom, height: s.height } : null,
+    };
+  });
+
+  expect(geometry, "the game-started message should be in the DOM").not.toBeNull();
+  expect(geometry!.container, "the message log should have a scroll container").not.toBeNull();
+  // Enough room to read at least one message.
+  expect(geometry!.container!.height).toBeGreaterThan(24);
+  // And the message is inside the container's visible band, not clipped away.
+  expect(geometry!.line.top).toBeGreaterThanOrEqual(geometry!.container!.top - 0.5);
+  expect(geometry!.line.bottom).toBeLessThanOrEqual(geometry!.container!.bottom + 0.5);
 });
 
 test("landscape: peek shows the whole board without breaking the layout", async ({ page }) => {
