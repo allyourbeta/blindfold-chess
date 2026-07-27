@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/cn";
+import { PieceGlyph } from "@/components/board/PieceGlyph";
 import { useGameStore } from "@/state/gameStore";
 import { useSpeechStore } from "@/state/speechStore";
 import {
   computeEntryState,
+  interpretDualTap,
+  dualTapOptions,
   PIECE_LETTERS,
   FILE_LETTERS,
   RANK_DIGITS,
@@ -16,9 +18,21 @@ import {
   type RankDigit,
 } from "@/services/keypad/entry";
 
-const PIECE_GLYPH: Record<PieceLetter, string> = { K: "♔", Q: "♕", R: "♖", B: "♗", N: "♘" };
-const PIECE_NAME: Record<PieceLetter, string> = { K: "King", Q: "Queen", R: "Rook", B: "Bishop", N: "Knight" };
-const KEY_TO_PIECE: Record<string, PieceLetter> = { n: "N", b: "B", r: "R", q: "Q", k: "K" };
+const PIECE_NAME: Record<PieceLetter, string> = {
+  K: "King",
+  Q: "Queen",
+  R: "Rook",
+  B: "Bishop",
+  N: "Knight",
+  P: "Pawn",
+};
+
+/**
+ * Novag-style dual keys, straight off the Sapphire II: eight fixed keys,
+ * each printed with one file and one rank. Nothing on this keypad ever
+ * moves, resizes, or relabels — dimmed vs lit is the only state change.
+ */
+const DUAL_KEYS = FILE_LETTERS.map((file, i) => ({ file, rank: RANK_DIGITS[i] }));
 
 const PROMOTION_ORDER: { promotion: "q" | "r" | "b" | "n"; label: string }[] = [
   { promotion: "q", label: "Queen" },
@@ -27,7 +41,6 @@ const PROMOTION_ORDER: { promotion: "q" | "r" | "b" | "n"; label: string }[] = [
   { promotion: "n", label: "Knight" },
 ];
 
-/** The move-entry control. Physical piece/file/rank + Backspace keys drive the same state machine as taps. */
 export function MoveKeypad() {
   const chess = useGameStore((s) => s.chess);
   const fen = useGameStore((s) => s.fen);
@@ -38,11 +51,15 @@ export function MoveKeypad() {
   const isSpeaking = useSpeechStore((s) => s.isSpeaking);
 
   const [taps, setTaps] = useState<Tap[]>([]);
+  const [dualChoices, setDualChoices] = useState<string[] | null>(null);
   const isPlayersTurn = turn === playerColor;
   const inert = gameOverFlag || isSpeaking || !isPlayersTurn;
 
   // A new position (our move, the engine's reply, a takeback) invalidates any in-progress entry.
-  useEffect(() => setTaps([]), [fen]);
+  useEffect(() => {
+    setTaps([]);
+    setDualChoices(null);
+  }, [fen]);
 
   const legalMoves = useMemo<LegalMove[]>(() => {
     if (!isPlayersTurn) return [];
@@ -62,6 +79,7 @@ export function MoveKeypad() {
   function play(san: string) {
     submitMoveText(san);
     setTaps([]);
+    setDualChoices(null);
   }
 
   function pushTap(tap: Tap) {
@@ -71,7 +89,24 @@ export function MoveKeypad() {
     else setTaps((t) => [...t, tap]);
   }
 
+  function pushPiece(piece: PieceLetter) {
+    pushTap({ kind: "piece", value: piece });
+  }
+
+  /** A dual key is its file when the entry wants a file, its rank when it wants a rank — the machine decides. */
+  function pushDual(file: FileLetter, rank: RankDigit) {
+    if (inert || dualChoices) return;
+    const reading = interpretDualTap(legalMoves, taps, file, rank);
+    if (reading === "file") pushTap({ kind: "file", value: file });
+    else if (reading === "rank") pushTap({ kind: "rank", value: rank });
+    else if (reading === "both") setDualChoices(dualTapOptions(legalMoves, taps, file, rank));
+  }
+
   function undoTap() {
+    if (dualChoices) {
+      setDualChoices(null);
+      return;
+    }
     setTaps((t) => t.slice(0, -1));
   }
 
@@ -83,14 +118,15 @@ export function MoveKeypad() {
         undoTap();
         return;
       }
+      if (dualChoices) return;
       // SAN's own case convention: uppercase letters are pieces, lowercase
       // letters are files. This matters for "b", which is both a file and
       // the bishop — lowercase b is ALWAYS the b-file (so 1. b4 is typable),
       // Shift+B is the bishop. The other piece letters aren't files, so
       // their lowercase forms map to pieces as a convenience.
-      if (/^[KQRBN]$/.test(event.key)) {
+      if (/^[KQRBNP]$/.test(event.key)) {
         const pieceLetter = event.key as PieceLetter;
-        if (entry.enabled.pieces[pieceLetter]) pushTap({ kind: "piece", value: pieceLetter });
+        if (entry.enabled.pieces[pieceLetter]) pushPiece(pieceLetter);
         return;
       }
       if (/^[a-h]$/.test(event.key)) {
@@ -98,9 +134,9 @@ export function MoveKeypad() {
         if (entry.enabled.files[file]) pushTap({ kind: "file", value: file });
         return;
       }
-      const pieceLetter = KEY_TO_PIECE[event.key];
-      if (pieceLetter) {
-        if (entry.enabled.pieces[pieceLetter]) pushTap({ kind: "piece", value: pieceLetter });
+      if (/^[nrqkp]$/.test(event.key)) {
+        const pieceLetter = event.key.toUpperCase() as PieceLetter;
+        if (entry.enabled.pieces[pieceLetter]) pushPiece(pieceLetter);
         return;
       }
       if (/^[1-8]$/.test(event.key)) {
@@ -111,46 +147,57 @@ export function MoveKeypad() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [entry, inert, taps]);
+  }, [entry, inert, taps, dualChoices]);
 
+  const chooser = dualChoices ?? entry.disambiguation;
   const statusText = isSpeaking ? "Engine speaking…" : !isPlayersTurn && !gameOverFlag ? "Engine thinking…" : null;
 
   return (
     <div role="group" aria-label="Move entry keypad" className="flex flex-col gap-2">
-      <div className="flex h-11 items-center justify-center overflow-x-auto rounded-xl border border-border-default bg-bg-surface-alt px-3">
-        {entry.disambiguation ? (
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {entry.disambiguation.map((san) => (
-              <Button key={san} type="button" size="sm" onClick={() => play(san)}>
-                {san}
-              </Button>
-            ))}
-          </div>
-        ) : entry.promotionPending ? (
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {PROMOTION_ORDER.map(({ promotion, label }) => {
-              const candidate = entry.candidates.find((c) => c.promotion === promotion);
-              if (!candidate) return null;
-              return (
-                <Button key={promotion} type="button" size="sm" onClick={() => play(candidate.san)}>
-                  {label}
+      <div className="flex items-stretch gap-2">
+        <div className="flex h-12 flex-1 items-center justify-center overflow-x-auto rounded-xl border border-border-default bg-bg-surface-alt px-3">
+          {chooser ? (
+            <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
+              {chooser.map((san) => (
+                <Button key={san} type="button" size="sm" onClick={() => play(san)}>
+                  {san}
                 </Button>
-              );
-            })}
-          </div>
-        ) : statusText ? (
-          <span className="flex items-center gap-2 text-sm font-semibold text-text-secondary">
-            {isSpeaking && <Volume2 className="h-4 w-4" />}
-            {statusText}
-          </span>
-        ) : (
-          <span className={cn("font-mono text-lg tracking-wide", taps.length === 0 && "text-text-muted")}>
-            {entry.preview || "Tap a piece or a file to begin"}
-          </span>
-        )}
+              ))}
+            </div>
+          ) : entry.promotionPending ? (
+            <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
+              {PROMOTION_ORDER.map(({ promotion, label }) => {
+                const candidate = entry.candidates.find((c) => c.promotion === promotion);
+                if (!candidate) return null;
+                return (
+                  <Button key={promotion} type="button" size="sm" onClick={() => play(candidate.san)}>
+                    {label}
+                  </Button>
+                );
+              })}
+            </div>
+          ) : statusText ? (
+            <span className="flex items-center gap-2 text-sm font-semibold text-text-secondary">
+              {isSpeaking && <Volume2 className="h-4 w-4" />}
+              {statusText}
+            </span>
+          ) : (
+            <span className="font-mono text-xl tracking-wide">{entry.preview}</span>
+          )}
+        </div>
+        <Button
+          type="button"
+          variant="secondary"
+          className="h-12 w-14 shrink-0 text-xl disabled:!opacity-30"
+          aria-label="Undo last entry"
+          disabled={inert || (taps.length === 0 && !dualChoices)}
+          onClick={undoTap}
+        >
+          ⌫
+        </Button>
       </div>
 
-      <div className="grid grid-cols-5 gap-2">
+      <div className="grid grid-cols-6 gap-1.5">
         {PIECE_LETTERS.map((p) => (
           <Button
             key={p}
@@ -158,75 +205,54 @@ export function MoveKeypad() {
             size="keypadPiece"
             variant="secondary"
             aria-label={PIECE_NAME[p]}
-            disabled={inert || !entry.enabled.pieces[p]}
-            onClick={() => pushTap({ kind: "piece", value: p })}
+            className="disabled:!opacity-30"
+            disabled={inert || !!chooser || !entry.enabled.pieces[p]}
+            onClick={() => pushPiece(p)}
           >
-            {PIECE_GLYPH[p]}
+            <PieceGlyph piece={playerColor === "w" ? p : p.toLowerCase()} />
           </Button>
         ))}
       </div>
 
-      {(entry.enabled.castleKingside || entry.enabled.castleQueenside) && (
-        <div className="grid grid-cols-2 gap-2">
-          {entry.enabled.castleKingside && (
-            <Button type="button" variant="secondary" disabled={inert} onClick={() => pushTap({ kind: "castle", value: "O-O" })}>
-              O-O
-            </Button>
-          )}
-          {entry.enabled.castleQueenside && (
-            <Button
-              type="button"
-              variant="secondary"
-              disabled={inert}
-              onClick={() => pushTap({ kind: "castle", value: "O-O-O" })}
-            >
-              O-O-O
-            </Button>
-          )}
-        </div>
-      )}
-
-      <div className="flex gap-1.5">
-        {FILE_LETTERS.map((f) => (
-          <Button
-            key={f}
-            type="button"
-            size="keypadKey"
-            variant="secondary"
-            className="flex-1"
-            disabled={inert || !entry.enabled.files[f]}
-            onClick={() => pushTap({ kind: "file", value: f })}
-          >
-            {f}
-          </Button>
-        ))}
-      </div>
-
-      <div className="flex gap-1.5">
-        {RANK_DIGITS.map((r) => (
-          <Button
-            key={r}
-            type="button"
-            size="keypadKey"
-            variant="secondary"
-            className="flex-1"
-            disabled={inert || !entry.enabled.ranks[r]}
-            onClick={() => pushTap({ kind: "rank", value: r })}
-          >
-            {r}
-          </Button>
-        ))}
+      <div className="grid grid-cols-2 gap-1.5">
         <Button
           type="button"
-          size="keypadKey"
           variant="secondary"
-          className="w-12 shrink-0"
-          aria-label="Undo last entry"
-          disabled={inert || taps.length === 0}
-          onClick={undoTap}
+          className="h-11 disabled:!opacity-30"
+          disabled={inert || !!chooser || !entry.enabled.castleKingside}
+          onClick={() => pushTap({ kind: "castle", value: "O-O" })}
         >
-          ⌫
+          O-O
         </Button>
+        <Button
+          type="button"
+          variant="secondary"
+          className="h-11 disabled:!opacity-30"
+          disabled={inert || !!chooser || !entry.enabled.castleQueenside}
+          onClick={() => pushTap({ kind: "castle", value: "O-O-O" })}
+        >
+          O-O-O
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-4 gap-2">
+        {DUAL_KEYS.map(({ file, rank }) => (
+          <Button
+            key={file}
+            type="button"
+            size="keypadKey"
+            variant="secondary"
+            aria-label={`${file}${rank}`}
+            className="disabled:!opacity-30"
+            disabled={inert || !!chooser || !(entry.enabled.files[file] || entry.enabled.ranks[rank])}
+            onClick={() => pushDual(file, rank)}
+          >
+            <span className="flex items-baseline gap-1">
+              <span className="text-2xl font-semibold">{file}</span>
+              <span className="text-base text-text-secondary">{rank}</span>
+            </span>
+          </Button>
+        ))}
       </div>
     </div>
   );

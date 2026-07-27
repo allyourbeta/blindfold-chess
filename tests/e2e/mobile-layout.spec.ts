@@ -28,7 +28,7 @@ test("play screen is usable one-handed at iPhone width", async ({ page }) => {
   const knightBox = await knightKey.boundingBox();
   expect(knightBox?.height).toBeGreaterThanOrEqual(44);
 
-  const fileKey = pad.getByRole("button", { name: "e", exact: true });
+  const fileKey = pad.getByRole("button", { name: "e5", exact: true });
   const fileBox = await fileKey.boundingBox();
   expect(fileBox?.height).toBeGreaterThanOrEqual(44);
 

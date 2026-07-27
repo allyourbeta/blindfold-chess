@@ -32,11 +32,14 @@ test("a knight ambiguity shows both SAN labels in the chooser, and tapping one p
   await expect(page.getByText("White: Nbd2")).toBeVisible();
 });
 
-test("disables rank keys that no legal move can reach", async ({ page }) => {
+test("dims dual keys neither of whose readings can reach a legal move", async ({ page }) => {
   await startStandardGame(page);
   await tapKeypadKey(page, "Knight");
-  // No file has been chosen yet, so every rank is still unreachable.
-  await expect(keypad(page).getByRole("button", { name: "5", exact: true })).toBeDisabled();
+  // Neither reading of the e5 key works here: no knight reaches the e-file,
+  // and no file has been chosen yet so ranks aren't accepted at all.
+  await expect(keypad(page).getByRole("button", { name: "e5", exact: true })).toBeDisabled();
+  // f6 stays live via its file reading — Nf3 runs through it.
+  await expect(keypad(page).getByRole("button", { name: "f6", exact: true })).toBeEnabled();
 });
 
 test("desktop: a physical keyboard drives the same state machine", async ({ page }, testInfo) => {

@@ -34,10 +34,11 @@ test("an illegal destination can't be entered — the keypad disables it — and
   page,
 }) => {
   await startStandardGame(page);
-  // White's first pawn move can't reach rank 5 — the key must be disabled,
-  // not merely refused after the fact, so tapping it is not an option at all.
+  // After "e", neither reading of the e5 dual key is a legal move — the
+  // e-pawn can't reach rank 5 and can't capture on its own file — so the
+  // key must be disabled, not merely refused after the fact.
   await tapKeypadKey(page, "e");
-  await expect(keypad(page).getByRole("button", { name: "5", exact: true })).toBeDisabled();
+  await expect(keypad(page).getByRole("button", { name: "e5", exact: true })).toBeDisabled();
   await expect(page.getByText("No moves yet")).toBeVisible();
 
   // Undo the pending "e" tap before playing a real move, so the entry starts fresh.

@@ -8,6 +8,8 @@ import {
   type FileLetter,
   type RankDigit,
   type CastleValue,
+  interpretDualTap,
+  dualTapOptions,
 } from "./entry";
 
 function legalMoves(fen?: string): LegalMove[] {
@@ -31,7 +33,7 @@ describe("computeEntryState: start position", () => {
 
   it("enables only pieces that have a legal move, and no castle keys", () => {
     const state = computeEntryState(moves, []);
-    expect(state.enabled.pieces).toEqual({ K: false, Q: false, R: false, B: false, N: true });
+    expect(state.enabled.pieces).toEqual({ K: false, Q: false, R: false, B: false, N: true, P: true });
     expect(state.enabled.castleKingside).toBe(false);
     expect(state.enabled.castleQueenside).toBe(false);
   });
@@ -175,5 +177,68 @@ describe("computeEntryState: undo", () => {
 
     const undone = computeEntryState(moves, taps);
     expect(undone).toEqual(before);
+  });
+});
+
+describe("pawn key", () => {
+  it("P commits a pawn entry without consuming a file: P,e,4 plays e4", () => {
+    const state = computeEntryState(legalMoves(), [
+      { kind: "piece", value: "P" },
+      { kind: "file", value: "e" },
+      { kind: "rank", value: "4" },
+    ]);
+    expect(state.resolved?.san).toBe("e4");
+  });
+
+  it("P is enabled at the start position alongside the knight", () => {
+    const state = computeEntryState(legalMoves(), []);
+    expect(state.enabled.pieces.P).toBe(true);
+    expect(state.enabled.pieces.N).toBe(true);
+  });
+});
+
+describe("dual keys", () => {
+  const PUSH_OR_CAPTURE: LegalMove[] = [
+    { san: "e5", piece: "p", from: "e4", to: "e5" },
+    { san: "e4", piece: "p", from: "e3", to: "e4" },
+    { san: "exd5", piece: "p", from: "e4", to: "d5" },
+    { san: "Nf3", piece: "n", from: "g1", to: "f3" },
+  ];
+
+  it("reads a dual tap as a file when only the file reading is legal", () => {
+    expect(interpretDualTap(PUSH_OR_CAPTURE, [], "e", "5")).toBe("file");
+  });
+
+  it("reads a dual tap as a rank when only the rank reading is legal", () => {
+    const taps: Tap[] = [{ kind: "file", value: "e" }];
+    expect(interpretDualTap(PUSH_OR_CAPTURE, taps, "a", "5")).toBe("rank");
+  });
+
+  it("flags the genuinely two-way pawn tap: after e, the d4 key is both exd-capture and rank 4", () => {
+    const taps: Tap[] = [{ kind: "file", value: "e" }];
+    expect(interpretDualTap(PUSH_OR_CAPTURE, taps, "d", "4")).toBe("both");
+    expect(dualTapOptions(PUSH_OR_CAPTURE, taps, "d", "4")).toEqual(["exd5", "e4"]);
+  });
+
+  it("returns none when neither reading can extend the entry", () => {
+    const taps: Tap[] = [{ kind: "piece", value: "N" }];
+    expect(interpretDualTap(PUSH_OR_CAPTURE, taps, "a", "1")).toBe("none");
+  });
+});
+
+describe("dual keys: same-file pawn pushes", () => {
+  it("second tap on the pawn's own key reads as the rank, so d,4 plays d4 without a chooser", () => {
+    const moves = legalMoves();
+    const taps: Tap[] = [{ kind: "file", value: "d" }];
+    expect(interpretDualTap(moves, taps, "d", "4")).toBe("rank");
+  });
+
+  it("the pawn's own file is not a capture target: files.e goes dead after tapping e at the start", () => {
+    const state = computeEntryState(legalMoves(), [{ kind: "file", value: "e" }]);
+    expect(state.enabled.files.e).toBe(false);
+  });
+
+  it("the e5 key is fully dead after e at the start: no e-file capture, no rank-5 push", () => {
+    expect(interpretDualTap(legalMoves(), [{ kind: "file", value: "e" }], "e", "5")).toBe("none");
   });
 });

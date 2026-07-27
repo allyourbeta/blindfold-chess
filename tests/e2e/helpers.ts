@@ -66,13 +66,55 @@ function sanToTaps(san: string): { taps: string[]; promotion?: string } {
   return { taps, promotion };
 }
 
-export async function tapKeypadKey(page: Page, name: string) {
-  await keypad(page).getByRole("button", { name, exact: true }).click();
+const FILES = "abcdefgh";
+
+/**
+ * Maps a logical tap ("e", "4", "Knight", "O-O") to the physical key that
+ * carries it. Files and ranks live on Novag-style dual keys whose accessible
+ * name is both glyphs: the e-file and rank 5 are the same "e5" key.
+ */
+function dualKeyName(tap: string): string {
+  if (/^[a-h]$/.test(tap)) return `${tap}${FILES.indexOf(tap) + 1}`;
+  if (/^[1-8]$/.test(tap)) return `${FILES[Number(tap) - 1]}${tap}`;
+  return tap;
 }
 
-/** Plays a move by tapping the keypad keys that produce it — see sanToTaps. */
+export async function tapKeypadKey(page: Page, name: string) {
+  await keypad(page).getByRole("button", { name: dualKeyName(name), exact: true }).click();
+}
+
+/**
+ * Plays a move by tapping the keypad keys that produce it — see sanToTaps.
+ * A dual key can be genuinely two-way (pawn capture vs pawn push); when the
+ * keypad answers with a chooser instead of accepting the next tap, the
+ * target SAN is picked from the chooser directly.
+ */
+/**
+ * The chooser (dual-tap ambiguity, SAN disambiguation, promotion) is its own
+ * named group. Never look for chooser buttons on the bare keypad: a pawn SAN
+ * like "d4" is also the NAME of the d4 dual key, and an unscoped lookup
+ * clicks the key instead of the chooser (or vice versa) — that collision
+ * silently broke every test that played d4.
+ */
+function chooserGroup(page: Page) {
+  return keypad(page).getByRole("group", { name: "Move chooser" });
+}
+
 export async function submitMove(page: Page, san: string) {
   const { taps, promotion } = sanToTaps(san);
-  for (const tap of taps) await tapKeypadKey(page, tap);
-  if (promotion) await tapKeypadKey(page, promotion);
+  const bare = san.replace(/[+#]/g, "");
+  for (const tap of taps) {
+    const chooserButton = chooserGroup(page).getByRole("button", { name: bare, exact: true });
+    if (await chooserButton.count()) {
+      await chooserButton.click();
+      return;
+    }
+    await tapKeypadKey(page, tap);
+  }
+  const chooserButton = chooserGroup(page).getByRole("button", { name: bare, exact: true });
+  if (await chooserButton.count()) {
+    await chooserButton.click();
+    return;
+  }
+  if (promotion) await chooserGroup(page).getByRole("button", { name: promotion, exact: true }).click();
 }

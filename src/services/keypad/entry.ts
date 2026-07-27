@@ -6,7 +6,7 @@
  * needs to render from those two inputs alone.
  */
 
-export type PieceLetter = "N" | "B" | "R" | "Q" | "K";
+export type PieceLetter = "N" | "B" | "R" | "Q" | "K" | "P";
 export type FileLetter = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h";
 export type RankDigit = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8";
 export type CastleValue = "O-O" | "O-O-O";
@@ -44,7 +44,7 @@ export interface EntryState {
 }
 
 /** Row order matches the keypad's Row 1 layout (♔ ♕ ♖ ♗ ♘). */
-export const PIECE_LETTERS: readonly PieceLetter[] = ["K", "Q", "R", "B", "N"];
+export const PIECE_LETTERS: readonly PieceLetter[] = ["K", "Q", "R", "B", "N", "P"];
 export const FILE_LETTERS: readonly FileLetter[] = ["a", "b", "c", "d", "e", "f", "g", "h"];
 export const RANK_DIGITS: readonly RankDigit[] = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
@@ -54,6 +54,7 @@ const PIECE_CHAR: Record<PieceLetter, LegalMove["piece"]> = {
   R: "r",
   Q: "q",
   K: "k",
+  P: "p",
 };
 
 interface Slots {
@@ -84,7 +85,7 @@ function reduceTaps(taps: readonly Tap[]): Slots {
 
   taps.forEach((tap, i) => {
     if (i === 0) {
-      if (tap.kind === "piece") slots.committed = "piece";
+      if (tap.kind === "piece") slots.committed = tap.value === "P" ? "pawn" : "piece";
       else if (tap.kind === "castle") slots.committed = "castle";
       else if (tap.kind === "file") slots.committed = "pawn";
     }
@@ -92,7 +93,7 @@ function reduceTaps(taps: readonly Tap[]): Slots {
     if (tap.kind === "castle") {
       slots.castle = tap.value;
     } else if (tap.kind === "piece") {
-      slots.pieceLetter = tap.value;
+      slots.pieceLetter = tap.value === "P" ? null : tap.value;
     } else if (tap.kind === "file") {
       if (slots.committed === "piece") slots.destFile = tap.value;
       else if (slots.originFile === null) slots.originFile = tap.value;
@@ -124,6 +125,19 @@ function candidatesFor(legalMoves: readonly LegalMove[], taps: readonly Tap[]): 
   return legalMoves.filter((m) => matchesSlots(m, slots));
 }
 
+/**
+ * A pawn can never capture on its own file, so once a pawn entry has its
+ * origin file, tapping that same file again means nothing — the second tap
+ * on the d4 key after "d" must read as rank 4 (playing d4), never as a
+ * phantom d-file "capture". Without this rule the file reading stayed alive
+ * on the pawn's own pushes and every same-key pawn push opened a chooser.
+ */
+function fileTapAccepted(taps: readonly Tap[], file: FileLetter): boolean {
+  const slots = reduceTaps(taps);
+  if (slots.committed === "pawn" && slots.destFile === null && slots.originFile === file) return false;
+  return true;
+}
+
 function buildPreview(taps: readonly Tap[], terminal: boolean): string {
   if (taps.length === 0) return "";
   const shown = taps.map((t) => t.value as string);
@@ -150,7 +164,8 @@ function computeEnabled(legalMoves: readonly LegalMove[], taps: readonly Tap[], 
     pieces[p] = atStart && legalMoves.some((m) => m.piece === PIECE_CHAR[p]);
   }
   for (const f of FILE_LETTERS) {
-    files[f] = candidatesFor(legalMoves, [...taps, { kind: "file", value: f }]).length > 0;
+    files[f] =
+      fileTapAccepted(taps, f) && candidatesFor(legalMoves, [...taps, { kind: "file", value: f }]).length > 0;
   }
   for (const r of RANK_DIGITS) {
     ranks[r] = fileEntered && candidatesFor(legalMoves, [...taps, { kind: "rank", value: r }]).length > 0;
@@ -197,4 +212,56 @@ export function computeEntryState(legalMoves: readonly LegalMove[], taps: readon
     disambiguation,
     promotionPending,
   };
+}
+
+/**
+ * Novag-style dual keys: each of the eight square keys carries one file AND
+ * one rank (a1, b2, … h8). A tap is read as whichever the entry can accept;
+ * "both" is the rare genuinely-two-way case (e.g. after a pawn's origin
+ * file, the d4 key can mean the d-file capture or rank 4) and the keypad
+ * resolves it with a chooser built from `dualTapOptions`.
+ */
+export type DualReading = "file" | "rank" | "both" | "none";
+
+function fileReadable(legalMoves: readonly LegalMove[], taps: readonly Tap[], file: FileLetter): boolean {
+  if (!fileTapAccepted(taps, file)) return false;
+  return candidatesFor(legalMoves, [...taps, { kind: "file", value: file }]).length > 0;
+}
+
+function rankReadable(legalMoves: readonly LegalMove[], taps: readonly Tap[], rank: RankDigit): boolean {
+  if (!taps.some((t) => t.kind === "file")) return false;
+  return candidatesFor(legalMoves, [...taps, { kind: "rank", value: rank }]).length > 0;
+}
+
+export function interpretDualTap(
+  legalMoves: readonly LegalMove[],
+  taps: readonly Tap[],
+  file: FileLetter,
+  rank: RankDigit,
+): DualReading {
+  const asFile = fileReadable(legalMoves, taps, file);
+  const asRank = rankReadable(legalMoves, taps, rank);
+  if (asFile && asRank) return "both";
+  if (asFile) return "file";
+  if (asRank) return "rank";
+  return "none";
+}
+
+/** SANs of every legal move reachable under either reading of a dual tap, file reading first, deduped. */
+export function dualTapOptions(
+  legalMoves: readonly LegalMove[],
+  taps: readonly Tap[],
+  file: FileLetter,
+  rank: RankDigit,
+): string[] {
+  const sans: string[] = [];
+  for (const tap of [
+    { kind: "file", value: file } as Tap,
+    { kind: "rank", value: rank } as Tap,
+  ]) {
+    for (const move of candidatesFor(legalMoves, [...taps, tap])) {
+      if (!sans.includes(move.san)) sans.push(move.san);
+    }
+  }
+  return sans;
 }

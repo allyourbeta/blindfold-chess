@@ -26,8 +26,8 @@ const buttonVariants = cva(
         icon: "h-11 w-11 shrink-0",
         // The move keypad's two key sizes — piece keys read as the primary
         // control, file/rank keys pack eight to a row on a phone width.
-        keypadPiece: "h-14 px-1 text-2xl",
-        keypadKey: "h-12 px-1 text-lg",
+        keypadPiece: "h-16 px-1",
+        keypadKey: "h-16 px-1 text-2xl",
       },
       active: {
         true: "bg-bg-primary text-text-on-primary border-transparent",
