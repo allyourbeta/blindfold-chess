@@ -1,11 +1,15 @@
 /**
- * Board pieces are the cburnett SVG set — the same pieces the original app
- * used, but vendored into public/pieces/ instead of pulled from GitHub at
- * runtime, so they survive offline. Unicode chess characters were tried and
- * abandoned: the white pieces are hollow outlines and disappear on a light
- * board, and every platform renders them differently.
+ * Board pieces are the Staunty SVG set, vendored into public/pieces/ rather
+ * than fetched at runtime so they survive offline. Staunty replaced cburnett
+ * because its heavier outlines and solid shapes stay legible at small sizes —
+ * on a peek board and on the keypad keys, cburnett's thin white outlines
+ * washed out against pale backgrounds. Unicode chess characters were tried
+ * long before either and abandoned: every platform renders them differently.
  *
- * Set by Colin M. L. Burnett, CC BY-SA 3.0 — see README for attribution.
+ * Staunty by sadsnake1 (via lila / cm-chessboard), CC BY-NC-SA 4.0 — see
+ * CREDITS.md. Extracted from cm-chessboard's sprite into twelve standalone
+ * files so nothing depends on cross-file SVG <use>, which Safari handles
+ * unreliably.
  */
 
 const PIECE_FILES: Record<string, string> = {

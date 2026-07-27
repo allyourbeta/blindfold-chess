@@ -102,6 +102,7 @@ is hidden and typed play remains fully functional.
 
 ## Credits
 
-Board pieces are the cburnett set by Colin M. L. Burnett, used under
-CC BY-SA 3.0. The SVGs are vendored in `public/pieces/` so the app works
-offline.
+Board pieces are the Staunty set (by sadsnake1, via lila and
+cm-chessboard), used under CC BY-NC-SA 4.0 — non-commercial, share-alike.
+The twelve SVGs are extracted from cm-chessboard's sprite and vendored in
+`public/pieces/` so the app works offline. See `CREDITS.md`.

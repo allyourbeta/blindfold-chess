@@ -13,6 +13,17 @@ export async function openApp(page: Page) {
   await page.goto("/");
 }
 
+/**
+ * Clicks a button that now lives in the play screen's "More" sheet
+ * (PGN, FEN, History, New Game, Engine speaks, Alpha). Resign and the
+ * primary row are still directly on screen.
+ */
+export async function tapMoreAction(page: Page, name: RegExp | string) {
+  await page.getByRole("button", { name: /More/ }).click();
+  const sheet = page.getByRole("dialog", { name: "More actions" });
+  await sheet.getByRole("button", { name }).click();
+}
+
 export async function waitForEngineReady(page: Page) {
   await expect(page.getByRole("button", { name: /New Game/ })).toBeVisible({
     timeout: 20_000,

@@ -115,3 +115,22 @@ from the official Stockfish engine with multi-variant support from
 [ddugovic/Stockfish](https://github.com/ddugovic/Stockfish). Predates this
 spike; documented here because `LICENSE` now points at this file for the
 full list of vendored GPL components.
+
+## Board pieces (`public/pieces/`)
+
+**Source:** the **Staunty** piece set, by sadsnake1, originally from
+[lila](https://github.com/lichess-org/lila/tree/master/public/piece/staunty)
+and redistributed in
+[`shaack/cm-chessboard`](https://github.com/shaack/cm-chessboard) at
+`assets/pieces/staunty.svg`.
+
+**License: CC BY-NC-SA 4.0** — attribution, **non-commercial**, share-alike.
+Stricter than the cburnett set it replaced (CC BY-SA 3.0): this app must not
+be sold or used commercially while it ships these pieces, and the extracted
+files below carry the same license.
+
+**What changed:** cm-chessboard ships all twelve pieces as one 40×40 SVG
+sprite. Each piece's `<g>` was extracted verbatim — transforms, paths and
+all — into a standalone `<svg viewBox="0 0 40 40">` file (`wK.svg`,
+`bQ.svg`, …), so the app never depends on cross-file SVG `<use>`, which
+Safari has historically handled unreliably. No artwork was altered.

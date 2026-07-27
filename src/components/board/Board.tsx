@@ -30,10 +30,11 @@ export function Board({
   return (
     <div
       className={cn(
-        // The board is square, so in short landscape the HEIGHT is what
-        // limits it: cap the width by the viewport height (minus the
-        // rotate control and padding) or it overflows the screen.
-        "mx-auto w-full max-w-[400px] select-none shortscape:max-w-[calc(100dvh-5rem)]",
+        // The board is square, so whoever renders it decides how big it can
+        // be — the peek overlay sizes its wrapper by BOTH viewport
+        // dimensions and passes `!max-w-full`, since height is what limits a
+        // square in landscape and width is what limits it in portrait.
+        "mx-auto w-full max-w-[400px] select-none",
         className,
       )}
     >

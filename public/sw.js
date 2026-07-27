@@ -1,6 +1,6 @@
 // Bump this whenever the app shell / precache list changes so browsers
 // pick up a fresh install instead of reusing a stale cache.
-const CACHE_NAME = 'blindfold-chess-v41';
+const CACHE_NAME = 'blindfold-chess-v43';
 
 /**
  * Maia's model + WASM runtime live in their own cache, deliberately never

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { startStandardGame, submitMove, keypad, openApp, waitForEngineReady, throttleCpu } from "./helpers";
+import { startStandardGame, submitMove, keypad, openApp, waitForEngineReady, throttleCpu, tapMoreAction } from "./helpers";
 
 test("recovers after an initial Maia model load failure", async ({ page }) => {
   let requestCount = 0;
@@ -56,7 +56,7 @@ test("starting a new game while Maia might still be replying restarts it safely"
   await startStandardGame(page);
   await throttleCpu(page, 20);
   await submitMove(page, "e4");
-  await page.getByRole("button", { name: /New Game/ }).click();
+  await tapMoreAction(page, /New Game/);
 
   await expect(page.getByText("No moves yet")).toBeVisible({ timeout: 15_000 });
   await expect(page.getByText(/error/i)).toHaveCount(0);

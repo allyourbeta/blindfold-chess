@@ -33,6 +33,7 @@ export function BoardPanel({
   return (
     <div className="flex flex-col items-center gap-2">
       <Board
+        className="!max-w-full"
         board={board}
         flipped={flipped}
         highlightFrom={highlightFrom}

@@ -39,7 +39,7 @@ test("landscape: every control is fully inside the viewport", async ({ page }) =
     ["status", page.getByText(/Your move ·/)],
     ["ticker", page.getByRole("button", { name: /Move list/ })],
     ["log", page.getByText(/Game started/)],
-    ["actionbar", page.getByRole("button", { name: /New Game/ })],
+    ["actionbar", page.getByRole("button", { name: /Resign/ })],
     ["keypad", keypad(page)],
   ] as const) {
     const b = await locator.boundingBox();

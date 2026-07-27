@@ -24,8 +24,21 @@ type GetState = () => GameState;
  * the store's `create()` callback plus its own private bookkeeping
  * (message ids, the current game's start time/fen/skill label).
  */
+/**
+ * Maia answers in roughly 70ms — faster than a hand leaves the screen, which
+ * reads as being rushed rather than as being played against. These bound a
+ * minimum time before its reply lands. It's a FLOOR, not an added pause:
+ * real thinking time counts towards it, so a slow position never waits
+ * twice. Varied rather than fixed, because a person doesn't answer in the
+ * same beat every move, and the whole point of Maia is a human-feeling
+ * opponent.
+ */
+const MIN_REPLY_MS = 500;
+const MAX_REPLY_MS = 900;
+
 export function createGameFlow(set: SetState, get: GetState, engineManager: EngineManager) {
   let messageIdCounter = 0;
+  let replyFloorAt = 0;
   let gameStartTime = 0;
   let gameStartFen = "";
   let opponentLabelAtStart = "";
@@ -41,6 +54,7 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   function requestEngineMove() {
     addMessage("thinking", `${OPPONENT_LABEL} thinking...`);
     set({ isThinking: true });
+    replyFloorAt = Date.now() + MIN_REPLY_MS + Math.random() * (MAX_REPLY_MS - MIN_REPLY_MS);
     engineManager.setLevel({ label: OPPONENT_LABEL, randomness: useSettingsStore.getState().randomness });
     void engineManager.requestMove(get().chess.fen(), get().moveHistory, applyEngineMove, (err) =>
       handleEngineFailure(err.message),
@@ -70,6 +84,18 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   }
 
   function applyEngineMove(uci: string) {
+    const remaining = replyFloorAt - Date.now();
+    if (remaining > 0) {
+      // The abort path can't reach a pending timer, so re-check the game
+      // state when it fires: resign, New Game or a takeback during the wait
+      // must not be followed by the move that was already in flight.
+      setTimeout(() => applyEngineMoveNow(uci), remaining);
+      return;
+    }
+    applyEngineMoveNow(uci);
+  }
+
+  function applyEngineMoveNow(uci: string) {
     const s = get();
     if (s.gameOverFlag || s.chess.turn() === s.playerColor) return; // stale reply — defense in depth
     const from = uci.slice(0, 2);
