@@ -69,16 +69,14 @@ export function ActionBar() {
         <Button variant="secondary" size="sm" onClick={() => void copyPgn()} title="Copy game notation">
           <ClipboardCopy className="h-4 w-4" /> PGN
         </Button>
-        </div>
-        <div className="flex flex-wrap justify-center gap-2">
         <Button variant="secondary" size="sm" onClick={() => submitMoveText("fen")} title="Show the current position's FEN">
           <FileCode className="h-4 w-4" /> FEN
         </Button>
+        </div>
+        <div className="flex flex-wrap justify-center gap-2">
         <Button variant="secondary" size="sm" onClick={() => submitMoveText("history")} title="Past games and stats">
           <History className="h-4 w-4" /> History
         </Button>
-        </div>
-        <div className="flex flex-wrap justify-center gap-2">
         <Button variant="secondary" size="sm" disabled={gameOverFlag} onClick={doResign}>
           <Flag className="h-4 w-4" /> Resign
         </Button>

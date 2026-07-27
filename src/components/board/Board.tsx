@@ -28,7 +28,15 @@ export function Board({
   const cols = flipped ? [...INDICES].reverse() : INDICES;
 
   return (
-    <div className={cn("mx-auto w-full max-w-[400px] select-none", className)}>
+    <div
+      className={cn(
+        // The board is square, so in short landscape the HEIGHT is what
+        // limits it: cap the width by the viewport height (minus the
+        // rotate control and padding) or it overflows the screen.
+        "mx-auto w-full max-w-[400px] select-none shortscape:max-w-[calc(100dvh-5rem)]",
+        className,
+      )}
+    >
       <div className="flex overflow-hidden rounded-lg border-2 border-stone-700 dark:border-stone-500">
         <div className="flex w-5 flex-col">
           {rows.map((r) => (

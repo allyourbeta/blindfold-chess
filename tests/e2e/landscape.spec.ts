@@ -73,6 +73,34 @@ test("landscape: keys stay full size — the layout uses the width, it doesn't s
   expect(box!.width).toBeGreaterThanOrEqual(60);
 });
 
+test("landscape: the message log has real room to show moves", async ({ page }) => {
+  await startStandardGame(page);
+
+  // The log collapsed to zero height in an earlier landscape layout while
+  // every other assertion passed — engine move text was simply invisible.
+  const log = page.getByText(/Game started/);
+  const box = await log.boundingBox();
+  expect(box, "the game-started message should be rendered").not.toBeNull();
+  expect(box!.y + box!.height).toBeLessThanOrEqual(H + 0.5);
+  expect(box!.height).toBeGreaterThan(10);
+});
+
+test("landscape: peek shows the whole board without breaking the layout", async ({ page }) => {
+  await startStandardGame(page);
+  await page.getByRole("button", { name: /Peek/ }).click();
+
+  const board = page.locator(".grid-cols-8, [class*='select-none']").first();
+  const box = await board.boundingBox();
+  expect(box, "the peek board should render").not.toBeNull();
+  // The whole board on screen — it used to push the layout apart and spill.
+  expect(box!.y).toBeGreaterThanOrEqual(-0.5);
+  expect(box!.y + box!.height).toBeLessThanOrEqual(H + 0.5);
+  expect(box!.x + box!.width).toBeLessThanOrEqual(W + 0.5);
+  expect(box!.height).toBeGreaterThan(120);
+
+  await page.screenshot({ path: "test-results/landscape-peek.png" });
+});
+
 test("landscape: a move can actually be played", async ({ page }) => {
   await startStandardGame(page);
 
