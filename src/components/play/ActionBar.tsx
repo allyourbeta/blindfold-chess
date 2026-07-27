@@ -45,7 +45,8 @@ export function ActionBar() {
         </Button>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 border-t border-border-default pt-3">
+      <div className="flex flex-col gap-2 border-t border-border-default pt-2">
+        <div className="flex justify-center gap-2">
         <Button
           variant="secondary"
           size="sm"
@@ -67,6 +68,8 @@ export function ActionBar() {
         <Button variant="secondary" size="sm" onClick={() => void copyPgn()} title="Copy game notation">
           <ClipboardCopy className="h-4 w-4" /> PGN
         </Button>
+        </div>
+        <div className="flex justify-center gap-2">
         <Button variant="secondary" size="sm" onClick={() => submitMoveText("fen")} title="Show the current position's FEN">
           <FileCode className="h-4 w-4" /> FEN
         </Button>
@@ -79,6 +82,7 @@ export function ActionBar() {
         <Button variant="secondary" size="sm" onClick={() => void startNewGame()}>
           <RotateCcw className="h-4 w-4" /> New Game
         </Button>
+        </div>
       </div>
     </div>
   );

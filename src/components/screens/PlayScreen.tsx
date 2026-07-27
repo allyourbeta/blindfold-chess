@@ -26,11 +26,11 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
 
   return (
     <div className="flex h-full w-full flex-col p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">
-      <div className="mb-3 flex items-center justify-between border-b border-border-default pb-3">
+      <div className="mb-2 flex items-center justify-between border-b border-border-default pb-2">
         <button onClick={handleMenu} aria-label="Back to menu" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt">
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <div className="text-base font-extrabold tracking-widest text-text-accent">MIND'S EYE</div>
+        <div className="text-3xl font-extrabold tracking-widest text-text-accent">MIND'S EYE</div>
         <div className="h-11 w-11" aria-hidden />
       </div>
 

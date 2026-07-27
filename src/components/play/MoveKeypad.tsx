@@ -214,7 +214,7 @@ export function MoveKeypad() {
         <Button
           type="button"
           variant="secondary"
-          className="h-11 disabled:!opacity-30"
+          className="h-9 disabled:!opacity-30"
           disabled={inert || anyChooser || !entry.enabled.castleKingside}
           onClick={() => pushTap({ kind: "castle", value: "O-O" })}
         >
@@ -223,7 +223,7 @@ export function MoveKeypad() {
         <Button
           type="button"
           variant="secondary"
-          className="h-11 disabled:!opacity-30"
+          className="h-9 disabled:!opacity-30"
           disabled={inert || anyChooser || !entry.enabled.castleQueenside}
           onClick={() => pushTap({ kind: "castle", value: "O-O-O" })}
         >
