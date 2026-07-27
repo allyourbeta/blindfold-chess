@@ -26,6 +26,23 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    // onnxruntime-web's default "bundle" build self-locates its wasm binary
+    // via import.meta.url, which makes Vite copy its own extra ~13MB copy
+    // into dist/assets on top of the one we deliberately self-host at
+    // public/maia/ort/ (see maia.worker.ts). This condition picks the
+    // non-bundle build instead, which expects `ort.env.wasm.wasmPaths` to be
+    // set (which it is) and skips the redundant copy.
+    conditions: ["onnxruntime-web-use-extern-wasm"],
+  },
+  build: {
+    rollupOptions: {
+      // maia-spike.html is a standalone lab-bench page (SPEC_maia_spike.md),
+      // not wired into the app — it needs its own entry to be built at all.
+      input: {
+        main: path.resolve(__dirname, "index.html"),
+        maiaSpike: path.resolve(__dirname, "maia-spike.html"),
+      },
+    },
   },
   // Display the deployed Git revision so a cached phone build can be matched
   // directly to the source commit. Vercel supplies the SHA in production;

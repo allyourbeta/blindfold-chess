@@ -19,3 +19,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+This license covers this project's own code. A small number of vendored
+third-party components are licensed separately (GPL-3.0), isolated at a
+worker boundary and never imported by the app's own modules. See
+`CREDITS.md` for the full list, sources, and licenses.
