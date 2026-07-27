@@ -69,12 +69,10 @@ function sanToTaps(san: string): { taps: string[]; promotion?: string } {
   }
   s = s.replace("x", "");
 
-  if (!pieceMatch && s.length === 3) {
-    taps.push(s[0], s[1], s[2]); // pawn capture: origin file, dest file, dest rank
-  } else {
-    const dest = s.slice(-2);
-    taps.push(dest[0], dest[1]);
-  }
+  // Every move is entered as its DESTINATION square — pawn captures too.
+  // exd5 is tapped as d,5; which pawn takes is the app's job to resolve.
+  const dest = s.slice(-2);
+  taps.push(dest[0], dest[1]);
 
   return { taps, promotion };
 }

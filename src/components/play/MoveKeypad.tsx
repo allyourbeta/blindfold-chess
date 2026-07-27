@@ -5,7 +5,7 @@ import { PieceGlyph } from "@/components/board/PieceGlyph";
 import { useGameStore } from "@/state/gameStore";
 import { useSpeechStore } from "@/state/speechStore";
 import { useSettingsStore } from "@/state/settingsStore";
-import { interpretDualTap, dualTapOptions, strictDualChoices, type StrictDualChoice } from "@/services/keypad/dual";
+import { interpretDualTap } from "@/services/keypad/dual";
 import {
   computeEntryState,
   PIECE_LETTERS,
@@ -52,17 +52,11 @@ export function MoveKeypad() {
   const assistMode = useSettingsStore((s) => s.assistMode);
 
   const [taps, setTaps] = useState<Tap[]>([]);
-  const [dualChoices, setDualChoices] = useState<string[] | null>(null);
-  const [readingChoices, setReadingChoices] = useState<StrictDualChoice[] | null>(null);
   const isPlayersTurn = turn === playerColor;
   const inert = gameOverFlag || isSpeaking || !isPlayersTurn;
 
   // A new position (our move, the engine's reply, a takeback) invalidates any in-progress entry.
-  useEffect(() => {
-    setTaps([]);
-    setDualChoices(null);
-    setReadingChoices(null);
-  }, [fen]);
+  useEffect(() => setTaps([]), [fen]);
 
   const legalMoves = useMemo<LegalMove[]>(() => {
     if (!isPlayersTurn) return [];
@@ -82,13 +76,10 @@ export function MoveKeypad() {
   function play(san: string) {
     submitMoveText(san);
     setTaps([]);
-    setDualChoices(null);
-    setReadingChoices(null);
   }
 
   function pushTap(tap: Tap) {
     if (inert) return;
-    setReadingChoices(null);
     const next = computeEntryState(legalMoves, [...taps, tap], assistMode);
     if (next.resolved) play(next.resolved.san);
     // Strict: a fully stated entry that matches nothing goes through the
@@ -103,23 +94,15 @@ export function MoveKeypad() {
   }
 
   /** A dual key is its file when the entry wants a file, its rank when it wants a rank — the machine decides. */
+  /** Novag rule: first tap in a square is the letter, second is the number. Never anything else. */
   function pushDual(file: FileLetter, rank: RankDigit) {
-    if (inert || dualChoices || readingChoices) return;
+    if (inert) return;
     const reading = interpretDualTap(legalMoves, taps, file, rank, assistMode);
     if (reading === "file") pushTap({ kind: "file", value: file });
     else if (reading === "rank") pushTap({ kind: "rank", value: rank });
-    else if (reading === "both") {
-      if (assistMode === "strict") setReadingChoices(strictDualChoices(taps, file, rank));
-      else setDualChoices(dualTapOptions(legalMoves, taps, file, rank));
-    }
   }
 
   function undoTap() {
-    if (dualChoices || readingChoices) {
-      setDualChoices(null);
-      setReadingChoices(null);
-      return;
-    }
     setTaps((t) => t.slice(0, -1));
   }
 
@@ -131,7 +114,6 @@ export function MoveKeypad() {
         undoTap();
         return;
       }
-      if (dualChoices || readingChoices) return;
       // SAN's own case convention: uppercase letters are pieces, lowercase
       // letters are files. This matters for "b", which is both a file and
       // the bishop — lowercase b is ALWAYS the b-file (so 1. b4 is typable),
@@ -160,33 +142,17 @@ export function MoveKeypad() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [entry, inert, taps, dualChoices, readingChoices]);
+  }, [entry, inert, taps]);
 
-  const chooser = dualChoices ?? entry.disambiguation;
-  const anyChooser = !!chooser || !!readingChoices;
+  const chooser = entry.disambiguation;
+  const anyChooser = !!chooser || entry.promotionPending;
   const statusText = isSpeaking ? "Engine speaking…" : !isPlayersTurn && !gameOverFlag ? "Engine thinking…" : null;
 
   return (
     <div role="group" aria-label="Move entry keypad" className="flex flex-col gap-2">
       <div className="flex items-stretch gap-2">
         <div className="flex h-12 flex-1 items-center justify-center overflow-x-auto rounded-xl border border-border-default bg-bg-surface-alt px-3">
-          {readingChoices ? (
-            <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
-              {readingChoices.map((choice) => (
-                <Button
-                  key={choice.label}
-                  type="button"
-                  size="sm"
-                  onClick={() => {
-                    setReadingChoices(null);
-                    pushTap(choice.tap);
-                  }}
-                >
-                  {choice.label}
-                </Button>
-              ))}
-            </div>
-          ) : chooser ? (
+          {chooser ? (
             <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
               {chooser.map((san) => (
                 <Button key={san} type="button" size="sm" onClick={() => play(san)}>
@@ -220,7 +186,7 @@ export function MoveKeypad() {
           variant="secondary"
           className="h-12 w-14 shrink-0 text-xl disabled:!opacity-30"
           aria-label="Undo last entry"
-          disabled={inert || (taps.length === 0 && !anyChooser)}
+          disabled={inert || taps.length === 0}
           onClick={undoTap}
         >
           ⌫

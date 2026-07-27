@@ -65,24 +65,22 @@ export interface Slots {
   committed: "piece" | "pawn" | "castle" | null;
   pieceLetter: PieceLetter | null;
   castle: CastleValue | null;
-  originFile: FileLetter | null;
   destFile: FileLetter | null;
   destRank: RankDigit | null;
 }
 
 /**
- * Folds the tap sequence into named slots. A file tap is ambiguous on its
- * own — it means "pawn origin file" the first time one appears with no
- * piece committed, "piece destination file" right after a piece tap, and
- * "capture destination file" the second time it appears in a pawn entry.
- * Which one applies is decided here, once, rather than by tap position.
+ * Folds the tap sequence into named slots. Every entry is piece (or pawn
+ * or castle) followed by the DESTINATION square, file then rank — pawn
+ * captures included. Which pawn makes the capture is the position's
+ * business at resolution time, exactly like which knight goes to f3;
+ * two candidates get the standard SAN chooser.
  */
 export function reduceTaps(taps: readonly Tap[]): Slots {
   const slots: Slots = {
     committed: null,
     pieceLetter: null,
     castle: null,
-    originFile: null,
     destFile: null,
     destRank: null,
   };
@@ -99,11 +97,8 @@ export function reduceTaps(taps: readonly Tap[]): Slots {
     } else if (tap.kind === "piece") {
       slots.pieceLetter = tap.value === "P" ? null : tap.value;
     } else if (tap.kind === "file") {
-      if (slots.committed === "piece") slots.destFile = tap.value;
-      else if (slots.originFile === null) slots.originFile = tap.value;
-      else slots.destFile = tap.value;
+      if (slots.destFile === null) slots.destFile = tap.value;
     } else if (tap.kind === "rank") {
-      if (slots.destFile === null && slots.originFile !== null) slots.destFile = slots.originFile;
       slots.destRank = tap.value;
     }
   });
@@ -118,7 +113,6 @@ function matchesSlots(move: LegalMove, slots: Slots): boolean {
   } else if (slots.committed === "pawn") {
     if (move.piece !== "p") return false;
   }
-  if (slots.originFile && move.from[0] !== slots.originFile) return false;
   if (slots.destFile && move.to[0] !== slots.destFile) return false;
   if (slots.destRank && move.to[1] !== slots.destRank) return false;
   return true;
@@ -129,18 +123,6 @@ export function candidatesFor(legalMoves: readonly LegalMove[], taps: readonly T
   return legalMoves.filter((m) => matchesSlots(m, slots));
 }
 
-/**
- * A pawn can never capture on its own file, so once a pawn entry has its
- * origin file, tapping that same file again means nothing — the second tap
- * on the d4 key after "d" must read as rank 4 (playing d4), never as a
- * phantom d-file "capture". Without this rule the file reading stayed alive
- * on the pawn's own pushes and every same-key pawn push opened a chooser.
- */
-export function fileTapAccepted(taps: readonly Tap[], file: FileLetter): boolean {
-  const slots = reduceTaps(taps);
-  if (slots.committed === "pawn" && slots.destFile === null && slots.originFile === file) return false;
-  return true;
-}
 
 function buildPreview(taps: readonly Tap[], terminal: boolean): string {
   if (taps.length === 0) return "";
@@ -170,9 +152,9 @@ function computeStrictEnabled(taps: readonly Tap[], terminal: boolean): EnabledK
     slots.committed !== "castle" &&
     slots.destFile === null;
   for (const p of PIECE_LETTERS) pieces[p] = atStart;
-  for (const f of FILE_LETTERS) files[f] = !terminal && fileOpen && fileTapAccepted(taps, f);
+  for (const f of FILE_LETTERS) files[f] = fileOpen;
   for (const r of RANK_DIGITS) {
-    ranks[r] = !terminal && slots.destRank === null && taps.some((t) => t.kind === "file");
+    ranks[r] = !terminal && slots.destRank === null && slots.destFile !== null;
   }
   return { pieces, files, ranks, castleKingside: atStart, castleQueenside: atStart };
 }
@@ -180,9 +162,6 @@ function computeStrictEnabled(taps: readonly Tap[], terminal: boolean): EnabledK
 function buildSanFromSlots(slots: Slots): string {
   if (slots.committed === "castle") return slots.castle ?? "";
   if (slots.committed === "piece") return `${slots.pieceLetter}${slots.destFile}${slots.destRank}`;
-  if (slots.originFile && slots.destFile && slots.originFile !== slots.destFile) {
-    return `${slots.originFile}x${slots.destFile}${slots.destRank}`;
-  }
   return `${slots.destFile}${slots.destRank}`;
 }
 
@@ -206,7 +185,8 @@ function computeEnabled(legalMoves: readonly LegalMove[], taps: readonly Tap[], 
   }
   for (const f of FILE_LETTERS) {
     files[f] =
-      fileTapAccepted(taps, f) && candidatesFor(legalMoves, [...taps, { kind: "file", value: f }]).length > 0;
+      reduceTaps(taps).destFile === null &&
+      candidatesFor(legalMoves, [...taps, { kind: "file", value: f }]).length > 0;
   }
   for (const r of RANK_DIGITS) {
     ranks[r] = fileEntered && candidatesFor(legalMoves, [...taps, { kind: "rank", value: r }]).length > 0;

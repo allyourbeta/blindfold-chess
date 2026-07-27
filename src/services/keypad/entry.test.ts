@@ -9,7 +9,7 @@ import {
   type RankDigit,
   type CastleValue,
 } from "./entry";
-import { interpretDualTap, dualTapOptions } from "./dual";
+import { interpretDualTap } from "./dual";
 
 function legalMoves(fen?: string): LegalMove[] {
   const chess = fen ? new Chess(fen) : new Chess();
@@ -119,12 +119,20 @@ describe("computeEntryState: disambiguation", () => {
   });
 });
 
-describe("computeEntryState: pawn captures", () => {
-  it("narrows e,d to the exd-file capture and resolves it", () => {
-    // White pawn e4, black pawn d5 — only one legal e-file-to-d-file capture.
+describe("computeEntryState: pawn captures by destination", () => {
+  it("resolves the destination square d5 to the capture exd5 when only the e-pawn can go there", () => {
+    // White pawn e4, black pawn d5 — tapping the DESTINATION names the move.
     const moves = legalMoves("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3");
-    const afterFiles = computeEntryState(moves, [file("e"), file("d")]);
-    expect(afterFiles.resolved?.san).toBe("exd5");
+    const state = computeEntryState(moves, [file("d"), rank("5")]);
+    expect(state.resolved?.san).toBe("exd5");
+  });
+
+  it("two pawns reaching one square is a standard SAN disambiguation, like two knights", () => {
+    // White pawns a4 and c4, black pawn b5: axb5 or cxb5.
+    const moves = legalMoves("rnbqkbnr/p1pppppp/8/1p6/P1P5/8/1P1PPPPP/RNBQKBNR w KQkq b6 0 3");
+    const state = computeEntryState(moves, [file("b"), rank("5")]);
+    expect(state.resolved).toBeNull();
+    expect(state.disambiguation).toEqual(["axb5", "cxb5"]);
   });
 });
 
@@ -213,10 +221,9 @@ describe("dual keys", () => {
     expect(interpretDualTap(PUSH_OR_CAPTURE, taps, "a", "5")).toBe("rank");
   });
 
-  it("flags the genuinely two-way pawn tap: after e, the d4 key is both exd-capture and rank 4", () => {
+  it("a dual key is never two-way: with the destination file set, the tap is the rank", () => {
     const taps: Tap[] = [{ kind: "file", value: "e" }];
-    expect(interpretDualTap(PUSH_OR_CAPTURE, taps, "d", "4")).toBe("both");
-    expect(dualTapOptions(PUSH_OR_CAPTURE, taps, "d", "4")).toEqual(["exd5", "e4"]);
+    expect(interpretDualTap(PUSH_OR_CAPTURE, taps, "d", "4")).toBe("rank");
   });
 
   it("returns none when neither reading can extend the entry", () => {
@@ -225,20 +232,15 @@ describe("dual keys", () => {
   });
 });
 
-describe("dual keys: same-file pawn pushes", () => {
-  it("second tap on the pawn's own key reads as the rank, so d,4 plays d4 without a chooser", () => {
-    const moves = legalMoves();
+describe("dual keys: strict alternation", () => {
+  it("second tap on the same key is the rank: d,4 plays d4", () => {
     const taps: Tap[] = [{ kind: "file", value: "d" }];
-    expect(interpretDualTap(moves, taps, "d", "4")).toBe("rank");
+    expect(interpretDualTap(legalMoves(), taps, "d", "4")).toBe("rank");
   });
 
-  it("the pawn's own file is not a capture target: files.e goes dead after tapping e at the start", () => {
+  it("assisted still dims a rank no move can reach: e then rank 5 at the start", () => {
     const state = computeEntryState(legalMoves(), [{ kind: "file", value: "e" }]);
-    expect(state.enabled.files.e).toBe(false);
-  });
-
-  it("the e5 key is fully dead after e at the start: no e-file capture, no rank-5 push", () => {
-    expect(interpretDualTap(legalMoves(), [{ kind: "file", value: "e" }], "e", "5")).toBe("none");
+    expect(state.enabled.ranks["5"]).toBe(false);
   });
 });
 
@@ -269,9 +271,9 @@ describe("strict mode", () => {
     expect(state.invalid).toBe("Nf6");
   });
 
-  it("builds capture SAN for an invalid pawn capture entry", () => {
-    const state = computeEntryState(legalMoves(), [file("e"), file("d"), rank("5")], "strict");
-    expect(state.invalid).toBe("exd5");
+  it("flags an unreachable pawn destination as invalid with its square", () => {
+    const state = computeEntryState(legalMoves(), [piece("P"), file("e"), rank("5")], "strict");
+    expect(state.invalid).toBe("e5");
   });
 
   it("keeps SAN disambiguation even in strict — notation's own requirement", () => {
