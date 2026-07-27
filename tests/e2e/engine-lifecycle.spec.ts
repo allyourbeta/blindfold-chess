@@ -88,7 +88,7 @@ test("resign then New Game recovers cleanly — a fresh move gets a sane reply, 
 test("a checkmate set-up position ends the game immediately with an inert keypad", async ({ page }) => {
   await openApp(page);
   await waitForEngineReady(page);
-  await page.getByRole("button", { name: /Set Up a Position/ }).click();
+  await page.getByRole("button", { name: /set up a position/i }).click();
 
   // Fool's Mate: White to move, already checkmated — no engine request is
   // possible or needed, and White (the default player color) has no move.

@@ -1,17 +1,12 @@
 import { useState } from "react";
 import {
-  BookOpen,
-  ChevronDown,
-  ChevronUp,
   LoaderCircle,
   Moon,
-  SlidersHorizontal,
   Sun,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
-import { HowToPlay } from "./HowToPlay";
 import { useGameStore } from "@/state/gameStore";
 import { useSettingsStore } from "@/state/settingsStore";
 import { RANDOMNESS_STOPS } from "@/engine/maia/policy";
@@ -34,11 +29,6 @@ const SPEECH_HINT = {
   on: "The engine's moves are spoken aloud.",
 } as const;
 
-const SPEECH_SUMMARY = {
-  off: "Silent",
-  on: "Engine speaks",
-} as const;
-
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
@@ -50,7 +40,6 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
   const [showSettings, setShowSettings] = useState(false);
-  const [showHelp, setShowHelp] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const playerColor = useSettingsStore((s) => s.playerColor);
   const setPlayerColor = useSettingsStore((s) => s.setPlayerColor);
@@ -70,7 +59,6 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
   const engineReady = engineStatus === "ready";
   const engineFailed = engineStatus === "failed";
   const randomnessSummaryLabel = RANDOMNESS_STOPS.find((s) => s.value === randomness)?.label ?? "Human";
-  const setupSummary = `${playerColor === "w" ? "White" : "Black"} · Maia 1900 (${randomnessSummaryLabel}) · ${SPEECH_SUMMARY[speechMode]}`;
 
   async function handleStart() {
     unlockAudioOutput();
@@ -85,12 +73,6 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
 
   function toggleSettings() {
     setShowSettings((visible) => !visible);
-    setShowHelp(false);
-  }
-
-  function toggleHelp() {
-    setShowHelp((visible) => !visible);
-    setShowSettings(false);
   }
 
   return (
@@ -116,9 +98,8 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
           />
           <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-text-accent">Mind's Eye</h1>
           <p className="mt-1 text-lg font-semibold text-text-primary">The ultimate test of cerebral fitness</p>
-          <p className="mt-1 max-w-xs text-base font-semibold text-text-secondary">
-            No chessboard? No problem!
-          </p>
+          {/* Who you're facing — a fact, not a setting. There is one model. */}
+          <p className="mt-2 text-base font-semibold text-text-secondary">Maia 1900</p>
         </section>
 
         <section className="mt-7">
@@ -134,23 +115,34 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
             {engineStatus === "idle" && "Loading Maia 1900..."}
           </Button>
 
-          <Card className="mt-3 p-4">
-            <p className="text-center text-base font-semibold text-text-secondary">{setupSummary}</p>
-            <button
-              type="button"
-              onClick={toggleSettings}
-              aria-expanded={showSettings}
-              aria-controls="game-settings"
-              className="mx-auto mt-2 flex min-h-11 items-center justify-center gap-2 rounded-xl px-3 text-base font-bold text-text-accent hover:bg-bg-surface-alt"
-            >
-              <SlidersHorizontal className="h-4 w-4" />
-              Change settings
-              {showSettings ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-            </button>
-          </Card>
+          {/*
+            The three things that are actually adjustable, as chips rather
+            than a sentence: scannable instead of readable, and each one taps
+            straight into the settings. Opponent isn't here — there's only
+            one model, so a chip implying a choice would be a lie.
+          */}
+          <div className="mt-3 grid grid-cols-3 gap-2" id="game-settings-summary">
+            {[
+              { label: "Color", value: playerColor === "w" ? "White" : "Black" },
+              { label: "Variance", value: randomnessSummaryLabel },
+              { label: "Speech", value: speechMode === "on" ? "On" : "Off" },
+            ].map((chip) => (
+              <button
+                key={chip.label}
+                type="button"
+                onClick={toggleSettings}
+                aria-expanded={showSettings}
+                aria-controls="game-settings"
+                className="min-h-16 rounded-xl bg-bg-surface-alt px-2 py-2 text-center hover:bg-bg-surface"
+              >
+                <span className="block text-xs font-semibold text-text-muted">{chip.label}</span>
+                <span className="mt-0.5 block text-base font-bold text-text-primary">{chip.value}</span>
+              </button>
+            ))}
+          </div>
 
           <Button className="mt-3 w-full" variant="secondary" disabled={!engineReady} onClick={onSetup}>
-            Set Up a Position
+            Set up a position
           </Button>
         </section>
 
@@ -173,7 +165,7 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
               />
             </Field>
 
-            <Field label="Randomness">
+            <Field label="Variance">
               <div className="grid grid-cols-2 gap-2">
                 {RANDOMNESS_STOPS.map((stop) => (
                   <button
@@ -238,25 +230,6 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
             )}
           </Card>
         )}
-
-        <section className="mt-5 border-t border-border-default pt-4">
-          <button
-            type="button"
-            onClick={toggleHelp}
-            aria-expanded={showHelp}
-            aria-controls="how-to-play"
-            className="mx-auto flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 text-base font-bold text-text-secondary hover:bg-bg-surface-alt hover:text-text-primary"
-          >
-            <BookOpen className="h-4 w-4" />
-            How to play
-            {showHelp ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-          </button>
-          {showHelp && (
-            <div id="how-to-play" className="mt-3">
-              <HowToPlay />
-            </div>
-          )}
-        </section>
 
         <p className="mt-auto pt-8 text-center text-sm text-text-muted">build {__GIT_COMMIT__} · {__BUILD_TIME__}</p>
       </main>

@@ -1,26 +1,33 @@
 import { expect, test } from "@playwright/test";
 import { waitForEngineReady, openApp } from "./helpers";
 
-test("home screen prioritizes starting a game and progressively reveals details", async ({ page }) => {
+test("home screen leads with the game and keeps settings out of the way", async ({ page }) => {
   await openApp(page);
   await waitForEngineReady(page);
 
   await expect(page.getByRole("heading", { name: "Mind's Eye" })).toBeVisible();
   await expect(page.getByText("The ultimate test of cerebral fitness")).toBeVisible();
-  await expect(page.getByText("No chessboard? No problem!")).toBeVisible();
   await expect(page.locator('img[src="/icons/icon-512.png"]')).toBeVisible();
   await expect(page.getByRole("button", { name: "New Game" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Change settings" })).toBeVisible();
 
-  // Detailed controls and the notation guide should not compete with the main
-  // action until the player asks for them.
+  // The opponent is a fact, not a control: named, but not offered as a choice.
+  await expect(page.getByText("Maia 1900")).toBeVisible();
+
+  // Three chips replace the old summary sentence and its disclosure row.
+  for (const chip of ["Color", "Variance", "Speech"]) {
+    await expect(page.getByRole("button", { name: new RegExp(chip) })).toBeVisible();
+  }
+
+  // Detailed controls stay collapsed until asked for.
   await expect(page.getByRole("button", { name: "Wild", exact: true })).toHaveCount(0);
-  await expect(page.getByText("Tap moves on the keypad")).toHaveCount(0);
-
-  await page.getByRole("button", { name: "Change settings" }).click();
+  await page.getByRole("button", { name: /Variance/ }).click();
   await expect(page.getByRole("button", { name: "Wild", exact: true })).toBeVisible();
+});
 
-  await page.getByRole("button", { name: "How to play" }).click();
-  await expect(page.getByText("Tap moves on the keypad")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Wild", exact: true })).toHaveCount(0);
+test("the how-to-play guide is gone", async ({ page }) => {
+  await openApp(page);
+  await waitForEngineReady(page);
+
+  await expect(page.getByRole("button", { name: "How to play" })).toHaveCount(0);
+  await expect(page.getByText("Tap moves on the keypad")).toHaveCount(0);
 });

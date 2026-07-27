@@ -4,7 +4,7 @@ import { waitForEngineReady, keypad, openApp, tapMoreAction } from "./helpers";
 test("custom-position castling-right sanitation", async ({ page }) => {
   await openApp(page);
   await waitForEngineReady(page);
-  await page.getByRole("button", { name: /Set Up a Position/ }).click();
+  await page.getByRole("button", { name: /set up a position/i }).click();
 
   // Remove White's h1 rook — its kingside castling right becomes impossible
   // even though the checkbox is left checked.
@@ -26,7 +26,7 @@ test("custom-position castling-right sanitation", async ({ page }) => {
 test("importing a FEN preserves side-to-move, en passant, and move counters", async ({ page }) => {
   await openApp(page);
   await waitForEngineReady(page);
-  await page.getByRole("button", { name: /Set Up a Position/ }).click();
+  await page.getByRole("button", { name: /set up a position/i }).click();
 
   const importedFen = "rnbqkbnr/ppp1pppp/8/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3";
   await page.getByPlaceholder("Paste FEN string...").fill(importedFen);

@@ -11,7 +11,7 @@ test("plays e4 by tapping e then 4", async ({ page }) => {
 test("a knight ambiguity shows both SAN labels in the chooser, and tapping one plays it", async ({ page }) => {
   await openApp(page);
   await waitForEngineReady(page);
-  await page.getByRole("button", { name: /Set Up a Position/ }).click();
+  await page.getByRole("button", { name: /set up a position/i }).click();
 
   // Knights on b3 and f3 both reach d2 — a genuine SAN disambiguation.
   await page.getByPlaceholder("Paste FEN string...").fill("4k3/8/8/8/8/1N3N2/8/4K3 w - - 0 1");
