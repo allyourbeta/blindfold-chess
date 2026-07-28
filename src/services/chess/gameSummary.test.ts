@@ -28,6 +28,19 @@ describe("formatMovePairs", () => {
   it("pairs white/black moves under move numbers", () => {
     expect(formatMovePairs(["e4", "e5", "Nf3"])).toBe("1. e4 e5  2. Nf3");
   });
+
+  // Defect 4: a game set up from a FEN with Black to move on move 37 must
+  // number and label from THAT move number and side to move, not as though
+  // its first move were White's move 1.
+  it("numbers from the starting FEN's move number and side to move, not from White's move 1", () => {
+    const blackToMoveOn37 = "8/8/8/4k3/8/4K3/8/4R3 b - - 0 37";
+    expect(formatMovePairs(["Kd5", "Rd1", "Ke4"], blackToMoveOn37)).toBe("37... Kd5  38. Rd1 Ke4");
+  });
+
+  it("still numbers from move 1 for a White-to-move custom setup", () => {
+    const whiteToMoveOn12 = "8/8/8/4k3/8/4K3/8/4R3 w - - 0 12";
+    expect(formatMovePairs(["Re1", "Kd5"], whiteToMoveOn12)).toBe("12. Re1 Kd5");
+  });
 });
 
 

@@ -8,9 +8,10 @@ import { formatMovePairs } from "@/services/chess/gameSummary";
  */
 export function MoveList() {
   const moves = useGameStore((s) => s.moveHistory);
+  const startFen = useGameStore((s) => s.startFen);
   const showTicker = useSettingsStore((s) => s.showTicker);
   const toggleTicker = useSettingsStore((s) => s.toggleTicker);
-  const text = moves.length ? formatMovePairs(moves) : null;
+  const text = moves.length ? formatMovePairs(moves, startFen) : null;
 
   return (
     <div

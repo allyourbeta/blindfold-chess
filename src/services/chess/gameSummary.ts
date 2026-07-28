@@ -1,4 +1,5 @@
 import type { Chess, Color } from "chess.js";
+import { STARTING_FEN, parseFenMoveContext } from "./fen";
 
 export type GameEndReason =
   | "checkmate"
@@ -64,11 +65,29 @@ export function describeGameEnd(
   }
 }
 
-/** "1. e4 e5  2. Nf3 Nc6" — shared by the move list, PGN copy, and saved history. */
-export function formatMovePairs(moves: string[]): string {
+/**
+ * "1. e4 e5  2. Nf3 Nc6" — shared by the move list, PGN copy, and saved
+ * history. `startFen` defaults to the universal starting position, but a
+ * custom setup (e.g. Black to move on move 37) must number and label
+ * (`37...` rather than `37.`) from its own move number and side to move —
+ * those are only ever known from the FEN the game actually began at, never
+ * from `moves` or the current position.
+ */
+export function formatMovePairs(moves: string[], startFen: string = STARTING_FEN): string {
+  if (moves.length === 0) return "";
+  const { moveNumber: startMoveNumber, sideToMove: startColor } = parseFenMoveContext(startFen);
+
   const pairs: string[] = [];
-  for (let i = 0; i < moves.length; i += 2) {
-    const num = Math.floor(i / 2) + 1;
+  let i = 0;
+  if (startColor === "b") {
+    pairs.push(`${startMoveNumber}... ${moves[0]}`);
+    i = 1;
+  }
+  for (; i < moves.length; i += 2) {
+    const num =
+      startColor === "w"
+        ? startMoveNumber + Math.floor(i / 2)
+        : startMoveNumber + Math.floor((i + 1) / 2);
     const w = moves[i] || "";
     const b = moves[i + 1] || "";
     pairs.push(`${num}. ${w}${b ? " " + b : ""}`);

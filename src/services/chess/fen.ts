@@ -78,3 +78,21 @@ export function validateFen(fen: string): void {
   const { ok, error } = chessValidateFen(fen);
   if (!ok) throw new Error(error ?? "Invalid FEN");
 }
+
+/**
+ * The move number and side to move a game's *starting* FEN encodes — e.g. a
+ * custom setup with Black to move on move 37. Move-pair formatting needs
+ * this to number correctly; the current position's FEN can't stand in for
+ * it once any moves have been played.
+ */
+export interface FenMoveContext {
+  moveNumber: number;
+  sideToMove: "w" | "b";
+}
+
+export function parseFenMoveContext(fen: string): FenMoveContext {
+  const fields = fen.trim().split(/\s+/);
+  const sideToMove = fields[1] === "b" ? "b" : "w";
+  const moveNumber = Number.parseInt(fields[5], 10);
+  return { moveNumber: Number.isFinite(moveNumber) && moveNumber > 0 ? moveNumber : 1, sideToMove };
+}

@@ -37,6 +37,8 @@ export type GameAudioEvent =
 export interface GameState {
   chess: Chess;
   fen: string;
+  /** The FEN this game actually began at — never the current position — so move-pair formatting numbers correctly for a custom setup. */
+  startFen: string;
   turn: Color;
   playerColor: Color;
   moveHistory: string[];
@@ -80,6 +82,7 @@ export const useGameStore = create<GameState>((set, get) => {
   return {
     chess: new Chess(),
     fen: STARTING_FEN,
+    startFen: STARTING_FEN,
     turn: "w",
     playerColor: "w",
     moveHistory: [],
@@ -174,7 +177,7 @@ export const useGameStore = create<GameState>((set, get) => {
         flow.addMessage("system", "No moves to copy.");
         return;
       }
-      const pgn = formatMovePairs(s.moveHistory);
+      const pgn = formatMovePairs(s.moveHistory, s.startFen);
       try {
         await navigator.clipboard.writeText(pgn);
         flow.addMessage("system", "PGN copied to clipboard.");

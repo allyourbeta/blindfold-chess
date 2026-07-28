@@ -171,7 +171,7 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
       difficulty: opponentLabelAtStart,
       moves: s.moveHistory.length,
       peeks: s.peekCount,
-      pgn: formatMovePairs(s.moveHistory),
+      pgn: formatMovePairs(s.moveHistory, gameStartFen),
       fen: gameStartFen,
       durationSec: Math.round((Date.now() - gameStartTime) / 1000),
     });
@@ -195,6 +195,7 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     set({
       chess,
       fen: chess.fen(),
+      startFen: fen,
       turn: chess.turn(),
       playerColor: color,
       moveHistory: [],
