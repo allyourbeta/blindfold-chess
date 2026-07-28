@@ -129,6 +129,16 @@ export const useGameStore = create<GameState>((set, get) => {
         flow.addMessage("system", "Wait for the engine to finish.");
         return;
       }
+      // A single ply in history is the engine's own move (this game started
+      // with the engine to move) — there is nothing of the player's yet to
+      // take back. Undoing it would empty history and strand the game on
+      // the engine's turn with no request in flight to get it moving again.
+      // Refuse rather than silently discarding the engine's move for a
+      // fresh (possibly different) one — the player made no move to redo.
+      if (s.moveHistory.length === 1) {
+        flow.addMessage("system", "Nothing to take back yet.");
+        return;
+      }
       let undone = 0;
       while (undone < 2 && s.chess.history().length > 0) {
         const move = s.chess.undo();

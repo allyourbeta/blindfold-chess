@@ -61,3 +61,38 @@ describe("submitKeypadMove: a fully-stated illegal entry is rejected, not reinte
     });
   });
 });
+
+// Defect 2: playing Black, after Maia's opening move the history holds a
+// single ply. Taking it back must never strand the game on the engine's
+// turn with nobody requesting its move — see doTakeback's comment for the
+// chosen behaviour (refuse) and why.
+describe("doTakeback: playing Black, taking back Maia's opening move never strands the game", () => {
+  it("refuses the takeback and leaves the position untouched, rather than emptying history onto the engine's turn", () => {
+    const chess = new Chess();
+    chess.move("e4");
+    const fenAfterMaiasMove = chess.fen();
+    useGameStore.setState({
+      chess,
+      fen: fenAfterMaiasMove,
+      turn: chess.turn(),
+      playerColor: "b",
+      moveHistory: ["e4"],
+      gameOverFlag: false,
+      isThinking: false,
+      lastMove: { from: "e2", to: "e4" },
+    });
+
+    useGameStore.getState().doTakeback();
+
+    const after = useGameStore.getState();
+    // The core property: never a dead end. Either the engine was asked to
+    // move, or nothing changed and it's still the player's turn.
+    const strandedOnEngineTurn = after.chess.turn() !== after.playerColor && !after.isThinking;
+    expect(strandedOnEngineTurn).toBe(false);
+
+    // This app's specific choice: refuse outright, position untouched.
+    expect(after.moveHistory).toEqual(["e4"]);
+    expect(after.chess.fen()).toBe(fenAfterMaiasMove);
+    expect(after.messages.at(-1)).toMatchObject({ type: "system", text: expect.stringMatching(/nothing to take back/i) });
+  });
+});
