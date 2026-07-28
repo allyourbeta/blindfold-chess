@@ -17,8 +17,9 @@ test("home screen leads with the game and keeps settings out of the way", async 
     .toBeGreaterThan(0);
   await expect(page.getByRole("button", { name: "New Game" })).toBeVisible();
 
-  // The opponent is a fact, not a control: named, but not offered as a choice.
-  await expect(page.getByText("Maia 1900")).toBeVisible();
+  // The opponent's name lives on the play screen's status line; repeating it
+  // here was redundant. Falsifier: goes red if it comes back to the menu.
+  await expect(page.getByText("Maia 1900", { exact: true })).toHaveCount(0);
 
   // Three chips replace the old summary sentence and its disclosure row.
   for (const chip of ["Color", "Variance", "Speech"]) {

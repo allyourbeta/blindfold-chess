@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/cn";
 import { MenuScreen } from "@/components/screens/MenuScreen";
 import { SetupScreen } from "@/components/screens/SetupScreen";
 import { PlayScreen } from "@/components/screens/PlayScreen";
@@ -37,7 +38,15 @@ export default function App() {
         into a floating card with two-thirds of the screen wasted. In
         shortscape the frame goes full-bleed again.
       */}
-      <div className="flex h-dvh w-full max-w-lg flex-col overflow-hidden bg-bg-surface sm:h-full sm:max-h-[46rem] sm:rounded-3xl sm:border-2 sm:border-border-emphasis sm:shadow-2xl shortscape:h-dvh shortscape:max-h-none shortscape:max-w-none shortscape:rounded-none shortscape:border-0">
+      <div
+        className={cn(
+          "flex h-dvh w-full max-w-lg flex-col overflow-hidden bg-bg-surface sm:h-full sm:max-h-[46rem] sm:rounded-3xl sm:border-2 sm:border-border-emphasis sm:shadow-2xl shortscape:h-dvh shortscape:max-h-none shortscape:max-w-none shortscape:rounded-none shortscape:border-0",
+          // The menu holds half a screen of content; play and setup depend on
+          // a definite height for the keypad and log. So only the menu hugs
+          // its content on desktop, and only there.
+          screen === "menu" && "sm:h-auto",
+        )}
+      >
         {screen === "menu" && <MenuScreen onPlay={() => setScreen("play")} onSetup={() => setScreen("setup")} />}
         {screen === "setup" && <SetupScreen onBack={() => setScreen("menu")} onPlay={() => setScreen("play")} />}
         {screen === "play" && <PlayScreen onMenu={() => setScreen("menu")} />}

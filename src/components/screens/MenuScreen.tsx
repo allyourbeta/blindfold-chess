@@ -9,6 +9,8 @@ import { Card } from "@/components/ui/Card";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { useGameStore } from "@/state/gameStore";
 import { useSettingsStore } from "@/state/settingsStore";
+import { formatPracticeStats } from "@/services/chess/gameSummary";
+import { getGameHistory } from "@/api/localStore";
 import { RANDOMNESS_STOPS } from "@/engine/maia/policy";
 import { useTheme } from "@/hooks/useTheme";
 import { unlockAudioOutput } from "@/hooks/useSpeechOutput";
@@ -50,6 +52,8 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
   const speechMode = useSettingsStore((s) => s.speechMode);
   const assistMode = useSettingsStore((s) => s.assistMode);
   const setAssistMode = useSettingsStore((s) => s.setAssistMode);
+  // Read once on mount: history only changes while a game is being played.
+  const [practiceStats] = useState(() => formatPracticeStats(getGameHistory()));
   const setSpeechMode = useSettingsStore((s) => s.setSpeechMode);
 
   const engineStatus = useGameStore((s) => s.engineStatus);
@@ -76,7 +80,23 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
   }
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="relative flex h-full w-full flex-col">
+      {/*
+        Texture, not pattern: 5% opacity, large squares, and masked so it
+        dissolves well before it reaches the button. If it ever reads as a
+        chessboard rather than as warmth, halve the opacity.
+      */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          opacity: 0.05,
+          backgroundImage: "repeating-conic-gradient(currentColor 0% 25%, transparent 0% 50%)",
+          backgroundSize: "88px 88px",
+          maskImage: "linear-gradient(#000 0%, transparent 62%)",
+          WebkitMaskImage: "linear-gradient(#000 0%, transparent 62%)",
+        }}
+      />
       <header className="relative shrink-0 px-5 pb-2 pt-[max(1rem,env(safe-area-inset-top))]">
         <button
           type="button"
@@ -88,23 +108,33 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
         </button>
       </header>
 
-      <main className="flex flex-1 flex-col overflow-y-auto px-6 pb-6">
-        <section className="flex flex-col items-center text-center">
+      <main className="relative flex flex-1 flex-col overflow-y-auto px-6 pb-6">
+        <section className="relative flex flex-col items-center text-center">
+          {/* Warmth behind the logo so it sits in light rather than on a flat field. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2"
+            style={{
+              background:
+                "radial-gradient(circle, color-mix(in srgb, var(--color-text-accent) 22%, transparent) 0%, transparent 68%)",
+            }}
+          />
           <img
             src="/icons/icon-512.png"
             alt=""
             aria-hidden="true"
-            className="h-28 w-28 rounded-[2rem] shadow-sm"
+            className="relative h-28 w-28 rounded-[2rem] shadow-lg"
           />
-          <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-text-accent">Mind's Eye</h1>
-          <p className="mt-1 text-lg font-semibold text-text-primary">The ultimate test of cerebral fitness</p>
-          {/* Who you're facing — a fact, not a setting. There is one model. */}
-          <p className="mt-2 text-base font-semibold text-text-secondary">Maia 1900</p>
+          <h1 className="relative mt-4 text-4xl font-extrabold tracking-tight text-text-accent">Mind's Eye</h1>
+          {/* Small caps: lets the title dominate without shrinking it. */}
+          <p className="relative mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary">
+            The ultimate test of cerebral fitness
+          </p>
         </section>
 
         <section className="mt-7">
           <Button
-            className="h-14 w-full text-lg font-extrabold"
+            className="h-16 w-full text-xl font-extrabold uppercase tracking-[0.2em] shadow-lg"
             disabled={engineStatus === "loading"}
             onClick={() => void handleStart()}
           >
@@ -231,7 +261,10 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
           </Card>
         )}
 
-        <p className="mt-auto pt-8 text-center text-sm text-text-muted">build {__GIT_COMMIT__} · {__BUILD_TIME__}</p>
+        {practiceStats && (
+          <p className="mt-auto pt-8 text-center text-sm text-text-secondary">{practiceStats}</p>
+        )}
+        <p className="mt-auto pt-4 text-center text-sm text-text-muted">build {__GIT_COMMIT__} · {__BUILD_TIME__}</p>
       </main>
     </div>
   );

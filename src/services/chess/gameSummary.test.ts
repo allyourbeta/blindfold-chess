@@ -5,6 +5,7 @@ import {
   describeGameEnd,
   formatMovePairs,
   formatHistorySummary,
+  formatPracticeStats,
   type StoredGame,
 } from "./gameSummary";
 
@@ -64,5 +65,35 @@ describe("formatHistorySummary", () => {
     const summary = formatHistorySummary([game]);
     expect(summary).toContain("1 games · 1 wins");
     expect(summary).toContain("2 peeks");
+  });
+});
+
+describe("formatPracticeStats", () => {
+  const game = (moves: number, peeks: number): StoredGame => ({
+    date: "2026-07-28",
+    result: "Lost",
+    color: "White",
+    difficulty: "Maia 1900",
+    moves,
+    peeks,
+    pgn: "",
+    fen: "",
+    durationSec: 60,
+  });
+
+  // Falsifier: goes red if the line ever reports a result, reads a game
+  // other than the longest, or takes peeks from anything but the last game.
+  it("reports the longest game and the most recent game's peeks", () => {
+    expect(formatPracticeStats([game(12, 3), game(31, 0), game(18, 2)])).toBe(
+      "Longest game: 31 moves · Last game: 2 peeks",
+    );
+  });
+
+  it("singularises a single peek", () => {
+    expect(formatPracticeStats([game(9, 1)])).toBe("Longest game: 9 moves · Last game: 1 peek");
+  });
+
+  it("returns null with no history, so the caller renders nothing", () => {
+    expect(formatPracticeStats([])).toBeNull();
   });
 });

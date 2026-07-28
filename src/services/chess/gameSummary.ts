@@ -140,3 +140,21 @@ export function formatHistorySummary(history: StoredGame[]): string {
     `  Totals: ${totalGames} games · ${wins} wins · avg ${avgPeeks} peeks/game`,
   ].join("\n");
 }
+
+/**
+ * The one line of history worth putting on the landing page. Deliberately
+ * says nothing about results: almost every blindfold game against Maia is a
+ * loss, and a scoreboard of defeats is a reason to close the app. Both of
+ * these improve as the player improves — how long they held the board, and
+ * how little they peeked — and neither depends on winning.
+ *
+ * Returns null when there is no history yet, so the caller can render
+ * nothing rather than a row of zeroes.
+ */
+export function formatPracticeStats(history: readonly StoredGame[]): string | null {
+  if (history.length === 0) return null;
+  const longest = history.reduce((best, game) => Math.max(best, game.moves), 0);
+  const lastPeeks = history[history.length - 1].peeks;
+  const peekWord = lastPeeks === 1 ? "peek" : "peeks";
+  return `Longest game: ${longest} moves · Last game: ${lastPeeks} ${peekWord}`;
+}
