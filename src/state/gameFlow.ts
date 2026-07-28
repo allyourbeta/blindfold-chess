@@ -41,6 +41,14 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   let gameStartTime = 0;
   let gameStartFen = "";
   let opponentLabelAtStart = "";
+  let pendingReplyTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function cancelPendingReply() {
+    if (pendingReplyTimer !== null) {
+      clearTimeout(pendingReplyTimer);
+      pendingReplyTimer = null;
+    }
+  }
 
   function addMessage(type: MessageType, text: string) {
     set((s) => ({ messages: [...s.messages, { id: ++messageIdCounter, type, text }] }));
@@ -54,9 +62,13 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     addMessage("thinking", `${OPPONENT_LABEL} thinking...`);
     set({ isThinking: true });
     replyFloorAt = Date.now() + MIN_REPLY_MS + Math.random() * (MAX_REPLY_MS - MIN_REPLY_MS);
+    const requestGeneration = engineManager.getGeneration();
     engineManager.setLevel({ label: OPPONENT_LABEL, randomness: useSettingsStore.getState().randomness });
-    void engineManager.requestMove(get().chess.fen(), get().moveHistory, applyEngineMove, (err) =>
-      handleEngineFailure(err.message),
+    void engineManager.requestMove(
+      get().chess.fen(),
+      get().moveHistory,
+      (uci) => applyEngineMove(uci, requestGeneration),
+      (err) => handleEngineFailure(err.message),
     );
   }
 
@@ -82,20 +94,26 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     );
   }
 
-  function applyEngineMove(uci: string) {
+  function applyEngineMove(uci: string, requestGeneration: number) {
     const remaining = replyFloorAt - Date.now();
     if (remaining > 0) {
-      // The abort path can't reach a pending timer, so re-check the game
-      // state when it fires: resign, New Game or a takeback during the wait
-      // must not be followed by the move that was already in flight.
-      setTimeout(() => applyEngineMoveNow(uci), remaining);
+      // The abort path can't reach a pending timer, so re-check identity
+      // (requestGeneration) and game state when it fires: resign, New Game
+      // or a takeback during the wait must not be followed by the move that
+      // was already in flight — even when the new position also happens to
+      // have the engine to move, which the turn/color guard alone can't see.
+      pendingReplyTimer = setTimeout(() => {
+        pendingReplyTimer = null;
+        applyEngineMoveNow(uci, requestGeneration);
+      }, remaining);
       return;
     }
-    applyEngineMoveNow(uci);
+    applyEngineMoveNow(uci, requestGeneration);
   }
 
-  function applyEngineMoveNow(uci: string) {
+  function applyEngineMoveNow(uci: string, requestGeneration: number) {
     const s = get();
+    if (requestGeneration !== engineManager.getGeneration()) return; // superseded by a newer game/search
     if (s.gameOverFlag || s.chess.turn() === s.playerColor) return; // stale reply — defense in depth
     const from = uci.slice(0, 2);
     const to = uci.slice(2, 4);
@@ -134,6 +152,7 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
 
   function finishGame(reason: GameEndReason) {
     if (get().gameOverFlag) return; // already recorded — never append history twice
+    cancelPendingReply(); // a reply held behind the floor must not outlive the game it was for
     engineManager.abortSearch(); // no in-flight search may survive into whatever comes next
     const s = get();
     const outcome = describeGameEnd(reason, s.chess, s.playerColor);
@@ -159,6 +178,7 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   }
 
   async function beginGame(fen: string) {
+    cancelPendingReply(); // a reply held behind the floor must not outlive the game it was for
     // Unconditional: a prior game's search must never survive into this one,
     // whether it's still running (isThinking) or was already ended (resign,
     // checkmate) — relying on isThinking here was the bug, since finishGame

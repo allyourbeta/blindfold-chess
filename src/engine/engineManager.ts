@@ -25,6 +25,16 @@ export class EngineManager {
     return this.status;
   }
 
+  /**
+   * The generation a caller must remember at request time and re-check
+   * before acting on a reply it held onto itself (e.g. behind a timer) —
+   * `requestMove`'s own staleness check only covers the window up to when
+   * `onMove` fires, not whatever a caller does with the result afterwards.
+   */
+  getGeneration(): number {
+    return this.generation;
+  }
+
   isReady(): boolean {
     return this.status === "ready" && this.adapter.isReady();
   }
