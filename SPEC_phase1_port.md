@@ -1,5 +1,10 @@
 # SPEC — Blindfold Chess Trainer, Phase 1
 
+> **Note (see AUDIT.md §3.2):** §7.2-7.3's `SpeechRecognition`/`normalize.ts`/
+> `candidates.ts`/`match.ts` stack was fully removed by `SPEC_keypad_input.md`;
+> the rest of this document (architecture rules, project structure) still
+> describes the current code.
+
 Port the existing single-file app to a maintainable React app, replace the
 visual design, and rebuild the speech layer. Deploy to Vercel.
 

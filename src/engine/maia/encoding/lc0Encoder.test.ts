@@ -6,6 +6,11 @@ import { encodeMove, decodeMove, NUM_POLICY_MOVES, boardToInputPlanes } from "./
 import { mirrorFen, mirrorUci } from "@/maia-spike/encoding/mirrorFen";
 import { evaluatePosition } from "@/maia-spike/inference/evaluatePosition";
 
+// This production test imports from src/maia-spike/ (see AUDIT.md §3.1) for
+// its gate 2 colour-mirror checks. maia-spike is a live, shipping standalone
+// diagnostics page, not leftover spike code — don't delete it assuming it's
+// dead, that would silently break this suite.
+
 /**
  * Gate 1 (spec: "Policy-map round-trip") and Gate 2 (spec: "Colour-mirror
  * symmetry"). These confirm the port landed intact -- they do not, on their

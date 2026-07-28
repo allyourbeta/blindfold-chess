@@ -1,5 +1,9 @@
 # SPEC: iOS audio reliability + phone UI round
 
+> **Note (see AUDIT.md §3.2):** Part A4/A5 and B1's mic-button/tap-session
+> sections describe code deleted by the keypad round (`SPEC_keypad_input.md`)
+> — no mic button remains. Part A1's clip-playback sections still apply.
+
 Repo: blindfold-chess, branch `main`, working tree.
 Execute everything below, verify, and leave the changes **uncommitted** for
 Ashish's review. Do not deploy. Do not add dependencies. Follow the existing
