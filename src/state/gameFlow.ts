@@ -1,5 +1,4 @@
 import { Chess, type Move } from "chess.js";
-import { resolveMoveInput } from "@/services/chess/moveResolve";
 import { detectGameOver, describeGameEnd, formatMovePairs, type GameEndReason } from "@/services/chess/gameSummary";
 import { saveGameToHistory } from "@/api/localStore";
 import type { EngineManager } from "@/engine/engineManager";
@@ -208,16 +207,14 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   }
 
   /**
-   * `exact` is for the keypad. `resolveMoveInput` still carries the
-   * voice-era leniency layers — prefix matching, missing-rank shorthands,
-   * piece-plus-file guesses — which existed to rescue mangled speech. The
-   * keypad produces well-formed SAN and has ALREADY decided whether the
-   * entry is legal, so routing a known-illegal entry through a resolver
-   * whose job is to find something legal that resembles it hands it a
-   * second chance to be reinterpreted. Stated moves are answered, never
-   * guessed at.
+   * Every mover (keypad, and submitMoveText's fallback) already produces a
+   * well-formed SAN string and has decided its own legality before calling
+   * this — matched exactly against chess.js's legal-move list, never
+   * reinterpreted or fuzzy-matched. See AUDIT.md §1.1 for why: a resolver
+   * that guesses at intent from a bare destination square can silently
+   * substitute a different piece's legal move for a rejected one.
    */
-  function attemptMove(raw: string, source: MoveSource = { kind: "typed" }, exact = false) {
+  function attemptMove(raw: string, source: MoveSource = { kind: "typed" }) {
     const s = get();
     if (!s.chess || s.gameOverFlag) return;
     if (s.chess.turn() !== s.playerColor) {
@@ -225,20 +222,12 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
       set({ audioEvent: { kind: "illegal-move", spoken: "Not your turn", attempted: null, source } });
       return;
     }
-    const result = exact
-      ? (() => {
-          const legal = s.chess.moves().includes(raw);
-          return legal
-            ? ({ ok: true, san: raw } as const)
-            : ({ ok: false, error: `Illegal or unrecognized move: "${raw}". Try again.` } as const);
-        })()
-      : resolveMoveInput(s.chess, raw);
-    if (!result.ok) {
-      if (result.error) addMessage("error", result.error);
+    if (!s.chess.moves().includes(raw)) {
+      addMessage("error", `Illegal or unrecognized move: "${raw}". Try again.`);
       set({ audioEvent: { kind: "illegal-move", spoken: "Illegal move", attempted: raw, source } });
       return;
     }
-    finishMove(s.chess.move(result.san), "player", source);
+    finishMove(s.chess.move(raw), "player", source);
   }
 
   return { addMessage, beginGame, attemptMove, finishGame };

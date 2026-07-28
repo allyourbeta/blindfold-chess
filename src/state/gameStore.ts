@@ -142,7 +142,7 @@ export const useGameStore = create<GameState>((set, get) => {
     },
 
     submitKeypadMove: (san: string) => {
-      flow.attemptMove(san, { kind: "typed" }, true);
+      flow.attemptMove(san, { kind: "typed" });
     },
 
     doPeek: () => {
