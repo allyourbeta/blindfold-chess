@@ -19,7 +19,6 @@ const NATO_FILE_PARTS = FILE_PARTS.map((f) => `nato-${f}` as NatoFileClip);
 // generates exactly these ids plus the pieces/files/ranks/nato below.
 const SPECIAL_PARTS: SpokenPart[] = [
   "takes",
-  "to",
   "from",
   "check",
   "checkmate",
@@ -30,8 +29,6 @@ const SPECIAL_PARTS: SpokenPart[] = [
   "stalemate",
   "draw",
   "not-legal",
-  "ambiguous",
-  "not-understood",
 ];
 
 /**
@@ -61,8 +58,6 @@ const CLIP_SPEECH_TEXT: Partial<Record<ClipId, string>> = {
   "promotes-to": "promotes to",
   "en-passant": "en passant",
   "not-legal": "is not legal",
-  ambiguous: "is ambiguous. Say which one.",
-  "not-understood": "Sorry, I did not catch that.",
 };
 
 /** Human-readable text for native speech synthesis; never exposes clip filenames. */
@@ -86,22 +81,6 @@ export function movePhraseClips(move: Move, fileNaming: FileNaming = "letters"):
   const parts = movePhraseParts(move);
   if (fileNaming !== "nato") return parts;
   return parts.map((part) => (isFilePart(part) ? (`nato-${part}` as NatoFileClip) : part));
-}
-
-/**
- * A rejected spoken move, as clips: "knight d four is not legal".
- * Built the same way as a played move so it uses the same voice.
- */
-export function rejectionPhraseClips(
-  piece: SpokenPart,
-  to: string,
-  reason: "illegal" | "ambiguous",
-  fileNaming: FileNaming = "letters",
-): ClipId[] {
-  const file = to[0] as FilePart;
-  const rank = to[1] as SpokenPart;
-  const fileClip: ClipId = fileNaming === "nato" ? (`nato-${file}` as NatoFileClip) : file;
-  return [piece, fileClip, rank, reason === "ambiguous" ? "ambiguous" : "not-legal"];
 }
 
 /**

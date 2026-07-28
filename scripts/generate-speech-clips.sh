@@ -36,14 +36,13 @@ CLIPS=(
   "nato-a:Alpha" "nato-b:Bravo" "nato-c:Charlie" "nato-d:Delta"
   "nato-e:Echo" "nato-f:Foxtrot" "nato-g:Golf" "nato-h:Hotel"
   "1:one" "2:two" "3:three" "4:four" "5:five" "6:six" "7:seven" "8:eight"
-  "takes:takes" "to:to" "from:from" "check:check" "checkmate:checkmate"
+  "takes:takes" "from:from" "check:check" "checkmate:checkmate"
   "castles-kingside:castles kingside" "castles-queenside:castles queenside"
   "promotes-to:promotes to" "en-passant:en passant"
   "stalemate:stalemate" "draw:draw"
   # Spoken move rejections — built from clips so Tessa says them too, rather
   # than falling through to the browser's default synthesiser.
-  "not-legal:is not legal" "ambiguous:is ambiguous. Say which one."
-  "not-understood:Sorry, I did not catch that."
+  "not-legal:is not legal"
 )
 
 echo "Generating ${#CLIPS[@]} clips with voice '$VOICE' at ${RATE}wpm into $OUT_DIR ..."

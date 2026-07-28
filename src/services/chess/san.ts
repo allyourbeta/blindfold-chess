@@ -29,7 +29,6 @@ export type SpokenPart =
   | "7"
   | "8"
   | "takes"
-  | "to"
   | "from"
   | "check"
   | "checkmate"
@@ -39,8 +38,6 @@ export type SpokenPart =
   | "en-passant"
   | "stalemate"
   | "not-legal"
-  | "ambiguous"
-  | "not-understood"
   | "draw";
 
 export const PIECE_WORDS: Record<PieceSymbol, SpokenPart> = {

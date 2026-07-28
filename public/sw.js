@@ -1,6 +1,6 @@
 // Bump this whenever the app shell / precache list changes so browsers
 // pick up a fresh install instead of reusing a stale cache.
-const CACHE_NAME = 'blindfold-chess-v46';
+const CACHE_NAME = 'blindfold-chess-v47';
 
 // Must match AUDIO_VERSION in src/services/audio/clipPlayer.ts — the app and
 // the precache have to request the same URL or clips are fetched twice.
@@ -33,10 +33,10 @@ const AUDIO_CLIPS = [
   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
   'nato-a', 'nato-b', 'nato-c', 'nato-d', 'nato-e', 'nato-f', 'nato-g', 'nato-h',
   '1', '2', '3', '4', '5', '6', '7', '8',
-  'takes', 'to', 'from', 'check', 'checkmate',
+  'takes', 'from', 'check', 'checkmate',
   'castles-kingside', 'castles-queenside',
   'promotes-to', 'en-passant', 'stalemate', 'draw',
-  'not-legal', 'ambiguous', 'not-understood',
+  'not-legal',
 ].map((id) => `/audio/${id}.wav?v=${AUDIO_VERSION}`);
 
 const APP_SHELL = [

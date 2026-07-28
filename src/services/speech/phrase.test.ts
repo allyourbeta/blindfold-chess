@@ -2,8 +2,7 @@ import { describe, it, expect } from "vitest";
 import { readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { Chess } from "chess.js";
-import { movePhraseClips, gameEndPhraseClips, rejectionPhraseClips, speechTextForClips, CLIP_IDS } from "./phrase";
-import { PIECE_WORDS } from "../chess/san";
+import { movePhraseClips, gameEndPhraseClips, speechTextForClips, CLIP_IDS } from "./phrase";
 
 describe("movePhraseClips", () => {
   it("wraps san.ts's phrase parts as clip ids", () => {
@@ -38,7 +37,7 @@ describe("speechTextForClips", () => {
       "knight foxtrot 3 check",
     );
     expect(speechTextForClips(["castles-kingside"])).toBe("castles kingside");
-    expect(speechTextForClips(["not-understood"])).toBe("Sorry, I did not catch that.");
+    expect(speechTextForClips(["not-legal"])).toBe("is not legal");
   });
 });
 
@@ -92,16 +91,7 @@ describe("CLIP_IDS", () => {
     }
   });
 
-  it("covers every clip rejectionPhraseClips and gameEndPhraseClips can produce", () => {
-    for (const piece of Object.values(PIECE_WORDS)) {
-      for (const reason of ["illegal", "ambiguous"] as const) {
-        for (const naming of ["letters", "nato"] as const) {
-          for (const clip of rejectionPhraseClips(piece, "d4", reason, naming)) {
-            expect(CLIP_IDS).toContain(clip);
-          }
-        }
-      }
-    }
+  it("covers every clip gameEndPhraseClips can produce", () => {
     for (const reason of ["checkmate", "stalemate", "threefold-repetition", "insufficient-material", "fifty-move-rule", "resignation"] as const) {
       for (const clip of gameEndPhraseClips(reason)) expect(CLIP_IDS).toContain(clip);
     }
