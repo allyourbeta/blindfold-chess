@@ -7,7 +7,14 @@ test("home screen leads with the game and keeps settings out of the way", async 
 
   await expect(page.getByRole("heading", { name: "Mind's Eye" })).toBeVisible();
   await expect(page.getByText("The ultimate test of cerebral fitness")).toBeVisible();
-  await expect(page.locator('img[src="/icons/icon-512.png"]')).toBeVisible();
+  // toBeVisible() alone passes for a broken <img> too — it has fixed width/
+  // height classes, so its box is non-empty even at 404. Assert it actually
+  // decoded a real image.
+  const logo = page.locator('img[src="/icons/icon-512.png"]');
+  await expect(logo).toBeVisible();
+  await expect
+    .poll(() => logo.evaluate((img: HTMLImageElement) => img.naturalWidth), { timeout: 10_000 })
+    .toBeGreaterThan(0);
   await expect(page.getByRole("button", { name: "New Game" })).toBeVisible();
 
   // The opponent is a fact, not a control: named, but not offered as a choice.
