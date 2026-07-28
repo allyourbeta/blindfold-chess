@@ -301,22 +301,53 @@ describe("strict mode", () => {
   });
 });
 
-describe("strict mode: piece-first", () => {
-  it("square keys are dead until a piece starts the entry", () => {
+describe("strict mode: a bare file starts a pawn move", () => {
+  // Replaces the old "piece-first" rule. Players say "a3", not "pawn a3",
+  // and destination-square entry removed the ambiguity that made the pawn
+  // key necessary. Falsifier for this block: it goes red if a bare file no
+  // longer starts a pawn move, if the pawn key stops working, or if a
+  // second file is swallowed instead of replacing the first.
+  it("square keys are live at entry start", () => {
     const state = computeEntryState(legalMoves(), [], "strict");
-    for (const enabled of Object.values(state.enabled.files)) expect(enabled).toBe(false);
+    for (const enabled of Object.values(state.enabled.files)) expect(enabled).toBe(true);
+    // Ranks still wait for a file — the square is stated file first.
     for (const enabled of Object.values(state.enabled.ranks)) expect(enabled).toBe(false);
   });
 
-  it("the pawn key opens the files: P then e then 4 plays e4", () => {
-    const afterP = computeEntryState(legalMoves(), [piece("P")], "strict");
-    expect(afterP.enabled.files.e).toBe(true);
+  it("e then 4 plays e4 with no pawn key", () => {
+    expect(computeEntryState(legalMoves(), [file("e"), rank("4")], "strict").resolved?.san).toBe("e4");
+  });
+
+  it("the pawn key still works for anyone who prefers it", () => {
     const state = computeEntryState(legalMoves(), [piece("P"), file("e"), rank("4")], "strict");
     expect(state.resolved?.san).toBe("e4");
   });
 
-  it("a dual tap at entry start reads as nothing in strict", () => {
-    expect(interpretDualTap(legalMoves(), [], "a", "1", "strict")).toBe("none");
+  it("a dual tap at entry start now reads as its file", () => {
+    expect(interpretDualTap(legalMoves(), [], "a", "1", "strict")).toBe("file");
+  });
+});
+
+describe("typing SAN: a second file replaces the first", () => {
+  // A keyboard user types "cxd4". The x isn't a key, so without replacement
+  // the d was dropped and the entry silently became c4 — a legal move
+  // nobody asked for. Falsifier: goes red if c,d,4 resolves to anything but
+  // a move to d4.
+  const CAPTURE_POSITION = "rnbqkbnr/pp1ppppp/8/8/3p4/2P5/PP1PPPPP/RNBQKBNR w KQkq - 0 3";
+
+  it("c then d then 4 means d4, not c4", () => {
+    const moves = legalMoves(CAPTURE_POSITION);
+    const state = computeEntryState(moves, [file("c"), file("d"), rank("4")], "strict");
+    expect(state.resolved?.san).toBe("cxd4");
+  });
+
+  it("a push and a capture onto one square go to the standard chooser", () => {
+    // White pawns c3 and e3, black pawn on d4: cxd4, exd4 — and no push,
+    // so the chooser is between the two captures.
+    const moves = legalMoves("4k3/8/8/8/3p4/2P1P3/8/4K3 w - - 0 1");
+    const state = computeEntryState(moves, [file("d"), rank("4")], "strict");
+    expect(state.resolved).toBeNull();
+    expect(state.disambiguation).toEqual(["cxd4", "exd4"]);
   });
 });
 

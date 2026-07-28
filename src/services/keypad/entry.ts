@@ -97,7 +97,11 @@ export function reduceTaps(taps: readonly Tap[]): Slots {
     } else if (tap.kind === "piece") {
       slots.pieceLetter = tap.value === "P" ? null : tap.value;
     } else if (tap.kind === "file") {
-      if (slots.destFile === null) slots.destFile = tap.value;
+      // Replace rather than ignore. Typing SAN on a keyboard produces
+      // "cxd4": the x is not a key, so without replacement the d is
+      // dropped and the entry silently becomes c4 — a real move nobody
+      // asked for. Replacing also makes a mistapped file self-correcting.
+      slots.destFile = tap.value;
     } else if (tap.kind === "rank") {
       slots.destRank = tap.value;
     }
@@ -143,14 +147,16 @@ function computeStrictEnabled(taps: readonly Tap[], terminal: boolean): EnabledK
   const files = {} as Record<FileLetter, boolean>;
   const ranks = {} as Record<RankDigit, boolean>;
   const atStart = taps.length === 0;
-  // Piece-first: in strict, square keys wake only after a piece (or the
-  // pawn key) starts the entry — a bare letter can't wander you into a
-  // pawn move you didn't mean to start. Pawn moves are P, file, rank.
-  const fileOpen =
-    !terminal &&
-    slots.committed !== null &&
-    slots.committed !== "castle" &&
-    slots.destFile === null;
+  // A bare file starts a pawn move — "a3", not "pawn a3", which is how
+  // players say it. Requiring the pawn key first was a guard from when a
+  // file tap could ALSO mean a capture's origin file; destination-square
+  // entry removed that meaning, so the guard went with it. Push and capture
+  // are the same entry now: the position decides which pawn moves, exactly
+  // as it decides which knight.
+  //
+  // Files stay live until the rank is stated, so a second file replaces the
+  // first instead of being swallowed.
+  const fileOpen = !terminal && slots.committed !== "castle" && slots.destRank === null;
   for (const p of PIECE_LETTERS) pieces[p] = atStart;
   for (const f of FILE_LETTERS) files[f] = fileOpen;
   for (const r of RANK_DIGITS) {
@@ -185,7 +191,7 @@ function computeEnabled(legalMoves: readonly LegalMove[], taps: readonly Tap[], 
   }
   for (const f of FILE_LETTERS) {
     files[f] =
-      reduceTaps(taps).destFile === null &&
+      reduceTaps(taps).destRank === null &&
       candidatesFor(legalMoves, [...taps, { kind: "file", value: f }]).length > 0;
   }
   for (const r of RANK_DIGITS) {

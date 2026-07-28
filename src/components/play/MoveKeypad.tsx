@@ -241,7 +241,12 @@ export function MoveKeypad() {
             variant="secondary"
             aria-label={`${file}${rank}`}
             className="disabled:!opacity-30"
-            disabled={inert || anyChooser || !(entry.enabled.files[file] || entry.enabled.ranks[rank])}
+            // A dual key is live exactly when tapping it would DO something. The
+            // two flags can't answer that on their own: files stay enabled
+            // while a typed letter could still replace an earlier one, but a
+            // dual key never replaces — once the file is set this key means
+            // the rank. Ask the reader instead of inferring.
+            disabled={inert || anyChooser || interpretDualTap(legalMoves, taps, file, rank, assistMode) === "none"}
             onClick={() => pushDual(file, rank)}
           >
             <span className="flex items-baseline gap-1">

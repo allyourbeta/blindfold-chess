@@ -31,9 +31,12 @@ export function interpretDualTap(
   const slots = reduceTaps(taps);
   if (slots.committed === "castle") return "none";
 
+  // Dual keys keep strict alternation: first tap in a square is the file,
+  // second is the rank. Replacement (typing "cxd4" on a keyboard) is NOT
+  // available here — after a file is set there is no way for a dual key to
+  // signal "another file", so the second tap must be the rank. What did
+  // change: a bare file now starts a pawn move, with no pawn key first.
   if (slots.destFile === null) {
-    // Strict piece-first: a square tap means nothing until a piece opens the entry.
-    if (assist === "strict" && slots.committed === null) return "none";
     if (assist === "assisted" && candidatesFor(legalMoves, [...taps, { kind: "file", value: file }]).length === 0) {
       return "none";
     }
