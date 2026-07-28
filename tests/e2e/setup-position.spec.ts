@@ -38,3 +38,39 @@ test("importing a FEN preserves side-to-move, en passant, and move counters", as
   await tapMoreAction(page, /FEN/);
   await expect(page.getByText(importedFen)).toBeVisible();
 });
+
+test("the setup board keeps its size after Clear Board", async ({ page }) => {
+  await openApp(page);
+  await waitForEngineReady(page);
+  await page.getByRole("button", { name: /set up a position/i }).click();
+
+  const board = page.locator("[data-testid='setup-board'], .grid-cols-8").first();
+  const before = await page.getByRole("button", { name: /Clear Board/ }).boundingBox();
+  expect(before).not.toBeNull();
+
+  // Squares are percentage-width, so the board needs a definite width of its
+  // own. When it didn't have one, an empty board had no contents to imply a
+  // size and collapsed to a few dozen pixels.
+  //
+  // Falsifier: this goes red if the board is narrower after clearing than a
+  // usable board can be, or if clearing changes its width at all.
+  const widthWithPieces = (await boardWidth(page)) ?? 0;
+  expect(widthWithPieces).toBeGreaterThan(200);
+
+  await page.getByRole("button", { name: /Clear Board/ }).click();
+
+  const widthWhenEmpty = (await boardWidth(page)) ?? 0;
+  expect(widthWhenEmpty).toBeGreaterThan(200);
+  expect(Math.abs(widthWhenEmpty - widthWithPieces)).toBeLessThan(2);
+  void board;
+});
+
+async function boardWidth(page: import("@playwright/test").Page) {
+  return page.evaluate(() => {
+    const label = Array.from(document.querySelectorAll("div")).find(
+      (d) => d.textContent?.trim() === "a" && d.className.includes("w-[12.5%]"),
+    );
+    const row = label?.parentElement?.parentElement;
+    return row ? row.getBoundingClientRect().width : null;
+  });
+}

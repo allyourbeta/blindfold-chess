@@ -4,6 +4,8 @@ import type { SetupBoard as BoardMatrix } from "@/services/chess/fen";
 import { useSettingsStore } from "@/state/settingsStore";
 
 interface BoardPanelProps {
+  /** Lets a caller that has already sized its own wrapper (the peek overlay) lift the board's default width cap. */
+  boardClassName?: string;
   board: BoardMatrix;
   /** Orientation to use until the player rotates it themselves. */
   defaultFlipped: boolean;
@@ -17,8 +19,14 @@ interface BoardPanelProps {
  * A board plus its rotate control. Every board in the app goes through here so
  * the orientation is always adjustable and always consistent — a rotation on
  * the setup board carries over to a peek, and vice versa.
+ *
+ * The wrapper is `w-full` deliberately: a centred flex column shrinks to fit
+ * its contents, and the board's squares are percentage-width, so without a
+ * definite width from above the board collapses to whatever it happens to
+ * contain — which is nothing once the setup board is cleared.
  */
 export function BoardPanel({
+  boardClassName,
   board,
   defaultFlipped,
   highlightFrom,
@@ -31,9 +39,9 @@ export function BoardPanel({
   const flipped = override ?? defaultFlipped;
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex w-full flex-col items-center gap-2">
       <Board
-        className="!max-w-full"
+        className={boardClassName}
         board={board}
         flipped={flipped}
         highlightFrom={highlightFrom}

@@ -27,6 +27,7 @@ export function PeekPanel() {
     <div className="animate-fade-in pointer-events-none fixed inset-0 z-40 flex items-center justify-center bg-bg-base/95 p-4">
       <div className="w-[min(92vw,calc(100dvh-7rem))]">
         <BoardPanel
+          boardClassName="max-w-none"
           board={fenToBoard(fen)}
           defaultFlipped={playerColor === "b"}
           highlightFrom={lastMove?.from}

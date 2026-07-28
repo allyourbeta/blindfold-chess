@@ -30,11 +30,13 @@ export function Board({
   return (
     <div
       className={cn(
-        // The board is square, so whoever renders it decides how big it can
-        // be — the peek overlay sizes its wrapper by BOTH viewport
-        // dimensions and passes `!max-w-full`, since height is what limits a
-        // square in landscape and width is what limits it in portrait.
-        "mx-auto w-full max-w-[400px] select-none",
+        // Squares are percentage-width, so the board MUST have a definite
+        // width of its own — with only `w-full` inside a shrink-to-fit
+        // parent the size collapses to whatever the contents imply, which
+        // is nothing once the setup board is cleared. Callers that have
+        // already sized their own wrapper (the peek overlay) pass
+        // `max-w-none`; everyone else keeps this cap.
+        "mx-auto w-full min-w-[16rem] max-w-[400px] select-none",
         className,
       )}
     >

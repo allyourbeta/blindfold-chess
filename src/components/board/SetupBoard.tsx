@@ -47,7 +47,7 @@ function PaletteGroup({
 
 export function SetupBoard({ board, flipped, selectedPiece, onSelectPiece, onSquareClick }: SetupBoardProps) {
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex w-full flex-col items-center gap-4">
       <div className="flex flex-wrap justify-center gap-4">
         <PaletteGroup pieces={WHITE_PIECES} selectedPiece={selectedPiece} onSelectPiece={onSelectPiece} />
         <PaletteGroup pieces={BLACK_PIECES} selectedPiece={selectedPiece} onSelectPiece={onSelectPiece} />

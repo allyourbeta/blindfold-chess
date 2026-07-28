@@ -25,8 +25,11 @@ export async function tapMoreAction(page: Page, name: RegExp | string) {
 }
 
 export async function waitForEngineReady(page: Page) {
+  // The model download and WASM session creation happen before the menu's
+  // primary button appears. Under parallel workers each context does that
+  // work independently, so this waits on the engine, not on rendering.
   await expect(page.getByRole("button", { name: /New Game/ })).toBeVisible({
-    timeout: 20_000,
+    timeout: 45_000,
   });
 }
 
