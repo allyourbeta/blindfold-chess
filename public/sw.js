@@ -1,6 +1,6 @@
 // Bump this whenever the app shell / precache list changes so browsers
 // pick up a fresh install instead of reusing a stale cache.
-const CACHE_NAME = 'blindfold-chess-v47';
+const CACHE_NAME = 'blindfold-chess-v48';
 
 // Must match AUDIO_VERSION in src/services/audio/clipPlayer.ts — the app and
 // the precache have to request the same URL or clips are fetched twice.
@@ -46,7 +46,10 @@ const APP_SHELL = [
   '/icons/icon-512.png',
   '/icons/icon-maskable-512.png',
   '/icons/apple-touch-icon.png',
-  '/engine/stockfish.js',
+  // '/engine/stockfish.js' (~1.5 MB) deliberately not precached: StockfishAdapter
+  // is kept for a future analysis feature but is never instantiated today, so
+  // every visitor paid for it on every install for nothing. Add it back here
+  // if/when analysis mode actually loads the engine.
   '/fonts/nunito-variable.woff2',
   ...AUDIO_CLIPS,
   ...PIECE_FILES,
