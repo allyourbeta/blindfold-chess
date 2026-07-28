@@ -332,3 +332,24 @@ describe("promotion with two source pawns", () => {
     expect(state.disambiguation).toContain("fxe8=Q+");
   });
 });
+
+describe("illegal entries are never reinterpreted", () => {
+  it("Nc4 from the start position is invalid, and is NOT the SAN of any legal move", () => {
+    const moves = legalMoves();
+    const state = computeEntryState(moves, [piece("N"), file("c"), rank("4")], "strict");
+    expect(state.resolved).toBeNull();
+    expect(state.invalid).toBe("Nc4");
+    // The keypad submits `invalid` verbatim; an exact match against the legal
+    // list is the only thing that may play it. This asserts the premise that
+    // makes the exact path safe: no legal move is spelled "Nc4" here.
+    expect(moves.map((m) => m.san)).not.toContain("Nc4");
+  });
+
+  it("Nf4 likewise — the neighbouring legal knight moves must not absorb it", () => {
+    const moves = legalMoves();
+    const state = computeEntryState(moves, [piece("N"), file("f"), rank("4")], "strict");
+    expect(state.invalid).toBe("Nf4");
+    expect(moves.map((m) => m.san)).toEqual(expect.arrayContaining(["Nf3", "Nh3"]));
+    expect(moves.map((m) => m.san)).not.toContain("Nf4");
+  });
+});

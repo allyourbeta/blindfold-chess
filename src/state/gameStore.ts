@@ -59,6 +59,8 @@ export interface GameState {
   startNewGame(): Promise<void>;
   startFromSetup(fen: string): Promise<void>;
   submitMoveText(raw: string): void;
+  /** Keypad entries only: already-formed SAN, matched exactly against the legal moves. */
+  submitKeypadMove(san: string): void;
   doPeek(): void;
   doTakeback(): void;
   doResign(): void;
@@ -137,6 +139,10 @@ export const useGameStore = create<GameState>((set, get) => {
         default:
           flow.attemptMove(trimmed, { kind: "typed" });
       }
+    },
+
+    submitKeypadMove: (san: string) => {
+      flow.attemptMove(san, { kind: "typed" }, true);
     },
 
     doPeek: () => {

@@ -47,7 +47,7 @@ export function MoveKeypad() {
   const turn = useGameStore((s) => s.turn);
   const playerColor = useGameStore((s) => s.playerColor);
   const gameOverFlag = useGameStore((s) => s.gameOverFlag);
-  const submitMoveText = useGameStore((s) => s.submitMoveText);
+  const submitKeypadMove = useGameStore((s) => s.submitKeypadMove);
   const isSpeaking = useSpeechStore((s) => s.isSpeaking);
   const assistMode = useSettingsStore((s) => s.assistMode);
 
@@ -74,7 +74,7 @@ export function MoveKeypad() {
   const entry = useMemo(() => computeEntryState(legalMoves, taps, assistMode), [legalMoves, taps, assistMode]);
 
   function play(san: string) {
-    submitMoveText(san);
+    submitKeypadMove(san);
     setTaps([]);
   }
 

@@ -207,7 +207,17 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     if (chess.turn() !== color) requestEngineMove();
   }
 
-  function attemptMove(raw: string, source: MoveSource = { kind: "typed" }) {
+  /**
+   * `exact` is for the keypad. `resolveMoveInput` still carries the
+   * voice-era leniency layers — prefix matching, missing-rank shorthands,
+   * piece-plus-file guesses — which existed to rescue mangled speech. The
+   * keypad produces well-formed SAN and has ALREADY decided whether the
+   * entry is legal, so routing a known-illegal entry through a resolver
+   * whose job is to find something legal that resembles it hands it a
+   * second chance to be reinterpreted. Stated moves are answered, never
+   * guessed at.
+   */
+  function attemptMove(raw: string, source: MoveSource = { kind: "typed" }, exact = false) {
     const s = get();
     if (!s.chess || s.gameOverFlag) return;
     if (s.chess.turn() !== s.playerColor) {
@@ -215,7 +225,14 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
       set({ audioEvent: { kind: "illegal-move", spoken: "Not your turn", attempted: null, source } });
       return;
     }
-    const result = resolveMoveInput(s.chess, raw);
+    const result = exact
+      ? (() => {
+          const legal = s.chess.moves().includes(raw);
+          return legal
+            ? ({ ok: true, san: raw } as const)
+            : ({ ok: false, error: `Illegal or unrecognized move: "${raw}". Try again.` } as const);
+        })()
+      : resolveMoveInput(s.chess, raw);
     if (!result.ok) {
       if (result.error) addMessage("error", result.error);
       set({ audioEvent: { kind: "illegal-move", spoken: "Illegal move", attempted: raw, source } });
