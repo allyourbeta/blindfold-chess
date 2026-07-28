@@ -20,7 +20,7 @@ const wavIds = new Set(
     .map((f) => f.replace(/\.wav$/, "")),
 );
 
-const clipIds = new Set(CLIP_IDS);
+const clipIds = new Set<string>(CLIP_IDS);
 
 function parseSwAudioClips(): Set<string> {
   const text = readFileSync(swJsPath, "utf8");
