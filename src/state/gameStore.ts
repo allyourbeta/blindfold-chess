@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { Chess, type Color, type Move } from "chess.js";
 import { STARTING_FEN, validateFen } from "@/services/chess/fen";
-import { parseTypedCommand } from "@/services/chess/commands";
 import {
   formatHint,
   formatHistorySummary,
@@ -58,7 +57,6 @@ export interface GameState {
   retryEngine(): Promise<void>;
   startNewGame(): Promise<void>;
   startFromSetup(fen: string): Promise<void>;
-  submitMoveText(raw: string): void;
   /** Keypad entries only: already-formed SAN, matched exactly against the legal moves. */
   submitKeypadMove(san: string): void;
   doPeek(): void;
@@ -66,6 +64,7 @@ export interface GameState {
   doResign(): void;
   requestHint(): void;
   copyPgn(): Promise<void>;
+  showFen(): void;
   showHistorySummary(): void;
   returnToMenu(): void;
 }
@@ -107,37 +106,6 @@ export const useGameStore = create<GameState>((set, get) => {
         await flow.beginGame(fen);
       } catch (err) {
         set({ setupError: err instanceof Error ? err.message : "Invalid position." });
-      }
-    },
-
-    submitMoveText: (raw: string) => {
-      const trimmed = raw.trim();
-      if (!trimmed) return;
-      const s = get();
-      switch (parseTypedCommand(trimmed)) {
-        case "peek":
-          s.doPeek();
-          return;
-        case "resign":
-          s.doResign();
-          return;
-        case "takeback":
-          s.doTakeback();
-          return;
-        case "hint":
-          s.requestHint();
-          return;
-        case "fen":
-          flow.addMessage("system", s.chess.fen());
-          return;
-        case "pgn":
-          void s.copyPgn();
-          return;
-        case "history":
-          s.showHistorySummary();
-          return;
-        default:
-          flow.attemptMove(trimmed, { kind: "typed" });
       }
     },
 
@@ -204,6 +172,8 @@ export const useGameStore = create<GameState>((set, get) => {
         flow.addMessage("system", pgn);
       }
     },
+
+    showFen: () => flow.addMessage("system", get().chess.fen()),
 
     showHistorySummary: () => flow.addMessage("system", formatHistorySummary(getGameHistory())),
 

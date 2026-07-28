@@ -27,7 +27,8 @@ export function ActionBar() {
   const doResign = useGameStore((s) => s.doResign);
   const startNewGame = useGameStore((s) => s.startNewGame);
   const copyPgn = useGameStore((s) => s.copyPgn);
-  const submitMoveText = useGameStore((s) => s.submitMoveText);
+  const showFen = useGameStore((s) => s.showFen);
+  const showHistorySummary = useGameStore((s) => s.showHistorySummary);
   const speechMode = useSettingsStore((s) => s.speechMode);
   const fileNaming = useSettingsStore((s) => s.fileNaming);
   const setFileNaming = useSettingsStore((s) => s.setFileNaming);
@@ -90,10 +91,10 @@ export function ActionBar() {
             <Button variant="secondary" onClick={() => void copyPgn()} title="Copy game notation">
               <ClipboardCopy className="h-4 w-4" /> PGN
             </Button>
-            <Button variant="secondary" onClick={() => submitMoveText("fen")} title="Show the current position's FEN">
+            <Button variant="secondary" onClick={showFen} title="Show the current position's FEN">
               <FileCode className="h-4 w-4" /> FEN
             </Button>
-            <Button variant="secondary" onClick={() => submitMoveText("history")} title="Past games and stats">
+            <Button variant="secondary" onClick={showHistorySummary} title="Past games and stats">
               <History className="h-4 w-4" /> History
             </Button>
             <Button
