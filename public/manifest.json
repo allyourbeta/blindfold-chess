@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "Blindfold Chess Trainer",
-  "short_name": "Blindfold",
-  "description": "Practice chess visualization by playing blindfold against Stockfish",
+  "name": "Mind's Eye \u2014 Blindfold Chess",
+  "short_name": "Mind's Eye",
+  "description": "Play blindfold chess against Maia, a neural engine that plays like a human. Works offline.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

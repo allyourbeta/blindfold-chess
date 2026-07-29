@@ -11,6 +11,8 @@ import { useGameStore } from "@/state/gameStore";
 import { useSettingsStore } from "@/state/settingsStore";
 import { formatPracticeStats } from "@/services/chess/gameSummary";
 import { getGameHistory } from "@/api/localStore";
+import { useInstallPrompt } from "@/hooks/useInstallPrompt";
+import { Share, Plus, X, Download } from "lucide-react";
 import { RANDOMNESS_STOPS } from "@/engine/maia/policy";
 import { useTheme } from "@/hooks/useTheme";
 import { unlockAudioOutput } from "@/hooks/useSpeechOutput";
@@ -54,6 +56,8 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
   const setAssistMode = useSettingsStore((s) => s.setAssistMode);
   // Read once on mount: history only changes while a game is being played.
   const [practiceStats] = useState(() => formatPracticeStats(getGameHistory()));
+  const { advice, install } = useInstallPrompt();
+  const [showInstall, setShowInstall] = useState(false);
   const setSpeechMode = useSettingsStore((s) => s.setSpeechMode);
 
   const engineStatus = useGameStore((s) => s.engineStatus);
@@ -174,7 +178,71 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
           <Button className="mt-3 w-full" variant="secondary" disabled={!engineReady} onClick={onSetup}>
             Set up a position
           </Button>
+
+          {/*
+            Most people don't know a website can live on the home screen with
+            its own icon, and that's the difference between "a link I have to
+            find" and an app. Shown only when there's actually something to
+            do: never when it's already installed, never where no install
+            route exists.
+          */}
+          {advice.kind !== "installed" && advice.kind !== "unavailable" && (
+            <button
+              type="button"
+              onClick={() => setShowInstall(true)}
+              className="mx-auto mt-4 flex min-h-11 items-center gap-2 rounded-xl px-3 text-sm font-semibold text-text-accent hover:bg-bg-surface-alt"
+            >
+              <Download className="h-4 w-4" />
+              Add Mind&apos;s Eye to your home screen
+            </button>
+          )}
         </section>
+
+        {showInstall && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Add to home screen"
+            className="animate-fade-in fixed inset-0 z-50 flex items-center justify-center bg-bg-base/95 p-6"
+            onClick={() => setShowInstall(false)}
+          >
+            <div
+              className="flex w-full max-w-sm flex-col items-center gap-4 text-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Show the payoff: this icon is what lands on their home screen. */}
+              <img src="/icons/icon-512.png" alt="" aria-hidden="true" className="h-20 w-20 rounded-3xl shadow-lg" />
+              <p className="text-base font-semibold text-text-primary">
+                Mind&apos;s Eye can live on your home screen with its own icon, and works offline once installed.
+              </p>
+
+              {advice.kind === "prompt" ? (
+                <Button
+                  className="w-full"
+                  onClick={() => {
+                    void install();
+                    setShowInstall(false);
+                  }}
+                >
+                  Install
+                </Button>
+              ) : (
+                <ol className="w-full space-y-2 text-left text-base text-text-secondary">
+                  <li className="flex items-center gap-2">
+                    <Share className="h-4 w-4 shrink-0" /> 1. Tap Share in Safari&apos;s toolbar
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Plus className="h-4 w-4 shrink-0" /> 2. Choose &ldquo;Add to Home Screen&rdquo;
+                  </li>
+                </ol>
+              )}
+
+              <Button variant="secondary" className="w-full" onClick={() => setShowInstall(false)}>
+                <X className="h-4 w-4" /> Close
+              </Button>
+            </div>
+          </div>
+        )}
 
         {showSettings && (
           <Card id="game-settings" className="mt-5 space-y-6 p-5">
