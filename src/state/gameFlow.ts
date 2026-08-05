@@ -32,8 +32,10 @@ type GetState = () => GameState;
  * same beat every move, and the whole point of Maia is a human-feeling
  * opponent.
  */
-const MIN_REPLY_MS = 500;
-const MAX_REPLY_MS = 900;
+// Doubled from 500/900 on 2026-08-04: the original floor still landed the
+// reply before the player had finished registering their own move.
+const MIN_REPLY_MS = 1000;
+const MAX_REPLY_MS = 1800;
 
 export function createGameFlow(set: SetState, get: GetState, engineManager: EngineManager) {
   let messageIdCounter = 0;

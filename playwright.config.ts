@@ -10,7 +10,17 @@ import { defineConfig, devices } from "@playwright/test";
  * hasn't answered yet. These are the settings that stop that; they are not
  * masking a bug in the app.
  */
-const WORKERS = process.env.CI ? 2 : 3;
+// Two, not three. At three, the two engine-lifecycle tests that act on an
+// in-flight reply took ~52s and hit the 60s ceiling; at one worker the same
+// two ran in 9.6s and 6.5s. Nothing was wrong with them — three browser
+// contexts each loading the 3.3MB model is simply more than this machine
+// has. The round-74 reply delay (1.0-1.8s floor per engine move) spends
+// wall-clock rather than CPU, so it does not add contention, but it does
+// push every engine-waiting test nearer that ceiling — which is what turned
+// a marginal setting into a failing one. Raising the timeout instead would
+// have bought headroom without reducing load, and made a genuinely hung
+// test take 90s to report.
+const WORKERS = 2;
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -22,13 +32,25 @@ export default defineConfig({
   expect: { timeout: 10_000 },
   reporter: "list",
   use: {
-    baseURL: "http://localhost:4173",
+    baseURL: "http://localhost:4190",
     trace: "retain-on-failure",
     actionTimeout: 20_000,
   },
+  /**
+   * PORT 4190, NOT Vite's default 4173, and `--strictPort` in the preview
+   * script so it fails loudly instead of drifting to the next free port.
+   *
+   * `reuseExistingServer` means Playwright skips launching a server when
+   * something already answers on this URL. On the shared default port that
+   * is a silent-wrong-results trap: run a second Vite project's suite at the
+   * same time and it reuses THIS app's server, then reports passes and
+   * failures for tests that never loaded their own application. A port
+   * nobody else defaults to makes reuse safe — it can only ever pick up our
+   * own preview server. Do not "tidy" this back to 4173.
+   */
   webServer: {
     command: "npm run preview",
-    url: "http://localhost:4173",
+    url: "http://localhost:4190",
     reuseExistingServer: !process.env.CI,
     timeout: 30_000,
   },

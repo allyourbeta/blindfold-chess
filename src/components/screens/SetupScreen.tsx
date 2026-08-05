@@ -114,7 +114,7 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
         </button>
         <div>
           <h1 className="text-lg font-semibold text-text-accent">Position Setup</h1>
-          <p className="text-xs text-text-secondary">Click a piece, then click the board. Click again to remove.</p>
+          <p className="text-sm text-text-secondary">Click a piece, then click the board. Click again to remove.</p>
         </div>
       </header>
 
@@ -127,7 +127,7 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
       />
 
       <div>
-        <span className="mb-2 block text-xs uppercase tracking-wide text-text-secondary">Side to move</span>
+        <span className="mb-2 block text-sm uppercase tracking-wide text-text-secondary">Side to move</span>
         <SegmentedControl<"w" | "b">
           aria-label="Side to move"
           value={turn}
@@ -145,7 +145,7 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
           value={fenInput}
           onChange={(e) => setFenInput(e.target.value)}
           placeholder="Paste FEN string..."
-          className="min-h-11 flex-1 rounded-xl border border-border-default bg-bg-surface px-3 font-mono text-xs text-text-primary placeholder:text-text-muted focus:border-border-active focus:outline-none"
+          className="min-h-11 flex-1 rounded-xl border border-border-default bg-bg-surface px-3 font-mono text-sm text-text-primary placeholder:text-text-muted focus:border-border-active focus:outline-none"
         />
         <Button variant="secondary" size="sm" onClick={handleLoadFen}>
           Load
@@ -154,10 +154,10 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
       {fenError && <p className="-mt-3 text-sm text-text-error">{fenError}</p>}
 
       <div className="rounded-xl border border-border-default bg-bg-surface-alt p-4">
-        <span className="mb-2 block text-xs uppercase tracking-wide text-text-secondary">Castling rights</span>
+        <span className="mb-2 block text-sm uppercase tracking-wide text-text-secondary">Castling rights</span>
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
           {CASTLING_KEYS.map((key) => (
-            <label key={key} className="flex min-h-11 cursor-pointer items-center gap-2 text-xs text-text-primary">
+            <label key={key} className="flex min-h-11 cursor-pointer items-center gap-2 text-sm text-text-primary">
               <input
                 type="checkbox"
                 checked={castling[key]}

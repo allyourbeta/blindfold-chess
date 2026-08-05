@@ -1,6 +1,6 @@
 // Bump this whenever the app shell / precache list changes so browsers
 // pick up a fresh install instead of reusing a stale cache.
-const CACHE_NAME = 'blindfold-chess-v50';
+const CACHE_NAME = 'blindfold-chess-v52';
 
 // Must match AUDIO_VERSION in src/services/audio/clipPlayer.ts — the app and
 // the precache have to request the same URL or clips are fetched twice.

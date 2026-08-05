@@ -152,12 +152,22 @@ export function MoveKeypad() {
     <div role="group" aria-label="Move entry keypad" className="flex flex-col gap-2">
       {/* One slim line for everything transient: entry preview, the SAN /
           promotion choosers, and engine status. Idle = empty. The old
-          full-height text-entry row is gone — this is all that remains. */}
-      <div className="flex h-8 items-center justify-center overflow-x-auto px-2">
+          full-height text-entry row is gone — this is all that remains.
+
+          The height is FIXED and always reserved, never grown on demand:
+          the chooser must not shove the keypad down when it appears. It has
+          to clear the tallest thing it holds, which is a 44px chooser button
+          (36px in shortscape). At h-8 it did not: `overflow-x-auto` forces
+          the vertical axis to `auto` as well, so the buttons were being
+          clipped 6px top and bottom — the real reason they read as tiny.
+          Overflow stays horizontal-only in practice: the rare 8-button
+          promotion chooser scrolls sideways rather than wrapping, because
+          wrapping is what would change this row's height. */}
+      <div data-testid="entry-strip" className="flex h-12 items-center justify-center overflow-x-auto px-2 shortscape:h-9">
         {chooser ? (
           <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
             {chooser.map((san) => (
-              <Button key={san} type="button" size="sm" onClick={() => play(san)}>
+              <Button key={san} type="button" size="chooser" onClick={() => play(san)}>
                 {san}
               </Button>
             ))}
@@ -168,19 +178,19 @@ export function MoveKeypad() {
               const candidate = entry.candidates.find((c) => c.promotion === promotion);
               if (!candidate) return null;
               return (
-                <Button key={promotion} type="button" size="sm" onClick={() => play(candidate.san)}>
+                <Button key={promotion} type="button" size="chooser" onClick={() => play(candidate.san)}>
                   {label}
                 </Button>
               );
             })}
           </div>
         ) : statusText ? (
-          <span className="flex items-center gap-2 text-sm font-semibold text-text-secondary">
+          <span className="flex items-center gap-2 text-base font-semibold text-text-secondary">
             {isSpeaking && <Volume2 className="h-4 w-4" />}
             {statusText}
           </span>
         ) : (
-          <span className="font-mono text-lg tracking-wide">{entry.preview}</span>
+          <span className="font-mono text-xl tracking-wide">{entry.preview}</span>
         )}
       </div>
 
@@ -205,7 +215,8 @@ export function MoveKeypad() {
         <Button
           type="button"
           variant="secondary"
-          className="h-9 disabled:!opacity-30"
+          size="keypadRow"
+          className="disabled:!opacity-30"
           disabled={inert || anyChooser || !entry.enabled.castleKingside}
           onClick={() => pushTap({ kind: "castle", value: "O-O" })}
         >
@@ -214,7 +225,8 @@ export function MoveKeypad() {
         <Button
           type="button"
           variant="secondary"
-          className="h-9 disabled:!opacity-30"
+          size="keypadRow"
+          className="disabled:!opacity-30"
           disabled={inert || anyChooser || !entry.enabled.castleQueenside}
           onClick={() => pushTap({ kind: "castle", value: "O-O-O" })}
         >
@@ -223,12 +235,14 @@ export function MoveKeypad() {
         <Button
           type="button"
           variant="secondary"
-          className="h-9 text-lg disabled:!opacity-30"
+          size="keypadRow"
+          className="disabled:!opacity-30"
           aria-label="Undo last entry"
           disabled={inert || taps.length === 0}
           onClick={undoTap}
         >
-          ⌫
+          {/* Own element, so its size can't collide with the button's. */}
+          <span className="text-xl">⌫</span>
         </Button>
       </div>
 

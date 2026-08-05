@@ -41,9 +41,12 @@ export function Board({
       )}
     >
       <div className="flex overflow-hidden rounded-lg border-2 border-stone-700 dark:border-stone-500">
-        <div className="flex w-5 flex-col">
+        {/* Coordinate gutter widened from w-5 so the labels can carry a
+            readable size — they were text-[10px], the smallest type in the
+            app, on a board you only get to look at for three seconds. */}
+        <div className="flex w-6 flex-col">
           {rows.map((r) => (
-            <div key={r} className="flex flex-1 items-center justify-center font-mono text-[10px] text-text-secondary">
+            <div key={r} className="flex flex-1 items-center justify-center font-mono text-sm text-text-secondary">
               {8 - r}
             </div>
           ))}
@@ -69,9 +72,9 @@ export function Board({
           ))}
         </div>
       </div>
-      <div className="flex pl-5">
+      <div className="flex pl-6">
         {cols.map((c) => (
-          <div key={c} className="w-[12.5%] text-center font-mono text-[10px] text-text-secondary">
+          <div key={c} className="w-[12.5%] text-center font-mono text-sm text-text-secondary">
             {FILES[c]}
           </div>
         ))}
