@@ -39,7 +39,7 @@ after `onstart`). Audio unlocking (`unlockAudioOutput`, called from the New
 Game buttons on both the menu and setup screens) is implemented per spec but
 likewise unverified on a real iOS PWA install.
 
-- [ ] Remove the `console.log('[speech] ...')` lines from `useSpeechRecognition.ts` once iOS behavior is confirmed working
+- [ ] Remove the `console.log('[speech] ...')` lines from `useSpeechRecognition.ts` once iOS behavior is confirmed working ^bc-2wqkpp
   They are there specifically to make this diagnosable on a real device per
   the runtime-sequence/logging convention in this project owner's global
   instructions — remove them once confirmed working, not before.
@@ -80,23 +80,23 @@ asking first and should have.
 
 ## Deferred
 
-- [ ] Self-host a webfont (e.g. Nunito) to match the reference apps' typeface exactly
+- [ ] Self-host a webfont (e.g. Nunito) to match the reference apps' typeface exactly ^bc-y2kl3u
   The same way Stockfish and the audio clips are vendored — Phase 1
   used the system sans-serif stack instead (see above).
 
-- [ ] Physical-device iOS verification of speech mode degrade and audio unlocking
+- [ ] Physical-device iOS verification of speech mode degrade and audio unlocking ^bc-kwtg5e
   See above.
 
-- [ ] Add `tailwind-merge`
+- [ ] Add `tailwind-merge` ^bc-djbj3r
   It was not added (only `cva`/`clsx` were approved) — `cn()`
   doesn't dedupe conflicting Tailwind classes. Not an issue today since no
   component both sets and overrides the same utility via `className`, but
   worth adding if that changes.
 
-- [ ] Maia/Leela (Phase 2, explicitly out of scope)
+- [ ] Maia/Leela (Phase 2, explicitly out of scope) ^bc-pjnmn7
   `EngineAdapter` and `EngineManager` are written generically against the
   interface for this reason; `stockfishAdapter.ts` is the only file that
   imports Stockfish specifically, via `engine/createEngineManager.ts`.
 
-- [ ] Upgrade Stockfish to a WASM build
+- [ ] Upgrade Stockfish to a WASM build ^bc-pkkkhs
   Explicitly deferred by the spec.
