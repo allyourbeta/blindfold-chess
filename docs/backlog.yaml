@@ -1,0 +1,51 @@
+version: 1
+project: blindfold-chess
+prefix: bc
+items:
+  - id: bc-2wqkpp
+    title: Remove the `console.log('[speech] ...')` lines from 
+      `useSpeechRecognition.ts` once iOS behavior is confirmed working
+    status: open
+    section: iOS — untested
+    body: |-
+      They are there specifically to make this diagnosable on a real device per
+      the runtime-sequence/logging convention in this project owner's global
+      instructions — remove them once confirmed working, not before.
+  - id: bc-y2kl3u
+    title: Self-host a webfont (e.g. Nunito) to match the reference apps' 
+      typeface exactly
+    status: open
+    section: Deferred
+    body: |-
+      The same way Stockfish and the audio clips are vendored — Phase 1
+      used the system sans-serif stack instead (see above).
+  - id: bc-kwtg5e
+    title: Physical-device iOS verification of speech mode degrade and audio 
+      unlocking
+    status: open
+    section: Deferred
+    body: |-
+      See above.
+  - id: bc-djbj3r
+    title: Add `tailwind-merge`
+    status: open
+    section: Deferred
+    body: |-
+      It was not added (only `cva`/`clsx` were approved) — `cn()`
+      doesn't dedupe conflicting Tailwind classes. Not an issue today since no
+      component both sets and overrides the same utility via `className`, but
+      worth adding if that changes.
+  - id: bc-pjnmn7
+    title: Maia/Leela (Phase 2, explicitly out of scope)
+    status: open
+    section: Deferred
+    body: |-
+      `EngineAdapter` and `EngineManager` are written generically against the
+      interface for this reason; `stockfishAdapter.ts` is the only file that
+      imports Stockfish specifically, via `engine/createEngineManager.ts`.
+  - id: bc-pkkkhs
+    title: Upgrade Stockfish to a WASM build
+    status: open
+    section: Deferred
+    body: |-
+      Explicitly deferred by the spec.
