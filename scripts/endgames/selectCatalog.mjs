@@ -3,6 +3,7 @@
 // Part 1e.
 import { mirrorColors } from "./mirror.mjs";
 import { isNearCopy, toCanonicalFen } from "./curationHelpers.mjs";
+import { isQuiet } from "./quiet.mjs";
 
 // Selection deliberately oversamples well beyond the spec's final max per
 // bucket -- curate.mjs's liveness check (not-lost for the side to move)
@@ -49,6 +50,11 @@ function mulberry32(seed) {
 
 export function selectCatalog(pool) {
   const rng = mulberry32(20261007);
+
+  // SPEC_endgames_quiet.md: never select a candidate that lets the side to
+  // move grab material for free -- belt-and-braces alongside buildPool.mjs's
+  // own filter, so a re-run can't bring a non-quiet position back in.
+  pool = pool.filter((c) => isQuiet(toCanonicalFen(c.placement, c.sideToMove)));
 
   const selected = [];
   const selectedPlacements = [];

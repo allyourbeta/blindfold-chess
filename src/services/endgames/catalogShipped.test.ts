@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { Chess } from "chess.js";
 import { mirrorColors } from "./mirror";
+import { isQuiet } from "./quiet";
 import { ENDGAMES, materialKey, family, sizeOf, bucketOf, SIZE_BUCKETS } from "./catalog";
 
 // Checklist rule 3: these read the SHIPPED catalog, never a hand-built
@@ -137,6 +138,16 @@ describe("the shipped catalog (src/data/endgames.json)", () => {
     }
     for (const [fam, buckets] of Object.entries(coverage)) {
       expect(buckets.size, fam).toBeGreaterThanOrEqual(3);
+    }
+  });
+
+  // SPEC_endgames_quiet.md: QUIET means the side to move has no capture
+  // with a static exchange evaluation of +2 or more. Every shipped entry
+  // must be quiet -- no position should let the side to move grab
+  // material for free.
+  it("is quiet: the side to move has no capture worth 2 pawns or more (SEE)", () => {
+    for (const entry of ENDGAMES) {
+      expect(isQuiet(entry.fen), entry.id).toBe(true);
     }
   });
 

@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { extractFromRecipe } from "./extract.mjs";
 import { mirrorColors } from "./mirror.mjs";
+import { isQuiet } from "./quiet.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SOURCES_PATH = path.resolve(__dirname, "sources.json");
@@ -48,6 +49,16 @@ async function main() {
     for (const e of errors) console.error(`  ${e.id}: ${e.error}`);
     process.exit(1);
   }
+
+  // SPEC_endgames_quiet.md: a built entry must never let the side to move
+  // grab material for free (SEE >= +2 on some capture). Refuse to ship one.
+  const notQuiet = out.filter((entry) => !isQuiet(entry.fen));
+  if (notQuiet.length > 0) {
+    console.error(`${notQuiet.length} built entries are not quiet:`);
+    for (const e of notQuiet) console.error(`  ${e.id}: ${e.fen}`);
+    process.exit(1);
+  }
+
   writeFileSync(OUTPUT_PATH, `${JSON.stringify(out, null, 2)}\n`);
   console.log(`Wrote ${out.length} entries to ${path.relative(process.cwd(), OUTPUT_PATH)}`);
 }

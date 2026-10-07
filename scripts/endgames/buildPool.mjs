@@ -12,7 +12,8 @@ import {
   PGNMENTOR_FILES,
   LICHESS_BULK_EXPORTS,
 } from "./sourceList.mjs";
-import { pieceCount, bucketFor } from "./curationHelpers.mjs";
+import { pieceCount, bucketFor, toCanonicalFen } from "./curationHelpers.mjs";
+import { isQuiet } from "./quiet.mjs";
 
 function titleFromWikiPage(host, page) {
   const url = `https://${host}/wiki/${page.replace(/ /g, "_")}`;
@@ -177,5 +178,15 @@ export async function buildPool() {
   for (const g of LICHESS_GAMES) pool.push(...(await harvestLichessGame(g)));
   for (const f of PGNMENTOR_FILES) pool.push(...(await harvestPgnMentorFile(f)));
   for (const b of LICHESS_BULK_EXPORTS) pool.push(...(await harvestLichessBulkExport(b)));
-  return pool;
+  // SPEC_endgames_quiet.md: drop any candidate that lets the side to move
+  // grab material for free, so a re-run of curate.mjs can't bring one back
+  // in. A candidate with an illegal placement (missing king, etc.) is left
+  // for curate.mjs's own legality filter to drop instead of failing here.
+  return pool.filter((c) => {
+    try {
+      return isQuiet(toCanonicalFen(c.placement, c.sideToMove));
+    } catch {
+      return true;
+    }
+  });
 }
