@@ -20,6 +20,7 @@ import { unlockAudioOutput } from "@/hooks/useSpeechOutput";
 interface MenuScreenProps {
   onPlay(): void;
   onSetup(): void;
+  onEndgames(): void;
 }
 
 const ASSIST_HINT = {
@@ -42,7 +43,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
+export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
   const [showSettings, setShowSettings] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const playerColor = useSettingsStore((s) => s.playerColor);
@@ -177,6 +178,10 @@ export function MenuScreen({ onPlay, onSetup }: MenuScreenProps) {
 
           <Button className="mt-3 w-full" variant="secondary" disabled={!engineReady} onClick={onSetup}>
             Set up a position
+          </Button>
+
+          <Button className="mt-3 w-full" variant="secondary" disabled={!engineReady} onClick={onEndgames}>
+            Practice an endgame
           </Button>
 
           {/*

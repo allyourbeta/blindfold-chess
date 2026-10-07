@@ -12,7 +12,8 @@
     "test:unit:watch": "vitest",
     "test:e2e": "playwright test",
     "test:all": "npm run typecheck && npm run build && npm run test:unit && npm run test:e2e",
-    "audio:generate": "bash scripts/generate-speech-clips.sh"
+    "audio:generate": "bash scripts/generate-speech-clips.sh",
+    "endgames:verify": "node scripts/endgames/verify.mjs"
   },
   "dependencies": {
     "chess.js": "^1.4.0",

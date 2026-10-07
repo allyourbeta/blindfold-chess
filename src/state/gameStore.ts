@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { Chess, type Color, type Move } from "chess.js";
-import { STARTING_FEN, validateFen } from "@/services/chess/fen";
+import { STARTING_FEN, validateFen, parseFenMoveContext } from "@/services/chess/fen";
+import { getById as getEndgameById } from "@/services/endgames/catalog";
 import {
   formatHint,
   formatHistorySummary,
@@ -44,6 +45,8 @@ export interface GameState {
   moveHistory: string[];
   lastMove: { from: string; to: string } | null;
   gameOverFlag: boolean;
+  /** Set only by startEndgame; cleared by startNewGame and startFromSetup. Null for a normal or set-up game. */
+  activeEndgame: { id: string } | null;
   /** Opponent + randomness stop the current game was started with — shown in the status line. */
   activeOpponentLabel: string;
   gameOverOutcome: GameEndOutcome | null;
@@ -59,6 +62,7 @@ export interface GameState {
   retryEngine(): Promise<void>;
   startNewGame(): Promise<void>;
   startFromSetup(fen: string): Promise<void>;
+  startEndgame(id: string): Promise<void>;
   /** Keypad entries only: already-formed SAN, matched exactly against the legal moves. */
   submitKeypadMove(san: string): void;
   doPeek(): void;
@@ -88,6 +92,7 @@ export const useGameStore = create<GameState>((set, get) => {
     moveHistory: [],
     lastMove: null,
     gameOverFlag: false,
+    activeEndgame: null,
     activeOpponentLabel: "",
     gameOverOutcome: null,
     isThinking: false,
@@ -100,16 +105,29 @@ export const useGameStore = create<GameState>((set, get) => {
 
     initEngine: () => engineManager.load(),
     retryEngine: () => engineManager.load(),
-    startNewGame: () => flow.beginGame(STARTING_FEN),
+    startNewGame: async () => {
+      set({ activeEndgame: null });
+      await flow.beginGame(STARTING_FEN);
+    },
 
     startFromSetup: async (fen: string) => {
       try {
         validateFen(fen);
-        set({ setupError: null });
+        set({ setupError: null, activeEndgame: null });
         await flow.beginGame(fen);
       } catch (err) {
         set({ setupError: err instanceof Error ? err.message : "Invalid position." });
       }
+    },
+
+    // The White/Black setting is ignored here on purpose: you always play
+    // the side to move in an endgame, never the side the settings say.
+    startEndgame: async (id: string) => {
+      const entry = getEndgameById(id);
+      if (!entry) return;
+      const sideToMove = parseFenMoveContext(entry.fen).sideToMove;
+      await flow.beginGame(entry.fen, { playerColor: sideToMove });
+      set({ activeEndgame: { id } });
     },
 
     submitKeypadMove: (san: string) => {

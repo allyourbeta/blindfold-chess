@@ -1,6 +1,9 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { Chess } from "chess.js";
 import { useGameStore } from "./gameStore";
+import { useSettingsStore } from "./settingsStore";
+import { STARTING_FEN, parseFenMoveContext } from "@/services/chess/fen";
+import { ENDGAMES } from "@/services/endgames/catalog";
 
 // doPeek() doesn't touch the engine, so this is safe to unit test without a
 // Worker (the engine's own lifecycle is covered by engineManager.test.ts and
@@ -94,5 +97,62 @@ describe("doTakeback: playing Black, taking back Maia's opening move never stran
     expect(after.moveHistory).toEqual(["e4"]);
     expect(after.chess.fen()).toBe(fenAfterMaiasMove);
     expect(after.messages.at(-1)).toMatchObject({ type: "system", text: expect.stringMatching(/nothing to take back/i) });
+  });
+});
+
+// Decision 6: you always play the side to move in an endgame; the
+// White/Black setting is ignored for that one game, and never written.
+// Every catalog entry forces playerColor to its own side to move, so the
+// engine is never asked for a move here (chess.turn() === playerColor
+// always holds right after startEndgame) -- this stays a pure state test.
+describe("startEndgame: forces the side to move, ignoring (and not writing) the settings colour", () => {
+  afterEach(() => {
+    useSettingsStore.getState().setPlayerColor("w");
+  });
+
+  it("sets activeEndgame and playerColor from the entry, leaving settings untouched", async () => {
+    const entry = ENDGAMES[0];
+    const entryColor = parseFenMoveContext(entry.fen).sideToMove;
+    const oppositeOfEntry = entryColor === "w" ? "b" : "w";
+    useSettingsStore.getState().setPlayerColor(oppositeOfEntry);
+
+    await useGameStore.getState().startEndgame(entry.id);
+
+    const after = useGameStore.getState();
+    expect(after.activeEndgame).toEqual({ id: entry.id });
+    expect(after.playerColor).toBe(entryColor);
+    expect(after.fen).toBe(entry.fen);
+    expect(useSettingsStore.getState().playerColor).toBe(oppositeOfEntry);
+  });
+});
+
+describe("activeEndgame is cleared by every other way of starting a game", () => {
+  afterEach(() => {
+    useSettingsStore.getState().setPlayerColor("w");
+  });
+
+  it("startNewGame clears activeEndgame and uses the settings colour again", async () => {
+    const entry = ENDGAMES[0];
+    useSettingsStore.getState().setPlayerColor("w");
+    await useGameStore.getState().startEndgame(entry.id);
+    expect(useGameStore.getState().activeEndgame).not.toBeNull();
+
+    await useGameStore.getState().startNewGame();
+
+    const after = useGameStore.getState();
+    expect(after.activeEndgame).toBeNull();
+    expect(after.playerColor).toBe("w");
+    expect(after.fen).toBe(STARTING_FEN);
+  });
+
+  it("startFromSetup clears activeEndgame", async () => {
+    const entry = ENDGAMES[0];
+    useSettingsStore.getState().setPlayerColor("w");
+    await useGameStore.getState().startEndgame(entry.id);
+    expect(useGameStore.getState().activeEndgame).not.toBeNull();
+
+    await useGameStore.getState().startFromSetup(STARTING_FEN);
+
+    expect(useGameStore.getState().activeEndgame).toBeNull();
   });
 });

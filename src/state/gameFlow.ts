@@ -1,4 +1,4 @@
-import { Chess, type Move } from "chess.js";
+import { Chess, type Color, type Move } from "chess.js";
 import { detectGameOver, describeGameEnd, formatMovePairs, type GameEndReason } from "@/services/chess/gameSummary";
 import { saveGameToHistory } from "@/api/localStore";
 import type { EngineManager } from "@/engine/engineManager";
@@ -179,7 +179,7 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     });
   }
 
-  async function beginGame(fen: string) {
+  async function beginGame(fen: string, opts?: { playerColor?: Color }) {
     cancelPendingReply(); // a reply held behind the floor must not outlive the game it was for
     // Unconditional: a prior game's search must never survive into this one,
     // whether it's still running (isThinking) or was already ended (resign,
@@ -189,7 +189,11 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     else engineManager.abortSearch();
 
     const chess = new Chess(fen);
-    const color = useSettingsStore.getState().playerColor;
+    // An endgame practice position forces the player onto the side to
+    // move, overriding the settings colour for this game only — the
+    // setting itself is never written, so a normal game afterwards still
+    // uses whatever the player had chosen.
+    const color = opts?.playerColor ?? useSettingsStore.getState().playerColor;
     gameStartTime = Date.now();
     gameStartFen = fen;
     opponentLabelAtStart = `${OPPONENT_LABEL} · ${randomnessLabel()}`;

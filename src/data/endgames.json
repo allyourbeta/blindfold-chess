@@ -1,0 +1,3701 @@
+[
+  {
+    "id": "pawn-rule-of-square-a",
+    "fen": "8/8/8/8/5P2/k7/8/K7 b - - 0 1",
+    "name": null,
+    "themes": [
+      "rule-of-the-square"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-rule-of-square-a-1",
+    "fen": "8/8/8/8/6P1/1k6/8/1K6 b - - 0 1",
+    "name": null,
+    "themes": [
+      "rule-of-the-square"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-rule-of-square-a-2",
+    "fen": "8/8/8/8/7P/2k5/8/2K5 b - - 0 1",
+    "name": null,
+    "themes": [
+      "rule-of-the-square"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-rule-of-square-b",
+    "fen": "8/8/8/8/2P5/7k/8/7K b - - 0 1",
+    "name": null,
+    "themes": [
+      "rule-of-the-square"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-rule-of-square-b-1",
+    "fen": "8/8/8/8/1P6/6k1/8/6K1 b - - 0 1",
+    "name": null,
+    "themes": [
+      "rule-of-the-square"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-rule-of-square-b-2",
+    "fen": "8/8/8/8/P7/5k2/8/5K2 b - - 0 1",
+    "name": null,
+    "themes": [
+      "rule-of-the-square"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-rook-pawn-promote-h",
+    "fen": "5k2/8/6KP/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-rook-pawn-promote-a",
+    "fen": "2k5/8/PK6/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-panno-najdorf-h",
+    "fen": "8/1k6/8/8/8/7K/7P/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-panno-najdorf-a",
+    "fen": "8/6k1/8/8/8/K7/P7/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-barcza-fischer-a",
+    "fen": "8/8/8/p7/k7/4K3/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn",
+      "fortress"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-barcza-fischer-h",
+    "fen": "8/8/8/7p/7k/3K4/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn",
+      "fortress"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-golombek-pomar-g",
+    "fen": "6k1/8/6K1/6P1/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "zugzwang"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-golombek-pomar-b",
+    "fen": "1k6/8/1K6/1P6/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "zugzwang"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-drtina",
+    "fen": "3k4/8/8/8/8/P7/8/1K6 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "outflanking"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-drtina-1",
+    "fen": "4k3/8/8/8/8/1P6/8/2K5 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "outflanking"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-drtina-2",
+    "fen": "5k2/8/8/8/8/2P5/8/3K4 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "outflanking"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-drtina-3",
+    "fen": "6k1/8/8/8/8/3P4/8/4K3 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "outflanking"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-drtina-4",
+    "fen": "7k/8/8/8/8/4P3/8/5K2 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "outflanking"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-case2-king-front-sixth",
+    "fen": "3k4/8/2K5/2P5/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "sixth-rank"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-case2-king-front-sixth-1",
+    "fen": "4k3/8/3K4/3P4/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "sixth-rank"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-case2-king-front-sixth-2",
+    "fen": "5k2/8/4K3/4P3/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "sixth-rank"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-case2-king-front-sixth-3",
+    "fen": "6k1/8/5K2/5P2/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "sixth-rank"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-case4-sixth-rank-front-1",
+    "fen": "2k5/8/2K5/2P5/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "sixth-rank",
+      "ideal-position"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-case4-sixth-rank-front-2",
+    "fen": "3k4/8/3K4/3P4/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "sixth-rank",
+      "ideal-position"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-case4-sixth-rank-front-3",
+    "fen": "4k3/8/4K3/4P3/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "sixth-rank",
+      "ideal-position"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-case4-sixth-rank-front-4",
+    "fen": "5k2/8/5K2/5P2/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "sixth-rank",
+      "ideal-position"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-rookpawn-case4-draw-a",
+    "fen": "k7/8/K7/P7/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-rookpawn-case4-draw-h",
+    "fen": "7k/8/7K/7P/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-rookpawn-variant2-draw-h",
+    "fen": "8/5k1K/7P/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-rookpawn-variant2-draw-a",
+    "fen": "8/K1k5/P7/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-defense-king-front-opp",
+    "fen": "8/8/8/1p6/1k6/8/8/1K6 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-defense-king-front-opp-1",
+    "fen": "8/8/8/2p5/2k5/8/8/2K5 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-defense-king-front-opp-2",
+    "fen": "8/8/8/3p4/3k4/8/8/3K4 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-defense-king-front-opp-3",
+    "fen": "8/8/8/4p3/4k3/8/8/4K3 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-defense-after-advance",
+    "fen": "8/8/8/8/1pk5/8/1K6/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-defense-after-advance-1",
+    "fen": "8/8/8/8/2pk4/8/2K5/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-defense-after-advance-2",
+    "fen": "8/8/8/8/3pk3/8/3K4/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-defense-after-advance-3",
+    "fen": "8/8/8/8/4pk2/8/4K3/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-defense-after-advance-4",
+    "fen": "8/8/8/8/5pk1/8/5K2/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-opposition-defense",
+    "fen": "8/8/8/8/1pk5/8/1K6/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-opposition-defense-1",
+    "fen": "8/8/8/8/2pk4/8/2K5/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-opposition-defense-2",
+    "fen": "8/8/8/8/3pk3/8/3K4/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-opposition-defense-3",
+    "fen": "8/8/8/8/4pk2/8/4K3/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-opposition-defense-4",
+    "fen": "8/8/8/8/5pk1/8/5K2/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-sixth-rank-defense",
+    "fen": "8/8/8/8/8/1pk5/8/2K5 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition",
+      "sixth-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-sixth-rank-defense-1",
+    "fen": "8/8/8/8/8/2pk4/8/3K4 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition",
+      "sixth-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-sixth-rank-defense-2",
+    "fen": "8/8/8/8/8/3pk3/8/4K3 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition",
+      "sixth-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-sixth-rank-defense-3",
+    "fen": "8/8/8/8/8/4pk2/8/5K2 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition",
+      "sixth-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-sixth-rank-defense-4",
+    "fen": "8/8/8/8/8/5pk1/8/6K1 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition",
+      "sixth-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-gligoric-fischer",
+    "fen": "1k6/8/8/8/PK6/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-gligoric-fischer-1",
+    "fen": "2k5/8/8/8/1PK5/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-gligoric-fischer-2",
+    "fen": "3k4/8/8/8/2PK4/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-gligoric-fischer-3",
+    "fen": "4k3/8/8/8/3PK3/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-kamsky-kramnik",
+    "fen": "3k4/8/K1P5/8/8/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-kamsky-kramnik-1",
+    "fen": "4k3/8/1K1P4/8/8/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-kamsky-kramnik-2",
+    "fen": "5k2/8/2K1P3/8/8/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-kamsky-kramnik-3",
+    "fen": "6k1/8/3K1P2/8/8/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-kamsky-kramnik-4",
+    "fen": "7k/8/4K1P1/8/8/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and pawn versus king endgame",
+      "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    }
+  },
+  {
+    "id": "pawn-distant-opposition-capablanca",
+    "fen": "4k3/8/8/1p5p/1P5P/8/8/4K3 w - - 0 1",
+    "name": null,
+    "themes": [
+      "distant-opposition"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Opposition (chess)",
+      "url": "https://en.wikipedia.org/wiki/Opposition_(chess)"
+    }
+  },
+  {
+    "id": "pawn-purpose1-key-square",
+    "fen": "8/8/2k5/8/PK6/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Opposition (chess)",
+      "url": "https://en.wikipedia.org/wiki/Opposition_(chess)"
+    }
+  },
+  {
+    "id": "pawn-purpose1-key-square-1",
+    "fen": "8/8/3k4/8/1PK5/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "opposition"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Opposition (chess)",
+      "url": "https://en.wikipedia.org/wiki/Opposition_(chess)"
+    }
+  },
+  {
+    "id": "pawn-purpose1-key-square-2",
+    "fen": "8/8/4k3/8/2PK4/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "opposition"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Opposition (chess)",
+      "url": "https://en.wikipedia.org/wiki/Opposition_(chess)"
+    }
+  },
+  {
+    "id": "pawn-purpose1-key-square-3",
+    "fen": "8/8/5k2/8/3PK3/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "opposition"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Opposition (chess)",
+      "url": "https://en.wikipedia.org/wiki/Opposition_(chess)"
+    }
+  },
+  {
+    "id": "pawn-purpose2-key-square",
+    "fen": "1k6/8/K7/P7/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "opposition"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Opposition (chess)",
+      "url": "https://en.wikipedia.org/wiki/Opposition_(chess)"
+    }
+  },
+  {
+    "id": "pawn-purpose2-key-square-1",
+    "fen": "2k5/8/1K6/1P6/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "opposition"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Opposition (chess)",
+      "url": "https://en.wikipedia.org/wiki/Opposition_(chess)"
+    }
+  },
+  {
+    "id": "pawn-purpose2-key-square-6",
+    "fen": "7k/8/6K1/6P1/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square",
+      "opposition"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Opposition (chess)",
+      "url": "https://en.wikipedia.org/wiki/Opposition_(chess)"
+    }
+  },
+  {
+    "id": "pawn-triangulation-basic",
+    "fen": "8/p1k5/P7/1PK5/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Triangulation (chess)",
+      "url": "https://en.wikipedia.org/wiki/Triangulation_(chess)"
+    }
+  },
+  {
+    "id": "pawn-triangulation-basic-1",
+    "fen": "8/1p1k4/1P6/2PK4/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Triangulation (chess)",
+      "url": "https://en.wikipedia.org/wiki/Triangulation_(chess)"
+    }
+  },
+  {
+    "id": "pawn-triangulation-basic-2",
+    "fen": "8/2p1k3/2P5/3PK3/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Triangulation (chess)",
+      "url": "https://en.wikipedia.org/wiki/Triangulation_(chess)"
+    }
+  },
+  {
+    "id": "pawn-triangulation-basic-3",
+    "fen": "8/3p1k2/3P4/4PK2/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Triangulation (chess)",
+      "url": "https://en.wikipedia.org/wiki/Triangulation_(chess)"
+    }
+  },
+  {
+    "id": "pawn-triangulation-basic-4",
+    "fen": "8/4p1k1/4P3/5PK1/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Triangulation (chess)",
+      "url": "https://en.wikipedia.org/wiki/Triangulation_(chess)"
+    }
+  },
+  {
+    "id": "pawn-triangulation-basic-5",
+    "fen": "8/5p1k/5P2/6PK/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Triangulation (chess)",
+      "url": "https://en.wikipedia.org/wiki/Triangulation_(chess)"
+    }
+  },
+  {
+    "id": "pawn-alburt-kasparov",
+    "fen": "8/8/8/8/k2p4/1p1P4/8/1K6 b - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Triangulation (chess)",
+      "url": "https://en.wikipedia.org/wiki/Triangulation_(chess)"
+    }
+  },
+  {
+    "id": "pawn-alburt-kasparov-1",
+    "fen": "8/8/8/8/1k2p3/2p1P3/8/2K5 b - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Triangulation (chess)",
+      "url": "https://en.wikipedia.org/wiki/Triangulation_(chess)"
+    }
+  },
+  {
+    "id": "pawn-alburt-kasparov-2",
+    "fen": "8/8/8/8/2k2p2/3p1P2/8/3K4 b - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Triangulation (chess)",
+      "url": "https://en.wikipedia.org/wiki/Triangulation_(chess)"
+    }
+  },
+  {
+    "id": "pawn-alburt-kasparov-3",
+    "fen": "8/8/8/8/3k2p1/4p1P1/8/4K3 b - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Triangulation (chess)",
+      "url": "https://en.wikipedia.org/wiki/Triangulation_(chess)"
+    }
+  },
+  {
+    "id": "pawn-alburt-kasparov-4",
+    "fen": "8/8/8/8/4k2p/5p1P/8/5K2 b - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Triangulation (chess)",
+      "url": "https://en.wikipedia.org/wiki/Triangulation_(chess)"
+    }
+  },
+  {
+    "id": "pawn-corresponding-squares-fixed",
+    "fen": "8/8/8/5p2/4k3/7p/4K2P/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "corresponding-squares"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Corresponding squares",
+      "url": "https://en.wikipedia.org/wiki/Corresponding_squares"
+    }
+  },
+  {
+    "id": "pawn-lichess-key-square-intro",
+    "fen": "8/1k6/8/1KP5/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and Pawn Endgames I – Introduction (Lichess study)",
+      "url": "https://lichess.org/study/embed/kbSEH1nW/VYY8Gnyk"
+    }
+  },
+  {
+    "id": "pawn-lichess-key-square-intro-1",
+    "fen": "8/2k5/8/2KP4/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and Pawn Endgames I – Introduction (Lichess study)",
+      "url": "https://lichess.org/study/embed/kbSEH1nW/VYY8Gnyk"
+    }
+  },
+  {
+    "id": "pawn-lichess-key-square-intro-2",
+    "fen": "8/3k4/8/3KP3/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and Pawn Endgames I – Introduction (Lichess study)",
+      "url": "https://lichess.org/study/embed/kbSEH1nW/VYY8Gnyk"
+    }
+  },
+  {
+    "id": "pawn-lichess-key-square-intro-3",
+    "fen": "8/4k3/8/4KP2/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and Pawn Endgames I – Introduction (Lichess study)",
+      "url": "https://lichess.org/study/embed/kbSEH1nW/VYY8Gnyk"
+    }
+  },
+  {
+    "id": "pawn-lichess-key-square-intro-4",
+    "fen": "8/5k2/8/5KP1/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "key-square"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "King and Pawn Endgames I – Introduction (Lichess study)",
+      "url": "https://lichess.org/study/embed/kbSEH1nW/VYY8Gnyk"
+    }
+  },
+  {
+    "id": "rook-lucena-main",
+    "fen": "1K1k4/1P6/8/8/8/8/r7/2R5 w - - 0 1",
+    "name": "Lucena position",
+    "themes": [
+      "bridge"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Lucena position",
+      "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    }
+  },
+  {
+    "id": "rook-lucenammainmsp1",
+    "fen": "2K1k3/2P5/8/8/8/8/1r6/3R4 w - - 0 1",
+    "name": "Lucena position",
+    "themes": [
+      "bridge"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Lucena position",
+      "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    }
+  },
+  {
+    "id": "rook-lucenammainmsp2",
+    "fen": "3K1k2/3P4/8/8/8/8/2r5/4R3 w - - 0 1",
+    "name": "Lucena position",
+    "themes": [
+      "bridge"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Lucena position",
+      "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    }
+  },
+  {
+    "id": "rook-lucenammainmsp3",
+    "fen": "4K1k1/4P3/8/8/8/8/3r4/5R2 w - - 0 1",
+    "name": "Lucena position",
+    "themes": [
+      "bridge"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Lucena position",
+      "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    }
+  },
+  {
+    "id": "rook-lucenammainmsp4",
+    "fen": "5K1k/5P2/8/8/8/8/4r3/6R1 w - - 0 1",
+    "name": "Lucena position",
+    "themes": [
+      "bridge"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Lucena position",
+      "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    }
+  },
+  {
+    "id": "rook-lucena-bridge-fifth-rank",
+    "fen": "3K4/3P2k1/8/8/8/8/2r5/5R2 w - - 0 1",
+    "name": "Lucena position",
+    "themes": [
+      "bridge"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Lucena position",
+      "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    }
+  },
+  {
+    "id": "rook-lucena-bridge-fifth-rank-mirror",
+    "fen": "4K3/1k2P3/8/8/8/8/5r2/2R5 w - - 0 1",
+    "name": "Lucena position",
+    "themes": [
+      "bridge"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Lucena position",
+      "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    }
+  },
+  {
+    "id": "rook-lucena-rook-pawn-exception",
+    "fen": "K7/P4k2/8/8/8/8/1r6/4R3 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Lucena position",
+      "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    }
+  },
+  {
+    "id": "rook-lucena-rook-pawn-exception-mirror",
+    "fen": "7K/2k4P/8/8/8/8/6r1/3R4 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Lucena position",
+      "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    }
+  },
+  {
+    "id": "rook-philidor-main",
+    "fen": "8/8/8/8/4pk2/R7/7r/4K3 b - - 0 1",
+    "name": "Philidor position",
+    "themes": [
+      "third-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Philidor position",
+      "url": "https://en.wikipedia.org/wiki/Philidor_position"
+    }
+  },
+  {
+    "id": "rook-philidor-main-mirror",
+    "fen": "8/8/8/8/2kp4/7R/r7/3K4 b - - 0 1",
+    "name": "Philidor position",
+    "themes": [
+      "third-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Philidor position",
+      "url": "https://en.wikipedia.org/wiki/Philidor_position"
+    }
+  },
+  {
+    "id": "rook-philidor-original-study",
+    "fen": "4k3/R7/8/3KP3/5r2/8/8/8 b - - 0 1",
+    "name": "Philidor position",
+    "themes": [
+      "third-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Philidor position",
+      "url": "https://en.wikipedia.org/wiki/Philidor_position"
+    }
+  },
+  {
+    "id": "rook-philidormoriginalmstudymsp1",
+    "fen": "5k2/1R6/8/4KP2/6r1/8/8/8 b - - 0 1",
+    "name": "Philidor position",
+    "themes": [
+      "third-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Philidor position",
+      "url": "https://en.wikipedia.org/wiki/Philidor_position"
+    }
+  },
+  {
+    "id": "rook-philidormoriginalmstudymsp2",
+    "fen": "6k1/2R5/8/5KP1/7r/8/8/8 b - - 0 1",
+    "name": "Philidor position",
+    "themes": [
+      "third-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Philidor position",
+      "url": "https://en.wikipedia.org/wiki/Philidor_position"
+    }
+  },
+  {
+    "id": "rook-philidor-less-advanced-pawn",
+    "fen": "8/4k3/1R6/8/4PK2/8/8/r7 b - - 0 1",
+    "name": "Philidor position",
+    "themes": [
+      "third-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Philidor position",
+      "url": "https://en.wikipedia.org/wiki/Philidor_position"
+    }
+  },
+  {
+    "id": "rook-philidormlessmadvancedmpawnmsp1",
+    "fen": "8/5k2/2R5/8/5PK1/8/8/1r6 b - - 0 1",
+    "name": "Philidor position",
+    "themes": [
+      "third-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Philidor position",
+      "url": "https://en.wikipedia.org/wiki/Philidor_position"
+    }
+  },
+  {
+    "id": "rook-philidormlessmadvancedmpawnmsp2",
+    "fen": "8/6k1/3R4/8/6PK/8/8/2r5 b - - 0 1",
+    "name": "Philidor position",
+    "themes": [
+      "third-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Philidor position",
+      "url": "https://en.wikipedia.org/wiki/Philidor_position"
+    }
+  },
+  {
+    "id": "rook-cutting-off-king-along-rank",
+    "fen": "4r3/8/8/3PK3/7R/4k3/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "cut-off"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-cuttingmoffmkingmalongmrankmsm2",
+    "fen": "2r5/8/8/1PK5/5R2/2k5/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "cut-off"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-cuttingmoffmkingmalongmrankmsm1",
+    "fen": "3r4/8/8/2PK4/6R1/3k4/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "cut-off"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-cutting-off-king-along-rank-mirror",
+    "fen": "3r4/8/8/3KP3/R7/3k4/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "cut-off"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-rule-of-five",
+    "fen": "3r4/8/8/6k1/3P4/3K4/8/5R2 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rule-of-five",
+      "cut-off"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-cheron-1923",
+    "fen": "1r6/8/4k3/8/1P6/1K6/8/3R4 w - - 0 1",
+    "name": null,
+    "themes": [
+      "knight-pawn"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-cheron-1923-mirror",
+    "fen": "6r1/8/3k4/8/6P1/6K1/8/4R3 w - - 0 1",
+    "name": null,
+    "themes": [
+      "knight-pawn"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-capablanca-position",
+    "fen": "8/8/8/2k5/8/4K3/3R1P1r/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "capablanca"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-capablancampositionmsm1",
+    "fen": "8/8/8/1k6/8/3K4/2R1P1r1/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "capablanca"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-simple-method-central-pawn",
+    "fen": "4K3/2k1P3/8/8/8/8/3R4/5r2 w - - 0 1",
+    "name": null,
+    "themes": [
+      "central-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-simple-method-central-pawn-mirror",
+    "fen": "3K4/3P1k2/8/8/8/8/4R3/2r5 w - - 0 1",
+    "name": null,
+    "themes": [
+      "central-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-defending-rook-prevents-bridge",
+    "fen": "2k1K3/4P3/8/8/5r2/8/8/3R4 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bridge"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-defending-rook-prevents-bridge-mirror",
+    "fen": "3K1k2/3P4/8/8/2r5/8/8/4R3 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bridge"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-horwitz-kling-1851",
+    "fen": "4K3/2k1P3/8/8/8/8/3R4/4r3 w - - 0 1",
+    "name": null,
+    "themes": [
+      "zugzwang"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-horwitz-kling-1851-mirror",
+    "fen": "3K4/3P1k2/8/8/8/8/4R3/3r4 w - - 0 1",
+    "name": null,
+    "themes": [
+      "zugzwang"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-philidor-third-rank-defense-variant",
+    "fen": "4k3/7R/1r6/5K2/4P3/8/8/8 w - - 0 1",
+    "name": "Philidor position",
+    "themes": [
+      "third-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-philidor-third-rank-defense-variant-mirror",
+    "fen": "3k4/R7/6r1/2K5/3P4/8/8/8 w - - 0 1",
+    "name": "Philidor position",
+    "themes": [
+      "third-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-back-rank-defense",
+    "fen": "1r4k1/R7/5KP1/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "back-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-back-rank-defense-advanced-king",
+    "fen": "1r3k2/R7/5P2/6K1/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "back-rank"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-bishop-pawn-king-in-front",
+    "fen": "r5k1/1R6/5PK1/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bishop-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-knight-pawn-king-in-front",
+    "fen": "r5k1/1R6/6PK/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "knight-pawn"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-knight-pawn-king-in-front-mirror",
+    "fen": "1k5r/6R1/KP6/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "knight-pawn"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-short-side-defense-tarrasch-1906",
+    "fen": "4K3/4P1k1/8/8/8/8/r7/5R2 b - - 0 1",
+    "name": null,
+    "themes": [
+      "short-side",
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-last-rank-defense",
+    "fen": "1r6/R2KPk2/8/8/8/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "last-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-lastmrankmdefensemsp1",
+    "fen": "2r5/1R2KPk1/8/8/8/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "last-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-frontal-defense",
+    "fen": "1r6/4k3/8/8/6P1/6K1/5R2/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "frontal"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-frontalmdefensemsm1",
+    "fen": "r7/3k4/8/8/5P2/5K2/4R3/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "frontal"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-frontal-defense-emms",
+    "fen": "1r6/3k4/8/8/5P2/5K2/4R3/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "frontal"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-frontalmdefensememmsmsm1",
+    "fen": "r7/2k5/8/8/4P3/4K3/3R4/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "frontal"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-frontalmdefensememmsmsp1",
+    "fen": "2r5/4k3/8/8/6P1/6K1/5R2/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "frontal"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-rook-pawn-king-in-front",
+    "fen": "K7/P3k3/8/8/8/8/3R4/1r6 b - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-rook-pawn-king-in-front-mirror",
+    "fen": "7K/3k3P/8/8/8/8/4R3/6r1 b - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-rook-pawn-king-cut-off-far",
+    "fen": "K7/P4k2/8/8/8/4R3/8/1r6 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn",
+      "cut-off"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-rook-pawn-king-cut-off-far-mirror",
+    "fen": "7K/2k4P/8/8/8/3R4/8/6r1 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn",
+      "cut-off"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-position",
+    "fen": "R7/6k1/P4r2/8/2K5/8/8/8 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-e6",
+    "fen": "R7/6k1/P3K3/8/8/8/8/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-f5",
+    "fen": "R7/6k1/P7/5K2/8/8/8/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-g5",
+    "fen": "R7/6k1/P7/6K1/8/8/8/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-h5",
+    "fen": "R7/6k1/P7/7K/8/8/8/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-f4",
+    "fen": "R7/6k1/P7/8/5K2/8/8/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-g4",
+    "fen": "R7/6k1/P7/8/6K1/8/8/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-h4",
+    "fen": "R7/6k1/P7/8/7K/8/8/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-e3",
+    "fen": "R7/6k1/P7/8/8/4K3/8/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-f3",
+    "fen": "R7/6k1/P7/8/8/5K2/8/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-g3",
+    "fen": "R7/6k1/P7/8/8/6K1/8/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-h3",
+    "fen": "R7/6k1/P7/8/8/7K/8/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-d2",
+    "fen": "R7/6k1/P7/8/8/8/3K4/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-e2",
+    "fen": "R7/6k1/P7/8/8/8/4K3/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-f2",
+    "fen": "R7/6k1/P7/8/8/8/5K2/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-g2",
+    "fen": "R7/6k1/P7/8/8/8/6K1/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-vancura-drawing-zone-h2",
+    "fen": "R7/6k1/P7/8/8/8/7K/r7 b - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-purdy-common-2",
+    "fen": "R7/K4k2/P7/8/8/8/8/1r6 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-purdy-common-2-mirror",
+    "fen": "7R/2k4K/7P/8/8/8/8/6r1 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-purdy-common-4",
+    "fen": "7k/R7/P7/8/8/8/5K2/r7 w - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-grigoriev-1937-1",
+    "fen": "8/1r2K3/4P1k1/8/8/8/8/R7 w - - 0 1",
+    "name": null,
+    "themes": [
+      "grigoriev"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-grigoriev-1937-2",
+    "fen": "8/1r2K3/4P1k1/8/R7/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "grigoriev"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-kalashnikov-karpov-zugzwang",
+    "fen": "8/3k4/8/4R1P1/4K3/8/8/5r2 w - - 0 1",
+    "name": null,
+    "themes": [
+      "zugzwang"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-haworth-krpkr-00025",
+    "fen": "2k5/2P5/rRK5/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "zugzwang"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-haworthmkrpkrm00025msp1",
+    "fen": "3k4/3P4/1rRK4/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "zugzwang"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-haworth-krpkr-00149-longest",
+    "fen": "8/8/8/8/8/2RPr3/8/2K1k3 w - - 0 1",
+    "name": null,
+    "themes": [
+      "zugzwang"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-haworthmkrpkrm00149mlongestmsm1",
+    "fen": "8/8/8/8/8/1RPr4/8/1K1k4 w - - 0 1",
+    "name": null,
+    "themes": [
+      "zugzwang"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-haworthmkrpkrm00149mlongestmsp1",
+    "fen": "8/8/8/8/8/3RPr2/8/3K1k2 w - - 0 1",
+    "name": null,
+    "themes": [
+      "zugzwang"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-pein-ward-1997",
+    "fen": "8/8/3k4/R7/2p2K2/8/2r5/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "active-rook"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-ward-arkell-1994",
+    "fen": "6k1/R7/5K2/5P2/6r1/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "active-rook"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-ward-emms-1997",
+    "fen": "8/8/6k1/1r4p1/6K1/2R5/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "active-rook"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-chessbase-vancura-textbook",
+    "fen": "R7/6k1/P4r2/8/3K4/8/8/8 w - - 0 1",
+    "name": "Vancura position",
+    "themes": [
+      "checking-distance"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Karsten Müller: Understanding the Vancura draw",
+      "url": "https://en.chessbase.com/newsroom/post/karsten-mueller-understanding-the-vancura-draw?page=0"
+    }
+  },
+  {
+    "id": "rook-chessbase-radjabov-nakamura-2014",
+    "fen": "8/R4rk1/P7/4K3/8/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "rook-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Karsten Müller: Understanding the Vancura draw",
+      "url": "https://en.chessbase.com/newsroom/post/karsten-mueller-understanding-the-vancura-draw?page=0"
+    }
+  },
+  {
+    "id": "rook-lichess-lucena-fen",
+    "fen": "2K5/2P2k2/8/8/8/8/1r6/7R w - - 0 1",
+    "name": "Lucena position",
+    "themes": [
+      "bridge"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Endgame Fundamentals - The Lucena Position",
+      "url": "https://lichess.org/@/BigBrainChess_08/blog/endgame-fundamentals-the-lucena-position/DUMWM9wq"
+    }
+  },
+  {
+    "id": "rook-lichess-lucena-final",
+    "fen": "8/2P2k2/8/2K5/2R5/8/8/2r5 w - - 0 1",
+    "name": "Lucena position",
+    "themes": [
+      "bridge"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Endgame Fundamentals - The Lucena Position",
+      "url": "https://lichess.org/@/BigBrainChess_08/blog/endgame-fundamentals-the-lucena-position/DUMWM9wq"
+    }
+  },
+  {
+    "id": "rook-levenfish-smyslov-124-white",
+    "fen": "8/8/R3Pk1K/7P/8/8/8/4r3 w - - 0 1",
+    "name": null,
+    "themes": [
+      "two-pawns"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "rook-levenfish-smyslov-124-black",
+    "fen": "8/8/R3Pk1K/7P/8/8/8/4r3 b - - 0 1",
+    "name": null,
+    "themes": [
+      "two-pawns"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and pawn versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "minor-bn-phase1-start",
+    "fen": "8/8/8/8/8/4k3/8/2N1KB2 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-phase1-wall",
+    "fen": "8/8/8/6k1/4B3/3NK3/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-phase1-complete",
+    "fen": "5k2/5N2/5K2/8/4B3/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-phase2-start",
+    "fen": "3k4/8/3K4/1B1N4/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-w-maneuver-h8",
+    "fen": "7k/8/5K2/4N3/8/3B4/8/8 w - - 0 1",
+    "name": "W manoeuvre",
+    "themes": [
+      "w-maneuver"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-w-maneuver-a8",
+    "fen": "k7/8/2K5/3N4/8/4B3/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "w-maneuver"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-w-maneuver-h1",
+    "fen": "8/8/3B4/8/4N3/5K2/8/7k w - - 0 1",
+    "name": null,
+    "themes": [
+      "w-maneuver"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-w-maneuver-a1",
+    "fen": "8/8/4B3/8/3N4/2K5/8/k7 w - - 0 1",
+    "name": null,
+    "themes": [
+      "w-maneuver"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-deletang-start",
+    "fen": "8/2B5/8/2N5/6k1/8/6K1/8 w - - 0 1",
+    "name": "Delétang's triangulation method",
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-deletang-start-mirror",
+    "fen": "8/5B2/8/5N2/1k6/8/1K6/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-deletang-triangle1",
+    "fen": "8/4B3/8/4N3/5K2/8/5k2/8 w - - 0 1",
+    "name": "Delétang's triangulation method",
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-deletang-triangle1-h",
+    "fen": "8/3B4/8/3N4/2K5/8/2k5/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-deletang-triangle1-v",
+    "fen": "8/5k2/8/5K2/4N3/8/4B3/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-deletang-triangle3",
+    "fen": "8/8/8/8/4N3/8/4K2k/5B2 w - - 0 1",
+    "name": "Delétang's triangulation method",
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-deletang-triangle3-h",
+    "fen": "8/8/8/8/3N4/8/k2K4/2B5 w - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-deletang-triangle3-v",
+    "fen": "5B2/4K2k/8/4N3/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "triangulation"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-drawing-trap",
+    "fen": "2k1B3/8/3K4/8/2N5/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "stalemate-trap"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-drawing-trap-h",
+    "fen": "3B1k2/8/4K3/8/5N2/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "stalemate-trap"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-drawing-trap-v",
+    "fen": "8/8/2N5/8/8/3K4/8/2k1B3 w - - 0 1",
+    "name": null,
+    "themes": [
+      "stalemate-trap"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-karttunen-rasik",
+    "fen": "8/2k5/8/1K6/5N2/8/5B2/8 w - - 0 1",
+    "name": "Karttunen vs. Rasik",
+    "themes": [
+      "w-maneuver"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-kempinski-epishin-w",
+    "fen": "8/8/8/8/4K3/2kn4/5b2/8 b - - 0 1",
+    "name": "Kempinski vs. Epishin",
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-kempinski-epishin-x",
+    "fen": "K7/2b5/2kn4/8/8/8/8/8 b - - 0 1",
+    "name": "Kempinski vs. Epishin",
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-ushenina-girya-y",
+    "fen": "8/8/8/8/B7/2NK4/1k6/8 w - - 0 1",
+    "name": "Ushenina vs. Girya",
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-ushenina-girya-z",
+    "fen": "8/8/8/8/3N4/3K4/B4k2/8 w - - 0 1",
+    "name": "Ushenina vs. Girya",
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-phase1-start-h",
+    "fen": "8/8/8/8/8/3k4/8/2BK1N2 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-phase1-start-v",
+    "fen": "2N1KB2/8/4k3/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-phase1-wall-h",
+    "fen": "8/8/8/1k6/3B4/3KN3/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-phase1-wall-v",
+    "fen": "8/8/3NK3/4B3/6k1/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-phase2-start-h",
+    "fen": "4k3/8/4K3/4N1B1/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-bn-phase2-start-v",
+    "fen": "8/8/8/8/1B1N4/3K4/8/3k4 w - - 0 1",
+    "name": null,
+    "themes": [
+      "bishop-and-knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Bishop and knight checkmate",
+      "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    }
+  },
+  {
+    "id": "minor-2n-keres-diagram7",
+    "fen": "7k/8/4N1K1/5N2/8/8/8/8 w - - 0 1",
+    "name": "Keres diagram 7",
+    "themes": [
+      "two-knights-fortress"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-berger-position",
+    "fen": "6k1/8/3NN1K1/8/8/8/8/8 w - - 0 1",
+    "name": "Berger position",
+    "themes": [
+      "two-knights-fortress"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-edge-of-board",
+    "fen": "2k2K2/8/8/8/2NN4/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "two-knights-fortress"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-kling-horwitz-1851",
+    "fen": "8/8/8/8/8/6K1/3N1p2/5N1k w - - 0 1",
+    "name": "Kling and Horwitz, 1851",
+    "themes": [
+      "knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-troitsky-past-line",
+    "fen": "8/5K1k/8/5N2/8/3p4/3N4/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "troitsky-line"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-115-move-win",
+    "fen": "8/k7/8/4Kn2/8/p7/8/1n6 b - - 0 1",
+    "name": null,
+    "themes": [
+      "knight-endgame"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-cheron-1955",
+    "fen": "8/8/8/2N5/8/6p1/k1K3N1/8 w - - 0 1",
+    "name": "Chéron study, 1955",
+    "themes": [
+      "troitsky-line"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-averbakh-chekhover-251",
+    "fen": "8/8/3N2k1/4K3/8/7p/7N/8 w - - 0 1",
+    "name": "Averbakh and Chekhover, position 251",
+    "themes": [
+      "troitsky-line"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-benko-bronstein-1949",
+    "fen": "8/8/8/8/6N1/6n1/3K1pk1/8 w - - 0 1",
+    "name": "Benko vs. Bronstein, 1949",
+    "themes": [
+      "knight-endgame"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-karpov-korchnoi-1981",
+    "fen": "8/8/2k2NnP/5Nn1/3K4/8/8/8 b - - 0 1",
+    "name": "Karpov vs. Korchnoi, 1981",
+    "themes": [
+      "knight-endgame"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-wang-anand-2009",
+    "fen": "8/8/2k5/K7/8/2P2nn1/8/8 b - - 0 1",
+    "name": "Wang vs. Anand, 2009",
+    "themes": [
+      "knight-endgame"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-troitsky-zugzwang",
+    "fen": "7k/5K2/8/5N2/8/3p4/3N4/8 w - - 0 1",
+    "name": "Troitsky zugzwang position",
+    "themes": [
+      "troitsky-line"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-angos-2005",
+    "fen": "3N2k1/1n1N4/6K1/8/8/8/8/8 w - - 0 1",
+    "name": "Angos, 2005",
+    "themes": [
+      "knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-2n-berger-1890",
+    "fen": "4n1k1/8/3NN1K1/8/8/8/8/8 w - - 0 1",
+    "name": "Berger, 1890",
+    "themes": [
+      "knight-mate"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Two knights endgame",
+      "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    }
+  },
+  {
+    "id": "minor-ocb-isolated-pawns",
+    "fen": "8/2k1b3/2P5/3KP2B/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposite-colour-bishops",
+      "fortress"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Opposite-colored bishops endgame",
+      "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    }
+  },
+  {
+    "id": "minor-ocb-averbakh-1972",
+    "fen": "8/2bB4/2P5/6k1/4K3/5P2/8/8 w - - 0 1",
+    "name": "Averbakh, 1972",
+    "themes": [
+      "opposite-colour-bishops",
+      "fortress"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Opposite-colored bishops endgame",
+      "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    }
+  },
+  {
+    "id": "minor-ocb-miller-saidy-1971",
+    "fen": "8/3k4/8/2pK4/8/4b1p1/8/5B2 w - - 0 1",
+    "name": "Miller vs. Saidy, 1971",
+    "themes": [
+      "opposite-colour-bishops"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Opposite-colored bishops endgame",
+      "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    }
+  },
+  {
+    "id": "minor-ocb-alekhine-lasker-1924",
+    "fen": "5k2/8/8/7p/1b1p4/8/B7/5K2 w - - 0 1",
+    "name": "Alekhine vs. Lasker, 1924",
+    "themes": [
+      "opposite-colour-bishops",
+      "wrong-rook-pawn"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Opposite-colored bishops endgame",
+      "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    }
+  },
+  {
+    "id": "minor-ocb-connected-pawns-5th",
+    "fen": "8/2b1k3/8/1B1PP3/3K4/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposite-colour-bishops",
+      "fortress"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Opposite-colored bishops endgame",
+      "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    }
+  },
+  {
+    "id": "minor-ocb-connected-pawns-6th",
+    "fen": "3k1b2/8/3PP3/1B1K4/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "opposite-colour-bishops"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Opposite-colored bishops endgame",
+      "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    }
+  },
+  {
+    "id": "minor-ocb-berger-kotlerman-1948",
+    "fen": "8/8/8/5B2/1p3b2/2k1p3/8/5K2 w - - 0 1",
+    "name": "Berger vs. Kotlerman, 1948",
+    "themes": [
+      "opposite-colour-bishops"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Opposite-colored bishops endgame",
+      "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    }
+  },
+  {
+    "id": "minor-ocb-sokolov-mcshane-2002",
+    "fen": "4k2b/7P/5PK1/7P/8/1B6/8/8 w - - 0 1",
+    "name": "Sokolov vs. McShane, 2002",
+    "themes": [
+      "opposite-colour-bishops",
+      "fortress"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Opposite-colored bishops endgame",
+      "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    }
+  },
+  {
+    "id": "minor-wrong-bishop-a8",
+    "fen": "k7/4B3/PK6/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "wrong-bishop"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Wrong bishop",
+      "url": "https://en.wikipedia.org/wiki/Wrong_bishop"
+    }
+  },
+  {
+    "id": "minor-wrong-bishop-h8",
+    "fen": "7k/3B4/6KP/8/8/8/8/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "wrong-bishop"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Wrong bishop",
+      "url": "https://en.wikipedia.org/wiki/Wrong_bishop"
+    }
+  },
+  {
+    "id": "queen-sixth-rank-basic-win",
+    "fen": "K1Q5/8/8/8/8/5p2/5k2/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "sixth-rank"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-sixth-rank-king-blocks-queen",
+    "fen": "8/1Q4K1/8/8/8/2p5/8/2k5 w - - 0 1",
+    "name": null,
+    "themes": [
+      "sixth-rank",
+      "king-blocks-queen"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-horowitz-white-to-move",
+    "fen": "8/6KQ/8/8/8/2p5/8/k7 w - - 0 1",
+    "name": "Horowitz, 1957",
+    "themes": [
+      "sixth-rank"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-horowitz-black-to-move",
+    "fen": "8/6KQ/8/8/8/2p5/8/k7 b - - 0 1",
+    "name": "Horowitz, 1957",
+    "themes": [
+      "sixth-rank"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-alatortsev-chekhover",
+    "fen": "Q1K5/8/8/8/8/5p2/5k2/8 w - - 0 1",
+    "name": "Alatortsev vs. Chekhover",
+    "themes": [
+      "sixth-rank"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-bishop-pawn-win-far-king",
+    "fen": "6Q1/8/8/7K/8/3k4/2p5/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "bishop-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-central-knight-pawn-win",
+    "fen": "2Q5/1K6/8/8/8/8/3kp3/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "central-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-central-pawn-king-blocks-draw",
+    "fen": "2Q5/8/8/3K4/8/8/3kp3/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "king-blocks-queen"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-rook-pawn-draw",
+    "fen": "3Q4/1K6/8/8/8/8/pk6/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "rook-pawn-draw"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-rook-pawn-win-king-in-zone",
+    "fen": "3Q4/8/8/3K4/8/8/pk6/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "rook-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-bishop-pawn-draw-king-outside-zone",
+    "fen": "3Q4/8/8/8/4K3/8/1kp5/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "bishop-pawn-draw"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-lolli-1763",
+    "fen": "8/8/8/8/6K1/6Q1/2p5/3k4 w - - 0 1",
+    "name": "Lolli, 1763",
+    "themes": [
+      "seventh-rank",
+      "bishop-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-bishop-pawn-win-king-in-zone",
+    "fen": "6Q1/8/8/4K3/8/8/4kp2/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "bishop-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-van-wely-leko-1996",
+    "fen": "6Q1/7K/8/8/8/8/2p5/k7 w - - 0 1",
+    "name": "Van Wely vs. Leko, 1996",
+    "themes": [
+      "seventh-rank",
+      "bishop-pawn-draw"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-bishop-pawn-trap-a",
+    "fen": "8/8/8/3K4/8/4Q3/2p5/1k6 w - - 0 1",
+    "name": "de la Villa, position 4.10",
+    "themes": [
+      "seventh-rank",
+      "stalemate-trick"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-bishop-pawn-trap-b",
+    "fen": "8/8/8/4K3/8/1Q6/2pk4/8 w - - 0 1",
+    "name": "de la Villa, position 4.12",
+    "themes": [
+      "seventh-rank",
+      "stalemate-trick"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-extra-pawn-removes-stalemate",
+    "fen": "2Q5/7p/8/1K6/8/8/5p2/6k1 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "stalemate-trick"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-pawn-vs-queen-white-to-move",
+    "fen": "8/5QK1/2k5/7P/8/8/4q3/8 w - - 0 1",
+    "name": "Muller & Lamprecht, diagram 9.12A",
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Chess endgame",
+      "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    }
+  },
+  {
+    "id": "queen-pawn-vs-queen-black-to-move",
+    "fen": "8/5QK1/2k5/7P/8/8/4q3/8 b - - 0 1",
+    "name": "Muller & Lamprecht, diagram 9.12A",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Chess endgame",
+      "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    }
+  },
+  {
+    "id": "queen-rook-pawn-draw-h-file-mirror",
+    "fen": "4Q3/6K1/8/8/8/8/6kp/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "rook-pawn-draw"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-rook-pawn-win-h-file-mirror",
+    "fen": "4Q3/8/8/4K3/8/8/6kp/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "rook-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-bishop-pawn-draw-f-file-mirror",
+    "fen": "4Q3/8/8/8/3K4/8/5pk1/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "bishop-pawn-draw"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-bishop-pawn-win-c-file-mirror",
+    "fen": "1Q6/8/8/3K4/8/8/2pk4/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "seventh-rank",
+      "bishop-pawn"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "queen-sixth-rank-basic-win-c-file-mirror",
+    "fen": "5Q1K/8/8/8/8/2p5/2k5/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "sixth-rank"
+    ],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus pawn endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_pawn_endgame"
+    }
+  },
+  {
+    "id": "mixed-philidor-queen-vs-rook",
+    "fen": "1k6/1r6/2K5/Q7/8/8/8/8 w - - 0 1",
+    "name": "Philidor position",
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-philidor-queen-vs-rook-mirrored",
+    "fen": "6k1/6r1/5K2/7Q/8/8/8/8 w - - 0 1",
+    "name": "Philidor position",
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-second-rank-defense-queen-vs-rook",
+    "fen": "2k5/4r3/1K6/3Q4/8/8/8/8 w - - 0 1",
+    "name": "Second-rank defense",
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-second-rank-defense-queen-vs-rook-mirrored",
+    "fen": "5k2/3r4/6K1/4Q3/8/8/8/8 w - - 0 1",
+    "name": "Second-rank defense",
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-third-rank-defense-queen-vs-rook",
+    "fen": "3k4/5Q2/1r6/3K4/8/8/8/8 w - - 0 1",
+    "name": "Third-rank defense",
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-third-rank-defense-queen-vs-rook-mirrored",
+    "fen": "4k3/2Q5/6r1/4K3/8/8/8/8 w - - 0 1",
+    "name": "Third-rank defense",
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-fourth-rank-defense-queen-vs-rook",
+    "fen": "8/3k4/5Q2/r7/4K3/8/8/8 w - - 0 1",
+    "name": "Fourth-rank defense",
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-fourth-rank-defense-queen-vs-rook-mirrored",
+    "fen": "8/4k3/2Q5/7r/3K4/8/8/8 w - - 0 1",
+    "name": "Fourth-rank defense",
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-stalemate-trick-ponziani-1782",
+    "fen": "5k2/5r2/4Q3/6K1/8/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "stalemate-trick"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-stalemate-trick-ponziani-1782-mirrored",
+    "fen": "2k5/2r5/3Q4/1K6/8/8/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "stalemate-trick"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-stalemate-trick-berger-1889",
+    "fen": "6k1/6r1/5Q2/8/8/8/8/7K b - - 0 1",
+    "name": null,
+    "themes": [
+      "stalemate-trick"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-stalemate-trick-berger-1889-mirrored",
+    "fen": "1k6/1r6/2Q5/8/8/8/8/K7 b - - 0 1",
+    "name": null,
+    "themes": [
+      "stalemate-trick"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-stalemate-trick-nunn-2002",
+    "fen": "7k/5Q2/8/6r1/8/1K6/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "stalemate-trick"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-stalemate-trick-nunn-2002-mirrored",
+    "fen": "k7/2Q5/8/1r6/8/6K1/8/8 b - - 0 1",
+    "name": null,
+    "themes": [
+      "stalemate-trick"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-queen-vs-rook-pawn-muller-lamprecht",
+    "fen": "8/8/1q6/8/5k2/4R3/5PK1/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "fortress"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-queen-vs-rook-pawn-muller-lamprecht-mirrored",
+    "fen": "8/8/6q1/8/2k5/3R4/1KP5/8 w - - 0 1",
+    "name": null,
+    "themes": [
+      "fortress"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-queen-vs-rook-pawn-grigoriev-zugzwang",
+    "fen": "8/4k3/4P3/8/8/2K1R3/8/3q4 b - - 0 1",
+    "name": null,
+    "themes": [
+      "zugzwang"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-queen-vs-rook-pawn-grigoriev-zugzwang-mirrored",
+    "fen": "8/3k4/3P4/8/8/3R1K2/8/4q3 b - - 0 1",
+    "name": null,
+    "themes": [
+      "zugzwang"
+    ],
+    "goal": "draw",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-morozevich-jakovenko-2006",
+    "fen": "8/8/8/8/6K1/8/6kr/4Q3 w - - 0 1",
+    "name": null,
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Queen versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-philidor-rook-bishop-vs-rook",
+    "fen": "3k4/4r3/3K4/3B4/8/8/8/5R2 w - - 0 1",
+    "name": "Philidor position",
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-philidor-rook-bishop-vs-rook-mirrored",
+    "fen": "4k3/3r4/4K3/4B3/8/8/8/2R5 w - - 0 1",
+    "name": "Philidor position",
+    "themes": [],
+    "goal": "win",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-cochrane-defense-budnikov-novik",
+    "fen": "4k3/R7/8/4K3/4B3/8/4r3/8 b - - 0 1",
+    "name": "Cochrane defense",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-cochrane-defense-budnikov-novik-mirrored",
+    "fen": "3k4/7R/8/3K4/3B4/8/3r4/8 b - - 0 1",
+    "name": "Cochrane defense",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-cochrane-defense-ljubojevic-portisch",
+    "fen": "4k3/7R/8/4K3/4B3/8/8/4r3 w - - 0 1",
+    "name": "Cochrane defense",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-cochrane-defense-ljubojevic-portisch-mirrored",
+    "fen": "3k4/R7/8/3K4/3B4/8/8/3r4 w - - 0 1",
+    "name": "Cochrane defense",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-second-rank-defense-norri-atalik",
+    "fen": "8/8/8/1r6/3bk3/8/2R1K3/8 w - - 0 1",
+    "name": "Second-rank defense",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-second-rank-defense-norri-atalik-mirrored",
+    "fen": "8/8/8/6r1/3kb3/8/3K1R2/8 w - - 0 1",
+    "name": "Second-rank defense",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-second-rank-defense-carlsen-van-wely",
+    "fen": "8/8/7r/8/3bk3/8/2R1K3/8 w - - 0 1",
+    "name": "Second-rank defense",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-second-rank-defense-carlsen-van-wely-mirrored",
+    "fen": "8/8/r7/8/3kb3/8/3K1R2/8 w - - 0 1",
+    "name": "Second-rank defense",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-szen-position",
+    "fen": "8/2R5/8/1r6/4b3/4k3/8/3K4 b - - 0 1",
+    "name": "Szén position",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-szen-position-mirrored",
+    "fen": "8/5R2/8/6r1/3b4/3k4/8/4K3 b - - 0 1",
+    "name": "Szén position",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-second-lolli-position-1793",
+    "fen": "1k6/2r5/1K6/1B6/8/8/3R4/8 w - - 0 1",
+    "name": "Second Lolli position",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-second-lolli-position-1793-mirrored",
+    "fen": "6k1/5r2/6K1/6B1/8/8/4R3/8 w - - 0 1",
+    "name": "Second Lolli position",
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Rook and bishop versus rook endgame",
+      "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    }
+  },
+  {
+    "id": "mixed-cheron-1926-rook-vs-bishop",
+    "fen": "8/8/3b4/3k4/3pp3/8/4K3/4R3 w - - 0 1",
+    "name": null,
+    "themes": [],
+    "goal": "draw",
+    "source": {
+      "title": "Chess endgame",
+      "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    }
+  }
+]

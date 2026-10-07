@@ -3,15 +3,25 @@ import { cn } from "@/lib/cn";
 import { MenuScreen } from "@/components/screens/MenuScreen";
 import { SetupScreen } from "@/components/screens/SetupScreen";
 import { PlayScreen } from "@/components/screens/PlayScreen";
+import { EndgamesScreen } from "@/components/screens/EndgamesScreen";
 import { useGameStore } from "@/state/gameStore";
 import { useTheme } from "@/hooks/useTheme";
+import type { Family } from "@/services/endgames/catalog";
 
-type Screen = "menu" | "setup" | "play";
+type Screen = "menu" | "setup" | "play" | "endgames";
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("menu");
+  // The family to land on when the endgames screen is reached from the
+  // game-over panel's "Endgames" button -- null means start at its home view.
+  const [endgamesFamily, setEndgamesFamily] = useState<Family | null>(null);
   const initEngine = useGameStore((s) => s.initEngine);
   useTheme();
+
+  function openEndgames(family: Family | null) {
+    setEndgamesFamily(family);
+    setScreen("endgames");
+  }
 
   useEffect(() => {
     void initEngine();
@@ -47,9 +57,24 @@ export default function App() {
           screen === "menu" && "sm:h-auto",
         )}
       >
-        {screen === "menu" && <MenuScreen onPlay={() => setScreen("play")} onSetup={() => setScreen("setup")} />}
+        {screen === "menu" && (
+          <MenuScreen
+            onPlay={() => setScreen("play")}
+            onSetup={() => setScreen("setup")}
+            onEndgames={() => openEndgames(null)}
+          />
+        )}
         {screen === "setup" && <SetupScreen onBack={() => setScreen("menu")} onPlay={() => setScreen("play")} />}
-        {screen === "play" && <PlayScreen onMenu={() => setScreen("menu")} />}
+        {screen === "play" && (
+          <PlayScreen onMenu={() => setScreen("menu")} onEndgames={(family) => openEndgames(family)} />
+        )}
+        {screen === "endgames" && (
+          <EndgamesScreen
+            initialFamily={endgamesFamily}
+            onMenu={() => setScreen("menu")}
+            onPlay={() => setScreen("play")}
+          />
+        )}
       </div>
     </div>
   );

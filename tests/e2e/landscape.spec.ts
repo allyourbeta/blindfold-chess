@@ -1,30 +1,11 @@
-import { test, expect, type Page } from "@playwright/test";
-import { keypad, startStandardGame, submitMove, tapKeypadKey } from "./helpers";
+import { test, expect } from "@playwright/test";
+import { keypad, startStandardGame, submitMove, tapKeypadKey, boxesOf } from "./helpers";
 
 // A phone on its side. No new Playwright project — just this viewport, so
 // the landscape layout is covered without doubling every other suite's run.
 const W = 844;
 const H = 390;
 test.use({ viewport: { width: W, height: H }, isMobile: true, hasTouch: true });
-
-/**
- * The previous version of this file checked four keys' bottom edges and
- * passed while the real screen had controls clipped off the bottom AND the
- * action bar sitting on top of the keypad. These check what actually
- * matters: nothing leaves the viewport, and nothing overlaps anything.
- */
-async function boxesOf(page: Page) {
-  return page.evaluate(() => {
-    const out: { label: string; x: number; y: number; w: number; h: number }[] = [];
-    for (const el of Array.from(document.querySelectorAll("button"))) {
-      const r = el.getBoundingClientRect();
-      if (r.width === 0 && r.height === 0) continue;
-      const label = (el.getAttribute("aria-label") || el.textContent || "?").trim().slice(0, 24);
-      out.push({ label, x: r.x, y: r.y, w: r.width, h: r.height });
-    }
-    return out;
-  });
-}
 
 test("landscape: every control is fully inside the viewport", async ({ page }) => {
   await startStandardGame(page);

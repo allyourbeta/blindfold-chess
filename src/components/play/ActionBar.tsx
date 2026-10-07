@@ -26,6 +26,8 @@ export function ActionBar() {
   const requestHint = useGameStore((s) => s.requestHint);
   const doResign = useGameStore((s) => s.doResign);
   const startNewGame = useGameStore((s) => s.startNewGame);
+  const activeEndgame = useGameStore((s) => s.activeEndgame);
+  const startEndgame = useGameStore((s) => s.startEndgame);
   const copyPgn = useGameStore((s) => s.copyPgn);
   const showFen = useGameStore((s) => s.showFen);
   const showHistorySummary = useGameStore((s) => s.showHistorySummary);
@@ -101,11 +103,12 @@ export function ActionBar() {
               variant="secondary"
               onClick={() => {
                 unlockAudioOutput();
-                void startNewGame();
+                if (activeEndgame) void startEndgame(activeEndgame.id);
+                else void startNewGame();
                 setSheetOpen(false);
               }}
             >
-              <RotateCcw className="h-4 w-4" /> New Game
+              <RotateCcw className="h-4 w-4" /> {activeEndgame ? "Try again" : "New Game"}
             </Button>
             <Button variant="secondary" onClick={() => setSheetOpen(false)} aria-label="Close more actions">
               <X className="h-4 w-4" /> Close

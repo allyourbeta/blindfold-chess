@@ -93,3 +93,26 @@ describe("Defect 1: a delayed engine reply must not land in a new game", () => {
     expect(get().moveHistory).toEqual([]);
   });
 });
+
+describe("beginGame: an explicit playerColor overrides the settings colour, without writing it", () => {
+  afterEach(() => {
+    useSettingsStore.getState().setPlayerColor("w");
+  });
+
+  it("uses opts.playerColor instead of the settings colour, and leaves settings unchanged", async () => {
+    useSettingsStore.getState().setPlayerColor("w");
+
+    const adapter = fakeAdapter();
+    const engineManager = new EngineManager(adapter);
+    await engineManager.load();
+    const { get, set } = makeStore();
+    const flow = createGameFlow(set, get, engineManager);
+
+    // White to move, but forced to play Black -- the engine (White) must be
+    // asked to move immediately, same as a normal game started as Black.
+    await flow.beginGame(STARTING_FEN, { playerColor: "b" });
+
+    expect(get().playerColor).toBe("b");
+    expect(useSettingsStore.getState().playerColor).toBe("w");
+  });
+});

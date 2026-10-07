@@ -8,8 +8,14 @@ import { ActionBar } from "@/components/play/ActionBar";
 import { GameOverPanel } from "@/components/play/GameOverPanel";
 import { useGameStore } from "@/state/gameStore";
 import { useSpeechOutput, unlockAudioOutput } from "@/hooks/useSpeechOutput";
+import type { Family } from "@/services/endgames/catalog";
 
-export function PlayScreen({ onMenu }: { onMenu(): void }) {
+interface PlayScreenProps {
+  onMenu(): void;
+  onEndgames(family: Family): void;
+}
+
+export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
   useSpeechOutput();
   const returnToMenu = useGameStore((s) => s.returnToMenu);
   const startNewGame = useGameStore((s) => s.startNewGame);
@@ -17,6 +23,11 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
   function handleMenu() {
     returnToMenu();
     onMenu();
+  }
+
+  function handleEndgames(family: Family) {
+    returnToMenu();
+    onEndgames(family);
   }
 
   async function handleNewGame() {
@@ -61,7 +72,7 @@ export function PlayScreen({ onMenu }: { onMenu(): void }) {
         </div>
       </div>
 
-      <GameOverPanel onNewGame={() => void handleNewGame()} onMenu={handleMenu} />
+      <GameOverPanel onNewGame={() => void handleNewGame()} onMenu={handleMenu} onEndgames={handleEndgames} />
     </div>
   );
 }

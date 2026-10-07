@@ -130,6 +130,24 @@ function chooserGroup(page: Page) {
   return keypad(page).getByRole("group", { name: "Move chooser" });
 }
 
+/**
+ * Every rendered <button>'s box, by label. Shared by landscape.spec.ts and
+ * endgames.spec.ts: "nothing leaves the viewport" and "nothing overlaps"
+ * checks are the same evaluation regardless of which screen is on test.
+ */
+export async function boxesOf(page: Page) {
+  return page.evaluate(() => {
+    const out: { label: string; x: number; y: number; w: number; h: number }[] = [];
+    for (const el of Array.from(document.querySelectorAll("button"))) {
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 && r.height === 0) continue;
+      const label = (el.getAttribute("aria-label") || el.textContent || "?").trim().slice(0, 24);
+      out.push({ label, x: r.x, y: r.y, w: r.width, h: r.height });
+    }
+    return out;
+  });
+}
+
 export async function submitMove(page: Page, san: string) {
   const { taps, promotion } = sanToTaps(san);
   const bare = san.replace(/[+#]/g, "");
