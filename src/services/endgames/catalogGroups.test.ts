@@ -1,6 +1,16 @@
 import { describe, it, expect } from "vitest";
-import { ENDGAMES, materialKey, FAMILY_ORDER } from "./catalog";
-import { groupsForFamily, displayNameFor, familyOf, countsByFamily, groupEntries } from "./catalogGroups";
+import { ENDGAMES, FAMILY_ORDER, SIZE_BUCKETS } from "./catalog";
+import {
+  groupsForFamily,
+  displayNameFor,
+  familyOf,
+  countsByFamily,
+  bucketOfEntry,
+  entriesByBucket,
+  countsByBucket,
+  familiesInBucket,
+  bucketEntries,
+} from "./catalogGroups";
 
 describe("countsByFamily / groupsForFamily, against the real shipped catalog", () => {
   it("counts add up to the full catalog, split the same way family() would", () => {
@@ -20,18 +30,64 @@ describe("countsByFamily / groupsForFamily, against the real shipped catalog", (
   });
 });
 
+describe("countsByBucket / entriesByBucket, against the real shipped catalog", () => {
+  it("counts add up to the full catalog, split the same way bucketOfEntry() would", () => {
+    const counts = countsByBucket();
+    const sum = Object.values(counts).reduce((a, b) => a + b, 0);
+    expect(sum).toBe(ENDGAMES.length);
+  });
+
+  it("every bucket's entries match entriesByBucket, with no entry missing or duplicated", () => {
+    for (const bucket of SIZE_BUCKETS) {
+      const got = entriesByBucket(bucket).map((e) => e.id);
+      const expected = ENDGAMES.filter((e) => bucketOfEntry(e).label === bucket.label).map((e) => e.id);
+      expect(new Set(got)).toEqual(new Set(expected));
+      expect(got.length).toBe(expected.length);
+    }
+  });
+
+  it("bucketEntries(entry) is that entry's own bucket's full entry list", () => {
+    const entry = ENDGAMES[0];
+    expect(bucketEntries(entry).map((e) => e.id)).toEqual(entriesByBucket(bucketOfEntry(entry)).map((e) => e.id));
+  });
+});
+
+describe("familiesInBucket, against the real shipped catalog", () => {
+  it("lists families in FAMILY_ORDER, skipping any family absent from that bucket", () => {
+    for (const bucket of SIZE_BUCKETS) {
+      const groups = familiesInBucket(bucket);
+      const order = groups.map((g) => g.family);
+      const sorted = [...order].sort((a, b) => FAMILY_ORDER.indexOf(a) - FAMILY_ORDER.indexOf(b));
+      expect(order).toEqual(sorted);
+      for (const group of groups) expect(group.entries.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("every entry in a bucket appears in exactly one of that bucket's family groups", () => {
+    for (const bucket of SIZE_BUCKETS) {
+      const groups = familiesInBucket(bucket);
+      const flat = groups.flatMap((g) => g.entries.map((e) => e.id));
+      const expected = entriesByBucket(bucket).map((e) => e.id);
+      expect(new Set(flat)).toEqual(new Set(expected));
+      expect(flat.length).toBe(expected.length);
+    }
+  });
+});
+
 describe("Position N numbering, using real catalog entries", () => {
-  it("numbers unnamed entries 1-based, in catalog file order, within their own material group", () => {
+  it("numbers unnamed entries 1-based, in catalog file order, within their own bucket and family", () => {
     const unnamed = ENDGAMES.filter((e) => !e.name);
     expect(unnamed.length, "the catalog should contain at least one unnamed position").toBeGreaterThan(0);
 
-    const key = materialKey(unnamed[0].fen);
-    const siblings = groupEntries(unnamed[0]);
-    const unnamedSiblings = siblings.filter((e) => !e.name);
+    const sample = unnamed[0];
+    const bucket = bucketOfEntry(sample);
+    const fam = familyOf(sample);
+    const siblings = ENDGAMES.filter((e) => bucketOfEntry(e).label === bucket.label && familyOf(e) === fam && !e.name);
 
-    unnamedSiblings.forEach((entry, index) => {
+    siblings.forEach((entry, index) => {
       expect(displayNameFor(entry)).toBe(`Position ${index + 1}`);
-      expect(materialKey(entry.fen)).toBe(key);
+      expect(bucketOfEntry(entry).label).toBe(bucket.label);
+      expect(familyOf(entry)).toBe(fam);
     });
   });
 

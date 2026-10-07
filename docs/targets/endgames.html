@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mind's Eye — Endgame catalog mockups v2</title>
+<title>Mind's Eye — Endgame catalog mockups v3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -106,8 +106,8 @@ body{margin:0;background:var(--bg-base);color:var(--text-primary);font-family:"N
 <body>
 <div class="page">
   <div class="topbar">
-    <h1>Endgame catalog — mockups v2</h1>
-    <span class="stamp">Target file for SPEC_endgames.md. Version 2, built 2026-10-06 23:58 PT, approved by Ashish 2026-10-07. Sample data only.</span>
+    <h1>Endgame practice — mockups v3</h1>
+    <span class="stamp">Target file for SPEC_endgames_catalog.md. Version 3, built 2026-10-07 09:10 PT, approved by Ashish 2026-10-07. Sample data only.</span>
     <button class="themebtn" id="themeBtn" type="button">Switch light/dark</button>
   </div>
 
@@ -137,64 +137,58 @@ body{margin:0;background:var(--bg-base);color:var(--text-primary);font-family:"N
     <!-- 2 ENDGAMES HOME -->
     <div class="col">
       <p class="cap">2. Endgames</p>
-      <p class="capsub">Search by name or theme. Random picks from the whole catalog.</p>
+      <p class="capsub">Pick by how many pieces you can hold in your head. Counts include kings and pawns.</p>
       <div class="phone">
         <div class="scroll">
           <div class="screenhead">
             <div class="back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div>
-            <div><h2>Endgames</h2><p>Pick a family, or search by name.</p></div>
+            <div><h2>Endgames</h2><p>Pick a size, or search.</p></div>
           </div>
           <div class="searchwrap">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input class="input" placeholder="Search: Lucena, opposition, bishop…">
+            <input class="input" placeholder="Search: rook, Lucena, opposite bishops…">
           </div>
           <button class="btn btn-secondary w-full">Random endgame</button>
           <div>
-            <p class="label">Families</p>
+            <p class="label">By size</p>
             <div class="card">
-              <div class="item"><div class="t"><div class="n">Pawn endings</div><div class="s">King and pawns only</div></div><span class="count">80</span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
-              <div class="item"><div class="t"><div class="n">Rook endings</div><div class="s">Rooks, with or without pawns</div></div><span class="count">90</span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
-              <div class="item"><div class="t"><div class="n">Minor piece endings</div><div class="s">Bishops and knights</div></div><span class="count">60</span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
-              <div class="item"><div class="t"><div class="n">Queen endings</div><div class="s">Queen against pawns or queen</div></div><span class="count">30</span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
-              <div class="item"><div class="t"><div class="n">Mixed</div><div class="s">Rook against minor piece, and others</div></div><span class="count">40</span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+              <div class="item"><div class="t"><div class="n">3 to 5 pieces</div><div class="s">Kings and a few more</div></div><span class="count">70</span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+              <div class="item"><div class="t"><div class="n">6 to 8 pieces</div><div class="s">A small ending</div></div><span class="count">80</span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+              <div class="item"><div class="t"><div class="n">9 to 11 pieces</div><div class="s">A real ending</div></div><span class="count">70</span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+              <div class="item"><div class="t"><div class="n">12 to 16 pieces</div><div class="s">A heavy ending</div></div><span class="count">60</span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 3 FAMILY LIST -->
+    <!-- 3 SIZE LIST -->
     <div class="col">
-      <p class="cap">3. One family</p>
-      <p class="capsub">Grouped by material. Each row shows the goal for you.</p>
+      <p class="cap">3. One size</p>
+      <p class="capsub">Grouped by type of ending. The number on the right is the exact piece count.</p>
       <div class="phone">
         <div class="scroll">
-          <div class="screenhead">
-            <div class="back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div>
-            <div><h2>Rook endings</h2><p>90 positions</p></div>
-          </div>
-          <button class="btn btn-secondary w-full">Random rook ending</button>
+          <div class="screenhead"><div class="back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div><div><h2>6 to 8 pieces</h2><p>80 positions</p></div></div>
+          <button class="btn btn-secondary w-full">Random, 6 to 8 pieces</button>
           <div>
-            <p class="grouphead"><span>Rook and pawn vs rook</span><span>24</span></p>
+            <p class="grouphead"><span>Rook endings</span><span>26</span></p>
             <div class="card">
-              <div class="item"><div class="t"><div class="n">Lucena position</div><div class="s">White to move</div></div><span class="pill pill-win">Win</span></div>
-              <div class="item"><div class="t"><div class="n">Philidor position</div><div class="s">Black to move</div></div><span class="pill pill-draw">Draw</span></div>
-              <div class="item"><div class="t"><div class="n">Vancura position</div><div class="s">Black to move</div></div><span class="pill pill-draw">Draw</span></div>
-              <div class="item"><div class="t"><div class="n">Rook pawn, cut-off king</div><div class="s">White to move</div></div><span class="pill pill-win">Win</span></div>
-              <div class="item"><div class="t"><div class="n">Position 5</div><div class="s">Black to move</div></div><span class="pill pill-draw">Draw</span></div>
+              <div class="item"><div class="t"><div class="n">Connected passed pawns</div><div class="s">White to move</div></div><span class="count">6</span></div>
+              <div class="item"><div class="t"><div class="n">Position 2</div><div class="s">Black to move</div></div><span class="count">7</span></div>
+              <div class="item"><div class="t"><div class="n">Position 3</div><div class="s">White to move</div></div><span class="count">8</span></div>
             </div>
           </div>
           <div>
-            <p class="grouphead"><span>Rook vs pawn</span><span>12</span></p>
+            <p class="grouphead"><span>Pawn endings</span><span>22</span></p>
             <div class="card">
-              <div class="item"><div class="t"><div class="n">King shoulders the defender</div><div class="s">White to move</div></div><span class="pill pill-win">Win</span></div>
-              <div class="item"><div class="t"><div class="n">Pawn on the sixth</div><div class="s">Black to move</div></div><span class="pill pill-draw">Draw</span></div>
+              <div class="item"><div class="t"><div class="n">Outside passed pawn</div><div class="s">White to move</div></div><span class="count">6</span></div>
+              <div class="item"><div class="t"><div class="n">Position 2</div><div class="s">Black to move</div></div><span class="count">8</span></div>
             </div>
           </div>
           <div>
-            <p class="grouphead"><span>Rook and two pawns vs rook</span><span>18</span></p>
+            <p class="grouphead"><span>Minor piece endings</span><span>18</span></p>
             <div class="card">
-              <div class="item"><div class="t"><div class="n">Connected pawns</div><div class="s">White to move</div></div><span class="pill pill-win">Win</span></div>
+              <div class="item"><div class="t"><div class="n">Good knight, bad bishop</div><div class="s">White to move</div></div><span class="count">8</span></div>
             </div>
           </div>
         </div>
@@ -209,7 +203,7 @@ body{margin:0;background:var(--bg-base);color:var(--text-primary);font-family:"N
         <div class="scroll">
           <div class="screenhead">
             <div class="back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div>
-            <div><h2>Rook endings</h2><p>Rook and pawn vs rook</p></div>
+            <div><h2>3 to 5 pieces</h2><p>Rook endings</p></div>
           </div>
           <div class="boardwrap">
             <div class="board" id="board"></div>
@@ -217,11 +211,11 @@ body{margin:0;background:var(--bg-base);color:var(--text-primary);font-family:"N
           </div>
           <div>
             <p class="posname">Lucena position</p>
-            <p class="goal">You play White. Win.</p>
+            <p class="goal">You play White. 5 pieces.</p>
             <p class="facts">White: Kb8, Rc1, pawn b7.<br>Black: Kd8, Ra2.</p>
           </div>
           <button class="btn btn-primary w-full">Play Blindfold</button>
-          <button class="btn btn-secondary w-full" style="margin-top:-6px">Another from this group</button>
+          <button class="btn btn-secondary w-full" style="margin-top:-6px">Another of this size</button>
           <p class="note">Source: Lichess study, position 3.</p>
         </div>
       </div>
@@ -230,16 +224,16 @@ body{margin:0;background:var(--bg-base);color:var(--text-primary);font-family:"N
     <!-- 5 SEARCH RESULTS -->
     <div class="col">
       <p class="cap">5. Search with results</p>
-      <p class="capsub">Typing replaces the family list with matches. Each row says where it lives.</p>
+      <p class="capsub">Typing replaces the size list with matches. Each row shows its size.</p>
       <div class="phone">
         <div class="scroll">
-          <div class="screenhead"><div class="back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div><div><h2>Endgames</h2><p>Pick a family, or search by name.</p></div></div>
-          <div class="searchwrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input class="input" value="philidor"></div>
+          <div class="screenhead"><div class="back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div><div><h2>Endgames</h2><p>Pick a size, or search.</p></div></div>
+          <div class="searchwrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input class="input" value="rook"></div>
           <div>
-            <p class="grouphead"><span>2 matches</span></p>
+            <p class="grouphead"><span>96 matches</span></p>
             <div class="card">
-              <div class="item"><div class="t"><div class="n">Philidor position</div><div class="s">Rook and pawn vs rook. Black to move</div></div><span class="pill pill-draw">Draw</span></div>
-              <div class="item"><div class="t"><div class="n">Philidor, queen vs rook</div><div class="s">Mixed. White to move</div></div><span class="pill pill-win">Win</span></div>
+              <div class="item"><div class="t"><div class="n">Philidor position</div><div class="s">3 to 5 pieces. Black to move</div></div><span class="count">5</span></div>
+              <div class="item"><div class="t"><div class="n">Position 4</div><div class="s">12 to 16 pieces. White to move</div></div><span class="count">14</span></div>
             </div>
           </div>
         </div>
@@ -252,7 +246,7 @@ body{margin:0;background:var(--bg-base);color:var(--text-primary);font-family:"N
       <p class="capsub">Says what failed and offers one way back.</p>
       <div class="phone">
         <div class="scroll">
-          <div class="screenhead"><div class="back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div><div><h2>Endgames</h2><p>Pick a family, or search by name.</p></div></div>
+          <div class="screenhead"><div class="back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div><div><h2>Endgames</h2><p>Pick a size, or search.</p></div></div>
           <div class="searchwrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input class="input" value="dragon"></div>
           <p style="margin:12px 0 0;text-align:center;font-size:.95rem;color:var(--text-secondary)">No endgames match "dragon".</p>
           <button class="btn btn-secondary w-full">Clear search</button>
@@ -276,10 +270,10 @@ body{margin:0;background:var(--bg-base);color:var(--text-primary);font-family:"N
         <div style="position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;padding:16px">
           <div style="width:100%;max-width:320px;border-radius:16px;border:1px solid var(--border-default);background:var(--bg-surface);padding:24px;box-shadow:0 10px 15px -3px rgba(0,0,0,.1)">
             <p style="margin:0;text-align:center;font-size:1rem;font-weight:500;color:var(--text-accent)">Draw by stalemate.</p>
-            <p style="margin:4px 0 16px;text-align:center;font-size:.85rem;color:var(--text-secondary)">Goal was a win.</p>
+            <div style="height:12px"></div>
             <div style="display:flex;flex-direction:column;gap:8px">
               <button class="btn btn-primary w-full">Try again</button>
-              <button class="btn btn-secondary w-full">Another from this group</button>
+              <button class="btn btn-secondary w-full">Another of this size</button>
               <button class="btn btn-secondary w-full">Copy PGN</button>
               <button class="btn btn-secondary w-full">Endgames</button>
             </div>
@@ -292,23 +286,17 @@ body{margin:0;background:var(--bg-base);color:var(--text-primary);font-family:"N
   <div class="decisions">
     <h2>Decisions you will see</h2>
     <ul>
-      <li>Menu gets one new button, "Practice an endgame", under "Set up a position".</li>
-      <li>Endgames screen: search box, a random button, and five families with counts.</li>
-      <li>Family screen: positions grouped by material, each with a Win or Draw tag and side to move.</li>
-      <li>Position screen: the board is shown before you start, so you can memorize it.</li>
-      <li>The piece list is also written out in text, the way you would hear it read.</li>
-      <li>You always play the side to move. Your White/Black setting does not apply here.</li>
-      <li>"Play Blindfold" uses the same label as the setup screen.</li>
-      <li>Each position names its source in small text.</li>
-      <li>A position with no known name shows as "Position N" inside its group.</li>
-      <li>Typing in search replaces the family list with matching positions. Each match shows its group and side to move.</li>
-      <li>No matches shows one line and a "Clear search" button.</li>
-      <li>"Play Blindfold" and the random buttons are disabled while the engine loads, same as the setup screen.</li>
-      <li>Game over in an endgame: "Try again" replays the same position. "Another from this group" picks a random one. "Endgames" returns to the catalog. Copy PGN is unchanged.</li>
-      <li>The game-over panel adds one line under the result: "Goal was a win." or "Goal was a draw."</li>
-      <li>In an endgame, the "New Game" button in the More sheet reads "Try again" and replays the position.</li>
-      <li>Normal games and set-up positions keep today's panel and buttons exactly.</li>
-      <li>Board pieces and the menu logo here are stand-ins. The real build uses the app's own assets.</li>
+      <li>Menu: one new button, "Practice an endgame", under "Set up a position".</li>
+      <li>Endgames screen: search, "Random endgame", and four sizes: 3 to 5, 6 to 8, 9 to 11, 12 to 16 pieces.</li>
+      <li>Piece counts include kings and pawns.</li>
+      <li>Size screen: positions grouped by type of ending. Each row shows side to move and exact piece count.</li>
+      <li>No Win or Draw tags. This is practice, not a test.</li>
+      <li>Position screen: board, name, "You play White. 5 pieces.", piece list, source.</li>
+      <li>You always play the side to move. Your White/Black setting is ignored here only.</li>
+      <li>Game over in an endgame: Try again, Another of this size, Copy PGN, Endgames. No goal line.</li>
+      <li>In an endgame, the More sheet's "New Game" reads "Try again".</li>
+      <li>Normal games and set-up games are unchanged.</li>
+      <li>Board pieces and the menu logo here are stand-ins. The real build uses the app's own.</li>
     </ul>
   </div>
 </div>

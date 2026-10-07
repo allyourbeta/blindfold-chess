@@ -8,11 +8,11 @@ import { ActionBar } from "@/components/play/ActionBar";
 import { GameOverPanel } from "@/components/play/GameOverPanel";
 import { useGameStore } from "@/state/gameStore";
 import { useSpeechOutput, unlockAudioOutput } from "@/hooks/useSpeechOutput";
-import type { Family } from "@/services/endgames/catalog";
+import type { SizeBucket } from "@/services/endgames/catalog";
 
 interface PlayScreenProps {
   onMenu(): void;
-  onEndgames(family: Family): void;
+  onEndgames(bucket: SizeBucket): void;
 }
 
 export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
@@ -25,9 +25,9 @@ export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
     onMenu();
   }
 
-  function handleEndgames(family: Family) {
+  function handleEndgames(bucket: SizeBucket) {
     returnToMenu();
-    onEndgames(family);
+    onEndgames(bucket);
   }
 
   async function handleNewGame() {

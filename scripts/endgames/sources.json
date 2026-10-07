@@ -1,3722 +1,5064 @@
 [
   {
     "id": "12-to-16-pieces-minor",
-    "fen": "8/4kpB1/p3b1p1/3pK2p/7P/P5P1/1P3P2/8 w - - 0 1",
-    "sourceFen": "8/1p3p2/p5p1/7p/3Pk2P/P3B1P1/4KPb1/8 b - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Opposite-colored bishops endgame",
+      "index": 20,
+      "sideToMove": "b"
+    },
+    "flip": true
   },
   {
     "id": "12-to-16-pieces-minor-2",
-    "fen": "8/p2k1b2/1pn3p1/2p1Bp2/2P5/1P2KB2/P4PP1/8 w - - 0 1",
-    "sourceFen": "8/p2k1b2/1pn3p1/2p1Bp2/2P5/1P2KB2/P4PP1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Alekhine, Alexander vs. Tartakower, Saviely",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 95,
+      "ply": 62
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-minor-3",
-    "fen": "6k1/5pp1/p3p2p/1pn5/8/P3P2P/1P2NPP1/6K1 w - - 0 1",
-    "sourceFen": "6k1/5pp1/p3p2p/1pn5/8/P3P2P/1P2NPP1/6K1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1927.pgn",
+      "game": 3,
+      "ply": 60
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-minor-4",
-    "fen": "8/6p1/2p2p2/1p5p/p1kP4/P3KP1P/1Pb3P1/4B3 w - - 0 1",
-    "sourceFen": "8/6p1/2p2p2/1p5p/p1kP4/P3KP1P/1Pb3P1/4B3 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Tarrasch, Siegbert",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 186,
+      "ply": 82
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-minor-5",
-    "fen": "8/4kb1p/2p3pP/1pP1P1P1/1P3K2/1B6/8/8 w - - 0 1",
-    "sourceFen": "8/4kb1p/2p3pP/1pP1P1P1/1P3K2/1B6/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 5,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-minor-6",
-    "fen": "8/1pN5/p2p1kp1/3P2b1/4Pp2/2P2n2/PP2B3/3K4 b - - 0 1",
-    "sourceFen": "8/1pN5/p2p1kp1/3P2b1/4Pp2/2P2n2/PP2B3/3K4 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Marco, Georg vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 126,
+      "ply": 75
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-minor-7",
-    "fen": "4nn2/1p2kpp1/2p3p1/1PP3P1/2BKNP2/7P/8/8 b - - 0 1",
-    "sourceFen": "4nn2/1p2kpp1/2p3p1/1PP3P1/2BKNP2/7P/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Night-King96, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 125,
+      "ply": 71
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed",
-    "fen": "4r3/pp3k2/2p4R/3p1np1/3P1P2/2P5/PP2NK2/8 w - - 0 1",
-    "sourceFen": "4r3/pp3k2/2p4R/3p1np1/3P1P2/2P5/PP2NK2/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 2021: Carlsen,M vs. Nepomniachtchi,I",
       "url": "https://www.pgnmentor.com/events/WorldChamp2021.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp2021.pgn",
+      "game": 9,
+      "ply": 60
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-10",
-    "fen": "r5k1/5pp1/pBR5/2p5/2P1n2p/7P/P1P3P1/7K w - - 0 1",
-    "sourceFen": "r5k1/5pp1/pBR5/2p5/2P1n2p/7P/P1P3P1/7K w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Bogoljubow, Efim vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 61,
+      "ply": 58
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-11",
-    "fen": "2r4r/5pk1/1p1b4/nN5p/P4Pp1/3R3P/4R3/7K w - - 0 1",
-    "sourceFen": "2r4r/5pk1/1p1b4/nN5p/P4Pp1/3R3P/4R3/7K w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1972: Spassky, Boris V vs. Fischer, Robert James",
       "url": "https://www.pgnmentor.com/events/WorldChamp1972.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1972.pgn",
+      "game": 6,
+      "ply": 74
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-12",
-    "fen": "8/p3k1pp/4p3/2rn4/4R3/1B3P2/1P1K2PP/8 w - - 0 1",
-    "sourceFen": "8/p3k1pp/4p3/2rn4/4R3/1B3P2/1P1K2PP/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1927.pgn",
+      "game": 5,
+      "ply": 72
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-13",
-    "fen": "2r3k1/5p1p/1B3bp1/3R4/3p1P2/8/6PP/6K1 w - - 0 1",
-    "sourceFen": "2r3k1/5p1p/1B3bp1/3R4/3p1P2/8/6PP/6K1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Dragon700 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 59,
+      "ply": 58
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-14",
-    "fen": "4rr2/1p3pk1/p5p1/8/3p4/P3P2R/6PP/1B1N2K1 w - - 0 1",
-    "sourceFen": "4rr2/1p3pk1/p5p1/8/3p4/P3P2R/6PP/1B1N2K1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Night-King96 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 53,
+      "ply": 58
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-15",
-    "fen": "6k1/7p/4p3/1r3p2/3Pn1p1/4P3/R2BKPPb/4N3 w - - 0 1",
-    "sourceFen": "6k1/7p/4p3/1r3p2/3Pn1p1/4P3/R2BKPPb/4N3 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Burn, Amos vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 70,
+      "ply": 64
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-16",
-    "fen": "r7/3P4/3k1Bp1/1ppbRpP1/8/2r3KP/p7/3R4 w - - 0 1",
-    "sourceFen": "r7/3P4/3k1Bp1/1ppbRpP1/8/2r3KP/p7/3R4 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1972: Spassky, Boris V vs. Fischer, Robert James",
       "url": "https://www.pgnmentor.com/events/WorldChamp1972.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1972.pgn",
+      "game": 12,
+      "ply": 94
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-17",
-    "fen": "6k1/7p/1ppp2p1/4b3/4P3/NP3r2/P1P2P2/4R1K1 w - - 0 1",
-    "sourceFen": "6k1/7p/1ppp2p1/4b3/4P3/NP3r2/P1P2P2/4R1K1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Vergani, Beniamino",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 188,
+      "ply": 62
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-18",
-    "fen": "6k1/1R3pp1/2p4p/2P5/1PNr4/2b5/6PP/5K2 w - - 0 1",
-    "sourceFen": "6k1/1R3pp1/2p4p/2P5/1PNr4/2b5/6PP/5K2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 15,
+      "ply": 72
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-19",
-    "fen": "2k5/1pp5/p4N2/2r4p/4PPp1/6Kn/PP6/3R4 w - - 0 1",
-    "sourceFen": "2k5/1pp5/p4N2/2r4p/4PPp1/6Kn/PP6/3R4 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Emanuel vs. Marshall, Frank James",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 67,
+      "ply": 58
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-2",
-    "fen": "r7/1ppk1p2/3pb3/4p3/1P2P3/3P4/2PK2PR/6N1 w - - 0 1",
-    "sourceFen": "6n1/2pk2pr/3p4/1p2p3/4P3/3PB3/1PPK1P2/R7 b - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Von Bardeleben, Curt vs. Tarrasch, Siegbert",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 22,
+      "ply": 73
+    },
+    "flip": true
   },
   {
     "id": "12-to-16-pieces-mixed-20",
-    "fen": "4b2k/2q5/3bpr2/3pN3/3P1Pp1/1P2Q3/6R1/5BK1 w - - 0 1",
-    "sourceFen": "4b2k/2q5/3bpr2/3pN3/3P1Pp1/1P2Q3/6R1/5BK1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Marshall, Frank James vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 13,
+      "ply": 84
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-21",
-    "fen": "8/p1p1bk2/1p6/4pK2/6P1/2r1B3/P4P2/7R w - - 0 1",
-    "sourceFen": "8/p1p1bk2/1p6/4pK2/6P1/2r1B3/P4P2/7R w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. chess-art-us, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 58,
+      "ply": 62
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-22",
-    "fen": "5k2/p1r4p/5bp1/p2Bp3/7P/3PP1P1/5P2/1R3K2 w - - 0 1",
-    "sourceFen": "5k2/p1r4p/5bp1/p2Bp3/7P/3PP1P1/5P2/1R3K2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. indianstar, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 24,
+      "ply": 54
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-23",
-    "fen": "r7/2B2kpp/1pp2n2/8/1R2p1p1/2P1P3/5P1P/5K2 w - - 0 1",
-    "sourceFen": "r7/2B2kpp/1pp2n2/8/1R2p1p1/2P1P3/5P1P/5K2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Edward vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 50,
+      "ply": 58
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-24",
-    "fen": "5nk1/1r5p/1p6/p1b1Pp2/6P1/1P3K1P/P3R3/5R2 w - - 0 1",
-    "sourceFen": "5nk1/1r5p/1p6/p1b1Pp2/6P1/1P3K1P/P3R3/5R2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Lasker, Emanuel vs. Teichmann, Richard",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 113,
+      "ply": 72
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-25",
-    "fen": "1r3k2/p1p2p2/2b3p1/8/2PRB3/5P2/P3rKPP/8 w - - 0 1",
-    "sourceFen": "1r3k2/p1p2p2/2b3p1/8/2PRB3/5P2/P3rKPP/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Capablanca, Jose Raul vs. Alekhine, Alexander",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 55,
+      "ply": 68
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-26",
-    "fen": "2b5/5k2/pBRP2pp/2P2p2/8/P7/1r3KPP/8 w - - 0 1",
-    "sourceFen": "2b5/5k2/pBRP2pp/2P2p2/8/P7/1r3KPP/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 0,
+      "ply": 74
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-27",
-    "fen": "8/4k1p1/p6p/1pr2N1P/1n2K1P1/1P6/1P6/R7 b - - 0 1",
-    "sourceFen": "8/4k1p1/p6p/1pr2N1P/1n2K1P1/1P6/1P6/R7 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1927.pgn",
+      "game": 29,
+      "ply": 71
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-28",
-    "fen": "1r4k1/q5pp/3p4/2r5/2P5/P2Q4/2R3PP/2KR4 b - - 0 1",
-    "sourceFen": "1r4k1/q5pp/3p4/2r5/2P5/P2Q4/2R3PP/2KR4 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Walbrodt, Carl August vs. Marco, Georg",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 16,
+      "ply": 67
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-29",
-    "fen": "5k2/2r1n2p/5p2/5P1P/2BKP3/r1Pp1P2/6R1/6R1 b - - 0 1",
-    "sourceFen": "5k2/2r1n2p/5p2/5P1P/2BKP3/r1Pp1P2/6R1/6R1 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mason, James vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 133,
+      "ply": 91
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-3",
-    "fen": "2q2bk1/p4r1p/1p4pB/8/8/1Q5P/3r1PP1/3R3K w - - 0 1",
-    "sourceFen": "2q2bk1/p4r1p/1p4pB/8/8/1Q5P/3r1PP1/3R3K w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Janowsky, Dawid Markelowicz vs. Alekhine, Alexander",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 86,
+      "ply": 62
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-30",
-    "fen": "1r5Q/2kb1p2/4P3/3pP3/pp1N4/8/PPPR4/1K6 b - - 0 1",
-    "sourceFen": "1r5Q/2kb1p2/4P3/3pP3/pp1N4/8/PPPR4/1K6 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Walbrodt, Carl August vs. Mason, James",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 15,
+      "ply": 61
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-31",
-    "fen": "1k2r3/2pr4/p7/2p2Rp1/4P3/3PK1P1/PP2N3/8 b - - 0 1",
-    "sourceFen": "1k2r3/2pr4/p7/2p2Rp1/4P3/3PK1P1/PP2N3/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Pollock, William Henry Kraus vs. Mieses, Jacques",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 164,
+      "ply": 61
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-32",
-    "fen": "r7/1Q2p1kp/2pp2p1/p5q1/8/8/5P1P/2R2K2 b - - 0 1",
-    "sourceFen": "r7/1Q2p1kp/2pp2p1/p5q1/8/8/5P1P/2R2K2 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Lelouch_Vi_Brittania vs. DrNykterstein, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 110,
+      "ply": 53
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-33",
-    "fen": "6k1/pp3pB1/4p3/3pPn1Q/r2q4/8/5P1P/6RK b - - 0 1",
-    "sourceFen": "6k1/pp3pB1/4p3/3pPn1Q/r2q4/8/5P1P/6RK b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): FakeBruceLee vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 81,
+      "ply": 63
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-34",
-    "fen": "1Q4k1/5r2/2p4p/5Pp1/p7/P2B1Pn1/2P2KP1/7q b - - 0 1",
-    "sourceFen": "1Q4k1/5r2/2p4p/5Pp1/p7/P2B1Pn1/2P2KP1/7q b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Edward vs. Bogoljubow, Efim",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 75,
+      "ply": 91
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-35",
-    "fen": "6k1/p5pp/1p6/2p5/3b4/B1p3K1/P3Q1PP/1q6 b - - 0 1",
-    "sourceFen": "6k1/p5pp/1p6/2p5/3b4/B1p3K1/P3Q1PP/1q6 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Bird, Henry Edward vs. Pillsbury, Harry Nelson",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 48,
+      "ply": 65
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-36",
-    "fen": "6rk/2R5/2P1rp1b/p3p2p/7R/P4PBP/7K/8 b - - 0 1",
-    "sourceFen": "6rk/2R5/2P1rp1b/p3p2p/7R/P4PBP/7K/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Janowsky, Dawid Markelowicz vs. Yates, Frederick",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 77,
+      "ply": 91
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-37",
-    "fen": "r2r2k1/1b3ppp/4p3/8/1R2P3/3Q4/5PPP/1R4K1 b - - 0 1",
-    "sourceFen": "r2r2k1/1b3ppp/4p3/8/1R2P3/3Q4/5PPP/1R4K1 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1972: Spassky, Boris V vs. Fischer, Robert James",
       "url": "https://www.pgnmentor.com/events/WorldChamp1972.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1972.pgn",
+      "game": 8,
+      "ply": 45
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-38",
-    "fen": "8/1p1kp3/2np4/1p2bQBP/2q2p2/8/5PP1/5RK1 b - - 0 1",
-    "sourceFen": "8/1p1kp3/2np4/1p2bQBP/2q2p2/8/5PP1/5RK1 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Kasparov vs. The World, 1999",
       "url": "https://lichess.org/game/export/QVae8hXv.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/game/export/QVae8hXv.pgn",
+      "game": 0,
+      "ply": 59
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-39",
-    "fen": "6r1/2R5/3npk1R/4p1p1/r2pP1P1/3P2P1/5PK1/8 b - - 0 1",
-    "sourceFen": "6r1/2R5/3npk1R/4p1p1/r2pP1P1/3P2P1/5PK1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Chigorin, Mikhail vs. Albin, Adolf",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 75,
+      "ply": 87
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-4",
-    "fen": "5k2/p1p4R/1pr3p1/3p4/P1nP1PP1/2PB4/6K1/8 w - - 0 1",
-    "sourceFen": "5k2/p1p4R/1pr3p1/3p4/P1nP1PP1/2PB4/6K1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Capablanca, Jose Raul vs. Tartakower, Saviely",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 88,
+      "ply": 62
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-40",
-    "fen": "8/p1k2N2/1pn3Rp/2p2p2/2Pr4/1P3P2/P4PK1/8 b - - 0 1",
-    "sourceFen": "8/p1k2N2/1pn3Rp/2p2p2/2Pr4/1P3P2/P4PK1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Marshall, Frank James vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 10,
+      "ply": 93
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-41",
-    "fen": "rk6/1pp4Q/p1r5/8/4P1P1/2BP1R1P/qP6/2K5 b - - 0 1",
-    "sourceFen": "rk6/1pp4Q/p1r5/8/4P1P1/2BP1R1P/qP6/2K5 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Chigorin, Mikhail vs. Pillsbury, Harry Nelson",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 80,
+      "ply": 61
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-42",
-    "fen": "5k2/r5p1/p4r2/4p3/5bp1/1PP5/PK4BP/5N1R b - - 0 1",
-    "sourceFen": "5k2/r5p1/p4r2/4p3/5bp1/1PP5/PK4BP/5N1R b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Gunsberg, Isidor vs. Bird, Henry Edward",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 86,
+      "ply": 69
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-43",
-    "fen": "2q2bk1/2R2p2/4p1p1/7p/3PQ3/3NP1P1/5PKP/8 b - - 0 1",
-    "sourceFen": "2q2bk1/2R2p2/4p1p1/7p/3PQ3/3NP1P1/5PKP/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1927: Capablanca, Jose Raul vs. Alekhine, Alexander",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1927.pgn",
+      "game": 28,
+      "ply": 75
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-44",
-    "fen": "3r1k2/p1p2rpQ/2P1Rp2/3P3P/2q5/8/5K2/5R2 b - - 0 1",
-    "sourceFen": "3r1k2/p1p2rpQ/2P1Rp2/3P3P/2q5/8/5K2/5R2 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Tartakower, Saviely vs. Alekhine, Alexander",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 28,
+      "ply": 71
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-45",
-    "fen": "3r4/3b3R/1bk1p3/3p1p2/Rp1P1P2/2P1K1P1/1P6/8 b - - 0 1",
-    "sourceFen": "3r4/3b3R/1bk1p3/3p1p2/Rp1P1P2/2P1K1P1/1P6/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Bogoljubow, Efim vs. Alekhine, Alexander",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 93,
+      "ply": 97
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-46",
-    "fen": "4r1k1/pp3r1p/5pp1/8/2BP4/2P4R/P5PP/6K1 b - - 0 1",
-    "sourceFen": "4r1k1/pp3r1p/5pp1/8/2BP4/2P4R/P5PP/6K1 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Tartakower, Saviely vs. Bogoljubow, Efim",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 29,
+      "ply": 51
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-47",
-    "fen": "2r5/4pk2/3pp3/6p1/3NP2p/1RP1KP1P/6P1/r7 b - - 0 1",
-    "sourceFen": "2r5/4pk2/3pp3/6p1/3NP2p/1RP1KP1P/6P1/r7 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): SemenPuzyrevsky vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 42,
+      "ply": 69
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-48",
-    "fen": "5r1k/6np/1R2p3/4Q3/Bp6/5r2/PP4KP/2q1B3 b - - 0 1",
-    "sourceFen": "5r1k/6np/1R2p3/4Q3/Bp6/5r2/PP4KP/2q1B3 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Burn, Amos vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 74,
+      "ply": 77
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-49",
-    "fen": "4knQ1/7r/3p2p1/2bP1pP1/5P1N/6K1/8/8 b - - 0 1",
-    "sourceFen": "4knQ1/7r/3p2p1/2bP1pP1/5P1N/6K1/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Fortress (chess)",
+      "index": 21,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-5",
-    "fen": "7k/p6p/5p1p/5P2/1pB2RP1/7P/PP1rr2K/8 w - - 0 1",
-    "sourceFen": "8/pp1RR2k/7p/1Pb2rp1/5p2/5P1P/P6P/7K b - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Gunsberg, Isidor vs. Burn, Amos",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 87,
+      "ply": 87
+    },
+    "flip": true
   },
   {
     "id": "12-to-16-pieces-mixed-50",
-    "fen": "6b1/pp2q1k1/2R5/5QP1/3PpPp1/P3P3/1P3K2/8 b - - 0 1",
-    "sourceFen": "6b1/pp2q1k1/2R5/5QP1/3PpPp1/P3P3/1P3K2/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Capablanca, Jose Raul vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 105,
+      "ply": 71
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-6",
-    "fen": "1k1r4/pp3p2/8/4p2p/2B1n3/P3P2P/1P3PR1/2K5 w - - 0 1",
-    "sourceFen": "2k5/1p3pr1/p3p2p/2b1N3/4P2P/8/PP3P2/1K1R4 b - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): StrongKhaganaK1ller vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 32,
+      "ply": 49
+    },
+    "flip": true
   },
   {
     "id": "12-to-16-pieces-mixed-7",
-    "fen": "3q4/5b1k/8/1pR5/pP1P1pp1/P4P2/1B2R1P1/6K1 w - - 0 1",
-    "sourceFen": "6k1/1b2r1p1/p4p2/Pp1p1PP1/1Pr5/8/5B1K/3Q4 b - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Chigorin, Mikhail vs. Walbrodt, Carl August",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 84,
+      "ply": 79
+    },
+    "flip": true
   },
   {
     "id": "12-to-16-pieces-mixed-8",
-    "fen": "r7/p4pkp/6p1/4p1B1/2b5/6P1/PP3P1P/4R1K1 w - - 0 1",
-    "sourceFen": "r7/p4pkp/6p1/4p1B1/2b5/6P1/PP3P1P/4R1K1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): indianstar vs. DrNykterstein, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 21,
+      "ply": 44
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-mixed-9",
-    "fen": "8/pp4p1/4k3/P2R3p/4PB1P/2b2PK1/1r6/8 w - - 0 1",
-    "sourceFen": "8/pp4p1/4k3/P2R3p/4PB1P/2b2PK1/1r6/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1927.pgn",
+      "game": 31,
+      "ply": 70
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-pawn",
-    "fen": "8/6k1/3p3p/p1pP2pP/Pp2K3/7P/1PP5/8 b - - 0 1",
-    "sourceFen": "8/6k1/3p3p/p1pP2pP/Pp2K3/7P/1PP5/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Edward vs. Maroczy, Geza",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 49,
+      "ply": 69
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-queen",
-    "fen": "3Q4/p4qpk/5p2/6p1/1P6/P3P1PP/5P1K/8 w - - 0 1",
-    "sourceFen": "3Q4/p4qpk/5p2/6p1/1P6/P3P1PP/5P1K/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. MatthewG-p4p, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 148,
+      "ply": 68
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-rook",
-    "fen": "8/p3rkp1/4p2p/R7/7P/6P1/4PPK1/8 w - - 0 1",
-    "sourceFen": "8/p3rkp1/4p2p/R7/7P/6P1/4PPK1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "ChessBase: Riddle - Karpov-Hort, 1979",
       "url": "https://en.chessbase.com/post/riddle-karpov-hort-1979"
-    }
+    },
+    "extract": {
+      "kind": "embedded-fen",
+      "pageUrl": "https://en.chessbase.com/post/riddle-karpov-hort-1979",
+      "index": 1
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-rook-10",
-    "fen": "8/3R1kpp/2r2p2/pp6/5P2/1P2K3/P5PP/8 b - - 0 1",
-    "sourceFen": "8/3R1kpp/2r2p2/pp6/5P2/1P2K3/P5PP/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1927.pgn",
+      "game": 7,
+      "ply": 69
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-rook-11",
-    "fen": "3r2k1/5pp1/ppR1p2p/8/1P6/P3P2P/5PP1/6K1 b - - 0 1",
-    "sourceFen": "3r2k1/5pp1/ppR1p2p/8/1P6/P3P2P/5PP1/6K1 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1927: Capablanca, Jose Raul vs. Alekhine, Alexander",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1927.pgn",
+      "game": 12,
+      "ply": 51
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-rook-2",
-    "fen": "8/1p6/2pp2p1/p4k1p/3P4/P1P2KPP/1P3R2/4r3 w - - 0 1",
-    "sourceFen": "8/1p6/2pp2p1/p4k1p/3P4/P1P2KPP/1P3R2/4r3 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schiffers, Emanuel Stepanovich vs. Teichmann, Richard",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 122,
+      "ply": 62
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-rook-3",
-    "fen": "8/5k2/2R2p1p/4r1pP/4P1P1/8/2p2PK1/8 w - - 0 1",
-    "sourceFen": "8/5k2/2R2p1p/4r1pP/4P1P1/8/2p2PK1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Albin, Adolf vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 42,
+      "ply": 132
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-rook-4",
-    "fen": "2r5/pp3k2/5pp1/7p/3P4/2P1R3/P4KPP/8 b - - 0 1",
-    "sourceFen": "2r5/pp3k2/5pp1/7p/3P4/2P1R3/P4KPP/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Tartakower, Saviely vs. Bogoljubow, Efim",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 29,
+      "ply": 57
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-rook-5",
-    "fen": "8/1p4r1/p1p1kp2/2P1p3/2P3PR/4K3/1P6/8 b - - 0 1",
-    "sourceFen": "8/1p4r1/p1p1kp2/2P1p3/2P3PR/4K3/1P6/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Chigorin, Mikhail",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 181,
+      "ply": 101
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-rook-6",
-    "fen": "5r2/1p1R4/p1r1k2p/P5p1/4P1P1/8/6KP/3R4 b - - 0 1",
-    "sourceFen": "5r2/1p1R4/p1r1k2p/P5p1/4P1P1/8/6KP/3R4 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 17,
+      "ply": 75
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-rook-7",
-    "fen": "8/2pk2pp/p4r2/1p5P/1P6/2P1R3/2r2PP1/5RK1 b - - 0 1",
-    "sourceFen": "8/2pk2pp/p4r2/1p5P/1P6/2P1R3/2r2PP1/5RK1 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Yates, Frederick vs. Janowsky, Dawid Markelowicz",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 41,
+      "ply": 59
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-rook-8",
-    "fen": "R7/1p1r1k1p/p1p3p1/2Pp4/1P3P2/P2K2PP/8/8 b - - 0 1",
-    "sourceFen": "R7/1p1r1k1p/p1p3p1/2Pp4/1P3P2/P2K2PP/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Gunsberg, Isidor vs. Tarrasch, Siegbert",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 93,
+      "ply": 85
+    },
+    "flip": false
   },
   {
     "id": "12-to-16-pieces-rook-9",
-    "fen": "5rk1/1pp3p1/p2p3p/8/4P3/3P4/PP2R1PP/6K1 b - - 0 1",
-    "sourceFen": "5rk1/1pp3p1/p2p3p/8/4P3/3P4/PP2R1PP/6K1 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Pollock, William Henry Kraus",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 184,
+      "ply": 47
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor",
-    "fen": "4K3/8/3bbk2/8/8/8/8/8 b - - 0 1",
-    "sourceFen": "8/8/8/8/8/3BBK2/8/4k3 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Minor Piece endings",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Minor_Piece_endings"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikibooks.org",
+      "page": "Chess/The_Endgame/Minor_Piece_endings",
+      "index": 2,
+      "sideToMove": "w",
+      "style": "legacy-row"
+    },
+    "flip": true
   },
   {
     "id": "3-to-5-pieces-minor-10",
-    "fen": "2k5/8/3P4/3K3n/8/8/7B/8 w - - 0 1",
-    "sourceFen": "2k5/8/3P4/3K3n/8/8/7B/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 10,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-11",
-    "fen": "4n1k1/8/3NN1K1/8/8/8/8/8 w - - 0 1",
-    "sourceFen": "4n1k1/8/3NN1K1/8/8/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 23,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-12",
-    "fen": "8/k7/8/4Kn2/8/P7/8/1n6 b - - 0 1",
-    "sourceFen": "8/k7/8/4Kn2/8/P7/8/1n6 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 11,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-13",
-    "fen": "8/2k5/8/1K6/5N2/8/5B2/8 w - - 0 1",
-    "sourceFen": "8/2k5/8/1K6/5N2/8/5B2/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Bishop and knight checkmate",
       "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Bishop and knight checkmate",
+      "index": 18,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-14",
-    "fen": "3N2k1/1n1N4/6K1/8/8/8/8/8 w - - 0 1",
-    "sourceFen": "3N2k1/1n1N4/6K1/8/8/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 22,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-15",
-    "fen": "8/5K1k/8/5N2/8/3p4/3N4/8 w - - 0 1",
-    "sourceFen": "8/5K1k/8/5N2/8/3p4/3N4/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 10,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-16",
-    "fen": "2KB4/1P6/2k5/8/8/8/7b/8 w - - 0 1",
-    "sourceFen": "2KB4/1P6/2k5/8/8/8/7b/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 7,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-17",
-    "fen": "8/7n/8/4P3/8/7K/7n/7k b - - 0 1",
-    "sourceFen": "8/7n/8/4P3/8/7K/7n/7k b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 12,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-18",
-    "fen": "8/8/8/8/3p4/1K1N4/8/1k4N1 w - - 0 1",
-    "sourceFen": "8/8/8/8/3p4/1K1N4/8/1k4N1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 27,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-19",
-    "fen": "8/2KP4/8/8/3N3b/8/8/5k2 w - - 0 1",
-    "sourceFen": "8/2KP4/8/8/3N3b/8/8/5k2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 11,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-2",
-    "fen": "1b6/2k5/7P/8/5K2/8/8/8 b - - 0 1",
-    "sourceFen": "8/8/8/5k2/8/7p/2K5/1B6 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Endgame Studies and Puzzles",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Endgame_Studies_and_Puzzles"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikibooks.org",
+      "page": "Chess/The_Endgame/Endgame_Studies_and_Puzzles",
+      "index": 2,
+      "sideToMove": "w",
+      "style": "legacy-row"
+    },
+    "flip": true
   },
   {
     "id": "3-to-5-pieces-minor-20",
-    "fen": "8/8/8/8/1N3K1P/8/5kp1/8 b - - 0 1",
-    "sourceFen": "8/8/8/8/1N3K1P/8/5kp1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Umid-2006 vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 147,
+      "ply": 107
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-21",
-    "fen": "8/1n1K4/1P6/4k3/8/8/8/8 b - - 0 1",
-    "sourceFen": "8/1n1K4/1P6/4k3/8/8/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Night-King96, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 125,
+      "ply": 111
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-22",
-    "fen": "8/1n4K1/1P6/6P1/6k1/8/8/8 b - - 0 1",
-    "sourceFen": "8/1n4K1/1P6/6P1/6k1/8/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Night-King96, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 125,
+      "ply": 105
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-23",
-    "fen": "8/8/3k4/5pK1/6P1/8/2b5/8 w - - 0 1",
-    "sourceFen": "8/8/3k4/5pK1/6P1/8/2b5/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): indianstar vs. DrNykterstein, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 21,
+      "ply": 104
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-3",
-    "fen": "7K/3n4/6k1/8/6n1/8/8/8 b - - 0 1",
-    "sourceFen": "8/8/8/6N1/8/6K1/3N4/7k w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Minor Piece endings",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Minor_Piece_endings"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikibooks.org",
+      "page": "Chess/The_Endgame/Minor_Piece_endings",
+      "index": 4,
+      "sideToMove": "w",
+      "style": "legacy-row"
+    },
+    "flip": true
   },
   {
     "id": "3-to-5-pieces-minor-4",
-    "fen": "8/8/8/8/1b1n4/4k3/8/3K4 b - - 0 1",
-    "sourceFen": "3k4/8/4K3/1B1N4/8/8/8/8 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Minor Piece endings",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Minor_Piece_endings"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikibooks.org",
+      "page": "Chess/The_Endgame/Minor_Piece_endings",
+      "index": 3,
+      "sideToMove": "w",
+      "style": "legacy-row"
+    },
+    "flip": true
   },
   {
     "id": "3-to-5-pieces-minor-5",
-    "fen": "8/8/8/8/8/6K1/3N1p2/5N1k w - - 0 1",
-    "sourceFen": "8/8/8/8/8/6K1/3N1p2/5N1k w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 9,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-6",
-    "fen": "8/p7/8/N7/2N3k1/8/5K2/8 w - - 0 1",
-    "sourceFen": "8/p7/8/N7/2N3k1/8/5K2/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 29,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-7",
-    "fen": "k7/2K5/8/nPN5/8/8/8/8 w - - 0 1",
-    "sourceFen": "k7/2K5/8/nPN5/8/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 4,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-8",
-    "fen": "7k/8/5K2/4N3/8/3B4/8/8 w - - 0 1",
-    "sourceFen": "7k/8/5K2/4N3/8/3B4/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Bishop and knight checkmate",
       "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Bishop and knight checkmate",
+      "index": 8,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-minor-9",
-    "fen": "7k/5K2/8/5N2/8/3p4/3N4/8 w - - 0 1",
-    "sourceFen": "7k/5K2/8/5N2/8/3p4/3N4/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 21,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed",
-    "fen": "5k2/5r2/4Q3/6K1/8/8/8/8 b - - 0 1",
-    "sourceFen": "5k2/5r2/4Q3/6K1/8/8/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Queen versus rook endgame",
+      "index": 8,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-10",
-    "fen": "8/8/8/1r6/3bk3/8/2R1K3/8 w - - 0 1",
-    "sourceFen": "8/8/8/1r6/3bk3/8/2R1K3/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Rook and bishop versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Rook and bishop versus rook endgame",
+      "index": 5,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-11",
-    "fen": "6k1/6r1/5Q2/8/8/8/8/7K b - - 0 1",
-    "sourceFen": "6k1/6r1/5Q2/8/8/8/8/7K b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Queen versus rook endgame",
+      "index": 9,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-12",
-    "fen": "1k6/2r5/1K6/1B6/8/8/3R4/8 w - - 0 1",
-    "sourceFen": "1k6/2r5/1K6/1B6/8/8/3R4/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Rook and bishop versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Rook and bishop versus rook endgame",
+      "index": 8,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-13",
-    "fen": "8/2R5/8/1r6/4b3/4k3/8/3K4 b - - 0 1",
-    "sourceFen": "8/2R5/8/1r6/4b3/4k3/8/3K4 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Rook and bishop versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Rook and bishop versus rook endgame",
+      "index": 7,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-14",
-    "fen": "8/8/1q6/8/5k2/4R3/5PK1/8 w - - 0 1",
-    "sourceFen": "8/8/1q6/8/5k2/4R3/5PK1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Queen versus rook endgame",
+      "index": 14,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-15",
-    "fen": "4Q3/5rk1/8/6K1/8/8/8/8 w - - 0 1",
-    "sourceFen": "4Q3/5rk1/8/6K1/8/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Queen versus rook endgame",
+      "index": 5,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-16",
-    "fen": "3k4/4r3/3K4/3B4/8/8/8/5R2 w - - 0 1",
-    "sourceFen": "3k4/4r3/3K4/3B4/8/8/8/5R2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Rook and bishop versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Rook and bishop versus rook endgame",
+      "index": 0,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-17",
-    "fen": "2k5/4r3/1K6/3Q4/8/8/8/8 w - - 0 1",
-    "sourceFen": "2k5/4r3/1K6/3Q4/8/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Queen versus rook endgame",
+      "index": 3,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-18",
-    "fen": "8/8/7r/8/3bk3/8/2R1K3/8 w - - 0 1",
-    "sourceFen": "8/8/7r/8/3bk3/8/2R1K3/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Rook and bishop versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Rook and bishop versus rook endgame",
+      "index": 6,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-19",
-    "fen": "5k2/8/5nn1/8/2Q5/6K1/8/8 w - - 0 1",
-    "sourceFen": "5k2/8/5nn1/8/2Q5/6K1/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 22,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-2",
-    "fen": "8/8/1k6/3K4/8/4R3/7b/8 b - - 0 1",
-    "sourceFen": "8/7B/4r3/8/3k4/1K6/8/8 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Pawnless chess endgame",
+      "index": 9,
+      "sideToMove": "w"
+    },
+    "flip": true
   },
   {
     "id": "3-to-5-pieces-mixed-20",
-    "fen": "7k/5Q2/8/6r1/8/1K6/8/8 b - - 0 1",
-    "sourceFen": "7k/5Q2/8/6r1/8/1K6/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Queen versus rook endgame",
+      "index": 10,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-21",
-    "fen": "8/8/4k3/1KB5/7r/6R1/8/8 b - - 0 1",
-    "sourceFen": "8/8/4k3/1KB5/7r/6R1/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Pawnless chess endgame",
+      "index": 13,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-22",
-    "fen": "5k2/6r1/4Q3/8/8/8/8/7K b - - 0 1",
-    "sourceFen": "5k2/6r1/4Q3/8/8/8/8/7K b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 19,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-23",
-    "fen": "8/r2n4/3k4/8/3K4/8/1R6/8 w - - 0 1",
-    "sourceFen": "8/r2n4/3k4/8/3K4/8/1R6/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Pawnless chess endgame",
+      "index": 15,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-24",
-    "fen": "k7/n7/K7/8/8/8/8/1R6 w - - 0 1",
-    "sourceFen": "k7/n7/K7/8/8/8/8/1R6 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 1,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-25",
-    "fen": "1k6/5q2/5B2/8/8/4K3/8/5Q2 w - - 0 1",
-    "sourceFen": "1k6/5q2/5B2/8/8/4K3/8/5Q2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Pawnless chess endgame",
+      "index": 22,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-26",
-    "fen": "8/8/8/4N1K1/7P/8/4k2q/8 b - - 0 1",
-    "sourceFen": "8/8/8/4N1K1/7P/8/4k2q/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Umid-2006 vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 147,
+      "ply": 113
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-27",
-    "fen": "8/7P/8/5NK1/8/6k1/8/4q3 b - - 0 1",
-    "sourceFen": "8/7P/8/5NK1/8/6k1/8/4q3 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 123,
+      "ply": 147
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-3",
-    "fen": "8/3k4/5Q2/r7/4K3/8/8/8 w - - 0 1",
-    "sourceFen": "8/3k4/5Q2/r7/4K3/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Queen versus rook endgame",
+      "index": 7,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-4",
-    "fen": "5k2/1R6/5P2/4K3/2b5/8/8/8 b - - 0 1",
-    "sourceFen": "5k2/1R6/5P2/4K3/2b5/8/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Wrong bishop",
       "url": "https://en.wikipedia.org/wiki/Wrong_bishop"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Wrong bishop",
+      "index": 4,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-5",
-    "fen": "2R3bk/8/7K/8/8/8/8/8 w - - 0 1",
-    "sourceFen": "2R3bk/8/7K/8/8/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Fortress (chess)",
+      "index": 6,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-6",
-    "fen": "3k4/5Q2/1r6/3K4/8/8/8/8 w - - 0 1",
-    "sourceFen": "3k4/5Q2/1r6/3K4/8/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Queen versus rook endgame",
+      "index": 6,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-7",
-    "fen": "6rk/6r1/8/8/8/8/8/Q6K b - - 0 1",
-    "sourceFen": "6rk/6r1/8/8/8/8/8/Q6K b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Pawnless chess endgame",
+      "index": 17,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-8",
-    "fen": "8/8/8/2k1K3/8/3R4/4n3/8 w - - 0 1",
-    "sourceFen": "8/8/8/2k1K3/8/3R4/4n3/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Zugzwang",
+      "index": 0,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-mixed-9",
-    "fen": "4Q3/5K2/8/7N/6k1/8/8/7q w - - 0 1",
-    "sourceFen": "4Q3/5K2/8/7N/6k1/8/8/7q w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Pawnless chess endgame",
+      "index": 20,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-pawn",
-    "fen": "8/pk6/8/3K4/8/8/8/8 b - - 0 1",
-    "sourceFen": "8/8/8/8/3k4/8/PK6/8 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Endgame Studies and Puzzles",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Endgame_Studies_and_Puzzles"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikibooks.org",
+      "page": "Chess/The_Endgame/Endgame_Studies_and_Puzzles",
+      "index": 0,
+      "sideToMove": "w",
+      "style": "legacy-row"
+    },
+    "flip": true
   },
   {
     "id": "3-to-5-pieces-pawn-10",
-    "fen": "8/8/4K3/7p/8/8/6kP/8 w - - 0 1",
-    "sourceFen": "8/8/4K3/7p/8/8/6kP/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Zaven_ChessMood vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 57,
+      "ply": 108
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-pawn-2",
-    "fen": "8/8/4p3/4k3/8/4K3/8/8 b - - 0 1",
-    "sourceFen": "8/8/4k3/8/4K3/4P3/8/8 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Pawn Endings",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Pawn_Endings"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikibooks.org",
+      "page": "Chess/The_Endgame/Pawn_Endings",
+      "index": 4,
+      "sideToMove": "w",
+      "style": "legacy-row"
+    },
+    "flip": true
   },
   {
     "id": "3-to-5-pieces-pawn-3",
-    "fen": "8/8/8/8/3pk3/8/4K3/8 w - - 0 1",
-    "sourceFen": "8/8/8/8/3pk3/8/4K3/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "King and pawn versus king endgame",
       "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "King and pawn versus king endgame",
+      "index": 24,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-pawn-4",
-    "fen": "8/8/8/8/8/3pk3/8/4K3 b - - 0 1",
-    "sourceFen": "8/8/8/8/8/3pk3/8/4K3 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "King and pawn versus king endgame",
       "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "King and pawn versus king endgame",
+      "index": 25,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-pawn-5",
-    "fen": "8/8/8/1p6/1k6/8/8/1K6 w - - 0 1",
-    "sourceFen": "8/8/8/1p6/1k6/8/8/1K6 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "King and pawn versus king endgame",
       "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "King and pawn versus king endgame",
+      "index": 22,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-pawn-6",
-    "fen": "2k5/2P5/1K6/8/8/8/8/8 w - - 0 1",
-    "sourceFen": "2k5/2P5/1K6/8/8/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Zugzwang",
+      "index": 9,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-pawn-7",
-    "fen": "3k4/8/3KP3/8/8/8/8/8 w - - 0 1",
-    "sourceFen": "3k4/8/3KP3/8/8/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 3,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-pawn-8",
-    "fen": "7K/8/k1P5/7p/8/8/8/8 w - - 0 1",
-    "sourceFen": "7K/8/k1P5/7p/8/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "King and pawn versus king endgame",
       "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "King and pawn versus king endgame",
+      "index": 2,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-pawn-9",
-    "fen": "8/8/5p2/5P2/6Kp/8/6k1/8 b - - 0 1",
-    "sourceFen": "8/8/5p2/5P2/6Kp/8/6k1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Bestinblitz, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 96,
+      "ply": 113
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-queen",
-    "fen": "8/5QK1/2k5/7P/8/8/4q3/8 w - - 0 1",
-    "sourceFen": "8/5QK1/2k5/7P/8/8/4q3/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Queen and pawn versus queen endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_and_pawn_versus_queen_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Queen and pawn versus queen endgame",
+      "index": 0,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-queen-2",
-    "fen": "8/8/5pK1/5P2/8/8/6k1/7q b - - 0 1",
-    "sourceFen": "8/8/5pK1/5P2/8/8/6k1/7q b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Bestinblitz, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 96,
+      "ply": 119
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-rook",
-    "fen": "8/4r3/5k2/5p2/8/8/3K4/1R6 b - - 0 1",
-    "sourceFen": "1r6/3k4/8/8/5P2/5K2/4R3/8 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Rook and pawn versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Rook and pawn versus rook endgame",
+      "index": 21,
+      "sideToMove": "w"
+    },
+    "flip": true
   },
   {
     "id": "3-to-5-pieces-rook-2",
-    "fen": "5r2/2R5/8/8/8/8/3p2K1/3k4 b - - 0 1",
-    "sourceFen": "3K4/3P2k1/8/8/8/8/2r5/5R2 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lucena position",
       "url": "https://en.wikipedia.org/wiki/Lucena_position"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Lucena position",
+      "index": 4,
+      "sideToMove": "w"
+    },
+    "flip": true
   },
   {
     "id": "3-to-5-pieces-rook-3",
-    "fen": "8/1r2K3/4P1k1/8/8/8/8/R7 w - - 0 1",
-    "sourceFen": "8/1r2K3/4P1k1/8/8/8/8/R7 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Rook and pawn versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Rook and pawn versus rook endgame",
+      "index": 36,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-rook-4",
-    "fen": "8/8/6k1/1r4p1/6K1/2R5/8/8 b - - 0 1",
-    "sourceFen": "8/8/6k1/1r4p1/6K1/2R5/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Rook and pawn versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Rook and pawn versus rook endgame",
+      "index": 35,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-rook-5",
-    "fen": "3r4/8/8/6k1/3P4/3K4/8/5R2 w - - 0 1",
-    "sourceFen": "3r4/8/8/6k1/3P4/3K4/8/5R2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Rook and pawn versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Rook and pawn versus rook endgame",
+      "index": 3,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "3-to-5-pieces-rook-6",
-    "fen": "2r5/3K3p/8/8/4k3/8/7P/8 w - - 0 1",
-    "sourceFen": "2r5/3K3p/8/8/4k3/8/7P/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Zaven_ChessMood vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 57,
+      "ply": 102
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor",
-    "fen": "8/3n4/3k4/B7/P2K4/1P6/8/8 w - - 0 1",
-    "sourceFen": "8/3n4/3k4/B7/P2K4/1P6/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Fortress (chess)",
+      "index": 39,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-10",
-    "fen": "8/8/4p3/5p2/3k1Pp1/7p/3B1K2/8 w - - 0 1",
-    "sourceFen": "8/8/4p3/5p2/3k1Pp1/7p/3B1K2/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Burn, Amos vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 70,
+      "ply": 92
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-11",
-    "fen": "8/p7/8/1p3KPP/3b4/2k5/P7/8 w - - 0 1",
-    "sourceFen": "8/p7/8/1p3KPP/3b4/2k5/P7/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Tarrasch, Siegbert vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 177,
+      "ply": 90
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-12",
-    "fen": "8/7k/2N5/8/1p6/1n5P/8/5K2 w - - 0 1",
-    "sourceFen": "8/7k/2N5/8/1p6/1n5P/8/5K2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Maroczy, Geza vs. Reti, Richard",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 5,
+      "ply": 114
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-13",
-    "fen": "8/8/1B2p3/5p2/5Pp1/3k2Kp/8/8 w - - 0 1",
-    "sourceFen": "8/8/1B2p3/5p2/5Pp1/3k2Kp/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Burn, Amos vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 70,
+      "ply": 98
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-14",
-    "fen": "8/2b5/7p/5p1k/P2N4/3K4/2P5/8 w - - 0 1",
-    "sourceFen": "8/2b5/7p/5p1k/P2N4/3K4/2P5/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 141,
+      "ply": 96
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-15",
-    "fen": "8/8/3Pp1kp/8/2b5/8/3BK2P/8 w - - 0 1",
-    "sourceFen": "8/8/3Pp1kp/8/2b5/8/3BK2P/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Tartakower, Saviely vs. Maroczy, Geza",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 106,
+      "ply": 102
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-16",
-    "fen": "4b3/8/4Np1p/4k3/6PK/8/8/8 w - - 0 1",
-    "sourceFen": "4b3/8/4Np1p/4k3/6PK/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Marco, Georg vs. Gunsberg, Isidor",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 119,
+      "ply": 104
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-17",
-    "fen": "8/2b3N1/8/6k1/P3K2p/8/2P5/8 w - - 0 1",
-    "sourceFen": "8/2b3N1/8/6k1/P3K2p/8/2P5/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 141,
+      "ply": 102
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-18",
-    "fen": "8/8/2n1kn2/8/8/2PPPK2/8/8 b - - 0 1",
-    "sourceFen": "8/8/2pppk2/8/8/2N1KN2/8/8 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 18,
+      "sideToMove": "w"
+    },
+    "flip": true
   },
   {
     "id": "6-to-8-pieces-minor-19",
-    "fen": "8/8/8/4b1p1/8/6pP/6P1/4k2K b - - 0 1",
-    "sourceFen": "8/8/8/4b1p1/8/6pP/6P1/4k2K b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Fortress (chess)",
+      "index": 4,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-2",
-    "fen": "8/8/6N1/5N2/8/7p/4K1kp/8 w - - 0 1",
-    "sourceFen": "8/8/6N1/5N2/8/7p/4K1kp/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 28,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-20",
-    "fen": "8/8/4k3/8/6n1/8/1PP4P/1K5n b - - 0 1",
-    "sourceFen": "8/8/4k3/8/6n1/8/1PP4P/1K5n b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 19,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-21",
-    "fen": "8/5pK1/4k3/6B1/5PbP/6P1/8/8 b - - 0 1",
-    "sourceFen": "8/5pK1/4k3/6B1/5PbP/6P1/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Fortress (chess)",
+      "index": 14,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-22",
-    "fen": "7b/4k2P/6K1/2p2P2/7P/1B6/8/8 b - - 0 1",
-    "sourceFen": "7b/4k2P/6K1/2p2P2/7P/1B6/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Opposite-colored bishops endgame",
+      "index": 11,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-23",
-    "fen": "8/8/7b/1Nk4P/P7/8/2K5/8 b - - 0 1",
-    "sourceFen": "8/8/7b/1Nk4P/P7/8/2K5/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Zugzwang",
+      "index": 12,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-24",
-    "fen": "8/5p2/5kp1/4N3/4bPP1/8/7K/8 b - - 0 1",
-    "sourceFen": "8/5p2/5kp1/4N3/4bPP1/8/7K/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Marshall, Frank James vs. Lasker, Edward",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 12,
+      "ply": 89
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-25",
-    "fen": "8/4Pk2/3K4/6p1/bB5P/P7/8/8 b - - 0 1",
-    "sourceFen": "8/4Pk2/3K4/6p1/bB5P/P7/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 0,
+      "ply": 109
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-26",
-    "fen": "4n3/8/1p3k1p/3B4/1P3KP1/8/8/8 b - - 0 1",
-    "sourceFen": "4n3/8/1p3k1p/3B4/1P3KP1/8/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Chigorin, Mikhail",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 139,
+      "ply": 101
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-27",
-    "fen": "8/8/p2k2K1/7n/4P3/8/P7/8 b - - 0 1",
-    "sourceFen": "8/8/p2k2K1/7n/4P3/8/P7/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Marco, Georg vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 126,
+      "ply": 105
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-28",
-    "fen": "8/8/p1P3p1/4k2n/4P3/5K2/P7/8 b - - 0 1",
-    "sourceFen": "8/8/p1P3p1/4k2n/4P3/5K2/P7/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Marco, Georg vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 126,
+      "ply": 99
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-3",
-    "fen": "8/2k1b3/2P5/3KP2B/8/8/8/8 w - - 0 1",
-    "sourceFen": "8/2k1b3/2P5/3KP2B/8/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Opposite-colored bishops endgame",
+      "index": 0,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-4",
-    "fen": "8/5k1N/5BN1/8/8/7K/6nb/8 w - - 0 1",
-    "sourceFen": "8/5k1N/5BN1/8/8/7K/6nb/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 25,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-5",
-    "fen": "8/2bB4/2P5/6k1/4K3/5P2/8/8 w - - 0 1",
-    "sourceFen": "8/2bB4/2P5/6k1/4K3/5P2/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Opposite-colored bishops endgame",
+      "index": 1,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-6",
-    "fen": "8/8/8/2kpp3/8/8/1K1NN3/8 w - - 0 1",
-    "sourceFen": "8/8/8/2kpp3/8/8/1K1NN3/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 17,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-7",
-    "fen": "8/8/8/5B2/1p3b2/2k1p3/8/5K2 w - - 0 1",
-    "sourceFen": "8/8/8/5B2/1p3b2/2k1p3/8/5K2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Opposite-colored bishops endgame",
+      "index": 7,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-8",
-    "fen": "8/6bk/8/5Npp/8/4n1PK/8/8 w - - 0 1",
-    "sourceFen": "8/6bk/8/5Npp/8/4n1PK/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Alekhine, Alexander vs. Marshall, Frank James",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 97,
+      "ply": 116
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-minor-9",
-    "fen": "3b4/pp6/8/5K2/6P1/2k5/P6P/8 w - - 0 1",
-    "sourceFen": "3b4/pp6/8/5K2/6P1/2k5/P6P/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Tarrasch, Siegbert vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 177,
+      "ply": 84
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed",
-    "fen": "8/5k2/6b1/4b3/8/8/3R4/2KR4 w - - 0 1",
-    "sourceFen": "8/5k2/6b1/4b3/8/8/3R4/2KR4 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Pawnless chess endgame",
+      "index": 23,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-10",
-    "fen": "8/8/1R6/7B/8/5kp1/6q1/1N1K4 b - - 0 1",
-    "sourceFen": "1n1k4/6Q1/5KP1/8/7b/1r6/8/8 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 25,
+      "sideToMove": "w"
+    },
+    "flip": true
   },
   {
     "id": "6-to-8-pieces-mixed-11",
-    "fen": "8/4k3/8/3PP3/3K4/3B4/8/4r3 b - - 0 1",
-    "sourceFen": "4R3/8/3b4/3k4/3pp3/8/4K3/8 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 14,
+      "sideToMove": "w"
+    },
+    "flip": true
   },
   {
     "id": "6-to-8-pieces-mixed-12",
-    "fen": "4R3/1b2b3/4k3/8/1r3B2/6K1/8/8 b - - 0 1",
-    "sourceFen": "4R3/1b2b3/4k3/8/1r3B2/6K1/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Pawnless chess endgame",
+      "index": 29,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-13",
-    "fen": "8/8/4k3/3nB1R1/2b5/7r/1K6/8 b - - 0 1",
-    "sourceFen": "8/8/4k3/3nB1R1/2b5/7r/1K6/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Pawnless chess endgame",
+      "index": 28,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-14",
-    "fen": "8/3b1r1k/3P4/4K1Q1/8/8/8/8 b - - 0 1",
-    "sourceFen": "8/3b1r1k/3P4/4K1Q1/8/8/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Zugzwang",
+      "index": 8,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-15",
-    "fen": "6k1/1R5p/4K1p1/8/8/2b3P1/7P/8 b - - 0 1",
-    "sourceFen": "6k1/1R5p/4K1p1/8/8/2b3P1/7P/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Fortress (chess)",
+      "index": 35,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-16",
-    "fen": "8/8/3B4/5k2/6p1/1r3PK1/8/8 b - - 0 1",
-    "sourceFen": "8/8/3B4/5k2/6p1/1r3PK1/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Wrong bishop",
       "url": "https://en.wikipedia.org/wiki/Wrong_bishop"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Wrong bishop",
+      "index": 7,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-17",
-    "fen": "8/6pk/n5p1/2R5/4K3/6P1/5P2/8 b - - 0 1",
-    "sourceFen": "8/6pk/n5p1/2R5/4K3/6P1/5P2/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Janowsky, Dawid Markelowicz vs. Tinsley, Samuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 104,
+      "ply": 113
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-18",
-    "fen": "8/2B3p1/5pk1/R6n/3r4/5K2/8/8 b - - 0 1",
-    "sourceFen": "8/2B3p1/5pk1/R6n/3r4/5K2/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Bogoljubow, Efim vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 61,
+      "ply": 137
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-19",
-    "fen": "8/5pp1/8/R3B1kn/7r/8/6K1/8 b - - 0 1",
-    "sourceFen": "8/5pp1/8/R3B1kn/7r/8/6K1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Bogoljubow, Efim vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 61,
+      "ply": 131
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-2",
-    "fen": "kbK5/pp6/1P6/8/8/8/R7/8 w - - 0 1",
-    "sourceFen": "kbK5/pp6/1P6/8/8/8/R7/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Zugzwang",
+      "index": 3,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-20",
-    "fen": "5k2/2q5/8/3N4/3P1b2/1P6/4K1Q1/8 b - - 0 1",
-    "sourceFen": "5k2/2q5/8/3N4/3P1b2/1P6/4K1Q1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Marshall, Frank James vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 13,
+      "ply": 103
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-21",
-    "fen": "r7/P4p2/6k1/2B5/4b3/KR6/8/8 b - - 0 1",
-    "sourceFen": "r7/P4p2/6k1/2B5/4b3/KR6/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Bird, Henry Edward vs. Blackburne, Joseph Henry",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 43,
+      "ply": 135
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-22",
-    "fen": "6k1/8/8/8/3RPP1P/4K3/4N2q/8 b - - 0 1",
-    "sourceFen": "6k1/8/8/8/3RPP1P/4K3/4N2q/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 2021: Carlsen,M vs. Nepomniachtchi,I",
       "url": "https://www.pgnmentor.com/events/WorldChamp2021.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp2021.pgn",
+      "game": 5,
+      "ply": 227
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-23",
-    "fen": "8/p5k1/6Qp/8/5q2/8/P2R4/6K1 b - - 0 1",
-    "sourceFen": "8/p5k1/6Qp/8/5q2/8/P2R4/6K1 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Edward vs. Marshall, Frank James",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 34,
+      "ply": 111
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-24",
-    "fen": "8/8/6p1/p2q2k1/1P6/5R2/5NK1/8 b - - 0 1",
-    "sourceFen": "8/8/6p1/p2q2k1/1P6/5R2/5NK1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Janowsky, Dawid Markelowicz vs. Marshall, Frank James",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 80,
+      "ply": 141
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-25",
-    "fen": "5k2/8/8/8/4PP1q/5R2/3KN3/8 b - - 0 1",
-    "sourceFen": "5k2/8/8/8/4PP1q/5R2/3KN3/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 2021: Carlsen,M vs. Nepomniachtchi,I",
       "url": "https://www.pgnmentor.com/events/WorldChamp2021.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp2021.pgn",
+      "game": 5,
+      "ply": 233
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-26",
-    "fen": "8/8/6p1/3q4/1p5k/3N1R2/6K1/8 b - - 0 1",
-    "sourceFen": "8/8/6p1/3q4/1p5k/3N1R2/6K1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Janowsky, Dawid Markelowicz vs. Marshall, Frank James",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 80,
+      "ply": 147
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-27",
-    "fen": "rR6/P7/4k3/2B2p2/4b3/2K5/8/8 b - - 0 1",
-    "sourceFen": "rR6/P7/4k3/2B2p2/4b3/2K5/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Bird, Henry Edward vs. Blackburne, Joseph Henry",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 43,
+      "ply": 141
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-28",
-    "fen": "3r4/P7/8/2k5/4KPP1/1p6/8/3N4 b - - 0 1",
-    "sourceFen": "3r4/P7/8/2k5/4KPP1/1p6/8/3N4 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Emanuel vs. Lasker, Edward",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 69,
+      "ply": 157
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-29",
-    "fen": "3r4/8/2k5/Pp6/4KPP1/4N3/8/8 b - - 0 1",
-    "sourceFen": "3r4/8/2k5/Pp6/4KPP1/4N3/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Emanuel vs. Lasker, Edward",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 69,
+      "ply": 151
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-3",
-    "fen": "1n2k1K1/7R/8/4N3/6N1/8/8/8 w - - 0 1",
-    "sourceFen": "1n2k1K1/7R/8/4N3/6N1/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 24,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-4",
-    "fen": "6k1/8/8/4p2p/1b1BB3/8/r7/5K2 w - - 0 1",
-    "sourceFen": "6k1/8/8/4p2p/1b1BB3/8/r7/5K2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Alekhine, Alexander vs. Lasker, Edward",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 100,
+      "ply": 98
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-5",
-    "fen": "5n2/3k4/R7/4P3/4K1P1/P7/8/2r5 w - - 0 1",
-    "sourceFen": "5n2/3k4/R7/4P3/4K1P1/P7/8/2r5 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1927.pgn",
+      "game": 21,
+      "ply": 126
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-6",
-    "fen": "8/5p2/6p1/3b4/3K2k1/2p3P1/8/2R5 w - - 0 1",
-    "sourceFen": "8/5p2/6p1/3b4/3K2k1/2p3P1/8/2R5 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Burn, Amos vs. Janowsky, Dawid Markelowicz",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 66,
+      "ply": 110
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-7",
-    "fen": "8/8/1R6/2k4P/1p4K1/8/n7/8 w - - 0 1",
-    "sourceFen": "8/8/1R6/2k4P/1p4K1/8/n7/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Pillsbury, Harry Nelson vs. Tinsley, Samuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 157,
+      "ply": 136
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-8",
-    "fen": "8/8/5pbp/2N1k3/6PK/1r6/8/8 w - - 0 1",
-    "sourceFen": "8/8/5pbp/2N1k3/6PK/1r6/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Marco, Georg vs. Gunsberg, Isidor",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 119,
+      "ply": 98
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-mixed-9",
-    "fen": "8/3PPP2/4K3/8/P3q3/3k4/8/1N6 w - - 0 1",
-    "sourceFen": "8/3PPP2/4K3/8/P3q3/3k4/8/1N6 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Janowsky, Dawid Markelowicz vs. Lasker, Edward",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 83,
+      "ply": 140
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-pawn",
-    "fen": "8/4k3/7p/4K1pP/6P1/5P2/8/8 w - - 0 1",
-    "sourceFen": "8/4k3/7p/4K1pP/6P1/5P2/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Albin, Adolf vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 42,
+      "ply": 158
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-pawn-2",
-    "fen": "8/8/4k2p/4p1pP/3K2P1/5P2/8/8 w - - 0 1",
-    "sourceFen": "8/8/4k2p/4p1pP/3K2P1/5P2/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Albin, Adolf vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 42,
+      "ply": 152
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-pawn-3",
-    "fen": "8/1p6/8/pP6/6Kp/1kP3P1/8/8 w - - 0 1",
-    "sourceFen": "8/1p6/8/pP6/6Kp/1kP3P1/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Blackburne, Joseph Henry vs. Pillsbury, Harry Nelson",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 58,
+      "ply": 96
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-pawn-4",
-    "fen": "8/1p6/7P/1P6/6K1/1kP5/p7/8 w - - 0 1",
-    "sourceFen": "8/1p6/7P/1P6/6K1/1kP5/p7/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Blackburne, Joseph Henry vs. Pillsbury, Harry Nelson",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 58,
+      "ply": 102
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-pawn-5",
-    "fen": "8/pp6/8/7p/5K1k/P7/1P6/8 b - - 0 1",
-    "sourceFen": "8/pp6/8/7p/5K1k/P7/1P6/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Janowsky, Dawid Markelowicz vs. Gunsberg, Isidor",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 98,
+      "ply": 89
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-pawn-6",
-    "fen": "8/pp6/5k2/7p/2K4P/P7/1P6/8 b - - 0 1",
-    "sourceFen": "8/pp6/5k2/7p/2K4P/P7/1P6/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Janowsky, Dawid Markelowicz vs. Gunsberg, Isidor",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 98,
+      "ply": 83
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-queen",
-    "fen": "k7/8/7P/5PPK/8/8/8/q7 b - - 0 1",
-    "sourceFen": "Q7/8/8/8/5ppk/7p/8/K7 w - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 20,
+      "sideToMove": "w"
+    },
+    "flip": true
   },
   {
     "id": "6-to-8-pieces-queen-2",
-    "fen": "6Q1/2p5/8/2p5/4p3/k2q4/5P2/4K3 b - - 0 1",
-    "sourceFen": "6Q1/2p5/8/2p5/4p3/k2q4/5P2/4K3 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Teichmann, Richard",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 145,
+      "ply": 95
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook",
-    "fen": "8/8/6p1/7p/7P/8/pk1K4/2R5 w - - 0 1",
-    "sourceFen": "8/8/6p1/7p/7P/8/pk1K4/2R5 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Zugzwang",
+      "index": 1,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-10",
-    "fen": "8/8/P6R/5k2/6p1/r4PK1/8/8 w - - 0 1",
-    "sourceFen": "8/8/P6R/5k2/6p1/r4PK1/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Von Bardeleben, Curt vs. Janowsky, Dawid Markelowicz",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 27,
+      "ply": 114
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-11",
-    "fen": "8/2P3R1/8/6Pk/8/7P/5P2/r5K1 w - - 0 1",
-    "sourceFen": "8/2P3R1/8/6Pk/8/7P/5P2/r5K1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Marshall, Frank James vs. Janowsky, Dawid Markelowicz",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 11,
+      "ply": 102
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-12",
-    "fen": "8/1k1r4/2R5/1P6/2P5/3p4/2K5/8 w - - 0 1",
-    "sourceFen": "8/1k1r4/2R5/1P6/2P5/3p4/2K5/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Walbrodt, Carl August vs. Mason, James",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 15,
+      "ply": 98
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-13",
-    "fen": "R7/6k1/1P4p1/8/P3K1Pr/8/8/8 w - - 0 1",
-    "sourceFen": "R7/6k1/1P4p1/8/P3K1Pr/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Tarrasch, Siegbert vs. Vergani, Beniamino",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 209,
+      "ply": 106
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-14",
-    "fen": "6k1/8/R4p1r/2p2K2/5P2/8/8/8 w - - 0 1",
-    "sourceFen": "6k1/8/R4p1r/2p2K2/5P2/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Albin, Adolf vs. Vergani, Beniamino",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 41,
+      "ply": 94
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-15",
-    "fen": "7k/R7/5p1r/2p2p2/5K2/8/5P2/8 w - - 0 1",
-    "sourceFen": "7k/R7/5p1r/2p2p2/5K2/8/5P2/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Albin, Adolf vs. Vergani, Beniamino",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 41,
+      "ply": 88
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-16",
-    "fen": "8/6k1/8/3R1pr1/3P3p/4P3/5K2/8 b - - 0 1",
-    "sourceFen": "8/6k1/8/3R1pr1/3P3p/4P3/5K2/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Tinsley, Samuel vs. Bird, Henry Edward",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 222,
+      "ply": 123
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-17",
-    "fen": "8/2p2K2/6P1/8/4P3/p7/1kp5/7R b - - 0 1",
-    "sourceFen": "8/2p2K2/6P1/8/4P3/p7/1kp5/7R b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Bird, Henry Edward vs. Mieses, Jacques",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 47,
+      "ply": 115
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-18",
-    "fen": "8/7R/2k3pP/1p6/5r2/8/6P1/6K1 b - - 0 1",
-    "sourceFen": "8/7R/2k3pP/1p6/5r2/8/6P1/6K1 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Yates, Frederick vs. Janowsky, Dawid Markelowicz",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 41,
+      "ply": 79
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-19",
-    "fen": "3k4/5R2/2Kp4/3P3p/1P1r4/8/8/8 b - - 0 1",
-    "sourceFen": "3k4/5R2/2Kp4/3P3p/1P1r4/8/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Mieses, Jacques",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 183,
+      "ply": 97
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-2",
-    "fen": "8/8/R3Pk1K/7P/8/8/8/4r3 w - - 0 1",
-    "sourceFen": "8/8/R3Pk1K/7P/8/8/8/4r3 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Rook and pawn versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Rook and pawn versus rook endgame",
+      "index": 43,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-20",
-    "fen": "8/8/4k3/R4pK1/4pP2/P6r/8/8 b - - 0 1",
-    "sourceFen": "8/8/4k3/R4pK1/4pP2/P6r/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Janowsky, Dawid Markelowicz vs. Yates, Frederick",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 77,
+      "ply": 133
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-21",
-    "fen": "8/5kpp/R7/8/4K3/6P1/5r1P/8 b - - 0 1",
-    "sourceFen": "8/5kpp/R7/8/4K3/6P1/5r1P/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1972: Fischer, Robert James vs. Spassky, Boris V",
       "url": "https://www.pgnmentor.com/events/WorldChamp1972.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1972.pgn",
+      "game": 15,
+      "ply": 65
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-22",
-    "fen": "5k2/R7/6pK/4pP2/6rP/8/8/8 b - - 0 1",
-    "sourceFen": "5k2/R7/6pK/4pP2/6rP/8/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mason, James vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 130,
+      "ply": 135
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-23",
-    "fen": "8/6pp/R4k2/8/8/5KP1/3r4/8 b - - 0 1",
-    "sourceFen": "8/6pp/R4k2/8/8/5KP1/3r4/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1972: Fischer, Robert James vs. Spassky, Boris V",
       "url": "https://www.pgnmentor.com/events/WorldChamp1972.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1972.pgn",
+      "game": 15,
+      "ply": 71
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-24",
-    "fen": "8/R4kr1/8/4pp1K/7P/8/8/8 b - - 0 1",
-    "sourceFen": "8/R4kr1/8/4pp1K/7P/8/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mason, James vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 130,
+      "ply": 141
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-25",
-    "fen": "6K1/2p5/8/6P1/2p1P3/pk6/8/R7 b - - 0 1",
-    "sourceFen": "6K1/2p5/8/6P1/2p1P3/pk6/8/R7 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Bird, Henry Edward vs. Mieses, Jacques",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 47,
+      "ply": 109
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-3",
-    "fen": "8/8/3k1K2/3pRP2/8/4P3/8/5r2 w - - 0 1",
-    "sourceFen": "8/8/3k1K2/3pRP2/8/4P3/8/5r2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lucena position",
       "url": "https://en.wikipedia.org/wiki/Lucena_position"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Lucena position",
+      "index": 8,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-4",
-    "fen": "8/5p2/k7/6RK/5P1P/8/8/7r w - - 0 1",
-    "sourceFen": "8/5p2/k7/6RK/5P1P/8/8/7r w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp1927.pgn",
+      "game": 33,
+      "ply": 158
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-5",
-    "fen": "8/2R2pk1/8/6pp/8/6P1/5rK1/8 w - - 0 1",
-    "sourceFen": "8/2R2pk1/8/6pp/8/6P1/5rK1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Von Bardeleben, Curt vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 26,
+      "ply": 112
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-6",
-    "fen": "8/8/6R1/p7/r5Pk/7P/5PK1/8 w - - 0 1",
-    "sourceFen": "8/8/6R1/p7/r5Pk/7P/5PK1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: New York 1924: Yates, Frederick vs. Lasker, Edward",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 42,
+      "ply": 92
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-7",
-    "fen": "8/6p1/5k2/PR5p/8/r4PK1/8/8 w - - 0 1",
-    "sourceFen": "8/6p1/5k2/PR5p/8/r4PK1/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Von Bardeleben, Curt vs. Janowsky, Dawid Markelowicz",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 27,
+      "ply": 108
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-8",
-    "fen": "8/6kp/4R3/6Pp/5P2/8/5K2/r7 w - - 0 1",
-    "sourceFen": "8/6kp/4R3/6Pp/5P2/8/5K2/r7 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: World Championship 2021: Carlsen,M vs. Nepomniachtchi,I",
       "url": "https://www.pgnmentor.com/events/WorldChamp2021.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/WorldChamp2021.pgn",
+      "game": 1,
+      "ply": 110
+    },
+    "flip": false
   },
   {
     "id": "6-to-8-pieces-rook-9",
-    "fen": "8/1p1k2r1/7R/1pP1p3/8/4K3/8/8 w - - 0 1",
-    "sourceFen": "8/1p1k2r1/7R/1pP1p3/8/4K3/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Chigorin, Mikhail",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 181,
+      "ply": 116
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor",
-    "fen": "8/8/7p/4k2P/2B1P1P1/4bP2/2K5/8 w - - 0 1",
-    "sourceFen": "8/2k5/4Bp2/2b1p1p1/4K2p/7P/8/8 b - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Opposite-colored bishops endgame",
+      "index": 6,
+      "sideToMove": "b"
+    },
+    "flip": true
   },
   {
     "id": "9-to-11-pieces-minor-10",
-    "fen": "5k2/7p/6p1/p1bB4/5P1P/3PP3/4K3/8 b - - 0 1",
-    "sourceFen": "5k2/7p/6p1/p1bB4/5P1P/3PP3/4K3/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. indianstar, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 24,
+      "ply": 65
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-11",
-    "fen": "5k2/4b2p/8/p7/5P1p/1B1PPK2/8/8 b - - 0 1",
-    "sourceFen": "5k2/4b2p/8/p7/5P1p/1B1PPK2/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. indianstar, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 24,
+      "ply": 71
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-12",
-    "fen": "3n4/5Np1/1p2k1p1/2P3P1/4KP1P/8/8/8 b - - 0 1",
-    "sourceFen": "3n4/5Np1/1p2k1p1/2P3P1/4KP1P/8/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Night-King96, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 125,
+      "ply": 89
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-13",
-    "fen": "8/7p/6p1/1kp1Bp2/5P2/p2K4/1p4P1/8 b - - 0 1",
-    "sourceFen": "8/7p/6p1/1kp1Bp2/5P2/p2K4/1p4P1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): satrancdelisi23 vs. DrNykterstein, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 94,
+      "ply": 83
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-14",
-    "fen": "8/3b4/6p1/2k1p2P/2P1p2P/4N1K1/5P2/8 b - - 0 1",
-    "sourceFen": "8/3b4/6p1/2k1p2P/2P1p2P/4N1K1/5P2/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 123,
+      "ply": 117
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-15",
-    "fen": "1b4k1/1P3pp1/2p4p/8/8/3K4/6PP/8 b - - 0 1",
-    "sourceFen": "1b4k1/1P3pp1/2p4p/8/8/3K4/6PP/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 15,
+      "ply": 83
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-16",
-    "fen": "8/8/4b3/4p2N/2Pkp2P/6K1/5P2/8 b - - 0 1",
-    "sourceFen": "8/8/4b3/4p2N/2Pkp2P/6K1/5P2/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 123,
+      "ply": 123
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-17",
-    "fen": "8/1n4p1/1P2k1p1/6P1/2K2P1P/8/8/8 b - - 0 1",
-    "sourceFen": "8/1n4p1/1P2k1p1/6P1/2K2P1P/8/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Night-King96, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 125,
+      "ply": 95
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-2",
-    "fen": "3b4/p4B1p/8/6k1/6P1/8/1P3PK1/8 w - - 0 1",
-    "sourceFen": "3b4/p4B1p/8/6k1/6P1/8/1P3PK1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Opposite-colored bishops endgame",
+      "index": 16,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-3",
-    "fen": "8/8/8/3k2p1/4p3/2b1P1pP/4KNP1/8 w - - 0 1",
-    "sourceFen": "8/8/8/3k2p1/4p3/2b1P1pP/4KNP1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Fortress (chess)",
+      "index": 3,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-4",
-    "fen": "6b1/7p/1p1k3P/6P1/1p1P1P2/3BK3/8/8 w - - 0 1",
-    "sourceFen": "6b1/7p/1p1k3P/6P1/1p1P1P2/3BK3/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 19,
+      "ply": 80
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-5",
-    "fen": "5b2/1p2p1k1/8/2BPp3/5P2/n2B1K2/8/8 w - - 0 1",
-    "sourceFen": "5b2/1p2p1k1/8/2BPp3/5P2/n2B1K2/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 31,
+      "ply": 80
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-6",
-    "fen": "8/3b4/1k5p/1B4p1/3pp1P1/6PP/3K4/8 w - - 0 1",
-    "sourceFen": "8/3b4/1k5p/1B4p1/3pp1P1/6PP/3K4/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 117,
+      "ply": 86
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-7",
-    "fen": "8/8/7p/4kBp1/3pp1P1/6PP/2K5/8 w - - 0 1",
-    "sourceFen": "8/8/7p/4kBp1/3pp1P1/6PP/2K5/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 117,
+      "ply": 92
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-8",
-    "fen": "8/8/4b1p1/2Bp3p/5P1P/1pK1Pk2/8/8 b - - 0 1",
-    "sourceFen": "8/8/4b1p1/2Bp3p/5P1P/1pK1Pk2/8/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Opposite-colored bishops endgame",
+      "index": 14,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-minor-9",
-    "fen": "6k1/5pp1/1Pp4p/N7/8/2b5/6PP/5K2 b - - 0 1",
-    "sourceFen": "6k1/5pp1/1Pp4p/N7/8/2b5/6PP/5K2 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 15,
+      "ply": 77
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed",
-    "fen": "7R/3n2r1/3N2np/6kP/3N1p2/7K/8/8 w - - 0 1",
-    "sourceFen": "7R/3n2r1/3N2np/6kP/3N1p2/7K/8/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Two knights endgame",
+      "index": 26,
+      "sideToMove": "w"
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-10",
-    "fen": "6k1/5p2/6p1/3R3p/3bKP2/8/6PP/3r4 w - - 0 1",
-    "sourceFen": "6k1/5p2/6p1/3R3p/3bKP2/8/6PP/3r4 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Dragon700 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 59,
+      "ply": 66
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-11",
-    "fen": "8/pp4bk/8/8/6QP/1P3PPK/q7/8 w - - 0 1",
-    "sourceFen": "8/pp4bk/8/8/6QP/1P3PPK/q7/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. pasino, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 126,
+      "ply": 70
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-12",
-    "fen": "3k4/1R6/r7/4NK2/p2P1P2/4P3/8/6r1 w - - 0 1",
-    "sourceFen": "3k4/1R6/r7/4NK2/p2P1P2/4P3/8/6r1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Lord_Maxik vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 68,
+      "ply": 92
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-13",
-    "fen": "5k2/1R6/r7/p3pK2/3P1PN1/4P3/8/6r1 w - - 0 1",
-    "sourceFen": "5k2/1R6/r7/p3pK2/3P1PN1/4P3/8/6r1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Lord_Maxik vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 68,
+      "ply": 86
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-14",
-    "fen": "1R6/2P3Bp/8/4p1K1/2n5/3k4/1p4rP/8 w - - 0 1",
-    "sourceFen": "1R6/2P3Bp/8/4p1K1/2n5/3k4/1p4rP/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Zaven_ChessMood vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 57,
+      "ply": 86
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-15",
-    "fen": "8/8/5k2/8/1r3p2/RB2KP2/P5b1/8 w - - 0 1",
-    "sourceFen": "8/8/5k2/8/1r3p2/RB2KP2/P5b1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 49,
+      "ply": 96
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-16",
-    "fen": "6k1/R4pp1/7p/3n4/3N4/6P1/1r5P/6K1 w - - 0 1",
-    "sourceFen": "6k1/R4pp1/7p/3n4/3N4/6P1/1r5P/6K1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Umid-2006 vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 147,
+      "ply": 52
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-17",
-    "fen": "1r4k1/5q2/3R4/2p5/4B3/1b2P3/2Q3P1/6K1 w - - 0 1",
-    "sourceFen": "1r4k1/5q2/3R4/2p5/4B3/1b2P3/2Q3P1/6K1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. chess-art-us, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 48,
+      "ply": 72
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-18",
-    "fen": "8/p7/2p5/3p4/4kr2/2P1p3/PP2Q3/3K4 w - - 0 1",
-    "sourceFen": "8/p7/2p5/3p4/4kr2/2P1p3/PP2Q3/3K4 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 149,
+      "ply": 116
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-19",
-    "fen": "8/6p1/k4b1p/7P/2p1R1P1/8/4K3/8 w - - 0 1",
-    "sourceFen": "8/6p1/k4b1p/7P/2p1R1P1/8/4K3/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 37,
+      "ply": 124
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-2",
-    "fen": "8/5pk1/2Q1pbp1/1P6/8/3rP1P1/8/6K1 w - - 0 1",
-    "sourceFen": "6k1/8/3Rp1p1/8/1p6/2q1PBP1/5PK1/8 b - - 0 1",
-    "flipped": true,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 17,
+      "sideToMove": "b"
+    },
+    "flip": true
   },
   {
     "id": "9-to-11-pieces-mixed-20",
-    "fen": "8/8/pB1p4/P2kp3/p4p2/5r2/R1K5/8 w - - 0 1",
-    "sourceFen": "8/8/pB1p4/P2kp3/p4p2/5r2/R1K5/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): affa19 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 38,
+      "ply": 100
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-21",
-    "fen": "6k1/7p/8/8/1B2r3/P3pN1P/4K3/8 w - - 0 1",
-    "sourceFen": "6k1/7p/8/8/1B2r3/P3pN1P/4K3/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. ChessArtHouse, 2026.10.06",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 0,
+      "ply": 92
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-22",
-    "fen": "8/6p1/kb3p1p/5R1P/2p1P1P1/8/4K3/8 w - - 0 1",
-    "sourceFen": "8/6p1/kb3p1p/5R1P/2p1P1P1/8/4K3/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 37,
+      "ply": 118
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-23",
-    "fen": "6k1/5ppp/8/2N5/8/1r3P2/3B2PP/6K1 b - - 0 1",
-    "sourceFen": "6k1/5ppp/8/2N5/8/1r3P2/3B2PP/6K1 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Chess endgame",
+      "index": 15,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-24",
-    "fen": "8/1r3pk1/6p1/2K1P3/2Bp4/6P1/1N5P/8 b - - 0 1",
-    "sourceFen": "8/1r3pk1/6p1/2K1P3/2Bp4/6P1/1N5P/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Night-King96 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 53,
+      "ply": 103
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-25",
-    "fen": "8/3P3k/7p/1P2N1p1/8/7P/6PK/q2N4 b - - 0 1",
-    "sourceFen": "8/3P3k/7p/1P2N1p1/8/7P/6PK/q2N4 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 60,
+      "ply": 99
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-26",
-    "fen": "8/5pk1/6p1/4P3/K2p4/1r1B2P1/1N5P/8 b - - 0 1",
-    "sourceFen": "8/5pk1/6p1/4P3/K2p4/1r1B2P1/1N5P/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Night-King96 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 53,
+      "ply": 97
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-27",
-    "fen": "8/4Q1kp/2pp2p1/p5q1/5r2/7K/7P/8 b - - 0 1",
-    "sourceFen": "8/4Q1kp/2pp2p1/p5q1/5r2/7K/7P/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Lelouch_Vi_Brittania vs. DrNykterstein, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 110,
+      "ply": 61
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-28",
-    "fen": "8/5R2/6p1/1b4Kp/2k5/p1P3P1/5P1P/8 b - - 0 1",
-    "sourceFen": "8/5R2/6p1/1b4Kp/2k5/p1P3P1/5P1P/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): indianstar vs. DrNykterstein, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 21,
+      "ply": 85
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-29",
-    "fen": "8/3q3k/7p/1P4p1/8/4N2P/5KP1/8 b - - 0 1",
-    "sourceFen": "8/3q3k/7p/1P4p1/8/4N2P/5KP1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 60,
+      "ply": 105
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-3",
-    "fen": "8/8/pB1p4/P3k3/5p2/4pr2/2K5/3R4 w - - 0 1",
-    "sourceFen": "8/8/pB1p4/P3k3/5p2/4pr2/2K5/3R4 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): affa19 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 38,
+      "ply": 106
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-30",
-    "fen": "8/1p2n3/3p3P/4p1P1/2kB4/1p6/8/3R3K b - - 0 1",
-    "sourceFen": "8/1p2n3/3p3P/4p1P1/2kB4/1p6/8/3R3K b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Kasparov vs. The World, 1999",
       "url": "https://lichess.org/game/export/QVae8hXv.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/game/export/QVae8hXv.pgn",
+      "game": 0,
+      "ply": 81
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-31",
-    "fen": "8/4kp2/4pPp1/p2B4/1p6/2q5/8/1K6 b - - 0 1",
-    "sourceFen": "8/4kp2/4pPp1/p2B4/1p6/2q5/8/1K6 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): ChessArtHouse vs. DrNykterstein, 2026.10.06",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 1,
+      "ply": 101
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-32",
-    "fen": "8/3kp2R/1b4p1/2pr4/6P1/6BP/6K1/8 b - - 0 1",
-    "sourceFen": "8/3kp2R/1b4p1/2pr4/6P1/6BP/6K1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 50,
+      "ply": 69
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-33",
-    "fen": "6k1/R5b1/2b5/8/3n3B/6P1/5PBK/1r6 b - - 0 1",
-    "sourceFen": "6k1/R5b1/2b5/8/3n3B/6P1/5PBK/1r6 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): affa19 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 83,
+      "ply": 69
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-34",
-    "fen": "4k3/1r5p/5Bp1/3KP3/1P3R2/7P/8/2r5 b - - 0 1",
-    "sourceFen": "4k3/1r5p/5Bp1/3KP3/1P3R2/7P/8/2r5 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. SalihEke, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 82,
+      "ply": 93
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-35",
-    "fen": "6k1/4R1b1/8/8/4b2B/5nPK/1r3PB1/8 b - - 0 1",
-    "sourceFen": "6k1/4R1b1/8/8/4b2B/5nPK/1r3PB1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): affa19 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 83,
+      "ply": 75
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-36",
-    "fen": "8/8/6p1/6Kp/8/p1k3P1/2b2P1P/R7 b - - 0 1",
-    "sourceFen": "8/8/6p1/6Kp/8/p1k3P1/2b2P1P/R7 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): indianstar vs. DrNykterstein, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 21,
+      "ply": 91
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-37",
-    "fen": "2R5/4r1pk/3N3p/7P/8/3n2P1/6K1/8 b - - 0 1",
-    "sourceFen": "2R5/4r1pk/3N3p/7P/8/3n2P1/6K1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. yoseph2013, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 40,
+      "ply": 81
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-38",
-    "fen": "4k3/2r4p/5Bp1/4P3/1K3R2/3r3P/1P6/8 b - - 0 1",
-    "sourceFen": "4k3/2r4p/5Bp1/4P3/1K3R2/3r3P/1P6/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. SalihEke, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 82,
+      "ply": 87
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-39",
-    "fen": "7R/2bkp3/6p1/3r4/6P1/2p1B2P/6K1/8 b - - 0 1",
-    "sourceFen": "7R/2bkp3/6p1/3r4/6P1/2p1B2P/6K1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 50,
+      "ply": 75
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-4",
-    "fen": "Q7/p5bk/8/8/7P/1P3PPK/8/q7 w - - 0 1",
-    "sourceFen": "Q7/p5bk/8/8/7P/1P3PPK/8/q7 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. pasino, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 126,
+      "ply": 76
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-40",
-    "fen": "3k4/8/p1p1R3/1p2N3/2N2P2/1q6/5KP1/8 b - - 0 1",
-    "sourceFen": "3k4/8/p1p1R3/1p2N3/2N2P2/1q6/5KP1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. penguingim1, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 133,
+      "ply": 73
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-41",
-    "fen": "5r2/pp4k1/4p3/5q2/8/P3Q1P1/4R2K/8 b - - 0 1",
-    "sourceFen": "5r2/pp4k1/4p3/5q2/8/P3Q1P1/4R2K/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): indianstar vs. DrNykterstein, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 25,
+      "ply": 67
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-42",
-    "fen": "8/1p5P/3p2n1/5KP1/8/3p4/1pk5/7R b - - 0 1",
-    "sourceFen": "8/1p5P/3p2n1/5KP1/8/3p4/1pk5/7R b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Kasparov vs. The World, 1999",
       "url": "https://lichess.org/game/export/QVae8hXv.pgn"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/game/export/QVae8hXv.pgn",
+      "game": 0,
+      "ply": 93
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-43",
-    "fen": "4k3/5p2/p3pqp1/3B4/1p3P2/2R5/1K6/8 b - - 0 1",
-    "sourceFen": "4k3/5p2/p3pqp1/3B4/1p3P2/2R5/1K6/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): ChessArtHouse vs. DrNykterstein, 2026.10.06",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 1,
+      "ply": 95
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-5",
-    "fen": "8/R4ppk/7p/5N2/6n1/6P1/1r5P/6K1 w - - 0 1",
-    "sourceFen": "8/R4ppk/7p/5N2/6n1/6P1/1r5P/6K1 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Umid-2006 vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 147,
+      "ply": 58
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-6",
-    "fen": "8/8/5k2/5pR1/7r/pB2KP2/P5P1/5b2 w - - 0 1",
-    "sourceFen": "8/8/5k2/5pR1/7r/pB2KP2/P5P1/5b2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 49,
+      "ply": 90
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-7",
-    "fen": "8/p7/2p5/3p4/5r2/2Pkp3/PP6/3KQ3 w - - 0 1",
-    "sourceFen": "8/p7/2p5/3p4/5r2/2Pkp3/PP6/3KQ3 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 149,
+      "ply": 110
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-8",
-    "fen": "4r1k1/7p/8/8/1B3p2/P4N1P/4r3/1R3K2 w - - 0 1",
-    "sourceFen": "4r1k1/7p/8/8/1B3p2/P4N1P/4r3/1R3K2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. ChessArtHouse, 2026.10.06",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 0,
+      "ply": 86
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-mixed-9",
-    "fen": "8/p5p1/6k1/4Pp2/2b4Q/P4q2/2B5/2K5 w - - 0 1",
-    "sourceFen": "8/p5p1/6k1/4Pp2/2b4Q/P4q2/2B5/2K5 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): mutdpro vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 46,
+      "ply": 88
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-queen",
-    "fen": "8/5Q2/2q4p/1k4p1/p4p2/5P1P/6PK/8 w - - 0 1",
-    "sourceFen": "8/5Q2/2q4p/1k4p1/p4p2/5P1P/6PK/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Alamzhi vs. DrNykterstein, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 95,
+      "ply": 84
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-queen-2",
-    "fen": "8/8/2q4p/1k4p1/p4p2/5P1P/Q5PK/8 w - - 0 1",
-    "sourceFen": "8/8/2q4p/1k4p1/p4p2/5P1P/Q5PK/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Alamzhi vs. DrNykterstein, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 95,
+      "ply": 90
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook",
-    "fen": "2r3k1/6p1/6Pp/8/5P2/p7/1P1R1P2/1K6 w - - 0 1",
-    "sourceFen": "2r3k1/6p1/6Pp/8/5P2/p7/1P1R1P2/1K6 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. RebeccaHarris, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 43,
+      "ply": 70
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-10",
-    "fen": "8/1p6/p1k5/2P2R2/2r5/1K6/P1P5/8 b - - 0 1",
-    "sourceFen": "8/1p6/p1k5/2P2R2/2r5/1K6/P1P5/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 127,
+      "ply": 69
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-11",
-    "fen": "7k/2R3p1/7p/8/P2R4/6rP/r7/5K2 b - - 0 1",
-    "sourceFen": "7k/2R3p1/7p/8/P2R4/6rP/r7/5K2 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 71,
+      "ply": 81
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-12",
-    "fen": "8/5pkp/6p1/3R4/5PP1/2r4P/6K1/8 b - - 0 1",
-    "sourceFen": "8/5pkp/6p1/3R4/5PP1/2r4P/6K1/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. KonstantinKornienko, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 54,
+      "ply": 81
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-13",
-    "fen": "2r5/r1Pk4/2R5/6pp/4K3/P1R5/7P/8 b - - 0 1",
-    "sourceFen": "2r5/r1Pk4/2R5/6pp/4K3/P1R5/7P/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): respects_55 vs. DrNykterstein, 2026.04.08",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 2,
+      "ply": 101
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-14",
-    "fen": "8/2R3p1/2p1p1p1/5rP1/3k4/6K1/2P2P2/8 b - - 0 1",
-    "sourceFen": "8/2R3p1/2p1p1p1/5rP1/3k4/6K1/2P2P2/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 13,
+      "ply": 73
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-15",
-    "fen": "7k/2R3p1/7p/8/8/6PP/Pr3r2/3R2K1 b - - 0 1",
-    "sourceFen": "7k/2R3p1/7p/8/8/6PP/Pr3r2/3R2K1 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 71,
+      "ply": 75
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-16",
-    "fen": "6r1/1p6/pk6/2PR1p2/6P1/8/P1P5/2K5 b - - 0 1",
-    "sourceFen": "6r1/1p6/pk6/2PR1p2/6P1/8/P1P5/2K5 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 127,
+      "ply": 63
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-17",
-    "fen": "5k2/2r2p1p/2P3p1/3R4/5P2/7P/6PK/8 b - - 0 1",
-    "sourceFen": "5k2/2r2p1p/2P3p1/3R4/5P2/7P/6PK/8 b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. KonstantinKornienko, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 54,
+      "ply": 75
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-18",
-    "fen": "8/8/p5k1/5p2/2p5/2P3K1/1P1r3p/7R b - - 0 1",
-    "sourceFen": "8/8/p5k1/5p2/2p5/2P3K1/1P1r3p/7R b - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): KAPUTVSEMU vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 73,
+      "ply": 107
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-2",
-    "fen": "8/5pk1/6p1/3R3p/4KP2/7P/6P1/5r2 w - - 0 1",
-    "sourceFen": "8/5pk1/6p1/3R3p/4KP2/7P/6P1/5r2 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Dragon700 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 59,
+      "ply": 72
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-3",
-    "fen": "8/2k5/pp5p/4R2P/1PP5/2K5/P7/7r w - - 0 1",
-    "sourceFen": "8/2k5/pp5p/4R2P/1PP5/2K5/P7/7r w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 134,
+      "ply": 68
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-4",
-    "fen": "5k2/6p1/6Pp/8/P4r2/8/R4P2/1K6 w - - 0 1",
-    "sourceFen": "5k2/6p1/6Pp/8/P4r2/8/R4P2/1K6 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. RebeccaHarris, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 43,
+      "ply": 76
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-5",
-    "fen": "8/1pr5/p4R2/P5p1/4k1P1/7P/6K1/8 w - - 0 1",
-    "sourceFen": "8/1pr5/p4R2/P5p1/4k1P1/7P/6K1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 17,
+      "ply": 90
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-6",
-    "fen": "3R4/3P1ppk/7p/8/1p6/6KP/3r2P1/8 w - - 0 1",
-    "sourceFen": "3R4/3P1ppk/7p/8/1p6/6KP/3r2P1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Night-King96 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 47,
+      "ply": 84
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-7",
-    "fen": "1k6/p7/1p5p/4R2P/2P5/8/PP6/1K1r4 w - - 0 1",
-    "sourceFen": "1k6/p7/1p5p/4R2P/2P5/8/PP6/1K1r4 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 134,
+      "ply": 62
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-8",
-    "fen": "8/5pk1/4r1pp/8/3R4/6KP/6P1/8 w - - 0 1",
-    "sourceFen": "8/5pk1/4r1pp/8/3R4/6KP/6P1/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): mutdpro vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 129,
+      "ply": 66
+    },
+    "flip": false
   },
   {
     "id": "9-to-11-pieces-rook-9",
-    "fen": "3r4/p7/7k/4R3/2p2P2/P1p3P1/2P2K2/8 w - - 0 1",
-    "sourceFen": "3r4/p7/7k/4R3/2p2P2/P1p3P1/2P2K2/8 w - - 0 1",
-    "flipped": false,
     "name": null,
     "themes": [],
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Mamikon_Gharibyan, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
-    }
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false",
+      "game": 66,
+      "ply": 76
+    },
+    "flip": false
   },
   {
     "id": "lucena-position",
-    "fen": "4K3/4P1k1/8/8/8/8/r7/5R2 b - - 0 1",
-    "sourceFen": "4K3/4P1k1/8/8/8/8/r7/5R2 b - - 0 1",
-    "flipped": false,
     "name": "Lucena position",
     "themes": [],
     "source": {
       "title": "Lucena position",
       "url": "https://en.wikipedia.org/wiki/Lucena_position"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Lucena position",
+      "index": 6,
+      "sideToMove": "b"
+    },
+    "flip": false
   },
   {
     "id": "philidor-position",
-    "fen": "4k3/R7/8/3KP3/5r2/8/8/8 w - - 0 1",
-    "sourceFen": "4k3/R7/8/3KP3/5r2/8/8/8 w - - 0 1",
-    "flipped": false,
     "name": "Philidor position",
     "themes": [],
     "source": {
       "title": "Philidor position",
       "url": "https://en.wikipedia.org/wiki/Philidor_position"
-    }
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Philidor position",
+      "index": 1,
+      "sideToMove": "w"
+    },
+    "flip": false
   }
 ]

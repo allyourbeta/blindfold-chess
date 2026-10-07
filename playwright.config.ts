@@ -10,17 +10,24 @@ import { defineConfig, devices } from "@playwright/test";
  * hasn't answered yet. These are the settings that stop that; they are not
  * masking a bug in the app.
  */
-// Two, not three. At three, the two engine-lifecycle tests that act on an
-// in-flight reply took ~52s and hit the 60s ceiling; at one worker the same
-// two ran in 9.6s and 6.5s. Nothing was wrong with them — three browser
-// contexts each loading the 3.3MB model is simply more than this machine
-// has. The round-74 reply delay (1.0-1.8s floor per engine move) spends
+// Four, raised from two on 2026-10-07 for this session's M5 MacBook Air —
+// the full 108-test suite passed cleanly at four workers in ~1.1 minutes,
+// with real margin under every timeout (the slowest engine-lifecycle tests
+// finished in single-digit seconds). The two-worker reasoning below is kept
+// for context: it was a real constraint on the machine this was tuned for
+// before, not a rule to re-apply blindly on different hardware.
+//
+// At three, on that older machine, the two engine-lifecycle tests that act
+// on an in-flight reply took ~52s and hit the 60s ceiling; at one worker the
+// same two ran in 9.6s and 6.5s. Nothing was wrong with them — three browser
+// contexts each loading the 3.3MB model was simply more than that machine
+// had. The round-74 reply delay (1.0-1.8s floor per engine move) spends
 // wall-clock rather than CPU, so it does not add contention, but it does
 // push every engine-waiting test nearer that ceiling — which is what turned
 // a marginal setting into a failing one. Raising the timeout instead would
 // have bought headroom without reducing load, and made a genuinely hung
 // test take 90s to report.
-const WORKERS = 2;
+const WORKERS = 4;
 
 export default defineConfig({
   testDir: "./tests/e2e",

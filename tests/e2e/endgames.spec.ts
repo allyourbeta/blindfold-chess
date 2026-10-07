@@ -8,8 +8,8 @@ async function openEndgames(page: Page) {
   await page.getByRole("button", { name: /Practice an endgame/i }).click();
 }
 
-async function openFamily(page: Page, name: RegExp) {
-  await page.getByTestId("family-row").filter({ hasText: name }).click();
+async function openSize(page: Page, name: RegExp) {
+  await page.getByTestId("size-row").filter({ hasText: name }).click();
 }
 
 /** Opens the More sheet, reads the FEN message it adds, then closes the sheet again. */
@@ -31,46 +31,32 @@ function pickNonTerminalMove(fen: string): { san: string; endsGame: boolean } {
   return { san: chess.moves()[0], endsGame: true };
 }
 
-/** Walks every family from the endgames home until it finds a Black-to-move row, and opens it. */
-async function openABlackToMoveEntry(page: Page) {
-  const families = [/Pawn endings/, /Rook endings/, /Minor piece endings/, /Queen endings/, /Mixed/];
-  for (const fam of families) {
-    await openFamily(page, fam);
-    const rows = page.getByTestId("endgame-row");
-    const texts = await rows.allTextContents();
-    const index = texts.findIndex((t) => /Black to move/.test(t));
-    if (index !== -1) {
-      await rows.nth(index).click();
-      return;
-    }
-    await page.getByLabel("Back").click();
-  }
-  throw new Error("No Black-to-move entry found in any family — the catalog may be malformed.");
+/** Walks every size from the endgames home until it finds a Black-to-move row in `sizeName`, and opens it. */
+async function openABlackToMoveEntry(page: Page, sizeName: RegExp) {
+  await openSize(page, sizeName);
+  const rows = page.getByTestId("endgame-row");
+  const texts = await rows.allTextContents();
+  const index = texts.findIndex((t) => /Black to move/.test(t));
+  if (index === -1) throw new Error(`No Black-to-move entry found in ${sizeName} -- the catalog may be malformed.`);
+  await rows.nth(index).click();
 }
 
-test("Rook endings: open a named position, preview it, play it blindfold, and get a reply", async ({ page }) => {
+test("Home -> 3 to 5 pieces -> first named entry -> Play Blindfold -> one move -> reply", async ({ page }) => {
   await openEndgames(page);
-  await openFamily(page, /Rook endings/);
+  await openSize(page, /3 to 5 pieces/);
 
   const rows = page.getByTestId("endgame-row");
   const texts = await rows.allTextContents();
-  let index = texts.findIndex((t) => /Lucena/i.test(t));
+  let index = texts.findIndex((t) => !/^Position \d+/.test(t.trim()));
   const usedFallback = index === -1;
-  if (usedFallback) index = texts.findIndex((t) => !/^Position \d+/.test(t.trim()));
-  expect(index, "Rook endings should have at least one position").toBeGreaterThanOrEqual(0);
+  if (usedFallback) index = 0;
+  expect(index, "3 to 5 pieces should have at least one position").toBeGreaterThanOrEqual(0);
   if (usedFallback) {
-    test.info().annotations.push({
-      type: "note",
-      description: `No Lucena entry in the catalog; used the first named rook position instead: "${texts[index]}"`,
-    });
+    test.info().annotations.push({ type: "note", description: "No named entry in 3 to 5 pieces; used the first position instead." });
   }
 
   await rows.nth(index).click();
-  if (usedFallback) {
-    await expect(page.getByText(/You play (White|Black)\./)).toBeVisible();
-  } else {
-    await expect(page.getByText("You play White.")).toBeVisible();
-  }
+  await expect(page.getByText(/You play (White|Black)\. \d+ pieces\./)).toBeVisible();
 
   await page.getByRole("button", { name: "Play Blindfold" }).click();
   await expect(keypad(page)).toBeVisible();
@@ -86,10 +72,12 @@ test("Rook endings: open a named position, preview it, play it blindfold, and ge
   }
 });
 
-test("a Black-to-move endgame forces you onto Black, without changing the White setting", async ({ page }) => {
+test("a Black-to-move endgame from 12 to 16 pieces forces you onto Black, without changing the White setting", async ({
+  page,
+}) => {
   await openEndgames(page);
-  await openABlackToMoveEntry(page);
-  await expect(page.getByText("You play Black.")).toBeVisible();
+  await openABlackToMoveEntry(page, /12 to 16 pieces/);
+  await expect(page.getByText(/You play Black\. \d+ pieces\./)).toBeVisible();
 
   await page.getByRole("button", { name: "Play Blindfold" }).click();
   await expect(keypad(page)).toBeVisible();
@@ -98,13 +86,13 @@ test("a Black-to-move endgame forces you onto Black, without changing the White 
   await expect(page.locator("#game-settings-summary").getByText("White", { exact: true })).toBeVisible();
 });
 
-test("search narrows the family list to matches; a no-match query offers Clear search", async ({ page }) => {
+test("search narrows the size list to matches; a no-match query offers Clear search", async ({ page }) => {
   await openEndgames(page);
   const search = page.getByLabel("Search endgames");
 
-  // "rook" matches at least the whole Rook endings family via its family label.
+  // "rook" matches at least every rook-family position via its family label.
   await search.fill("rook");
-  await expect(page.getByTestId("family-row")).toHaveCount(0);
+  await expect(page.getByTestId("size-row")).toHaveCount(0);
   await expect(page.getByTestId("endgame-row").first()).toBeVisible();
 
   await search.fill("zzzz");
@@ -112,14 +100,14 @@ test("search narrows the family list to matches; a no-match query offers Clear s
   await expect(page.getByTestId("endgame-row")).toHaveCount(0);
 
   await page.getByRole("button", { name: "Clear search" }).click();
-  await expect(page.getByTestId("family-row")).toHaveCount(5);
+  await expect(page.getByTestId("size-row")).toHaveCount(4);
 });
 
-test("game over in an endgame: Try again replays the same position, Endgames lands on the family view", async ({
+test("game over in an endgame: Try again replays the same position, Endgames lands on the size view", async ({
   page,
 }) => {
   await openEndgames(page);
-  await openFamily(page, /Pawn endings/);
+  await openSize(page, /6 to 8 pieces/);
   await page.getByTestId("endgame-row").first().click();
   await page.getByRole("button", { name: "Play Blindfold" }).click();
   await expect(keypad(page)).toBeVisible();
@@ -129,10 +117,10 @@ test("game over in an endgame: Try again replays the same position, Endgames lan
   await page.getByRole("button", { name: /Resign/ }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog.getByRole("button", { name: "Try again" })).toBeVisible();
-  await expect(dialog.getByRole("button", { name: "Another from this group" })).toBeVisible();
+  await expect(dialog.getByRole("button", { name: "Another of this size" })).toBeVisible();
   await expect(dialog.getByRole("button", { name: "Copy PGN" })).toBeVisible();
   await expect(dialog.getByRole("button", { name: "Endgames" })).toBeVisible();
-  await expect(dialog.getByText(/Goal was a (win|draw)\./)).toBeVisible();
+  await expect(dialog.getByText(/Goal was a/)).toHaveCount(0);
 
   await dialog.getByRole("button", { name: "Try again" }).click();
   await expect(keypad(page)).toBeVisible();
@@ -141,7 +129,7 @@ test("game over in an endgame: Try again replays the same position, Endgames lan
   await page.getByRole("button", { name: /Resign/ }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Endgames" }).click();
   await expect(page.getByText(/^\d+ positions$/)).toBeVisible();
-  await expect(page.getByTestId("family-row")).toHaveCount(0);
+  await expect(page.getByTestId("size-row")).toHaveCount(0);
 });
 
 test("a normal game's game-over panel is unchanged by the endgame feature", async ({ page }) => {
@@ -156,25 +144,25 @@ test("a normal game's game-over panel is unchanged by the endgame feature", asyn
   await expect(dialog.getByText(/Goal was a/)).toHaveCount(0);
 });
 
-test("every back arrow returns where expected: position -> family -> home -> menu", async ({ page }) => {
+test("every back arrow returns where expected: position -> size -> home -> menu", async ({ page }) => {
   await openEndgames(page);
-  await openFamily(page, /Minor piece endings/);
+  await openSize(page, /9 to 11 pieces/);
   await page.getByTestId("endgame-row").first().click();
   await expect(page.getByRole("button", { name: "Play Blindfold" })).toBeVisible();
 
-  await page.getByLabel("Back").click(); // position -> family
+  await page.getByLabel("Back").click(); // position -> size
   await expect(page.getByTestId("endgame-row").first()).toBeVisible();
-  await expect(page.getByText("Minor piece endings")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "9 to 11 pieces" })).toBeVisible();
 
-  await page.getByLabel("Back").click(); // family -> home
-  await expect(page.getByTestId("family-row")).toHaveCount(5);
+  await page.getByLabel("Back").click(); // size -> home
+  await expect(page.getByTestId("size-row")).toHaveCount(4);
 
   await page.getByLabel("Back").click(); // home -> menu
   await expect(page.getByRole("button", { name: /Practice an endgame/i })).toBeVisible();
 });
 
-// Checklist rule 11: the overlap/viewport scan extended to the new screens,
-// at the iphone project's own size and at landscape 844x390 -- same
+// Checklist rule 11: the overlap/viewport scan extended to the renamed size
+// screen, at the iphone project's own size and at landscape 844x390 -- same
 // thresholds as landscape.spec.ts, with one deliberate difference: these
 // three views are plain `overflow-y-auto` scrolling pages (the same pattern
 // SetupScreen already uses), not PlayScreen's fixed, never-scrolls grid. A
@@ -205,15 +193,15 @@ function registerUiChecks(width: number, height: number) {
     await assertNoEscapeOrOverlap(page, width);
   });
 
-  test(`${width}x${height}: endgames family has no escaped or overlapping control`, async ({ page }) => {
+  test(`${width}x${height}: endgames size has no escaped or overlapping control`, async ({ page }) => {
     await openEndgames(page);
-    await openFamily(page, /Rook endings/);
+    await openSize(page, /6 to 8 pieces/);
     await assertNoEscapeOrOverlap(page, width);
   });
 
   test(`${width}x${height}: endgames position has no escaped or overlapping control`, async ({ page }) => {
     await openEndgames(page);
-    await openFamily(page, /Rook endings/);
+    await openSize(page, /6 to 8 pieces/);
     await page.getByTestId("endgame-row").first().click();
     await assertNoEscapeOrOverlap(page, width);
   });
@@ -239,15 +227,15 @@ test.describe("screenshots for visual comparison", () => {
     await page.screenshot({ path: "test-results/endgames-home.png" });
   });
 
-  test("endgames-family.png", async ({ page }) => {
+  test("endgames-size.png", async ({ page }) => {
     await openEndgames(page);
-    await openFamily(page, /Rook endings/);
-    await page.screenshot({ path: "test-results/endgames-family.png" });
+    await openSize(page, /6 to 8 pieces/);
+    await page.screenshot({ path: "test-results/endgames-size.png" });
   });
 
   test("endgames-position.png and endgames-position-dark.png", async ({ page }) => {
     await openEndgames(page);
-    await openFamily(page, /Rook endings/);
+    await openSize(page, /6 to 8 pieces/);
     await page.getByTestId("endgame-row").first().click();
     await page.screenshot({ path: "test-results/endgames-position.png" });
 
@@ -255,9 +243,15 @@ test.describe("screenshots for visual comparison", () => {
     await page.reload();
     await waitForEngineReady(page);
     await page.getByRole("button", { name: /Practice an endgame/i }).click();
-    await openFamily(page, /Rook endings/);
+    await openSize(page, /6 to 8 pieces/);
     await page.getByTestId("endgame-row").first().click();
     await page.screenshot({ path: "test-results/endgames-position-dark.png" });
+  });
+
+  test("endgames-position-black.png", async ({ page }) => {
+    await openEndgames(page);
+    await openABlackToMoveEntry(page, /12 to 16 pieces/);
+    await page.screenshot({ path: "test-results/endgames-position-black.png" });
   });
 
   test("endgames-search-empty.png", async ({ page }) => {
@@ -268,7 +262,7 @@ test.describe("screenshots for visual comparison", () => {
 
   test("endgames-gameover.png", async ({ page }) => {
     await openEndgames(page);
-    await openFamily(page, /Pawn endings/);
+    await openSize(page, /3 to 5 pieces/);
     await page.getByTestId("endgame-row").first().click();
     await page.getByRole("button", { name: "Play Blindfold" }).click();
     await expect(keypad(page)).toBeVisible();

@@ -6,20 +6,20 @@ import { PlayScreen } from "@/components/screens/PlayScreen";
 import { EndgamesScreen } from "@/components/screens/EndgamesScreen";
 import { useGameStore } from "@/state/gameStore";
 import { useTheme } from "@/hooks/useTheme";
-import type { Family } from "@/services/endgames/catalog";
+import type { SizeBucket } from "@/services/endgames/catalog";
 
 type Screen = "menu" | "setup" | "play" | "endgames";
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("menu");
-  // The family to land on when the endgames screen is reached from the
+  // The size bucket to land on when the endgames screen is reached from the
   // game-over panel's "Endgames" button -- null means start at its home view.
-  const [endgamesFamily, setEndgamesFamily] = useState<Family | null>(null);
+  const [endgamesBucket, setEndgamesBucket] = useState<SizeBucket | null>(null);
   const initEngine = useGameStore((s) => s.initEngine);
   useTheme();
 
-  function openEndgames(family: Family | null) {
-    setEndgamesFamily(family);
+  function openEndgames(bucket: SizeBucket | null) {
+    setEndgamesBucket(bucket);
     setScreen("endgames");
   }
 
@@ -66,11 +66,11 @@ export default function App() {
         )}
         {screen === "setup" && <SetupScreen onBack={() => setScreen("menu")} onPlay={() => setScreen("play")} />}
         {screen === "play" && (
-          <PlayScreen onMenu={() => setScreen("menu")} onEndgames={(family) => openEndgames(family)} />
+          <PlayScreen onMenu={() => setScreen("menu")} onEndgames={(bucket) => openEndgames(bucket)} />
         )}
         {screen === "endgames" && (
           <EndgamesScreen
-            initialFamily={endgamesFamily}
+            initialBucket={endgamesBucket}
             onMenu={() => setScreen("menu")}
             onPlay={() => setScreen("play")}
           />

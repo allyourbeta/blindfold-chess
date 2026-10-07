@@ -4,9 +4,11 @@ import { fenToBoard, FILES } from "@/services/chess/fen";
 export interface EndgamePosition {
   id: string;
   fen: string;
+  /** The position before any last-resort colour flip; equal to `fen` when `flipped` is false. */
+  sourceFen: string;
+  flipped: boolean;
   name: string | null;
   themes: string[];
-  goal: "win" | "draw";
   source: { title: string; url: string };
 }
 
@@ -23,6 +25,32 @@ export const FAMILY_INFO: Record<Family, { label: string; subtitle: string }> = 
   queen: { label: "Queen endings", subtitle: "Queen against pawns or queen" },
   mixed: { label: "Mixed", subtitle: "Rook against minor piece, and others" },
 };
+
+export interface SizeBucket {
+  min: number;
+  max: number;
+  label: string;
+  subtitle: string;
+}
+
+/** Practice is organized by how many pieces (kings and pawns included) are on the board, not by family. */
+export const SIZE_BUCKETS: SizeBucket[] = [
+  { min: 3, max: 5, label: "3 to 5 pieces", subtitle: "Kings and a few more" },
+  { min: 6, max: 8, label: "6 to 8 pieces", subtitle: "A small ending" },
+  { min: 9, max: 11, label: "9 to 11 pieces", subtitle: "A real ending" },
+  { min: 12, max: 16, label: "12 to 16 pieces", subtitle: "A heavy ending" },
+];
+
+/** Total pieces on the board, kings and pawns included. */
+export function sizeOf(fen: string): number {
+  return fenToBoard(fen).flat().filter((cell) => cell !== null).length;
+}
+
+/** The size bucket a FEN's piece count falls into, or undefined if it falls outside every bucket. */
+export function bucketOf(fen: string): SizeBucket | undefined {
+  const size = sizeOf(fen);
+  return SIZE_BUCKETS.find((b) => size >= b.min && size <= b.max);
+}
 
 const PIECE_VALUE: Record<string, number> = { q: 9, r: 5, b: 3, n: 3, p: 1 };
 const PIECE_NAME: Record<string, string> = { q: "queen", r: "rook", b: "bishop", n: "knight", p: "pawn" };
@@ -163,8 +191,8 @@ export function pieceList(fen: string, color: "w" | "b"): string {
 
 /**
  * Every word in `query` must appear in the name, a theme, the material
- * group label, or the family label -- OR'd across those fields, AND'd
- * across words.
+ * group label, the family label, or the size bucket label -- OR'd across
+ * those fields, AND'd across words.
  */
 export function search(query: string, catalog: EndgamePosition[] = ENDGAMES): EndgamePosition[] {
   const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
@@ -176,6 +204,7 @@ export function search(query: string, catalog: EndgamePosition[] = ENDGAMES): En
       ...entry.themes.map((t) => t.toLowerCase()),
       groupLabel(key).toLowerCase(),
       FAMILY_INFO[family(key)].label.toLowerCase(),
+      bucketOf(entry.fen)?.label.toLowerCase() ?? "",
     ];
     return words.every((w) => haystacks.some((h) => h.includes(w)));
   });

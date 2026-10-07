@@ -3,35 +3,32 @@ import { ChevronRight, Search } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { EndgamesHeader } from "./EndgamesHeader";
-import { GoalPill } from "./GoalPill";
 import {
-  FAMILY_ORDER,
-  FAMILY_INFO,
+  SIZE_BUCKETS,
   search as searchCatalog,
-  materialKey,
-  groupLabel,
-  type Family,
+  sizeOf,
+  type SizeBucket,
   type EndgamePosition,
 } from "@/services/endgames/catalog";
-import { countsByFamily, sideToMove, displayNameFor } from "@/services/endgames/catalogGroups";
+import { countsByBucket, sideToMove, displayNameFor, bucketOfEntry } from "@/services/endgames/catalogGroups";
 
 interface EndgamesHomeProps {
   engineReady: boolean;
   onBack(): void;
-  onOpenFamily(family: Family): void;
+  onOpenSize(bucket: SizeBucket): void;
   onOpenPosition(entry: EndgamePosition): void;
   onRandom(): void;
 }
 
-export function EndgamesHome({ engineReady, onBack, onOpenFamily, onOpenPosition, onRandom }: EndgamesHomeProps) {
+export function EndgamesHome({ engineReady, onBack, onOpenSize, onOpenPosition, onRandom }: EndgamesHomeProps) {
   const [query, setQuery] = useState("");
   const trimmed = query.trim();
   const results = trimmed ? searchCatalog(trimmed) : null;
-  const counts = countsByFamily();
+  const counts = countsByBucket();
 
   return (
     <div className="flex h-full w-full flex-col gap-4 overflow-y-auto p-6 pb-10">
-      <EndgamesHeader title="Endgames" subtitle="Pick a family, or search by name." onBack={onBack} />
+      <EndgamesHeader title="Endgames" subtitle="Pick a size, or search." onBack={onBack} />
 
       <div className="relative">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
@@ -39,7 +36,7 @@ export function EndgamesHome({ engineReady, onBack, onOpenFamily, onOpenPosition
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search: Lucena, opposition, bishop…"
+          placeholder="Search: rook, Lucena, opposite bishops…"
           aria-label="Search endgames"
           className="min-h-11 w-full rounded-xl border border-border-default bg-bg-surface py-0 pl-9 pr-3 text-sm text-text-primary placeholder:text-text-muted focus:border-border-active focus:outline-none"
         />
@@ -53,21 +50,21 @@ export function EndgamesHome({ engineReady, onBack, onOpenFamily, onOpenPosition
 
       {results === null && (
         <div>
-          <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-text-secondary">Families</p>
+          <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-text-secondary">By size</p>
           <Card>
-            {FAMILY_ORDER.map((fam) => (
+            {SIZE_BUCKETS.map((bucket) => (
               <button
-                key={fam}
+                key={bucket.label}
                 type="button"
-                data-testid="family-row"
-                onClick={() => onOpenFamily(fam)}
+                data-testid="size-row"
+                onClick={() => onOpenSize(bucket)}
                 className="flex min-h-14 w-full items-center gap-3 border-t border-border-default px-4 py-2 text-left first:border-t-0 hover:bg-bg-surface-alt"
               >
                 <div className="min-w-0 flex-1">
-                  <div className="text-base font-bold text-text-primary">{FAMILY_INFO[fam].label}</div>
-                  <div className="mt-0.5 text-sm text-text-secondary">{FAMILY_INFO[fam].subtitle}</div>
+                  <div className="text-base font-bold text-text-primary">{bucket.label}</div>
+                  <div className="mt-0.5 text-sm text-text-secondary">{bucket.subtitle}</div>
                 </div>
-                <span className="shrink-0 text-sm font-bold text-text-muted">{counts[fam]}</span>
+                <span className="shrink-0 text-sm font-bold text-text-muted">{counts[bucket.label]}</span>
                 <ChevronRight className="h-[18px] w-[18px] shrink-0 text-text-muted" />
               </button>
             ))}
@@ -91,7 +88,6 @@ export function EndgamesHome({ engineReady, onBack, onOpenFamily, onOpenPosition
           </p>
           <Card>
             {results.map((entry) => {
-              const key = materialKey(entry.fen);
               const side = sideToMove(entry);
               return (
                 <button
@@ -104,10 +100,10 @@ export function EndgamesHome({ engineReady, onBack, onOpenFamily, onOpenPosition
                   <div className="min-w-0 flex-1">
                     <div className="text-base font-bold text-text-primary">{displayNameFor(entry)}</div>
                     <div className="mt-0.5 text-sm text-text-secondary">
-                      {groupLabel(key)}. {side === "w" ? "White" : "Black"} to move
+                      {bucketOfEntry(entry).label}. {side === "w" ? "White" : "Black"} to move
                     </div>
                   </div>
-                  <GoalPill goal={entry.goal} />
+                  <span className="shrink-0 text-sm font-bold text-text-muted">{sizeOf(entry.fen)}</span>
                 </button>
               );
             })}

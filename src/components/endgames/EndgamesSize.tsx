@@ -1,37 +1,31 @@
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { EndgamesHeader } from "./EndgamesHeader";
-import { GoalPill } from "./GoalPill";
-import { FAMILY_INFO, type Family, type EndgamePosition } from "@/services/endgames/catalog";
-import { groupsForFamily, sideToMove, displayNameFor } from "@/services/endgames/catalogGroups";
+import { sizeOf, type SizeBucket, type EndgamePosition } from "@/services/endgames/catalog";
+import { familiesInBucket, sideToMove, displayNameFor, entriesByBucket } from "@/services/endgames/catalogGroups";
 
-interface EndgamesFamilyProps {
-  family: Family;
+interface EndgamesSizeProps {
+  bucket: SizeBucket;
   engineReady: boolean;
   onBack(): void;
   onOpenPosition(entry: EndgamePosition): void;
   onRandom(): void;
 }
 
-/** "Rook endings" -> "rook", "Mixed" -> "mixed", for the "Random X ending" button label. */
-function familyWord(label: string): string {
-  return label.replace(/ endings$/i, "").toLowerCase();
-}
-
-export function EndgamesFamily({ family, engineReady, onBack, onOpenPosition, onRandom }: EndgamesFamilyProps) {
-  const groups = groupsForFamily(family);
-  const total = groups.reduce((sum, g) => sum + g.entries.length, 0);
+export function EndgamesSize({ bucket, engineReady, onBack, onOpenPosition, onRandom }: EndgamesSizeProps) {
+  const groups = familiesInBucket(bucket);
+  const total = entriesByBucket(bucket).length;
 
   return (
     <div className="flex h-full w-full flex-col gap-4 overflow-y-auto p-6 pb-10">
-      <EndgamesHeader title={FAMILY_INFO[family].label} subtitle={`${total} positions`} onBack={onBack} />
+      <EndgamesHeader title={bucket.label} subtitle={`${total} positions`} onBack={onBack} />
 
       <Button variant="secondary" className="w-full" disabled={!engineReady} onClick={onRandom}>
-        Random {familyWord(FAMILY_INFO[family].label)} ending
+        Random, {bucket.label}
       </Button>
 
       {groups.map((group) => (
-        <div key={group.key}>
+        <div key={group.family}>
           <p className="mb-2 flex items-center justify-between text-sm font-semibold text-text-secondary">
             <span>{group.label}</span>
             <span>{group.entries.length}</span>
@@ -51,7 +45,7 @@ export function EndgamesFamily({ family, engineReady, onBack, onOpenPosition, on
                     {sideToMove(entry) === "w" ? "White" : "Black"} to move
                   </div>
                 </div>
-                <GoalPill goal={entry.goal} />
+                <span className="shrink-0 text-sm font-bold text-text-muted">{sizeOf(entry.fen)}</span>
               </button>
             ))}
           </Card>

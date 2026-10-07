@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+// Builds src/data/endgames.json from scripts/endgames/sources.json by
+// actually re-deriving every position from its real source -- see
+// SPEC_endgames_catalog.md Part 1b. Safe to re-run: fetches are cached
+// under .cache/ (gitignored), so a repeat run is offline.
+import { writeFileSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+import { extractFromRecipe } from "./extract.mjs";
+import { mirrorColors } from "./mirror.mjs";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const SOURCES_PATH = path.resolve(__dirname, "sources.json");
+const OUTPUT_PATH = path.resolve(__dirname, "../../src/data/endgames.json");
+
+function normalizedFen(placement, sideToMove) {
+  return `${placement} ${sideToMove} - - 0 1`;
+}
+
+async function buildEntry(manifestEntry) {
+  const { placement, sideToMove } = await extractFromRecipe(manifestEntry.extract);
+  const sourceFen = normalizedFen(placement, sideToMove);
+  const fen = manifestEntry.flip ? mirrorColors(sourceFen) : sourceFen;
+  return {
+    id: manifestEntry.id,
+    fen,
+    sourceFen,
+    flipped: !!manifestEntry.flip,
+    name: manifestEntry.name ?? null,
+    themes: manifestEntry.themes ?? [],
+    source: manifestEntry.source,
+  };
+}
+
+async function main() {
+  const manifest = JSON.parse(readFileSync(SOURCES_PATH, "utf8"));
+  const out = [];
+  const errors = [];
+  for (const entry of manifest) {
+    try {
+      out.push(await buildEntry(entry));
+    } catch (err) {
+      errors.push({ id: entry.id, error: err instanceof Error ? err.message : String(err) });
+    }
+  }
+  if (errors.length > 0) {
+    console.error(`${errors.length} entries failed to build:`);
+    for (const e of errors) console.error(`  ${e.id}: ${e.error}`);
+    process.exit(1);
+  }
+  writeFileSync(OUTPUT_PATH, `${JSON.stringify(out, null, 2)}\n`);
+  console.log(`Wrote ${out.length} entries to ${path.relative(process.cwd(), OUTPUT_PATH)}`);
+}
+
+main();
