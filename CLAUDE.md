@@ -12,7 +12,7 @@
 - Never remove, reuse or renumber an `id`.
 - Do not add priority, estimates or scheduling here. Those live in Tenzing.
 
-**Tenzing backlog.** File findings as you go, not batched into a report: `tenzing backlog add bc "<title>"`. Close what you finish in the same commit as the work that finished it: `tenzing backlog done <ref>`. If either command fails for any reason (network, lock, whatever), that is not a reason to stop the task -- note it and continue; do not block the actual work on Tenzing's own plumbing.
+**Tenzing backlog.** File findings as you go, not batched into a report: `tenzing backlog add blindfold-chess "<title>"`. Close what you finish in the same commit as the work that finished it: `tenzing backlog done <ref>`. If either command fails for any reason (network, lock, whatever), that is not a reason to stop the task -- note it and continue; do not block the actual work on Tenzing's own plumbing.
 
 ## Endgame catalog
 

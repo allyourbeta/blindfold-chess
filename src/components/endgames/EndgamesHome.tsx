@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { EndgamesHeader } from "./EndgamesHeader";
 import { EndgameCard } from "./EndgameCard";
-import { DiceButton } from "./DiceButton";
+import { RandomButton } from "./RandomButton";
 import { SIZE_BUCKETS, search as searchCatalog, bucketOf, type SizeBucket, type EndgamePosition } from "@/services/endgames/catalog";
 import { countsByBucket, favoriteEntries } from "@/services/endgames/catalogGroups";
 import { useFavorites } from "@/state/favoritesStore";
@@ -42,7 +42,7 @@ export function EndgamesHome({
         title="Endgames"
         subtitle="Pick a size, or search."
         onBack={onBack}
-        right={<DiceButton ariaLabel="Random endgame" disabled={!engineReady} onClick={onRandom} />}
+        right={<RandomButton ariaLabel="Random endgame" disabled={!engineReady} onClick={onRandom} />}
       />
 
       <div className="relative">

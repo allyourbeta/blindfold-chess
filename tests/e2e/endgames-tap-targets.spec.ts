@@ -2,7 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { openApp, waitForEngineReady } from "./helpers";
 
 // SPEC_buttons_results.md Part 4, checklist rule 11: "no thin strips" (the
-// design rule behind the square/dice buttons this round) becomes an
+// design rule behind the square/random buttons this round) becomes an
 // automated check instead of staying a design review note.
 
 async function openEndgames(page: Page) {
@@ -23,14 +23,6 @@ interface TapTarget {
   h: number;
   isListItem: boolean;
 }
-
-// BoardPanel's rotate-view toggle (36px tall) is shared across every board
-// in the app, not something SPEC_buttons_results.md touches (decision 5:
-// "Nothing else changes") -- fixing it would mean resizing a control used
-// by screens well outside this spec's scope. Known, pre-existing, and
-// excluded here on purpose; everything else on these screens is held to the
-// 44px rule.
-const KNOWN_EXCEPTIONS = new Set(["Rotate the board 180 degrees"]);
 
 /** Every visible button, plus whether it's a list row/card (data-testid "endgame-row" or inside a Card). */
 async function tapTargets(page: Page): Promise<TapTarget[]> {
@@ -59,12 +51,10 @@ async function tapTargets(page: Page): Promise<TapTarget[]> {
  * width of the screen).
  */
 function assertNoThinStrips(targets: TapTarget[]) {
-  const checked = targets.filter((t) => !KNOWN_EXCEPTIONS.has(t.label));
-
-  const tooShort = checked.filter((t) => t.h < 44 - 0.5);
+  const tooShort = targets.filter((t) => t.h < 44 - 0.5);
   expect(tooShort.map((t) => `${t.label} (${t.w.toFixed(0)}x${t.h.toFixed(0)})`)).toEqual([]);
 
-  const tooWide = checked.filter((t) => !t.isListItem && t.w > t.h * 4 + 0.5);
+  const tooWide = targets.filter((t) => !t.isListItem && t.w > t.h * 4 + 0.5);
   expect(tooWide.map((t) => `${t.label} (${t.w.toFixed(0)}x${t.h.toFixed(0)})`)).toEqual([]);
 }
 
@@ -100,18 +90,18 @@ test.describe("tap targets: iphone portrait", () => {
 test.describe("screenshots for visual comparison", () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 });
 
-  test("endgames-home-dice.png", async ({ page }) => {
+  test("endgames-home-random.png", async ({ page }) => {
     await openEndgames(page);
-    await page.screenshot({ path: "test-results/endgames-home-dice.png" });
+    await page.screenshot({ path: "test-results/endgames-home-random.png" });
   });
 
-  test("endgames-size-dice.png", async ({ page }) => {
+  test("endgames-size-random.png", async ({ page }) => {
     await openEndgames(page);
     await openSize(page, /6 to 8 pieces/);
-    await page.screenshot({ path: "test-results/endgames-size-dice.png" });
+    await page.screenshot({ path: "test-results/endgames-size-random.png" });
   });
 
-  test("endgames-favorites-dice.png", async ({ page }) => {
+  test("endgames-favorites-random.png", async ({ page }) => {
     await openEndgames(page);
     await openSize(page, /3 to 5 pieces/);
     await page.getByTestId("endgame-row").first().click();
@@ -119,6 +109,6 @@ test.describe("screenshots for visual comparison", () => {
     await page.getByLabel("Back").click();
     await page.getByLabel("Back").click();
     await page.getByTestId("favorites-row").click();
-    await page.screenshot({ path: "test-results/endgames-favorites-dice.png" });
+    await page.screenshot({ path: "test-results/endgames-favorites-random.png" });
   });
 });

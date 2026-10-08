@@ -11,7 +11,7 @@ const buttonVariants = cva(
   // equal specificity, and .text-sm is simply written later. (text-xl and
   // text-xs happen to sort after it and win, which is what made the bug so
   // hard to see: some overrides worked.) The same trap applies to
-  // rounded-xl vs rounded-2xl and whitespace-nowrap vs the wrap big/dice
+  // rounded-xl vs rounded-2xl and whitespace-nowrap vs the wrap big/random
   // need, so every size variant below declares its own font size, rounding
   // and whitespace handling, and nothing else in this file sets any of them.
   "inline-flex items-center justify-center gap-2 font-medium " +
@@ -55,8 +55,9 @@ const buttonVariants = cva(
         // (SPEC_buttons_results.md): tall enough for a two-line label, so no
         // whitespace-nowrap -- the browser default (normal) lets it wrap.
         big: "h-16 rounded-2xl px-2.5 text-center text-sm font-bold leading-tight",
-        // The square random-position button (SPEC_buttons_results.md) -- icon only.
-        dice: "h-14 w-14 shrink-0 rounded-2xl p-0",
+        // The square random-position button (SPEC_random_leave.md) -- icon
+        // above a "Random" label, so it needs its own flex direction too.
+        random: "h-16 w-16 shrink-0 flex-col whitespace-nowrap rounded-2xl p-0 text-xs font-bold",
       },
       active: {
         true: "bg-bg-primary text-text-on-primary border-transparent",

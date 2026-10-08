@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { startStandardGame, submitMove, keypad, tapKeypadKey } from "./helpers";
+import { startStandardGame, submitMove, keypad, tapKeypadKey, resignGame } from "./helpers";
 
 test("normal game start, player move, engine reply", async ({ page }) => {
   await startStandardGame(page);
@@ -87,4 +87,49 @@ test("Resign, confirmed, ends the game", async ({ page }) => {
 
   await expect(page.getByText("You resigned.").first()).toBeVisible();
   await expect(page.getByRole("dialog").getByRole("button", { name: "New Game" })).toBeVisible();
+});
+
+test("The back arrow asks for confirmation first — Stay keeps the game going, Leave returns to the menu", async ({
+  page,
+}) => {
+  await startStandardGame(page);
+  await submitMove(page, "e4");
+
+  await page.getByLabel("Back to menu").click();
+  const confirm = page.getByRole("dialog").filter({ hasText: "Leave this game?" });
+  await expect(confirm).toBeVisible();
+
+  await confirm.getByRole("button", { name: "Stay" }).click();
+  await expect(confirm).toBeHidden();
+  // The game is still on: still on the play screen, keypad visible, the move entered before Back is still there.
+  await expect(keypad(page)).toBeVisible();
+  await expect(page.getByText("White: e4")).toBeVisible();
+
+  await page.getByLabel("Back to menu").click();
+  await page.getByRole("dialog").filter({ hasText: "Leave this game?" }).getByRole("button", { name: "Leave", exact: true }).click();
+  await expect(page.getByRole("button", { name: /New Game/ })).toBeVisible();
+});
+
+test("play-leave-confirm.png", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await startStandardGame(page);
+  await page.getByLabel("Back to menu").click();
+  await expect(page.getByRole("dialog").filter({ hasText: "Leave this game?" })).toBeVisible();
+  await page.screenshot({ path: "test-results/play-leave-confirm.png" });
+});
+
+test("After the game is over, the back arrow leaves instantly with no question, and the game-over panel's Menu button never asks", async ({
+  page,
+}) => {
+  await startStandardGame(page);
+  await resignGame(page);
+  await expect(page.getByText("You resigned.").first()).toBeVisible();
+
+  // Dismiss the game-over panel the same way the resign dialog dismisses: Escape.
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toBeHidden();
+
+  await page.getByLabel("Back to menu").click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /New Game/ })).toBeVisible();
 });

@@ -1,6 +1,6 @@
 import { EndgamesHeader } from "./EndgamesHeader";
 import { EndgameCard } from "./EndgameCard";
-import { DiceButton } from "./DiceButton";
+import { RandomButton } from "./RandomButton";
 import { randomFrom, type EndgamePosition } from "@/services/endgames/catalog";
 import { favoriteEntries } from "@/services/endgames/catalogGroups";
 import { useFavorites } from "@/state/favoritesStore";
@@ -26,7 +26,7 @@ export function EndgamesFavorites({ engineReady, onBack, onOpenPosition }: Endga
         onBack={onBack}
         right={
           entries.length > 0 ? (
-            <DiceButton
+            <RandomButton
               ariaLabel="Random favorite"
               disabled={!engineReady}
               onClick={() => onOpenPosition(randomFrom(entries))}

@@ -1,6 +1,6 @@
 import { EndgamesHeader } from "./EndgamesHeader";
 import { EndgameCard } from "./EndgameCard";
-import { DiceButton } from "./DiceButton";
+import { RandomButton } from "./RandomButton";
 import { type SizeBucket, type EndgamePosition } from "@/services/endgames/catalog";
 import { familiesInBucket, entriesByBucket } from "@/services/endgames/catalogGroups";
 
@@ -25,7 +25,7 @@ export function EndgamesSize({ bucket, engineReady, onBack, onOpenPosition, onRa
         title={bucket.label}
         subtitle={`${total} positions`}
         onBack={onBack}
-        right={<DiceButton ariaLabel={`Random, ${bucket.label}`} disabled={!engineReady} onClick={onRandom} />}
+        right={<RandomButton ariaLabel={`Random, ${bucket.label}`} disabled={!engineReady} onClick={onRandom} />}
       />
 
       {groups.map((group) => (

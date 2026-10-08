@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
 import { StatusLine } from "@/components/play/StatusLine";
 import { PeekPanel } from "@/components/play/PeekPanel";
 import { MoveList } from "@/components/play/MoveList";
@@ -6,6 +7,8 @@ import { MessageLog } from "@/components/play/MessageLog";
 import { MoveKeypad } from "@/components/play/MoveKeypad";
 import { ActionBar } from "@/components/play/ActionBar";
 import { GameOverPanel } from "@/components/play/GameOverPanel";
+import { Modal } from "@/components/ui/Modal";
+import { Button } from "@/components/ui/Button";
 import { useGameStore } from "@/state/gameStore";
 import { useSpeechOutput, unlockAudioOutput } from "@/hooks/useSpeechOutput";
 import type { SizeBucket } from "@/services/endgames/catalog";
@@ -19,10 +22,20 @@ export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
   useSpeechOutput();
   const returnToMenu = useGameStore((s) => s.returnToMenu);
   const startNewGame = useGameStore((s) => s.startNewGame);
+  const gameOverFlag = useGameStore((s) => s.gameOverFlag);
+  const [leaveConfirmOpen, setLeaveConfirmOpen] = useState(false);
 
   function handleMenu() {
     returnToMenu();
     onMenu();
+  }
+
+  function handleBack() {
+    if (gameOverFlag) {
+      handleMenu();
+      return;
+    }
+    setLeaveConfirmOpen(true);
   }
 
   function handleEndgames(bucket: SizeBucket) {
@@ -38,7 +51,7 @@ export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
   return (
     <div className="flex h-[100dvh] w-full flex-col overflow-hidden p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]">
       <div className="mb-2 flex items-center justify-between border-b border-border-default pb-2 shortscape:mb-1 shortscape:pb-1">
-        <button onClick={handleMenu} aria-label="Back to menu" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt">
+        <button onClick={handleBack} aria-label="Back to menu" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt">
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div className="text-3xl font-extrabold tracking-widest text-text-accent shortscape:text-xl">MIND'S EYE</div>
@@ -73,6 +86,18 @@ export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
       </div>
 
       <GameOverPanel onNewGame={() => void handleNewGame()} onMenu={handleMenu} onEndgames={handleEndgames} />
+
+      <Modal open={leaveConfirmOpen} onClose={() => setLeaveConfirmOpen(false)}>
+        <p className="text-center text-base font-semibold text-text-primary">Leave this game?</p>
+        <div className="mt-4 flex gap-2">
+          <Button variant="secondary" className="flex-1" onClick={() => setLeaveConfirmOpen(false)}>
+            Stay
+          </Button>
+          <Button variant="primary" className="flex-1" onClick={handleMenu}>
+            Leave
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }

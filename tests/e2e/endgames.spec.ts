@@ -10,6 +10,7 @@ import {
   startStandardGame,
   assertBoardIsSquare,
   resignGame,
+  leaveGame,
 } from "./helpers";
 
 async function openEndgames(page: Page) {
@@ -95,8 +96,19 @@ test("a Black-to-move endgame from 12 to 16 pieces forces you onto Black, withou
   await page.getByRole("button", { name: "Play Blindfold" }).click();
   await expect(keypad(page)).toBeVisible();
 
-  await page.getByLabel("Back to menu").click();
+  await leaveGame(page);
   await expect(page.locator("#game-settings-summary").getByText("White", { exact: true })).toBeVisible();
+});
+
+test("the back arrow confirms before leaving an endgame in progress", async ({ page }) => {
+  await openEndgames(page);
+  await openSize(page, /3 to 5 pieces/);
+  await page.getByTestId("endgame-row").first().click();
+  await page.getByRole("button", { name: "Play Blindfold" }).click();
+  await expect(keypad(page)).toBeVisible();
+
+  await page.getByLabel("Back to menu").click();
+  await expect(page.getByRole("dialog").filter({ hasText: "Leave this game?" })).toBeVisible();
 });
 
 test("search narrows the size list to matches; a no-match query offers Clear search", async ({ page }) => {

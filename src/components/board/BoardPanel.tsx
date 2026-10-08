@@ -53,7 +53,7 @@ export function BoardPanel({
         type="button"
         onClick={() => toggleBoardFlip(defaultFlipped)}
         aria-label="Rotate the board 180 degrees"
-        className="inline-flex min-h-9 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-text-secondary hover:bg-bg-surface-alt"
+        className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-text-secondary hover:bg-bg-surface-alt"
       >
         <FlipVertical2 className="h-4 w-4" />
         {flipped ? "Black's view" : "White's view"}

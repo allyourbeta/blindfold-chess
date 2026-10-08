@@ -43,6 +43,12 @@ export async function resignGame(page: Page) {
   await page.getByRole("dialog").filter({ hasText: "Resign this game?" }).getByRole("button", { name: "Resign", exact: true }).click();
 }
 
+/** Clicks the back arrow mid-game, then confirms in the "Leave this game?" dialog it now opens. */
+export async function leaveGame(page: Page) {
+  await page.getByLabel("Back to menu").click();
+  await page.getByRole("dialog").filter({ hasText: "Leave this game?" }).getByRole("button", { name: "Leave", exact: true }).click();
+}
+
 export async function startStandardGame(page: Page) {
   await openApp(page);
   await waitForEngineReady(page);
