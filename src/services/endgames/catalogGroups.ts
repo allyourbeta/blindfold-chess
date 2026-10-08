@@ -97,6 +97,19 @@ export function displayNameFor(entry: EndgamePosition): string {
   return entry.name ?? entry.code;
 }
 
+export interface ResultDisplay {
+  label: string;
+  score: string;
+}
+
+/** The position screen's result line (decision 4), or null when none is known. */
+export function resultDisplay(entry: EndgamePosition): ResultDisplay | null {
+  if (!entry.result) return null;
+  const label = entry.result.kind === "perfect" ? "Perfect play:" : "Game result:";
+  const score = entry.result.score === "1/2-1/2" ? "½-½" : entry.result.score;
+  return { label, score };
+}
+
 /**
  * Favorited codes resolved to catalog entries, smallest first then by
  * code. A code with no matching entry (e.g. a deleted or retired position)

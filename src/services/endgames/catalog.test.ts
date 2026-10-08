@@ -67,6 +67,7 @@ describe("search", () => {
       name: "Lucena position",
       themes: ["bridge"],
       source: { title: "Test", url: "https://example.com/a" },
+      result: null,
     },
     {
       id: "b",
@@ -77,6 +78,7 @@ describe("search", () => {
       name: null,
       themes: ["opposition"],
       source: { title: "Test", url: "https://example.com/b" },
+      result: null,
     },
   ];
 

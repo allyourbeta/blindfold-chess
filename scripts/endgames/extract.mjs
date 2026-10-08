@@ -28,7 +28,11 @@ async function extractEmbeddedFen({ pageUrl, index }) {
   return { placement: fields[0], sideToMove: fields[1] === "b" ? "b" : "w" };
 }
 
-/** `kind: "pgn-ply"`. Replays a real PGN's `game`-th game to the position after `ply` half-moves. */
+/**
+ * `kind: "pgn-ply"`. Replays a real PGN's `game`-th game to the position
+ * after `ply` half-moves. Also returns the game's `Result` header (SPEC_buttons_results.md
+ * Part 1) -- `null` when there is none, e.g. a `*` or missing tag.
+ */
 async function extractPgnPly({ pgnUrl, game, ply }) {
   const text = await fetchText(pgnUrl);
   const games = splitPgnGames(text);
@@ -41,7 +45,7 @@ async function extractPgnPly({ pgnUrl, game, ply }) {
   const replay = new Chess();
   for (let i = 0; i < ply; i++) replay.move(history[i].san);
   const [placement, sideToMove] = replay.fen().split(" ");
-  return { placement, sideToMove };
+  return { placement, sideToMove, result: chess.getHeaders().Result ?? null };
 }
 
 function stripClock(pgn) {

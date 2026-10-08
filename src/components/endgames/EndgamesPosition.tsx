@@ -4,7 +4,7 @@ import { BoardPanel } from "@/components/board/BoardPanel";
 import { EndgamesHeader } from "./EndgamesHeader";
 import { fenToBoard } from "@/services/chess/fen";
 import { pieceList, sizeOf, FAMILY_INFO, type EndgamePosition } from "@/services/endgames/catalog";
-import { sideToMove, displayNameFor, familyOf, bucketOfEntry } from "@/services/endgames/catalogGroups";
+import { sideToMove, displayNameFor, familyOf, bucketOfEntry, resultDisplay } from "@/services/endgames/catalogGroups";
 import { useFavorites } from "@/state/favoritesStore";
 
 interface EndgamesPositionProps {
@@ -27,6 +27,7 @@ export function EndgamesPosition({
   const family = familyOf(entry);
   const isFavorite = useFavorites((s) => s.isFavorite(entry.code));
   const toggleFavorite = useFavorites((s) => s.toggle);
+  const result = resultDisplay(entry);
 
   return (
     <div
@@ -60,6 +61,14 @@ export function EndgamesPosition({
         <p className="mt-1 text-base font-bold text-text-accent">
           You play {side === "w" ? "White" : "Black"}. {sizeOf(entry.fen)} pieces.
         </p>
+        {result && (
+          <p className="mt-1.5 inline-flex items-baseline gap-2 text-sm text-text-secondary">
+            <span>{result.label}</span>
+            <span className="rounded-lg border border-border-emphasis bg-bg-surface-alt px-2 py-0.5 font-mono text-base font-extrabold text-text-primary">
+              {result.score}
+            </span>
+          </p>
+        )}
         <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">
           White: {pieceList(entry.fen, "w")}
           <br />
@@ -67,12 +76,14 @@ export function EndgamesPosition({
         </p>
       </div>
 
-      <Button variant="primary" className="w-full" disabled={!engineReady} onClick={onPlayBlindfold}>
-        Play Blindfold
-      </Button>
-      <Button variant="secondary" className="w-full" disabled={!engineReady} onClick={onAnotherOfThisSize}>
-        Another of this size
-      </Button>
+      <div className="grid grid-cols-2 gap-3">
+        <Button variant="primary" size="big" disabled={!engineReady} onClick={onPlayBlindfold}>
+          Play Blindfold
+        </Button>
+        <Button variant="secondary" size="big" disabled={!engineReady} onClick={onAnotherOfThisSize}>
+          Another of this size
+        </Button>
+      </div>
 
       <p className="text-sm text-text-muted">Source: {entry.source.title}.</p>
     </div>

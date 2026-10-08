@@ -12,6 +12,14 @@ export interface EndgamePosition {
   name: string | null;
   themes: string[];
   source: { title: string; url: string };
+  /**
+   * Computed at build time (SPEC_buttons_results.md) -- the app never calls
+   * the network for this. `"perfect"` comes from the tablebase category of
+   * `fen` (7 pieces or fewer wins over any game result); `"game"` comes from
+   * a real game's PGN Result header, 8+ pieces only. `null` when neither
+   * rule gives a certain score.
+   */
+  result: { kind: "perfect" | "game"; score: "1-0" | "1/2-1/2" | "0-1" } | null;
 }
 
 export type Family = "pawn" | "rook" | "minor" | "queen" | "mixed";

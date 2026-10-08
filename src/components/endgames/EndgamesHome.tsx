@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { EndgamesHeader } from "./EndgamesHeader";
 import { EndgameCard } from "./EndgameCard";
+import { DiceButton } from "./DiceButton";
 import { SIZE_BUCKETS, search as searchCatalog, bucketOf, type SizeBucket, type EndgamePosition } from "@/services/endgames/catalog";
 import { countsByBucket, favoriteEntries } from "@/services/endgames/catalogGroups";
 import { useFavorites } from "@/state/favoritesStore";
@@ -37,7 +38,12 @@ export function EndgamesHome({
       data-testid="endgame-scroll"
       className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))]"
     >
-      <EndgamesHeader title="Endgames" subtitle="Pick a size, or search." onBack={onBack} />
+      <EndgamesHeader
+        title="Endgames"
+        subtitle="Pick a size, or search."
+        onBack={onBack}
+        right={<DiceButton ariaLabel="Random endgame" disabled={!engineReady} onClick={onRandom} />}
+      />
 
       <div className="relative">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
@@ -50,12 +56,6 @@ export function EndgamesHome({
           className="min-h-11 w-full rounded-xl border border-border-default bg-bg-surface py-0 pl-9 pr-3 text-sm text-text-primary placeholder:text-text-muted focus:border-border-active focus:outline-none"
         />
       </div>
-
-      {results === null && (
-        <Button variant="secondary" className="w-full" disabled={!engineReady} onClick={onRandom}>
-          Random endgame
-        </Button>
-      )}
 
       {results === null && (
         <Card>

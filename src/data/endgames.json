@@ -10,7 +10,8 @@
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "result": null
   },
   {
     "id": "12-to-16-pieces-minor-2",
@@ -23,6 +24,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Alekhine, Alexander vs. Tartakower, Saviely",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -36,6 +41,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -49,6 +58,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Tarrasch, Siegbert",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -62,7 +75,8 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "result": null
   },
   {
     "id": "12-to-16-pieces-minor-6",
@@ -75,6 +89,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Marco, Georg vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -88,6 +106,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Night-King96, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -101,6 +123,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 2021: Carlsen,M vs. Nepomniachtchi,I",
       "url": "https://www.pgnmentor.com/events/WorldChamp2021.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -114,6 +140,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Bogoljubow, Efim vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -127,6 +157,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -140,6 +174,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Dragon700 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -153,6 +191,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Night-King96 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -166,6 +208,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Burn, Amos vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -179,6 +225,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 1972: Spassky, Boris V vs. Fischer, Robert James",
       "url": "https://www.pgnmentor.com/events/WorldChamp1972.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -192,6 +242,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Vergani, Beniamino",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -205,6 +259,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -218,6 +276,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Emanuel vs. Marshall, Frank James",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -231,6 +293,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Von Bardeleben, Curt vs. Tarrasch, Siegbert",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -244,6 +310,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Marshall, Frank James vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -257,6 +327,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. chess-art-us, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -270,6 +344,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. indianstar, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -283,6 +361,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Edward vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -296,6 +378,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Lasker, Emanuel vs. Teichmann, Richard",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -309,6 +395,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -322,6 +412,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -335,6 +429,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Walbrodt, Carl August vs. Marco, Georg",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -348,6 +446,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mason, James vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -361,6 +463,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Pollock, William Henry Kraus vs. Mieses, Jacques",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -374,6 +480,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Edward vs. Bogoljubow, Efim",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -387,6 +497,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Bird, Henry Edward vs. Pillsbury, Harry Nelson",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -400,6 +514,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Janowsky, Dawid Markelowicz vs. Yates, Frederick",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -413,6 +531,10 @@
     "source": {
       "title": "Kasparov vs. The World, 1999",
       "url": "https://lichess.org/game/export/QVae8hXv.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -426,6 +548,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Chigorin, Mikhail vs. Albin, Adolf",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -439,6 +565,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Capablanca, Jose Raul vs. Tartakower, Saviely",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -452,6 +582,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Marshall, Frank James vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -465,6 +599,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Chigorin, Mikhail vs. Pillsbury, Harry Nelson",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -478,6 +616,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Gunsberg, Isidor vs. Bird, Henry Edward",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -491,6 +633,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Tartakower, Saviely vs. Alekhine, Alexander",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -504,6 +650,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Bogoljubow, Efim vs. Alekhine, Alexander",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -517,6 +667,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Tartakower, Saviely vs. Bogoljubow, Efim",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -530,6 +684,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): SemenPuzyrevsky vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -543,6 +701,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Burn, Amos vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -556,7 +718,8 @@
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
-    }
+    },
+    "result": null
   },
   {
     "id": "12-to-16-pieces-mixed-6",
@@ -569,6 +732,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): StrongKhaganaK1ller vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -582,6 +749,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Chigorin, Mikhail vs. Walbrodt, Carl August",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -595,6 +766,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): indianstar vs. DrNykterstein, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -608,6 +783,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -621,6 +800,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Edward vs. Maroczy, Geza",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -634,6 +817,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. MatthewG-p4p, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -647,7 +834,8 @@
     "source": {
       "title": "ChessBase: Riddle - Karpov-Hort, 1979",
       "url": "https://en.chessbase.com/post/riddle-karpov-hort-1979"
-    }
+    },
+    "result": null
   },
   {
     "id": "12-to-16-pieces-rook-10",
@@ -660,6 +848,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -673,6 +865,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 1927: Capablanca, Jose Raul vs. Alekhine, Alexander",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -686,6 +882,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schiffers, Emanuel Stepanovich vs. Teichmann, Richard",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -699,6 +899,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Albin, Adolf vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -712,6 +916,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Tartakower, Saviely vs. Bogoljubow, Efim",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -725,6 +933,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Chigorin, Mikhail",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -738,6 +950,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -751,6 +967,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Yates, Frederick vs. Janowsky, Dawid Markelowicz",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -764,6 +984,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Gunsberg, Isidor vs. Tarrasch, Siegbert",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -777,6 +1001,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Pollock, William Henry Kraus",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -790,6 +1018,10 @@
     "source": {
       "title": "Minor Piece endings",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Minor_Piece_endings"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -803,6 +1035,10 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -816,6 +1052,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -829,6 +1069,10 @@
     "source": {
       "title": "Bishop and knight checkmate",
       "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -842,6 +1086,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -855,6 +1103,10 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -868,6 +1120,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -881,6 +1137,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -894,6 +1154,10 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -907,6 +1171,10 @@
     "source": {
       "title": "Endgame Studies and Puzzles",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Endgame_Studies_and_Puzzles"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -920,6 +1188,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Umid-2006 vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -933,6 +1205,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Night-King96, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -946,6 +1222,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Night-King96, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -959,6 +1239,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): indianstar vs. DrNykterstein, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -972,6 +1256,10 @@
     "source": {
       "title": "Minor Piece endings",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Minor_Piece_endings"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -985,6 +1273,10 @@
     "source": {
       "title": "Minor Piece endings",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Minor_Piece_endings"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -998,6 +1290,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1011,6 +1307,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1024,6 +1324,10 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1037,6 +1341,10 @@
     "source": {
       "title": "Bishop and knight checkmate",
       "url": "https://en.wikipedia.org/wiki/Bishop_and_knight_checkmate"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1050,6 +1358,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1063,6 +1375,10 @@
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1076,6 +1392,10 @@
     "source": {
       "title": "Rook and bishop versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1089,6 +1409,10 @@
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1102,6 +1426,10 @@
     "source": {
       "title": "Rook and bishop versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1115,6 +1443,10 @@
     "source": {
       "title": "Rook and bishop versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1128,6 +1460,10 @@
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1141,6 +1477,10 @@
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1154,6 +1494,10 @@
     "source": {
       "title": "Rook and bishop versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1167,6 +1511,10 @@
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1180,6 +1528,10 @@
     "source": {
       "title": "Rook and bishop versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_bishop_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1193,6 +1545,10 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1206,6 +1562,10 @@
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1219,6 +1579,10 @@
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1232,6 +1596,10 @@
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1245,6 +1613,10 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1258,6 +1630,10 @@
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1271,6 +1647,10 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1284,6 +1664,10 @@
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1297,6 +1681,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1310,6 +1698,10 @@
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1323,6 +1715,10 @@
     "source": {
       "title": "Wrong bishop",
       "url": "https://en.wikipedia.org/wiki/Wrong_bishop"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1336,6 +1732,10 @@
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1349,6 +1749,10 @@
     "source": {
       "title": "Queen versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1362,6 +1766,10 @@
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1375,6 +1783,10 @@
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1388,6 +1800,10 @@
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1401,6 +1817,10 @@
     "source": {
       "title": "Endgame Studies and Puzzles",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Endgame_Studies_and_Puzzles"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1414,6 +1834,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Zaven_ChessMood vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1427,6 +1851,10 @@
     "source": {
       "title": "Pawn Endings",
       "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Pawn_Endings"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1440,6 +1868,10 @@
     "source": {
       "title": "King and pawn versus king endgame",
       "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1453,6 +1885,10 @@
     "source": {
       "title": "King and pawn versus king endgame",
       "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1466,6 +1902,10 @@
     "source": {
       "title": "King and pawn versus king endgame",
       "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1479,6 +1919,10 @@
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1492,6 +1936,10 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1505,6 +1953,10 @@
     "source": {
       "title": "King and pawn versus king endgame",
       "url": "https://en.wikipedia.org/wiki/King_and_pawn_versus_king_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1518,6 +1970,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Bestinblitz, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -1531,6 +1987,10 @@
     "source": {
       "title": "Queen and pawn versus queen endgame",
       "url": "https://en.wikipedia.org/wiki/Queen_and_pawn_versus_queen_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1544,6 +2004,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Bestinblitz, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -1557,6 +2021,10 @@
     "source": {
       "title": "Rook and pawn versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -1570,6 +2038,10 @@
     "source": {
       "title": "Lucena position",
       "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -1583,6 +2055,10 @@
     "source": {
       "title": "Rook and pawn versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1596,6 +2072,10 @@
     "source": {
       "title": "Rook and pawn versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1609,6 +2089,10 @@
     "source": {
       "title": "Rook and pawn versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1622,6 +2106,10 @@
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1635,6 +2123,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Burn, Amos vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1648,6 +2140,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Tarrasch, Siegbert vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -1661,6 +2157,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Maroczy, Geza vs. Reti, Richard",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1674,6 +2174,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Burn, Amos vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1687,6 +2191,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1700,6 +2208,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Tartakower, Saviely vs. Maroczy, Geza",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1713,6 +2225,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Marco, Georg vs. Gunsberg, Isidor",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1726,6 +2242,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1739,6 +2259,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1752,6 +2276,10 @@
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1765,6 +2293,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1778,6 +2310,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1791,7 +2327,8 @@
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
-    }
+    },
+    "result": null
   },
   {
     "id": "6-to-8-pieces-minor-22",
@@ -1804,7 +2341,8 @@
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "result": null
   },
   {
     "id": "6-to-8-pieces-minor-23",
@@ -1817,6 +2355,10 @@
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1830,6 +2372,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Marshall, Frank James vs. Lasker, Edward",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1843,6 +2389,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Schiffers, Emanuel Stepanovich",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1856,6 +2406,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Chigorin, Mikhail",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1869,6 +2423,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Marco, Georg vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -1882,6 +2440,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Marco, Georg vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -1895,6 +2457,10 @@
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1908,6 +2474,10 @@
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1921,6 +2491,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1934,6 +2508,10 @@
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1947,6 +2525,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Tarrasch, Siegbert vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -1960,6 +2542,10 @@
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -1973,6 +2559,10 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1986,6 +2576,10 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -1999,6 +2593,10 @@
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -2012,6 +2610,10 @@
     "source": {
       "title": "Pawnless chess endgame",
       "url": "https://en.wikipedia.org/wiki/Pawnless_chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -2025,6 +2627,10 @@
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2038,7 +2644,8 @@
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
-    }
+    },
+    "result": null
   },
   {
     "id": "6-to-8-pieces-mixed-16",
@@ -2051,6 +2658,10 @@
     "source": {
       "title": "Wrong bishop",
       "url": "https://en.wikipedia.org/wiki/Wrong_bishop"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -2064,6 +2675,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Bogoljubow, Efim vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2077,6 +2692,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Bogoljubow, Efim vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2090,6 +2709,10 @@
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -2103,6 +2726,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Marshall, Frank James vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2116,6 +2743,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Bird, Henry Edward vs. Blackburne, Joseph Henry",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2129,6 +2760,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 2021: Carlsen,M vs. Nepomniachtchi,I",
       "url": "https://www.pgnmentor.com/events/WorldChamp2021.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2142,6 +2777,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Janowsky, Dawid Markelowicz vs. Marshall, Frank James",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2155,6 +2794,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 2021: Carlsen,M vs. Nepomniachtchi,I",
       "url": "https://www.pgnmentor.com/events/WorldChamp2021.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2168,6 +2811,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Janowsky, Dawid Markelowicz vs. Marshall, Frank James",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -2181,6 +2828,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Bird, Henry Edward vs. Blackburne, Joseph Henry",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2194,6 +2845,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Lasker, Emanuel vs. Lasker, Edward",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2207,6 +2862,10 @@
     "source": {
       "title": "Two knights endgame",
       "url": "https://en.wikipedia.org/wiki/Two_knights_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -2220,6 +2879,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Alekhine, Alexander vs. Lasker, Edward",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2233,6 +2896,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2246,6 +2913,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Pillsbury, Harry Nelson vs. Tinsley, Samuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -2259,6 +2930,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Janowsky, Dawid Markelowicz vs. Lasker, Edward",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2272,6 +2947,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Albin, Adolf vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2285,6 +2964,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Albin, Adolf vs. Von Bardeleben, Curt",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2298,6 +2981,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Blackburne, Joseph Henry vs. Pillsbury, Harry Nelson",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2311,6 +2998,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Blackburne, Joseph Henry vs. Pillsbury, Harry Nelson",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2324,6 +3015,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Janowsky, Dawid Markelowicz vs. Gunsberg, Isidor",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -2337,6 +3032,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Janowsky, Dawid Markelowicz vs. Gunsberg, Isidor",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2350,6 +3049,10 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "0-1"
     }
   },
   {
@@ -2363,6 +3066,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mieses, Jacques vs. Teichmann, Richard",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2376,6 +3083,10 @@
     "source": {
       "title": "Zugzwang",
       "url": "https://en.wikipedia.org/wiki/Zugzwang"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -2389,6 +3100,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Von Bardeleben, Curt vs. Janowsky, Dawid Markelowicz",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2402,6 +3117,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Marshall, Frank James vs. Janowsky, Dawid Markelowicz",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2415,6 +3134,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Walbrodt, Carl August vs. Mason, James",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2428,6 +3151,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Tarrasch, Siegbert vs. Vergani, Beniamino",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2441,6 +3168,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Albin, Adolf vs. Vergani, Beniamino",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2454,6 +3185,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Albin, Adolf vs. Vergani, Beniamino",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2467,6 +3202,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Tinsley, Samuel vs. Bird, Henry Edward",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2480,6 +3219,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Bird, Henry Edward vs. Mieses, Jacques",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2493,6 +3236,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Yates, Frederick vs. Janowsky, Dawid Markelowicz",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2506,6 +3253,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Mieses, Jacques",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2519,6 +3270,10 @@
     "source": {
       "title": "Rook and pawn versus rook endgame",
       "url": "https://en.wikipedia.org/wiki/Rook_and_pawn_versus_rook_endgame"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -2532,6 +3287,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Janowsky, Dawid Markelowicz vs. Yates, Frederick",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2545,6 +3304,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 1972: Fischer, Robert James vs. Spassky, Boris V",
       "url": "https://www.pgnmentor.com/events/WorldChamp1972.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2558,6 +3321,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mason, James vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2571,6 +3338,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 1972: Fischer, Robert James vs. Spassky, Boris V",
       "url": "https://www.pgnmentor.com/events/WorldChamp1972.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2584,6 +3355,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Mason, James vs. Lasker, Emanuel",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2597,6 +3372,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Bird, Henry Edward vs. Mieses, Jacques",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2610,6 +3389,10 @@
     "source": {
       "title": "Lucena position",
       "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -2623,6 +3406,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 1927: Alekhine, Alexander vs. Capablanca, Jose Raul",
       "url": "https://www.pgnmentor.com/events/WorldChamp1927.pgn"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   },
   {
@@ -2636,6 +3423,10 @@
     "source": {
       "title": "PGN Mentor: New York 1924: Yates, Frederick vs. Lasker, Edward",
       "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2649,6 +3440,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Von Bardeleben, Curt vs. Janowsky, Dawid Markelowicz",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2662,6 +3457,10 @@
     "source": {
       "title": "PGN Mentor: World Championship 2021: Carlsen,M vs. Nepomniachtchi,I",
       "url": "https://www.pgnmentor.com/events/WorldChamp2021.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2675,6 +3474,10 @@
     "source": {
       "title": "PGN Mentor: Hastings 1895: Schlechter, Carl vs. Chigorin, Mikhail",
       "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2688,7 +3491,8 @@
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "result": null
   },
   {
     "id": "9-to-11-pieces-minor-10",
@@ -2701,6 +3505,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. indianstar, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2714,6 +3522,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. indianstar, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2727,6 +3539,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): satrancdelisi23 vs. DrNykterstein, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2740,6 +3556,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2753,6 +3573,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2766,6 +3590,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2779,6 +3607,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Night-King96, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2792,7 +3624,8 @@
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "result": null
   },
   {
     "id": "9-to-11-pieces-minor-3",
@@ -2805,7 +3638,8 @@
     "source": {
       "title": "Fortress (chess)",
       "url": "https://en.wikipedia.org/wiki/Fortress_(chess)"
-    }
+    },
+    "result": null
   },
   {
     "id": "9-to-11-pieces-minor-4",
@@ -2818,6 +3652,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2831,6 +3669,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2844,7 +3686,8 @@
     "source": {
       "title": "Opposite-colored bishops endgame",
       "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
-    }
+    },
+    "result": null
   },
   {
     "id": "9-to-11-pieces-mixed-11",
@@ -2857,6 +3700,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. pasino, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2870,6 +3717,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Lord_Maxik vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2883,6 +3734,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Lord_Maxik vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2896,6 +3751,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Zaven_ChessMood vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2909,6 +3768,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2922,6 +3785,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Umid-2006 vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -2935,6 +3802,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. chess-art-us, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2948,6 +3819,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -2961,6 +3836,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -2974,7 +3853,8 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "result": null
   },
   {
     "id": "9-to-11-pieces-mixed-20",
@@ -2987,6 +3867,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): affa19 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3000,6 +3884,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. ChessArtHouse, 2026.10.06",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3013,6 +3901,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -3026,7 +3918,8 @@
     "source": {
       "title": "Chess endgame",
       "url": "https://en.wikipedia.org/wiki/Chess_endgame"
-    }
+    },
+    "result": null
   },
   {
     "id": "9-to-11-pieces-mixed-28",
@@ -3039,6 +3932,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): indianstar vs. DrNykterstein, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -3052,6 +3949,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3065,6 +3966,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): affa19 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3078,6 +3983,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): ChessArtHouse vs. DrNykterstein, 2026.10.06",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3091,6 +4000,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3104,6 +4017,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): affa19 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3117,6 +4034,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. SalihEke, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3130,6 +4051,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): affa19 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3143,6 +4068,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): indianstar vs. DrNykterstein, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -3156,6 +4085,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. yoseph2013, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3169,6 +4102,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. SalihEke, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3182,6 +4119,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3195,6 +4136,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. pasino, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3208,6 +4153,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): indianstar vs. DrNykterstein, 2026.01.19",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3221,6 +4170,10 @@
     "source": {
       "title": "Kasparov vs. The World, 1999",
       "url": "https://lichess.org/game/export/QVae8hXv.pgn"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3234,6 +4187,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Umid-2006 vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3247,6 +4204,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3260,6 +4221,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3273,6 +4238,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. ChessArtHouse, 2026.10.06",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3286,6 +4255,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Alamzhi vs. DrNykterstein, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -3299,6 +4272,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Alamzhi vs. DrNykterstein, 2024.06.22",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -3312,6 +4289,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. RebeccaHarris, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3325,6 +4306,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3338,6 +4323,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3351,6 +4340,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. KonstantinKornienko, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -3364,6 +4357,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): respects_55 vs. DrNykterstein, 2026.04.08",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3377,6 +4374,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3390,6 +4391,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. junglebook1, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3403,6 +4408,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): RebeccaHarris vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3416,6 +4425,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. KonstantinKornienko, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -3429,6 +4442,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): KAPUTVSEMU vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3442,6 +4459,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Dragon700 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3455,6 +4476,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3468,6 +4493,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. RebeccaHarris, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3481,6 +4510,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. PseudoBenko, 2026.03.17",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -3494,6 +4527,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): Night-King96 vs. DrNykterstein, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3507,6 +4544,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. mutdpro, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3520,6 +4561,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): mutdpro vs. DrNykterstein, 2023.07.15",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "0-1"
     }
   },
   {
@@ -3533,6 +4578,10 @@
     "source": {
       "title": "Lichess games: DrNykterstein (Magnus Carlsen): DrNykterstein vs. Mamikon_Gharibyan, 2025.05.24",
       "url": "https://lichess.org/api/games/user/DrNykterstein?max=150&until=1791394056000&pgnInJson=false&clocks=false&evals=false"
+    },
+    "result": {
+      "kind": "game",
+      "score": "1-0"
     }
   },
   {
@@ -3546,6 +4595,10 @@
     "source": {
       "title": "Lucena position",
       "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1/2-1/2"
     }
   },
   {
@@ -3559,6 +4612,10 @@
     "source": {
       "title": "Philidor position",
       "url": "https://en.wikipedia.org/wiki/Philidor_position"
+    },
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
     }
   }
 ]

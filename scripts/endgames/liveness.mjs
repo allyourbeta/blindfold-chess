@@ -6,6 +6,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFile } from "node:child_process";
+import { fetchText } from "./fetchCache.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const WORKER_PATH = path.join(__dirname, "sfWorker.mjs");
@@ -17,10 +18,11 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+// Goes through fetchCache's cache (SPEC_buttons_results.md Part 1) -- a
+// repeat build/verify run never re-queries a position it already has an
+// answer for.
 async function queryTablebaseOnce(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const body = await res.json();
+  const body = JSON.parse(await fetchText(url));
   return body.category ?? null;
 }
 

@@ -9,6 +9,9 @@ import path from "node:path";
 import { extractFromRecipe } from "./extract.mjs";
 import { mirrorColors } from "./mirror.mjs";
 import { isQuiet } from "./quiet.mjs";
+import { pieceCount } from "./curationHelpers.mjs";
+import { tablebaseCategory } from "./liveness.mjs";
+import { categoryToScore, normalizeGameResult, swapScore } from "./resultScore.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SOURCES_PATH = path.resolve(__dirname, "sources.json");
@@ -19,10 +22,36 @@ function normalizedFen(placement, sideToMove) {
   return `${placement} ${sideToMove} - - 0 1`;
 }
 
+/**
+ * Decisions in SPEC_buttons_results.md: 7 pieces or fewer always gets the
+ * tablebase's perfect-play answer (the certain result wins even over a real
+ * game); 8 or more gets the source game's result, only when the recipe is
+ * `pgn-ply`. Anything else -- an unreachable/uncertain tablebase category, a
+ * `*` or missing PGN result, a non-game recipe at 8+ pieces -- ships `null`.
+ */
+async function computeResult(manifestEntry, fen, gameResultHeader) {
+  const count = pieceCount(fen);
+  if (count <= 7) {
+    let category;
+    try {
+      category = await tablebaseCategory(fen);
+    } catch {
+      return null;
+    }
+    const score = categoryToScore(category, fen.split(" ")[1]);
+    return score ? { kind: "perfect", score } : null;
+  }
+  if (manifestEntry.extract.kind !== "pgn-ply") return null;
+  const normalized = normalizeGameResult(gameResultHeader);
+  if (!normalized) return null;
+  return { kind: "game", score: manifestEntry.flip ? swapScore(normalized) : normalized };
+}
+
 async function buildEntry(manifestEntry) {
-  const { placement, sideToMove } = await extractFromRecipe(manifestEntry.extract);
+  const { placement, sideToMove, result: gameResultHeader } = await extractFromRecipe(manifestEntry.extract);
   const sourceFen = normalizedFen(placement, sideToMove);
   const fen = manifestEntry.flip ? mirrorColors(sourceFen) : sourceFen;
+  const result = await computeResult(manifestEntry, fen, gameResultHeader);
   return {
     id: manifestEntry.id,
     code: manifestEntry.code,
@@ -32,6 +61,7 @@ async function buildEntry(manifestEntry) {
     name: manifestEntry.name ?? null,
     themes: manifestEntry.themes ?? [],
     source: manifestEntry.source,
+    result,
   };
 }
 
@@ -90,6 +120,11 @@ async function main() {
 
   writeFileSync(OUTPUT_PATH, `${JSON.stringify(out, null, 2)}\n`);
   console.log(`Wrote ${out.length} entries to ${path.relative(process.cwd(), OUTPUT_PATH)}`);
+
+  const perfect = out.filter((e) => e.result?.kind === "perfect").length;
+  const game = out.filter((e) => e.result?.kind === "game").length;
+  const none = out.length - perfect - game;
+  console.log(`Results: ${perfect} perfect, ${game} game, ${none} none.`);
 }
 
 main();

@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/Button";
 import { EndgamesHeader } from "./EndgamesHeader";
 import { EndgameCard } from "./EndgameCard";
+import { DiceButton } from "./DiceButton";
 import { randomFrom, type EndgamePosition } from "@/services/endgames/catalog";
 import { favoriteEntries } from "@/services/endgames/catalogGroups";
 import { useFavorites } from "@/state/favoritesStore";
@@ -24,6 +24,15 @@ export function EndgamesFavorites({ engineReady, onBack, onOpenPosition }: Endga
         title="Favorites"
         subtitle={entries.length === 0 ? "None yet" : `${entries.length} position${entries.length === 1 ? "" : "s"}`}
         onBack={onBack}
+        right={
+          entries.length > 0 ? (
+            <DiceButton
+              ariaLabel="Random favorite"
+              disabled={!engineReady}
+              onClick={() => onOpenPosition(randomFrom(entries))}
+            />
+          ) : undefined
+        }
       />
 
       {entries.length === 0 ? (
@@ -33,21 +42,11 @@ export function EndgamesFavorites({ engineReady, onBack, onOpenPosition }: Endga
           Tap the star on a position to add it.
         </p>
       ) : (
-        <>
-          <Button
-            variant="secondary"
-            className="w-full"
-            disabled={!engineReady}
-            onClick={() => onOpenPosition(randomFrom(entries))}
-          >
-            Random favorite
-          </Button>
-          <div className="grid grid-cols-2 gap-3">
-            {entries.map((entry) => (
-              <EndgameCard key={entry.id} entry={entry} onClick={() => onOpenPosition(entry)} showBucket />
-            ))}
-          </div>
-        </>
+        <div className="grid grid-cols-2 gap-3">
+          {entries.map((entry) => (
+            <EndgameCard key={entry.id} entry={entry} onClick={() => onOpenPosition(entry)} showBucket />
+          ))}
+        </div>
       )}
     </div>
   );
