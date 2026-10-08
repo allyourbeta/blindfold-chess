@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { materialKey, groupLabel, family, pieceList, search, randomFrom, type EndgamePosition } from "./catalog";
+import { materialKey, groupLabel, family, pieceList, search, randomFrom, sizeOf, ENDGAMES, type EndgamePosition } from "./catalog";
 
 describe("materialKey", () => {
   it("puts the stronger side first and names it like KRPvKR", () => {
@@ -60,6 +60,7 @@ describe("search", () => {
   const catalog: EndgamePosition[] = [
     {
       id: "a",
+      code: "E001",
       fen: "1K1k4/1P6/8/8/8/8/r7/2R5 w - - 0 1",
       sourceFen: "1K1k4/1P6/8/8/8/8/r7/2R5 w - - 0 1",
       flipped: false,
@@ -69,6 +70,7 @@ describe("search", () => {
     },
     {
       id: "b",
+      code: "E002",
       fen: "8/8/8/4k3/8/4K3/4P3/8 w - - 0 1",
       sourceFen: "8/8/8/4k3/8/4K3/4P3/8 w - - 0 1",
       flipped: false,
@@ -84,8 +86,16 @@ describe("search", () => {
     expect(search("rook", catalog)).toEqual([catalog[0]]); // family label "Rook endings"
     expect(search("opposition", catalog)).toEqual([catalog[1]]);
     expect(search("pawn king", catalog)).toEqual([catalog[1]]); // AND across words
-    expect(search("3 to 5", catalog)).toEqual(catalog); // bucket label -- both entries are 3-5 pieces
+    // bucket label -- both entries are 3-5 pieces; sorted by piece count ascending: b (3) before a (5).
+    expect(search("3 to 5", catalog)).toEqual([catalog[1], catalog[0]]);
     expect(search("zzzz", catalog)).toEqual([]);
+  });
+
+  it("sorts matches by piece count ascending, then by code", () => {
+    const counts = search("rook", ENDGAMES).map((e) => sizeOf(e.fen));
+    for (let i = 1; i < counts.length; i++) {
+      expect(counts[i]).toBeGreaterThanOrEqual(counts[i - 1]);
+    }
   });
 });
 

@@ -5,6 +5,7 @@ import {
   materialKey,
   groupLabel,
   bucketOf,
+  sizeOf,
   SIZE_BUCKETS,
   FAMILY_ORDER,
   FAMILY_INFO,
@@ -91,22 +92,19 @@ export function bucketEntries(entry: EndgamePosition, catalog: EndgamePosition[]
   return entriesByBucket(bucketOfEntry(entry), catalog);
 }
 
-export function displayNameFor(entry: EndgamePosition, catalog: EndgamePosition[] = ENDGAMES): string {
-  if (entry.name) return entry.name;
-  const bucket = bucketOfEntry(entry);
-  const fam = familyOf(entry);
-  const siblings = catalog.filter((e) => bucketOfEntry(e).label === bucket.label && familyOf(e) === fam && !e.name);
-  const index = siblings.findIndex((e) => e.id === entry.id);
-  return `Position ${index + 1}`;
+/** The position's name, or its permanent code when it has none. */
+export function displayNameFor(entry: EndgamePosition): string {
+  return entry.name ?? entry.code;
 }
 
 /**
- * The short label a grid card shows: a custom name unchanged, or "#N" for
- * an unnamed entry. `displayNameFor` (and so "Position N") stays the name
- * used everywhere else -- the position screen's title, its accessible
- * name -- only the card shortens it.
+ * Favorited codes resolved to catalog entries, smallest first then by
+ * code. A code with no matching entry (e.g. a deleted or retired position)
+ * is silently dropped -- it's never counted and never shown.
  */
-export function cardLabelFor(entry: EndgamePosition, catalog: EndgamePosition[] = ENDGAMES): string {
-  if (entry.name) return entry.name;
-  return displayNameFor(entry, catalog).replace(/^Position /, "#");
+export function favoriteEntries(codes: string[], catalog: EndgamePosition[] = ENDGAMES): EndgamePosition[] {
+  const favored = new Set(codes);
+  return catalog
+    .filter((e) => favored.has(e.code))
+    .sort((a, b) => sizeOf(a.fen) - sizeOf(b.fen) || a.code.localeCompare(b.code));
 }

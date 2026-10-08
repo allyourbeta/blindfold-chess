@@ -5,8 +5,16 @@ import { bucketEntries, bucketOfEntry, entriesByBucket } from "@/services/endgam
 import { EndgamesHome } from "@/components/endgames/EndgamesHome";
 import { EndgamesSize } from "@/components/endgames/EndgamesSize";
 import { EndgamesPosition } from "@/components/endgames/EndgamesPosition";
+import { EndgamesFavorites } from "@/components/endgames/EndgamesFavorites";
 
-type View = { kind: "home" } | { kind: "size"; bucket: SizeBucket } | { kind: "position"; id: string };
+type View =
+  | { kind: "home" }
+  | { kind: "size"; bucket: SizeBucket }
+  | { kind: "favorites" }
+  // `from` tracks where this position was opened from, so the back arrow can
+  // return there -- only favorites needs this (decision 6); size and search
+  // (opened from home) both already return to the entry's own size bucket.
+  | { kind: "position"; id: string; from: "favorites" | "other" };
 
 interface EndgamesScreenProps {
   /** Lands straight on this size's list -- the game-over "Endgames" button's entry point. Null starts at home. */
@@ -27,8 +35,8 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
   const engineReady = useGameStore((s) => s.engineStatus === "ready");
   const startEndgame = useGameStore((s) => s.startEndgame);
 
-  function openPosition(entry: EndgamePosition) {
-    setView({ kind: "position", id: entry.id });
+  function openPosition(entry: EndgamePosition, from: "favorites" | "other" = "other") {
+    setView({ kind: "position", id: entry.id, from });
   }
 
   async function playBlindfold(id: string) {
@@ -44,7 +52,19 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
         onBack={onMenu}
         onOpenSize={(bucket) => setView({ kind: "size", bucket })}
         onOpenPosition={openPosition}
+        onOpenFavorites={() => setView({ kind: "favorites" })}
         onRandom={() => openPosition(randomFrom(ENDGAMES))}
+      />
+    );
+  }
+
+  if (view.kind === "favorites") {
+    return (
+      <EndgamesFavorites
+        key="favorites"
+        engineReady={engineReady}
+        onBack={() => setView({ kind: "home" })}
+        onOpenPosition={(entry) => openPosition(entry, "favorites")}
       />
     );
   }
@@ -76,6 +96,7 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
         onBack={onMenu}
         onOpenSize={(bucket) => setView({ kind: "size", bucket })}
         onOpenPosition={openPosition}
+        onOpenFavorites={() => setView({ kind: "favorites" })}
         onRandom={() => openPosition(randomFrom(ENDGAMES))}
       />
     );
@@ -90,7 +111,9 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
       key={entry.id}
       entry={entry}
       engineReady={engineReady}
-      onBack={() => setView({ kind: "size", bucket: bucketOfEntry(entry) })}
+      onBack={() =>
+        setView(view.from === "favorites" ? { kind: "favorites" } : { kind: "size", bucket: bucketOfEntry(entry) })
+      }
       onPlayBlindfold={() => void playBlindfold(entry.id)}
       onAnotherOfThisSize={() => openPosition(randomFrom(bucketEntries(entry), entry.id))}
     />

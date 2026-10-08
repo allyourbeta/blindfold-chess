@@ -3,6 +3,8 @@ import { fenToBoard, FILES } from "@/services/chess/fen";
 
 export interface EndgamePosition {
   id: string;
+  /** Permanent, user-facing identifier (e.g. "E147"). Never changes; a deleted code is never reused. */
+  code: string;
   fen: string;
   /** The position before any last-resort colour flip; equal to `fen` when `flipped` is false. */
   sourceFen: string;
@@ -192,22 +194,25 @@ export function pieceList(fen: string, color: "w" | "b"): string {
 /**
  * Every word in `query` must appear in the name, a theme, the material
  * group label, the family label, or the size bucket label -- OR'd across
- * those fields, AND'd across words.
+ * those fields, AND'd across words. Results are sorted by piece count
+ * ascending, then by permanent code.
  */
 export function search(query: string, catalog: EndgamePosition[] = ENDGAMES): EndgamePosition[] {
   const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
   if (words.length === 0) return [];
-  return catalog.filter((entry) => {
-    const key = materialKey(entry.fen);
-    const haystacks = [
-      entry.name?.toLowerCase() ?? "",
-      ...entry.themes.map((t) => t.toLowerCase()),
-      groupLabel(key).toLowerCase(),
-      FAMILY_INFO[family(key)].label.toLowerCase(),
-      bucketOf(entry.fen)?.label.toLowerCase() ?? "",
-    ];
-    return words.every((w) => haystacks.some((h) => h.includes(w)));
-  });
+  return catalog
+    .filter((entry) => {
+      const key = materialKey(entry.fen);
+      const haystacks = [
+        entry.name?.toLowerCase() ?? "",
+        ...entry.themes.map((t) => t.toLowerCase()),
+        groupLabel(key).toLowerCase(),
+        FAMILY_INFO[family(key)].label.toLowerCase(),
+        bucketOf(entry.fen)?.label.toLowerCase() ?? "",
+      ];
+      return words.every((w) => haystacks.some((h) => h.includes(w)));
+    })
+    .sort((a, b) => sizeOf(a.fen) - sizeOf(b.fen) || a.code.localeCompare(b.code));
 }
 
 /** Never returns `excludeId` when the list has more than one entry to choose from instead. */
@@ -218,4 +223,8 @@ export function randomFrom<T extends { id: string }>(list: T[], excludeId?: stri
 
 export function getById(id: string, catalog: EndgamePosition[] = ENDGAMES): EndgamePosition | undefined {
   return catalog.find((e) => e.id === id);
+}
+
+export function getByCode(code: string, catalog: EndgamePosition[] = ENDGAMES): EndgamePosition | undefined {
+  return catalog.find((e) => e.code === code);
 }

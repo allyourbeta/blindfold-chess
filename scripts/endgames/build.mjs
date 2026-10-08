@@ -12,6 +12,7 @@ import { isQuiet } from "./quiet.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SOURCES_PATH = path.resolve(__dirname, "sources.json");
+const CODES_PATH = path.resolve(__dirname, "codes.json");
 const OUTPUT_PATH = path.resolve(__dirname, "../../src/data/endgames.json");
 
 function normalizedFen(placement, sideToMove) {
@@ -24,6 +25,7 @@ async function buildEntry(manifestEntry) {
   const fen = manifestEntry.flip ? mirrorColors(sourceFen) : sourceFen;
   return {
     id: manifestEntry.id,
+    code: manifestEntry.code,
     fen,
     sourceFen,
     flipped: !!manifestEntry.flip,
@@ -33,8 +35,35 @@ async function buildEntry(manifestEntry) {
   };
 }
 
+/** Every entry must have a code, no code may repeat, and none may be a retired code. */
+function checkCodes(manifest, codes) {
+  const problems = [];
+  const retired = new Set(codes.retired ?? []);
+  const seen = new Map();
+  for (const entry of manifest) {
+    if (!entry.code) {
+      problems.push(`${entry.id}: missing code`);
+      continue;
+    }
+    if (retired.has(entry.code)) problems.push(`${entry.id}: code ${entry.code} is retired`);
+    const dupeOf = seen.get(entry.code);
+    if (dupeOf) problems.push(`${entry.id}: code ${entry.code} repeats ${dupeOf}`);
+    else seen.set(entry.code, entry.id);
+  }
+  return problems;
+}
+
 async function main() {
   const manifest = JSON.parse(readFileSync(SOURCES_PATH, "utf8"));
+  const codes = JSON.parse(readFileSync(CODES_PATH, "utf8"));
+
+  const codeProblems = checkCodes(manifest, codes);
+  if (codeProblems.length > 0) {
+    console.error(`${codeProblems.length} code problems:`);
+    for (const p of codeProblems) console.error(`  ${p}`);
+    process.exit(1);
+  }
+
   const out = [];
   const errors = [];
   for (const entry of manifest) {

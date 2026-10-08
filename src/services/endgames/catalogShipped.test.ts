@@ -1,8 +1,16 @@
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 import { Chess } from "chess.js";
 import { mirrorColors } from "./mirror";
 import { isQuiet } from "./quiet";
 import { ENDGAMES, materialKey, family, sizeOf, bucketOf, SIZE_BUCKETS } from "./catalog";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const codes = JSON.parse(
+  readFileSync(path.resolve(__dirname, "../../../scripts/endgames/codes.json"), "utf8"),
+) as { next: number; retired: string[] };
 
 // Checklist rule 3: these read the SHIPPED catalog, never a hand-built
 // fixture. See SPEC_endgames_catalog.md Part 1e for every numbered rule.
@@ -32,6 +40,23 @@ describe("the shipped catalog (src/data/endgames.json)", () => {
   it("has a unique id for every entry", () => {
     const ids = ENDGAMES.map((e) => e.id);
     expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("has a permanent code matching E### (or more digits) for every entry, all unique", () => {
+    for (const entry of ENDGAMES) {
+      expect(entry.code, entry.id).toMatch(/^E\d{3,}$/);
+    }
+    const allCodes = ENDGAMES.map((e) => e.code);
+    expect(new Set(allCodes).size).toBe(allCodes.length);
+  });
+
+  it("never ships a retired code, and every shipped code is below codes.json's next", () => {
+    const retired = new Set(codes.retired);
+    for (const entry of ENDGAMES) {
+      expect(retired.has(entry.code), entry.id).toBe(false);
+      const n = Number(entry.code.slice(1));
+      expect(n, entry.id).toBeLessThan(codes.next);
+    }
   });
 
   it("has an https source url for every entry", () => {

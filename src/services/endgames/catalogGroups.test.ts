@@ -1,9 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { ENDGAMES, FAMILY_ORDER, SIZE_BUCKETS } from "./catalog";
+import { ENDGAMES, sizeOf, FAMILY_ORDER, SIZE_BUCKETS } from "./catalog";
 import {
   groupsForFamily,
   displayNameFor,
-  cardLabelFor,
   familyOf,
   countsByFamily,
   bucketOfEntry,
@@ -11,6 +10,7 @@ import {
   countsByBucket,
   familiesInBucket,
   bucketEntries,
+  favoriteEntries,
 } from "./catalogGroups";
 
 describe("countsByFamily / groupsForFamily, against the real shipped catalog", () => {
@@ -75,43 +75,33 @@ describe("familiesInBucket, against the real shipped catalog", () => {
   });
 });
 
-describe("Position N numbering, using real catalog entries", () => {
-  it("numbers unnamed entries 1-based, in catalog file order, within their own bucket and family", () => {
-    const unnamed = ENDGAMES.filter((e) => !e.name);
-    expect(unnamed.length, "the catalog should contain at least one unnamed position").toBeGreaterThan(0);
-
-    const sample = unnamed[0];
-    const bucket = bucketOfEntry(sample);
-    const fam = familyOf(sample);
-    const siblings = ENDGAMES.filter((e) => bucketOfEntry(e).label === bucket.label && familyOf(e) === fam && !e.name);
-
-    siblings.forEach((entry, index) => {
-      expect(displayNameFor(entry)).toBe(`Position ${index + 1}`);
-      expect(bucketOfEntry(entry).label).toBe(bucket.label);
-      expect(familyOf(entry)).toBe(fam);
-    });
-  });
-
-  it("never renumbers a named entry", () => {
-    const named = ENDGAMES.find((e) => e.name);
-    expect(named, "the catalog should contain at least one named position").toBeTruthy();
-    if (named) expect(displayNameFor(named)).toBe(named.name);
-  });
-});
-
-describe("cardLabelFor -- the grid card's shortened label", () => {
-  it("shortens 'Position N' to '#N' for an unnamed entry", () => {
-    const unnamed = ENDGAMES.find((e) => !e.name);
-    expect(unnamed, "the catalog should contain at least one unnamed position").toBeTruthy();
-    if (unnamed) {
-      const n = displayNameFor(unnamed).replace("Position ", "");
-      expect(cardLabelFor(unnamed)).toBe(`#${n}`);
+describe("favoriteEntries", () => {
+  it("resolves known codes to entries, sorted smallest first, and silently drops unknown codes", () => {
+    const a = ENDGAMES[0];
+    const b = ENDGAMES[1];
+    const result = favoriteEntries([a.code, "E999999", b.code]);
+    expect(result.map((e) => e.code).sort()).toEqual([a.code, b.code].sort());
+    for (let i = 1; i < result.length; i++) {
+      expect(sizeOf(result[i].fen)).toBeGreaterThanOrEqual(sizeOf(result[i - 1].fen));
     }
   });
 
-  it("leaves a named entry's name unchanged -- 'Position N' is never a real name", () => {
+  it("returns an empty list for no favorites, and ignores an all-unknown list", () => {
+    expect(favoriteEntries([])).toEqual([]);
+    expect(favoriteEntries(["E999999", "nope"])).toEqual([]);
+  });
+});
+
+describe("displayNameFor -- name, or the permanent code when there is none", () => {
+  it("falls back to the code for an unnamed entry", () => {
+    const unnamed = ENDGAMES.find((e) => !e.name);
+    expect(unnamed, "the catalog should contain at least one unnamed position").toBeTruthy();
+    if (unnamed) expect(displayNameFor(unnamed)).toBe(unnamed.code);
+  });
+
+  it("uses the name, not the code, for a named entry", () => {
     const named = ENDGAMES.find((e) => e.name);
     expect(named, "the catalog should contain at least one named position").toBeTruthy();
-    if (named) expect(cardLabelFor(named)).toBe(named.name);
+    if (named) expect(displayNameFor(named)).toBe(named.name);
   });
 });

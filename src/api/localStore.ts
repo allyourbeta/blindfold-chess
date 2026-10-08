@@ -175,3 +175,23 @@ export function setRandomness(stop: RandomnessStop): void {
     // ignore — the choice just won't persist
   }
 }
+
+const FAVORITES_KEY = "blindfoldFavorites";
+
+/** Favorited endgame positions, by permanent code. A code with no matching catalog entry is left untouched here — see useFavorites. */
+export function getFavorites(): string[] {
+  try {
+    const raw = localStorage.getItem(FAVORITES_KEY);
+    return raw ? (JSON.parse(raw) as string[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function setFavorites(codes: string[]): void {
+  try {
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(codes));
+  } catch {
+    // ignore — favorites just won't persist across reloads
+  }
+}

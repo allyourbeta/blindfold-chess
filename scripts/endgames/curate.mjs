@@ -3,7 +3,7 @@
 // harvests real candidate positions, selects a balanced catalog from them,
 // liveness-checks the selection, and writes scripts/endgames/sources.json
 // -- the manifest build.mjs will later execute for real.
-import { writeFileSync } from "node:fs";
+import { writeFileSync, readFileSync, existsSync } from "node:fs";
 import { Chess } from "chess.js";
 import { buildPool } from "./buildPool.mjs";
 import { selectCatalog, BUCKET_MAX } from "./selectCatalog.mjs";
@@ -42,6 +42,56 @@ function assignIds(selected) {
     counts.set(base, n);
     c.id = n === 1 ? base : `${base}-${n}`;
   }
+}
+
+const SOURCES_PATH = new URL("./sources.json", import.meta.url);
+const CODES_PATH = new URL("./codes.json", import.meta.url);
+
+/** Identifies the exact same real-world source a code was assigned to -- not the counter-based `id`, which a re-run can shuffle. */
+function recipeKey(extract) {
+  return JSON.stringify(extract);
+}
+
+function loadCodesByRecipe() {
+  if (!existsSync(SOURCES_PATH)) return new Map();
+  const existing = JSON.parse(readFileSync(SOURCES_PATH, "utf8"));
+  const map = new Map();
+  for (const entry of existing) {
+    if (entry.code) map.set(recipeKey(entry.extract), entry.code);
+  }
+  return map;
+}
+
+/**
+ * Permanent codes (SPEC_favorites.md Part 1): a position keeps its code
+ * across a curate re-run, matched by its source recipe (not `id`, which
+ * assignIds can renumber). A position no longer selected has its code
+ * retired, never reused; a newly selected one takes the next free code.
+ */
+function assignCodes(selected) {
+  const codes = existsSync(CODES_PATH) ? JSON.parse(readFileSync(CODES_PATH, "utf8")) : { next: 1, retired: [] };
+  const existingByRecipe = loadCodesByRecipe();
+
+  const usedKeys = new Set();
+  for (const c of selected) {
+    const key = recipeKey(c.recipe);
+    usedKeys.add(key);
+    const existingCode = existingByRecipe.get(key);
+    if (existingCode) {
+      c.code = existingCode;
+    } else {
+      c.code = `E${String(codes.next).padStart(3, "0")}`;
+      codes.next += 1;
+    }
+  }
+
+  const retired = new Set(codes.retired ?? []);
+  for (const [key, code] of existingByRecipe) {
+    if (!usedKeys.has(key)) retired.add(code);
+  }
+  codes.retired = [...retired].sort();
+
+  writeFileSync(CODES_PATH, `${JSON.stringify(codes, null, 2)}\n`);
 }
 
 /** Drops surplus entries in a bucket back down to its spec max, keeping the black/white split balanced. */
@@ -97,6 +147,7 @@ function toManifestEntry(c) {
   const flip = !!c.flipped;
   return {
     id: c.id,
+    code: c.code,
     name: c.name ?? null,
     themes: c.themes ?? [],
     source: { title: c.sourceTitle, url: c.sourceUrl },
@@ -145,6 +196,7 @@ async function main() {
 
   assignNames(selected);
   assignIds(selected);
+  assignCodes(selected);
 
   const byBucket = {};
   const blackByBucket = {};
@@ -187,7 +239,7 @@ async function main() {
     .sort((a, b) => a.id.localeCompare(b.id))
     .map(toManifestEntry);
 
-  writeFileSync(new URL("./sources.json", import.meta.url), `${JSON.stringify(manifest, null, 2)}\n`);
+  writeFileSync(SOURCES_PATH, `${JSON.stringify(manifest, null, 2)}\n`);
   console.log(`Wrote sources.json with ${manifest.length} entries`);
 }
 

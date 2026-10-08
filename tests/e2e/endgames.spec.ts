@@ -56,11 +56,11 @@ test("Home -> 3 to 5 pieces -> first named entry -> Play Blindfold -> one move -
   await openSize(page, /3 to 5 pieces/);
 
   // Each card's accessible name is "<label>, <side> to move, <n> pieces" --
-  // an unnamed entry's label is "#N" (Part 3's cardLabelFor), so a named
-  // entry is exactly the one whose accessible name doesn't start with "#".
+  // an unnamed entry's label is its permanent code (e.g. "E147"), so a named
+  // entry is exactly the one whose accessible name doesn't start with "E###".
   const rows = page.getByTestId("endgame-row");
   const labels = await rows.evaluateAll((els) => els.map((el) => el.getAttribute("aria-label") ?? ""));
-  let index = labels.findIndex((t) => !/^#\d+,/.test(t));
+  let index = labels.findIndex((t) => !/^E\d{3,},/.test(t));
   const usedFallback = index === -1;
   if (usedFallback) index = 0;
   expect(index, "3 to 5 pieces should have at least one position").toBeGreaterThanOrEqual(0);
@@ -107,6 +107,7 @@ test("search narrows the size list to matches; a no-match query offers Clear sea
   await search.fill("rook");
   await expect(page.getByTestId("size-row")).toHaveCount(0);
   await expect(page.getByTestId("endgame-row").first()).toBeVisible();
+  await expect(page.getByTestId("search-size-heading").first()).toHaveText("3 to 5 pieces");
 
   await search.fill("zzzz");
   await expect(page.getByText(/No endgames match/)).toBeVisible();
