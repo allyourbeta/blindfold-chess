@@ -44,6 +44,11 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   let gameStartFen = "";
   let opponentLabelAtStart = "";
   let pendingReplyTimer: ReturnType<typeof setTimeout> | null = null;
+  // Bumped at the very start of every beginGame call. A second beginGame
+  // call made while the first is still awaiting the engine restart makes
+  // the first call's session stale -- it must never go on to install its
+  // game, or ask the engine for a move, over the second one's.
+  let gameSession = 0;
 
   function cancelPendingReply() {
     if (pendingReplyTimer !== null) {
@@ -82,15 +87,24 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
    * rather than retrying forever.
    */
   function handleEngineFailure(reason: string) {
+    // Captured before the restart so a beginGame call that lands before it
+    // resolves -- a new game, or the same game moving on another way -- is
+    // detected and this recovery becomes a no-op for it.
+    const session = gameSession;
+    const fenAtFailure = get().chess.fen();
+    const stillCurrent = () => session === gameSession && get().chess.fen() === fenAtFailure;
+
     set({ isThinking: false });
     removeThinkingMessage();
     addMessage("error", `${reason} Restarting the engine.`);
     void engineManager.restart().then(
       () => {
+        if (!stillCurrent()) return;
         const cur = get();
         if (!cur.gameOverFlag && cur.chess.turn() !== cur.playerColor) requestEngineMove();
       },
       () => {
+        if (!stillCurrent()) return;
         addMessage("error", "Engine restart failed. Start a new game or reload the app.");
       },
     );
@@ -179,14 +193,30 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     });
   }
 
-  async function beginGame(fen: string, opts?: { playerColor?: Color }) {
+  /** Resolves true once the game is actually installed, false if the attempt was abandoned or superseded. */
+  async function beginGame(fen: string, opts?: { playerColor?: Color }): Promise<boolean> {
+    const session = ++gameSession;
     cancelPendingReply(); // a reply held behind the floor must not outlive the game it was for
     // Unconditional: a prior game's search must never survive into this one,
     // whether it's still running (isThinking) or was already ended (resign,
     // checkmate) — relying on isThinking here was the bug, since finishGame
     // clears it before a caller can ever reach this restart check.
-    if (get().isThinking) await engineManager.restart();
-    else engineManager.abortSearch();
+    if (get().isThinking) {
+      try {
+        await engineManager.restart();
+      } catch {
+        // A failed restart must not leave the previous game half-overwritten
+        // -- the caller stays on whatever screen it was on and can retry.
+        set({ engineStatus: "failed" });
+        return false;
+      }
+    } else {
+      engineManager.abortSearch();
+    }
+    // A second beginGame call made while this one was awaiting the restart
+    // has already moved gameSession on -- this call lost the race and must
+    // not install its game over the newer one.
+    if (session !== gameSession) return false;
 
     const chess = new Chess(fen);
     // An endgame practice position forces the player onto the side to
@@ -228,9 +258,10 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     const reason = detectGameOver(chess);
     if (reason) {
       finishGame(reason);
-      return;
+      return true;
     }
     if (chess.turn() !== color) requestEngineMove();
+    return true;
   }
 
   /**

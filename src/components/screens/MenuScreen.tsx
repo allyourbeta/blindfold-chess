@@ -76,8 +76,8 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
       return;
     }
     if (!engineReady) return;
-    await startNewGame();
-    onPlay();
+    const ok = await startNewGame();
+    if (ok) onPlay();
   }
 
   function toggleSettings() {

@@ -118,14 +118,19 @@ function speakText(text: string): Promise<boolean> {
 
 let queue: SpokenUtterance[] = [];
 let draining = false;
+// The currently-draining utterance's cancel handle — a fresh one per
+// utterance, so a reset only ever cuts off what's actually playing right
+// now, never something already finished and forgotten.
+let currentAbort: AbortController | null = null;
 
-/** Drops anything queued but not yet spoken — used when a game starts or ends. */
+/** Drops anything queued but not yet spoken — used when a game starts, ends, or the player leaves it. */
 export function resetSpeechQueue(): void {
   queue = [];
+  currentAbort?.abort();
   window.speechSynthesis?.cancel();
 }
 
-function enqueueSpeech(utterance: SpokenUtterance): void {
+export function enqueueSpeech(utterance: SpokenUtterance): void {
   queue.push(utterance);
   if (!draining) void drainQueue();
 }
@@ -136,15 +141,17 @@ async function drainQueue(): Promise<void> {
   try {
     let next = queue.shift();
     while (next) {
+      const controller = new AbortController();
+      currentAbort = controller;
       // The app deliberately generates no confirmation tones.
       // No throw here — from a bad clip fetch to a browser speechSynthesis
       // quirk — may skip this `finally` and leave isSpeaking stuck true.
       try {
         if (next.clips?.length) {
           try {
-            await playClipSequence(getPlaybackContext(), next.clips, CLIP_GAP_MS);
+            await playClipSequence(getPlaybackContext(), next.clips, CLIP_GAP_MS, controller.signal);
           } catch {
-            await speakText(next.text);
+            if (!controller.signal.aborted) await speakText(next.text);
           }
         } else if (next.text) {
           await speakText(next.text);
@@ -152,9 +159,11 @@ async function drainQueue(): Promise<void> {
       } catch {
         // Give up on this utterance and move on to the next.
       }
+      if (controller.signal.aborted) break;
       next = queue.shift();
     }
   } finally {
+    currentAbort = null;
     draining = false;
     useSpeechStore.getState().setSpeaking(false);
   }

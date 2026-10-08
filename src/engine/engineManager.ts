@@ -59,6 +59,13 @@ export class EngineManager {
   async restart(): Promise<void> {
     this.generation++;
     this.adapter.dispose();
+    // e2e-only: lets a test force a real restart failure (SPEC_lifecycle.md
+    // Part 3) without needing a flaky real one. Inert in production — no
+    // normal page ever sets this flag, and it's read, not written, here.
+    if (typeof window !== "undefined" && (window as unknown as { __failNextEngineRestart?: boolean }).__failNextEngineRestart) {
+      this.setStatus("failed");
+      throw new Error("Engine restart forced to fail (test hook)");
+    }
     await this.load();
   }
 

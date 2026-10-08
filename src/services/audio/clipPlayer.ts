@@ -85,6 +85,7 @@ export async function playClipSequence(
   ctx: AudioContext,
   ids: readonly string[],
   gapMs: number,
+  signal?: AbortSignal,
 ): Promise<void> {
   if (!ids.length) return;
 
@@ -102,6 +103,10 @@ export async function playClipSequence(
     LOAD_TIMEOUT_MS,
     "speech clips did not load in time",
   );
+
+  // A reset (new game, return to menu) that landed while these clips were
+  // still loading must not go on to schedule audio nobody asked for anymore.
+  if (signal?.aborted) return;
 
   const output = getOutputNode(ctx);
   const gapSeconds = Math.max(0, gapMs) / 1000;
@@ -133,15 +138,36 @@ export async function playClipSequence(
   return new Promise((resolve) => {
     let settled = false;
     let remaining = sources.length;
-    const settle = () => {
-      if (settled) return;
-      settled = true;
+
+    const cleanup = () => {
       clearTimeout(watchdog);
+      signal?.removeEventListener("abort", onAbort);
       for (const { source, gain } of sources) {
         source.onended = null;
         source.disconnect();
         gain.disconnect();
       }
+    };
+    const settle = () => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      resolve();
+    };
+    // A reset mid-sequence: stop every scheduled source outright rather than
+    // waiting for its natural onended, so cut-off audio actually goes
+    // silent instead of finishing the word it was on.
+    const onAbort = () => {
+      if (settled) return;
+      settled = true;
+      for (const { source } of sources) {
+        try {
+          source.stop();
+        } catch {
+          // Already stopped or past its end -- nothing left to cancel.
+        }
+      }
+      cleanup();
       resolve();
     };
 
@@ -149,6 +175,14 @@ export async function playClipSequence(
       settle,
       Math.max(0, finalEndAt - ctx.currentTime) * 1000 + WATCHDOG_SLACK_MS,
     );
+
+    if (signal) {
+      if (signal.aborted) {
+        onAbort();
+        return;
+      }
+      signal.addEventListener("abort", onAbort);
+    }
 
     for (const { source } of sources) {
       source.onended = () => {

@@ -9,7 +9,10 @@ import { useFavorites } from "@/state/favoritesStore";
 
 interface EndgamesPositionProps {
   entry: EndgamePosition;
-  engineReady: boolean;
+  /** Ready, or failed (so the error line's own button stays tappable to retry) — not while loading or idle. */
+  canStart: boolean;
+  /** Set when the last Play Blindfold attempt failed to start the engine — shown under the buttons, null otherwise. */
+  startError: string | null;
   onBack(): void;
   onPlayBlindfold(): void;
   onAnotherOfThisSize(): void;
@@ -17,7 +20,8 @@ interface EndgamesPositionProps {
 
 export function EndgamesPosition({
   entry,
-  engineReady,
+  canStart,
+  startError,
   onBack,
   onPlayBlindfold,
   onAnotherOfThisSize,
@@ -77,13 +81,15 @@ export function EndgamesPosition({
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <Button variant="primary" size="big" disabled={!engineReady} onClick={onPlayBlindfold}>
+        <Button variant="primary" size="big" disabled={!canStart} onClick={onPlayBlindfold}>
           Play Blindfold
         </Button>
-        <Button variant="secondary" size="big" disabled={!engineReady} onClick={onAnotherOfThisSize}>
+        <Button variant="secondary" size="big" disabled={!canStart} onClick={onAnotherOfThisSize}>
           Another of this size
         </Button>
       </div>
+
+      {startError && <p className="text-sm text-text-error">{startError}</p>}
 
       <p className="text-sm text-text-muted">Source: {entry.source.title}.</p>
     </div>

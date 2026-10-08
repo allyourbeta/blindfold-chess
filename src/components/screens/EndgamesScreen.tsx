@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGameStore } from "@/state/gameStore";
+import { useGameStore, engineStartFailedMessage } from "@/state/gameStore";
 import { ENDGAMES, getById, randomFrom, type SizeBucket, type EndgamePosition } from "@/services/endgames/catalog";
 import { bucketEntries, bucketOfEntry, entriesByBucket } from "@/services/endgames/catalogGroups";
 import { EndgamesHome } from "@/components/endgames/EndgamesHome";
@@ -32,16 +32,24 @@ interface EndgamesScreenProps {
  */
 export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreenProps) {
   const [view, setView] = useState<View>(initialBucket ? { kind: "size", bucket: initialBucket } : { kind: "home" });
-  const engineReady = useGameStore((s) => s.engineStatus === "ready");
+  const [startError, setStartError] = useState(false);
+  const engineStatus = useGameStore((s) => s.engineStatus);
+  const engineReady = engineStatus === "ready";
+  // Tappable once failed too, not just once ready -- otherwise the error
+  // line's own "Tap Play Blindfold to try again" would name a disabled
+  // button, with no other way back to a working engine from this screen.
+  const canStart = engineStatus === "ready" || engineStatus === "failed";
   const startEndgame = useGameStore((s) => s.startEndgame);
 
   function openPosition(entry: EndgamePosition, from: "favorites" | "other" = "other") {
+    setStartError(false);
     setView({ kind: "position", id: entry.id, from });
   }
 
   async function playBlindfold(id: string) {
-    await startEndgame(id);
-    onPlay();
+    const ok = await startEndgame(id);
+    if (ok) onPlay();
+    else setStartError(true);
   }
 
   if (view.kind === "home") {
@@ -110,7 +118,8 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
       // positions instead of starting at the top (decision 5).
       key={entry.id}
       entry={entry}
-      engineReady={engineReady}
+      canStart={canStart}
+      startError={startError ? engineStartFailedMessage("Play Blindfold") : null}
       onBack={() =>
         setView(view.from === "favorites" ? { kind: "favorites" } : { kind: "size", bucket: bucketOfEntry(entry) })
       }

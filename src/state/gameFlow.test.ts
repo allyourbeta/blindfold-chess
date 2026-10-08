@@ -94,6 +94,136 @@ describe("Defect 1: a delayed engine reply must not land in a new game", () => {
   });
 });
 
+/** An adapter whose init() and requestMove() stay pending until the test resolves/rejects them explicitly, with init() calls kept by index rather than FIFO so an out-of-order resolution (the second restart finishing before the first) is expressible. */
+function controllableAdapter(): EngineAdapter & {
+  resolveInit(index: number): void;
+  rejectInit(index: number, err: Error): void;
+  resolveNext(uci: string): void;
+  rejectNext(err: Error): void;
+  moveRequestCount: number;
+} {
+  const initCalls: Array<{ resolve: () => void; reject: (err: Error) => void }> = [];
+  const moveResolvers: Array<{ resolve: (uci: string) => void; reject: (err: Error) => void }> = [];
+  const adapter = {
+    id: "fake",
+    init: () =>
+      new Promise<void>((resolve, reject) => {
+        initCalls.push({ resolve, reject });
+      }),
+    isReady: () => true,
+    setLevel: () => {},
+    moveRequestCount: 0,
+    requestMove: () => {
+      adapter.moveRequestCount++;
+      return new Promise<string>((resolve, reject) => {
+        moveResolvers.push({ resolve, reject });
+      });
+    },
+    stop: () => {},
+    dispose: () => {},
+    resolveInit(index: number) {
+      initCalls[index]?.resolve();
+    },
+    rejectInit(index: number, err: Error) {
+      initCalls[index]?.reject(err);
+    },
+    resolveNext(uci: string) {
+      moveResolvers.shift()?.resolve(uci);
+    },
+    rejectNext(err: Error) {
+      moveResolvers.shift()?.reject(err);
+    },
+  };
+  return adapter;
+}
+
+describe("Decision: one gameSession at a time (SPEC_lifecycle.md Part 2)", () => {
+  afterEach(() => {
+    useSettingsStore.getState().setPlayerColor("w");
+  });
+
+  it("a second beginGame overlapping the first's restart installs only the second game, with exactly one move request", async () => {
+    const adapter = controllableAdapter();
+    const engineManager = new EngineManager(adapter);
+    const initialLoad = engineManager.load();
+    adapter.resolveInit(0);
+    await initialLoad;
+
+    const { get, set } = makeStore();
+    set({ isThinking: true }); // a previous search is still in flight
+    const flow = createGameFlow(set, get, engineManager);
+    // King and a pawn vs. a bare king -- White to move, not already over (unlike
+    // a bare-kings position, which chess.js calls an immediate insufficient-material draw).
+    const secondGameFen = "4k3/8/8/8/8/8/P7/4K3 w - - 0 1";
+
+    const first = flow.beginGame(STARTING_FEN, { playerColor: "b" }); // sees isThinking -> awaits restart (init call #1)
+    await sleep(0);
+    const second = flow.beginGame(secondGameFen, { playerColor: "b" }); // also sees isThinking still true -> awaits restart (init call #2)
+    await sleep(0);
+
+    // The second call's restart resolves first...
+    adapter.resolveInit(2);
+    await sleep(0);
+    // ...and only then does the first (now-stale) call's restart resolve.
+    adapter.resolveInit(1);
+
+    expect(await first).toBe(false);
+    expect(await second).toBe(true);
+    expect(get().fen).toBe(secondGameFen);
+    expect(get().moveHistory).toEqual([]);
+    expect(adapter.moveRequestCount).toBe(1); // only the winning (second) game ever asked the engine to move
+  });
+
+  it("beginGame returns false and sets engineStatus failed when the restart rejects, without touching the running game", async () => {
+    const adapter = controllableAdapter();
+    const engineManager = new EngineManager(adapter);
+    const initialLoad = engineManager.load();
+    adapter.resolveInit(0);
+    await initialLoad;
+
+    const { get, set } = makeStore();
+    set({ isThinking: true, fen: "PREVIOUS_GAME_MARKER", moveHistory: ["e4"] });
+    const flow = createGameFlow(set, get, engineManager);
+
+    const result = flow.beginGame(STARTING_FEN);
+    await sleep(0);
+    adapter.rejectInit(1, new Error("boom"));
+
+    expect(await result).toBe(false);
+    expect(get().engineStatus).toBe("failed");
+    // The previous game's state must be exactly as it was -- no half-install.
+    expect(get().fen).toBe("PREVIOUS_GAME_MARKER");
+    expect(get().moveHistory).toEqual(["e4"]);
+  });
+
+  it("a new game started before an engine-failure recovery resolves gets no extra move request from that stale recovery", async () => {
+    const adapter = controllableAdapter();
+    const engineManager = new EngineManager(adapter);
+    const initialLoad = engineManager.load();
+    adapter.resolveInit(0);
+    await initialLoad;
+
+    useSettingsStore.getState().setPlayerColor("b"); // the engine (White) is always the one asked to move below
+    const { get, set } = makeStore();
+    const flow = createGameFlow(set, get, engineManager);
+
+    await flow.beginGame(STARTING_FEN); // isThinking was false -> no restart, moves straight to requesting a move
+    expect(adapter.moveRequestCount).toBe(1);
+
+    adapter.rejectNext(new Error("worker died")); // the in-flight request fails -> handleEngineFailure
+    await sleep(0); // handleEngineFailure runs, kicks off its own restart (init call #1)
+
+    const second = flow.beginGame(STARTING_FEN); // a fresh game, started before that recovery resolves
+    expect(await second).toBe(true);
+    expect(adapter.moveRequestCount).toBe(2); // the new game's own move request
+
+    adapter.resolveInit(1); // the stale recovery finally resolves
+    await sleep(0);
+
+    expect(adapter.moveRequestCount).toBe(2); // unchanged -- the stale recovery asked for no move
+  });
+});
+
 describe("beginGame: an explicit playerColor overrides the settings colour, without writing it", () => {
   afterEach(() => {
     useSettingsStore.getState().setPlayerColor("w");

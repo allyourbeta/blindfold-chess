@@ -43,7 +43,11 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
   const startFromSetup = useGameStore((s) => s.startFromSetup);
   const clearSetupError = useGameStore((s) => s.clearSetupError);
   const setupError = useGameStore((s) => s.setupError);
-  const engineReady = useGameStore((s) => s.engineStatus === "ready");
+  const engineStatus = useGameStore((s) => s.engineStatus);
+  // Tappable once failed too, not just once ready -- otherwise the error
+  // line's own "Tap Play Blindfold to try again" would name a disabled
+  // button, with no other way back to a working engine from this screen.
+  const canStart = engineStatus === "ready" || engineStatus === "failed";
 
   const castlingString = () => CASTLING_KEYS.filter((k) => castling[k]).join("") || "-";
 
@@ -107,8 +111,8 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
   async function handlePlay() {
     unlockAudioOutput();
     const fen = boardToFEN(board, turn, castlingString(), enPassant, halfmove, fullmove);
-    await startFromSetup(fen);
-    if (!useGameStore.getState().setupError) onPlay();
+    const ok = await startFromSetup(fen);
+    if (ok) onPlay();
   }
 
   return (
@@ -184,7 +188,7 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
         <Button variant="secondary" size="sm" onClick={handleClear}>
           Clear Board
         </Button>
-        <Button variant="primary" disabled={!engineReady} onClick={() => void handlePlay()}>
+        <Button variant="primary" disabled={!canStart} onClick={() => void handlePlay()}>
           Play Blindfold
         </Button>
       </div>

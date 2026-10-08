@@ -27,17 +27,23 @@ export default function App() {
     void initEngine();
   }, [initEngine]);
 
-  // Spacebar peeks at the board whenever the move/FEN input isn't focused.
+  // Spacebar peeks at the board, but only on the play screen itself -- on
+  // every other screen Space must behave like any other key and activate
+  // whatever button has focus, not get eaten here first.
   useEffect(() => {
+    const FOCUSABLE_TAGS = new Set(["BUTTON", "INPUT", "SELECT", "TEXTAREA"]);
     function onKeyDown(e: KeyboardEvent) {
-      if (e.code !== "Space") return;
-      if (document.activeElement instanceof HTMLInputElement) return;
+      if (e.code !== "Space" || e.repeat) return;
+      if (screen !== "play") return;
+      if (document.querySelector('[role="dialog"]')) return;
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && FOCUSABLE_TAGS.has(active.tagName)) return;
       e.preventDefault();
       useGameStore.getState().doPeek();
     }
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, []);
+  }, [screen]);
 
   return (
     <div className="min-h-dvh bg-bg-base text-text-primary sm:flex sm:h-dvh sm:items-center sm:justify-center sm:p-6 shortscape:block shortscape:p-0">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
-import { useGameStore } from "@/state/gameStore";
+import { useGameStore, engineStartFailedMessage } from "@/state/gameStore";
 import { getById, randomFrom, type SizeBucket } from "@/services/endgames/catalog";
 import { bucketOfEntry, bucketEntries } from "@/services/endgames/catalogGroups";
 
@@ -28,17 +28,28 @@ export function GameOverPanel({ onNewGame, onMenu, onEndgames }: GameOverPanelPr
   const activeEndgame = useGameStore((s) => s.activeEndgame);
   const startEndgame = useGameStore((s) => s.startEndgame);
   const [dismissed, setDismissed] = useState(false);
+  const [startError, setStartError] = useState(false);
 
   // A new game (or a new game-over) resets the dismissal.
   useEffect(() => {
     setDismissed(false);
+    setStartError(false);
   }, [gameOverFlag]);
 
   const entry = activeEndgame ? getById(activeEndgame.id) : null;
 
-  function playAnotherOfThisSize() {
+  async function tryAgain() {
     if (!entry) return;
-    void startEndgame(randomFrom(bucketEntries(entry), entry.id).id);
+    setStartError(false);
+    const ok = await startEndgame(entry.id);
+    if (!ok) setStartError(true);
+  }
+
+  async function playAnotherOfThisSize() {
+    if (!entry) return;
+    setStartError(false);
+    const ok = await startEndgame(randomFrom(bucketEntries(entry), entry.id).id);
+    if (!ok) setStartError(true);
   }
 
   return (
@@ -47,10 +58,10 @@ export function GameOverPanel({ onNewGame, onMenu, onEndgames }: GameOverPanelPr
       <div className="flex flex-col gap-2">
         {entry ? (
           <>
-            <Button variant="primary" className="w-full" onClick={() => void startEndgame(entry.id)}>
+            <Button variant="primary" className="w-full" onClick={() => void tryAgain()}>
               Try again
             </Button>
-            <Button variant="secondary" className="w-full" onClick={playAnotherOfThisSize}>
+            <Button variant="secondary" className="w-full" onClick={() => void playAnotherOfThisSize()}>
               Another of this size
             </Button>
             <Button variant="secondary" className="w-full" onClick={() => void copyPgn()}>
@@ -59,6 +70,9 @@ export function GameOverPanel({ onNewGame, onMenu, onEndgames }: GameOverPanelPr
             <Button variant="secondary" className="w-full" onClick={() => onEndgames(bucketOfEntry(entry))}>
               Endgames
             </Button>
+            {startError && (
+              <p className="text-center text-sm text-text-error">{engineStartFailedMessage("Try again")}</p>
+            )}
           </>
         ) : (
           <>

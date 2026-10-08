@@ -8,7 +8,14 @@ import {
   throttleCpu,
   tapMoreAction,
   resignGame,
+  leaveGame,
 } from "./helpers";
+
+declare global {
+  interface Window {
+    __failNextEngineRestart?: boolean;
+  }
+}
 
 test("recovers after an initial Maia model load failure", async ({ page }) => {
   let requestCount = 0;
@@ -109,4 +116,46 @@ test("a checkmate set-up position ends the game immediately with an inert keypad
   await expect(page.getByRole("dialog")).toBeVisible({ timeout: 15_000 });
   await expect(page.getByRole("dialog").getByText(/Checkmate/)).toBeVisible();
   await expect(keypad(page).getByRole("button", { name: "Knight" })).toBeDisabled();
+});
+
+/**
+ * Forces beginGame's own restart (SPEC_lifecycle.md Part 2/3) to fail, via
+ * the __failNextEngineRestart test hook (engineManager.ts) -- a real
+ * restart failure is too flaky to rely on. Reaching the Endgames position
+ * screen with a stuck isThinking:true (left behind by returnToMenu, which
+ * restarts but never clears it) is what makes beginGame take the restart
+ * branch at all; without that, Play Blindfold would only ever abortSearch.
+ */
+test("a failed engine restart on Play Blindfold stays on the position screen and can be retried", async ({
+  page,
+}) => {
+  await startStandardGame(page);
+  await throttleCpu(page, 20);
+  await submitMove(page, "e4"); // engine now "thinking" a reply
+  await leaveGame(page); // returnToMenu restarts (succeeds) but leaves isThinking stuck true
+  await throttleCpu(page, 1);
+
+  await page.getByRole("button", { name: /Practice an endgame/ }).click();
+  await page.getByTestId("size-row").filter({ hasText: /3 to 5 pieces/ }).click();
+  await page.getByTestId("endgame-row").first().click();
+
+  const playButton = page.getByRole("button", { name: "Play Blindfold" });
+  await expect(playButton).toBeEnabled();
+
+  await page.evaluate(() => {
+    window.__failNextEngineRestart = true;
+  });
+  await playButton.click();
+
+  await expect(page.getByText("The engine did not start. Tap Play Blindfold to try again.")).toBeVisible({
+    timeout: 15_000,
+  });
+  await expect(playButton).toBeVisible(); // stayed on the position screen, not the play screen
+
+  await page.evaluate(() => {
+    window.__failNextEngineRestart = false;
+  });
+  await playButton.click();
+
+  await expect(keypad(page)).toBeVisible({ timeout: 15_000 });
 });

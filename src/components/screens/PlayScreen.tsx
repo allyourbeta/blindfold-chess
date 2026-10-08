@@ -10,7 +10,7 @@ import { GameOverPanel } from "@/components/play/GameOverPanel";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { useGameStore } from "@/state/gameStore";
-import { useSpeechOutput, unlockAudioOutput } from "@/hooks/useSpeechOutput";
+import { useSpeechOutput, unlockAudioOutput, resetSpeechQueue } from "@/hooks/useSpeechOutput";
 import type { SizeBucket } from "@/services/endgames/catalog";
 
 interface PlayScreenProps {
@@ -25,8 +25,16 @@ export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
   const gameOverFlag = useGameStore((s) => s.gameOverFlag);
   const [leaveConfirmOpen, setLeaveConfirmOpen] = useState(false);
 
-  function handleMenu() {
+  // Leaving a game, by any route, must not leave a move still being spoken
+  // behind — the engine's reply can still be mid-announcement when the
+  // player taps away.
+  function leaveCurrentGame() {
     returnToMenu();
+    resetSpeechQueue();
+  }
+
+  function handleMenu() {
+    leaveCurrentGame();
     onMenu();
   }
 
@@ -39,7 +47,7 @@ export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
   }
 
   function handleEndgames(bucket: SizeBucket) {
-    returnToMenu();
+    leaveCurrentGame();
     onEndgames(bucket);
   }
 

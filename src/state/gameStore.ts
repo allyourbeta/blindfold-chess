@@ -14,6 +14,11 @@ import { createEngineManager } from "@/engine/createEngineManager";
 import type { EngineStatus } from "@/engine/engineManager";
 import { createGameFlow } from "./gameFlow";
 
+/** The one sentence a caller shows when beginGame returns false — `buttonLabel` names whatever button retries it. */
+export function engineStartFailedMessage(buttonLabel: string): string {
+  return `The engine did not start. Tap ${buttonLabel} to try again.`;
+}
+
 export type MessageType = "system" | "player" | "engine" | "error" | "thinking";
 export interface GameMessage {
   id: number;
@@ -60,10 +65,10 @@ export interface GameState {
 
   initEngine(): Promise<void>;
   retryEngine(): Promise<void>;
-  startNewGame(): Promise<void>;
-  startFromSetup(fen: string): Promise<void>;
+  startNewGame(): Promise<boolean>;
+  startFromSetup(fen: string): Promise<boolean>;
   clearSetupError(): void;
-  startEndgame(id: string): Promise<void>;
+  startEndgame(id: string): Promise<boolean>;
   /** Keypad entries only: already-formed SAN, matched exactly against the legal moves. */
   submitKeypadMove(san: string): void;
   doPeek(): void;
@@ -108,16 +113,19 @@ export const useGameStore = create<GameState>((set, get) => {
     retryEngine: () => engineManager.load(),
     startNewGame: async () => {
       set({ activeEndgame: null });
-      await flow.beginGame(STARTING_FEN);
+      return flow.beginGame(STARTING_FEN);
     },
 
     startFromSetup: async (fen: string) => {
       try {
         validateFen(fen);
         set({ setupError: null, activeEndgame: null });
-        await flow.beginGame(fen);
+        const ok = await flow.beginGame(fen);
+        if (!ok) set({ setupError: engineStartFailedMessage("Play Blindfold") });
+        return ok;
       } catch (err) {
         set({ setupError: err instanceof Error ? err.message : "Invalid position." });
+        return false;
       }
     },
 
@@ -127,10 +135,11 @@ export const useGameStore = create<GameState>((set, get) => {
     // the side to move in an endgame, never the side the settings say.
     startEndgame: async (id: string) => {
       const entry = getEndgameById(id);
-      if (!entry) return;
+      if (!entry) return false;
       const sideToMove = parseFenMoveContext(entry.fen).sideToMove;
-      await flow.beginGame(entry.fen, { playerColor: sideToMove });
-      set({ activeEndgame: { id } });
+      const ok = await flow.beginGame(entry.fen, { playerColor: sideToMove });
+      if (ok) set({ activeEndgame: { id } });
+      return ok;
     },
 
     submitKeypadMove: (san: string) => {
