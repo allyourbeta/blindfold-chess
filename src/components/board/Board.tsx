@@ -26,9 +26,11 @@ export function Board({
 }: BoardProps) {
   const rows = flipped ? [...INDICES].reverse() : INDICES;
   const cols = flipped ? [...INDICES].reverse() : INDICES;
+  const lastRowIndex = rows.length - 1;
 
   return (
     <div
+      data-testid="board"
       className={cn(
         // Squares are percentage-width, so the board MUST have a definite
         // width of its own — with only `w-full` inside a shrink-to-fit
@@ -41,20 +43,10 @@ export function Board({
       )}
     >
       <div className="flex overflow-hidden rounded-lg border-2 border-stone-700 dark:border-stone-500">
-        {/* Coordinate gutter widened from w-5 so the labels can carry a
-            readable size — they were text-[10px], the smallest type in the
-            app, on a board you only get to look at for three seconds. */}
-        <div className="flex w-6 flex-col">
-          {rows.map((r) => (
-            <div key={r} className="flex flex-1 items-center justify-center font-mono text-sm text-text-secondary">
-              {8 - r}
-            </div>
-          ))}
-        </div>
         <div className="flex-1">
-          {rows.map((r) => (
+          {rows.map((r, ri) => (
             <div key={r} className="flex">
-              {cols.map((c) => {
+              {cols.map((c, ci) => {
                 const squareName = FILES[c] + (8 - r);
                 return (
                   <Square
@@ -65,19 +57,14 @@ export function Board({
                     interactive={interactive}
                     onClick={() => onSquareClick?.(r, c)}
                     square={squareName}
+                    rankLabel={ci === 0 ? String(8 - r) : undefined}
+                    fileLabel={ri === lastRowIndex ? FILES[c] : undefined}
                   />
                 );
               })}
             </div>
           ))}
         </div>
-      </div>
-      <div className="flex pl-6">
-        {cols.map((c) => (
-          <div key={c} className="w-[12.5%] text-center font-mono text-sm text-text-secondary">
-            {FILES[c]}
-          </div>
-        ))}
       </div>
     </div>
   );

@@ -37,6 +37,12 @@ export function keypad(page: Page) {
   return page.getByRole("group", { name: "Move entry keypad" });
 }
 
+/** Clicks Resign, then confirms in the "Resign this game?" dialog it now opens. */
+export async function resignGame(page: Page) {
+  await page.getByRole("button", { name: /Resign/ }).click();
+  await page.getByRole("dialog").filter({ hasText: "Resign this game?" }).getByRole("button", { name: "Resign", exact: true }).click();
+}
+
 export async function startStandardGame(page: Page) {
   await openApp(page);
   await waitForEngineReady(page);
@@ -146,6 +152,17 @@ export async function boxesOf(page: Page) {
     }
     return out;
   });
+}
+
+/**
+ * Every `Board` renders its own squares at `w-[12.5%]` of its own width, so
+ * a board that isn't square stretches every square with it -- this is the
+ * one check that would catch that regardless of which screen hosts it.
+ */
+export async function assertBoardIsSquare(page: Page) {
+  const box = await page.getByTestId("board").first().boundingBox();
+  expect(box, "a board should be rendered").not.toBeNull();
+  expect(Math.abs(box!.width - box!.height)).toBeLessThan(1);
 }
 
 export async function submitMove(page: Page, san: string) {

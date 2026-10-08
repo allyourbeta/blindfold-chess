@@ -47,3 +47,44 @@ test("an illegal destination can't be entered — the keypad disables it — and
   await submitMove(page, "e4");
   await expect(page.getByText("White: e4")).toBeVisible();
 });
+
+test("Resign asks for confirmation first — Cancel and Escape both keep the game going", async ({ page }) => {
+  await startStandardGame(page);
+  await submitMove(page, "e4");
+
+  await page.getByRole("button", { name: /Resign/ }).click();
+  const confirm = page.getByRole("dialog").filter({ hasText: "Resign this game?" });
+  await expect(confirm).toBeVisible();
+
+  await confirm.getByRole("button", { name: "Cancel" }).click();
+  await expect(confirm).toBeHidden();
+  // The game is still on: the move entered before Resign is still there, and
+  // the keypad is still live.
+  await expect(page.getByText("White: e4")).toBeVisible();
+  await expect(page.getByRole("button", { name: /Takeback/ })).toBeEnabled();
+
+  await page.getByRole("button", { name: /Resign/ }).click();
+  await expect(page.getByRole("dialog").filter({ hasText: "Resign this game?" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog").filter({ hasText: "Resign this game?" })).toBeHidden();
+  await expect(page.getByRole("button", { name: /Takeback/ })).toBeEnabled();
+});
+
+test("resign-confirm.png", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await startStandardGame(page);
+  await page.getByRole("button", { name: /Resign/ }).click();
+  await expect(page.getByRole("dialog").filter({ hasText: "Resign this game?" })).toBeVisible();
+  await page.screenshot({ path: "test-results/resign-confirm.png" });
+});
+
+test("Resign, confirmed, ends the game", async ({ page }) => {
+  await startStandardGame(page);
+
+  await page.getByRole("button", { name: /Resign/ }).click();
+  const confirm = page.getByRole("dialog").filter({ hasText: "Resign this game?" });
+  await confirm.getByRole("button", { name: "Resign", exact: true }).click();
+
+  await expect(page.getByText("You resigned.").first()).toBeVisible();
+  await expect(page.getByRole("dialog").getByRole("button", { name: "New Game" })).toBeVisible();
+});

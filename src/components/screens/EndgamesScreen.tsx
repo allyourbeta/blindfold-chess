@@ -39,6 +39,7 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
   if (view.kind === "home") {
     return (
       <EndgamesHome
+        key="home"
         engineReady={engineReady}
         onBack={onMenu}
         onOpenSize={(bucket) => setView({ kind: "size", bucket })}
@@ -52,6 +53,10 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
     const bucket = view.bucket;
     return (
       <EndgamesSize
+        // Forces a fresh mount (and so a scroll reset) on every distinct
+        // bucket -- without it, reaching this same `view.kind` from a
+        // different bucket keeps the previous instance's scroll position.
+        key={bucket.label}
         bucket={bucket}
         engineReady={engineReady}
         onBack={() => setView({ kind: "home" })}
@@ -66,6 +71,7 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
     // Shouldn't happen (a stale id), but never crash the screen over it.
     return (
       <EndgamesHome
+        key="home"
         engineReady={engineReady}
         onBack={onMenu}
         onOpenSize={(bucket) => setView({ kind: "size", bucket })}
@@ -77,6 +83,11 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
 
   return (
     <EndgamesPosition
+      // Same reasoning as the size view's key: "Another of this size" swaps
+      // `entry` without changing `view.kind`, so without a key keyed to the
+      // id the position view would keep its old scroll position across
+      // positions instead of starting at the top (decision 5).
+      key={entry.id}
       entry={entry}
       engineReady={engineReady}
       onBack={() => setView({ kind: "size", bucket: bucketOfEntry(entry) })}

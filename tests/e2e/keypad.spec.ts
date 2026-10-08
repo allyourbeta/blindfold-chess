@@ -75,6 +75,51 @@ test("the move chooser is legible and fits inside its row", async ({ page }) => 
   expect(geometry.overflowBottom).toBeLessThanOrEqual(0.5);
 });
 
+/**
+ * Part 4.3 (SPEC_board_list_fixes.md): the chooser row must stay one row
+ * (never wrap, which would grow the strip's reserved height) and, when it's
+ * wider than the strip, start left-aligned rather than centred -- a centred
+ * overflow hides the FIRST buttons off the left edge with no visible way to
+ * reach them.
+ */
+test("an 8-button chooser at 320px keeps the strip's height and starts at its left edge", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 760 });
+  await openApp(page);
+  await waitForEngineReady(page);
+  await page.getByRole("button", { name: /set up a position/i }).click();
+
+  // Black rook e8; white pawns d7 and f7 -- dxe8 and fxe8 both promote, four
+  // ways each: eight SAN candidates in one chooser.
+  await page.getByPlaceholder("Paste FEN string...").fill("4r2k/3P1P2/8/8/8/8/8/4K3 w - - 0 1");
+  await page.getByRole("button", { name: "Load" }).click();
+  await page.getByRole("button", { name: "Play Blindfold" }).click();
+  await expect(keypad(page)).toBeVisible();
+
+  const strip = page.getByTestId("entry-strip");
+
+  await tapKeypadKey(page, "Pawn");
+  await tapKeypadKey(page, "e");
+  await tapKeypadKey(page, "8");
+
+  const chooser = keypad(page).getByRole("group", { name: "Move chooser" });
+  const buttons = chooser.getByRole("button");
+  await expect(buttons).toHaveCount(8);
+
+  // One row: every button shares the same y. `flex-wrap` would break this
+  // into two or three rows at 320px, each clipped top/bottom by the strip's
+  // fixed height.
+  const boxes = await buttons.evaluateAll((els) => els.map((el) => el.getBoundingClientRect().y));
+  for (const y of boxes) expect(y).toBeCloseTo(boxes[0], 0);
+
+  // The row is wider than the strip, so it must scroll sideways instead of
+  // wrapping -- and it must start at the strip's own left edge (plain
+  // `justify-center` would centre the overflow and hide the first buttons
+  // off the left with no visible way back to them).
+  const stripBox = (await strip.boundingBox())!;
+  const firstButtonBox = (await buttons.first().boundingBox())!;
+  expect(firstButtonBox.x).toBeGreaterThanOrEqual(stripBox.x - 0.5);
+});
+
 test("dims dual keys neither of whose readings can reach a legal move", async ({ page }) => {
   await startStandardGame(page);
   await tapKeypadKey(page, "Knight");

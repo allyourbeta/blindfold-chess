@@ -1,7 +1,36 @@
 import { test, expect } from "@playwright/test";
-import { startStandardGame } from "./helpers";
+import { startStandardGame, assertBoardIsSquare } from "./helpers";
 
 const SQUARE_SELECTOR = '[class*="bg-sq-"]';
+
+// Part 2 (board-and-list.html, option B): the peek board is one of the
+// Board users the label redesign has to hold square for, at both
+// orientations the app ships.
+function registerPeekSquareCheck(width: number, height: number) {
+  test(`${width}x${height}: the peek board is square`, async ({ page }) => {
+    await startStandardGame(page);
+    await page.getByLabel("Peek at the board").click();
+    await assertBoardIsSquare(page);
+  });
+}
+
+test.describe("square board: iphone portrait", () => {
+  test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  registerPeekSquareCheck(390, 844);
+});
+
+test.describe("square board: landscape", () => {
+  test.use({ viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true });
+  registerPeekSquareCheck(844, 390);
+});
+
+test("peek-labels.png", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await startStandardGame(page);
+  await page.getByLabel("Peek at the board").click();
+  await expect(page.locator(SQUARE_SELECTOR)).toHaveCount(64);
+  await page.screenshot({ path: "test-results/peek-labels.png" });
+});
 
 test("peek reveals the board and hides after three seconds", async ({ page }) => {
   await startStandardGame(page);

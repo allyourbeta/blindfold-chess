@@ -163,9 +163,19 @@ export function MoveKeypad() {
           Overflow stays horizontal-only in practice: the rare 8-button
           promotion chooser scrolls sideways rather than wrapping, because
           wrapping is what would change this row's height. */}
-      <div data-testid="entry-strip" className="flex h-12 items-center justify-center overflow-x-auto px-2 shortscape:h-9">
+      <div
+        data-testid="entry-strip"
+        // `safe center`, not plain `center`: centering is fine while the
+        // chooser fits, but the rare 8-button chooser is WIDER than this
+        // strip, and plain `center` splits that overflow evenly on both
+        // sides -- hiding the first buttons off the left edge with no
+        // visible way to scroll back to them. `safe` falls back to
+        // start-alignment exactly when centering would do that.
+        className="flex h-12 items-center overflow-x-auto px-2 shortscape:h-9"
+        style={{ justifyContent: "safe center" }}
+      >
         {chooser ? (
-          <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
+          <div role="group" aria-label="Move chooser" className="flex flex-nowrap items-center gap-2">
             {chooser.map((san) => (
               <Button key={san} type="button" size="chooser" onClick={() => play(san)}>
                 {san}
@@ -173,7 +183,7 @@ export function MoveKeypad() {
             ))}
           </div>
         ) : entry.promotionPending ? (
-          <div role="group" aria-label="Move chooser" className="flex flex-wrap items-center justify-center gap-2">
+          <div role="group" aria-label="Move chooser" className="flex flex-nowrap items-center gap-2">
             {PROMOTION_ORDER.map(({ promotion, label }) => {
               const candidate = entry.candidates.find((c) => c.promotion === promotion);
               if (!candidate) return null;

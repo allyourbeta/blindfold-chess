@@ -25,7 +25,10 @@ export function EndgamesPosition({
   const family = familyOf(entry);
 
   return (
-    <div className="flex h-full w-full flex-col gap-4 overflow-y-auto p-6 pb-10">
+    <div
+      data-testid="endgame-scroll"
+      className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))]"
+    >
       <EndgamesHeader title={bucket.label} subtitle={FAMILY_INFO[family].label} onBack={onBack} />
 
       <BoardPanel board={fenToBoard(entry.fen)} defaultFlipped={side === "b"} />

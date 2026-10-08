@@ -3,14 +3,9 @@ import { ChevronRight, Search } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { EndgamesHeader } from "./EndgamesHeader";
-import {
-  SIZE_BUCKETS,
-  search as searchCatalog,
-  sizeOf,
-  type SizeBucket,
-  type EndgamePosition,
-} from "@/services/endgames/catalog";
-import { countsByBucket, sideToMove, displayNameFor, bucketOfEntry } from "@/services/endgames/catalogGroups";
+import { EndgameCard } from "./EndgameCard";
+import { SIZE_BUCKETS, search as searchCatalog, type SizeBucket, type EndgamePosition } from "@/services/endgames/catalog";
+import { countsByBucket } from "@/services/endgames/catalogGroups";
 
 interface EndgamesHomeProps {
   engineReady: boolean;
@@ -27,7 +22,10 @@ export function EndgamesHome({ engineReady, onBack, onOpenSize, onOpenPosition, 
   const counts = countsByBucket();
 
   return (
-    <div className="flex h-full w-full flex-col gap-4 overflow-y-auto p-6 pb-10">
+    <div
+      data-testid="endgame-scroll"
+      className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))]"
+    >
       <EndgamesHeader title="Endgames" subtitle="Pick a size, or search." onBack={onBack} />
 
       <div className="relative">
@@ -86,28 +84,11 @@ export function EndgamesHome({ engineReady, onBack, onOpenSize, onOpenPosition, 
           <p className="mb-2 text-sm font-semibold text-text-secondary">
             {results.length} match{results.length === 1 ? "" : "es"}
           </p>
-          <Card>
-            {results.map((entry) => {
-              const side = sideToMove(entry);
-              return (
-                <button
-                  key={entry.id}
-                  type="button"
-                  data-testid="endgame-row"
-                  onClick={() => onOpenPosition(entry)}
-                  className="flex min-h-14 w-full items-center gap-3 border-t border-border-default px-4 py-2 text-left first:border-t-0 hover:bg-bg-surface-alt"
-                >
-                  <div className="min-w-0 flex-1">
-                    <div className="text-base font-bold text-text-primary">{displayNameFor(entry)}</div>
-                    <div className="mt-0.5 text-sm text-text-secondary">
-                      {bucketOfEntry(entry).label}. {side === "w" ? "White" : "Black"} to move
-                    </div>
-                  </div>
-                  <span className="shrink-0 text-sm font-bold text-text-muted">{sizeOf(entry.fen)}</span>
-                </button>
-              );
-            })}
-          </Card>
+          <div className="grid grid-cols-2 gap-3">
+            {results.map((entry) => (
+              <EndgameCard key={entry.id} entry={entry} onClick={() => onOpenPosition(entry)} showBucket />
+            ))}
+          </div>
         </div>
       )}
     </div>

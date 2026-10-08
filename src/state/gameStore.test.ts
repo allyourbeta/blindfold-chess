@@ -156,3 +156,20 @@ describe("activeEndgame is cleared by every other way of starting a game", () =>
     expect(useGameStore.getState().activeEndgame).toBeNull();
   });
 });
+
+describe("clearSetupError", () => {
+  it("clears a setupError left over from a previous failed startFromSetup", async () => {
+    await useGameStore.getState().startFromSetup("not a real fen");
+    expect(useGameStore.getState().setupError).not.toBeNull();
+
+    useGameStore.getState().clearSetupError();
+
+    expect(useGameStore.getState().setupError).toBeNull();
+  });
+
+  it("is a no-op when there is nothing to clear", () => {
+    useGameStore.setState({ setupError: null });
+    useGameStore.getState().clearSetupError();
+    expect(useGameStore.getState().setupError).toBeNull();
+  });
+});

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Eye, Undo2, Lightbulb, Flag, RotateCcw, ClipboardCopy, Volume2, FileCode, History, MoreHorizontal, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui/Modal";
 import { useGameStore } from "@/state/gameStore";
 import { useSettingsStore } from "@/state/settingsStore";
 import { unlockAudioOutput } from "@/hooks/useSpeechOutput";
@@ -36,6 +37,12 @@ export function ActionBar() {
   const setFileNaming = useSettingsStore((s) => s.setFileNaming);
   const setSpeechMode = useSettingsStore((s) => s.setSpeechMode);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [resignConfirmOpen, setResignConfirmOpen] = useState(false);
+
+  function confirmResign() {
+    setResignConfirmOpen(false);
+    doResign();
+  }
 
   return (
     <div className="flex flex-col gap-3 pt-1">
@@ -57,7 +64,7 @@ export function ActionBar() {
       </div>
 
       <div className="grid grid-cols-2 gap-2 border-t border-border-default pt-2">
-        <Button variant="secondary" size="sm" disabled={gameOverFlag} onClick={doResign}>
+        <Button variant="secondary" size="sm" disabled={gameOverFlag} onClick={() => setResignConfirmOpen(true)}>
           <Flag className="h-4 w-4" /> Resign
         </Button>
         <Button variant="secondary" size="sm" onClick={() => setSheetOpen(true)} aria-label="More actions">
@@ -116,6 +123,18 @@ export function ActionBar() {
           </div>
         </div>
       )}
+
+      <Modal open={resignConfirmOpen} onClose={() => setResignConfirmOpen(false)}>
+        <p className="text-center text-base font-semibold text-text-primary">Resign this game?</p>
+        <div className="mt-4 flex gap-2">
+          <Button variant="secondary" className="flex-1" onClick={() => setResignConfirmOpen(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" className="flex-1" onClick={confirmResign}>
+            Resign
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }

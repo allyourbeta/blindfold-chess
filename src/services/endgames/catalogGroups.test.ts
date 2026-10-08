@@ -3,6 +3,7 @@ import { ENDGAMES, FAMILY_ORDER, SIZE_BUCKETS } from "./catalog";
 import {
   groupsForFamily,
   displayNameFor,
+  cardLabelFor,
   familyOf,
   countsByFamily,
   bucketOfEntry,
@@ -95,5 +96,22 @@ describe("Position N numbering, using real catalog entries", () => {
     const named = ENDGAMES.find((e) => e.name);
     expect(named, "the catalog should contain at least one named position").toBeTruthy();
     if (named) expect(displayNameFor(named)).toBe(named.name);
+  });
+});
+
+describe("cardLabelFor -- the grid card's shortened label", () => {
+  it("shortens 'Position N' to '#N' for an unnamed entry", () => {
+    const unnamed = ENDGAMES.find((e) => !e.name);
+    expect(unnamed, "the catalog should contain at least one unnamed position").toBeTruthy();
+    if (unnamed) {
+      const n = displayNameFor(unnamed).replace("Position ", "");
+      expect(cardLabelFor(unnamed)).toBe(`#${n}`);
+    }
+  });
+
+  it("leaves a named entry's name unchanged -- 'Position N' is never a real name", () => {
+    const named = ENDGAMES.find((e) => e.name);
+    expect(named, "the catalog should contain at least one named position").toBeTruthy();
+    if (named) expect(cardLabelFor(named)).toBe(named.name);
   });
 });

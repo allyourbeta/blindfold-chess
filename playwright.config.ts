@@ -55,12 +55,30 @@ export default defineConfig({
    * nobody else defaults to makes reuse safe — it can only ever pick up our
    * own preview server. Do not "tidy" this back to 4173.
    */
-  webServer: {
-    command: "npm run preview",
-    url: "http://localhost:4190",
-    reuseExistingServer: !process.env.CI,
-    timeout: 30_000,
-  },
+  webServer: [
+    {
+      command: "npm run preview",
+      url: "http://localhost:4190",
+      reuseExistingServer: !process.env.CI,
+      timeout: 30_000,
+    },
+    /**
+     * A second preview server, on its own port, for `webkit-iphone` alone.
+     * WebKit refuses to connect to 4190 outright — every navigation there
+     * hangs until the test timeout, logging "Not allowed to use restricted
+     * network port 4190" to the page console. 4190 is IANA's ManageSieve
+     * port, and it's on WebKit's (not Chromium's) built-in list of ports
+     * browsers refuse to connect to, same category as SMTP's 25 or X11's
+     * 6000 — nothing to do with this app. Confirmed directly: WebKit
+     * connects to 4191 fine and to 4190 never, against the same server.
+     */
+    {
+      command: "npx vite preview --port 4191 --strictPort",
+      url: "http://localhost:4191",
+      reuseExistingServer: !process.env.CI,
+      timeout: 30_000,
+    },
+  ],
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
     // Chromium at iPhone 13 dimensions rather than the WebKit device preset
@@ -76,6 +94,16 @@ export default defineConfig({
         isMobile: true,
         hasTouch: true,
       },
+    },
+    // Real WebKit (Safari's engine), not Chromium at iPhone dimensions --
+    // for the stuck-scroll bug, which is a WebKit-specific interaction
+    // between focus/tap-into-view and an `overflow-hidden` ancestor. Scoped
+    // to the two spec files that exercise it; the rest of the suite stays
+    // Chromium-only. Its own baseURL — see the second webServer entry above.
+    {
+      name: "webkit-iphone",
+      testMatch: ["endgames.spec.ts", "endgames-scroll.spec.ts"],
+      use: { ...devices["iPhone 13"], baseURL: "http://localhost:4191" },
     },
   ],
 });

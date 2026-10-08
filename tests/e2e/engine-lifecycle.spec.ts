@@ -1,5 +1,14 @@
 import { test, expect } from "@playwright/test";
-import { startStandardGame, submitMove, keypad, openApp, waitForEngineReady, throttleCpu, tapMoreAction } from "./helpers";
+import {
+  startStandardGame,
+  submitMove,
+  keypad,
+  openApp,
+  waitForEngineReady,
+  throttleCpu,
+  tapMoreAction,
+  resignGame,
+} from "./helpers";
 
 test("recovers after an initial Maia model load failure", async ({ page }) => {
   let requestCount = 0;
@@ -41,7 +50,7 @@ test("resign always ends the game cleanly, whether or not Maia had already repli
   await startStandardGame(page);
   await throttleCpu(page, 20);
   await submitMove(page, "e4");
-  await page.getByRole("button", { name: /Resign/ }).click();
+  await resignGame(page);
 
   await expect(page.getByText("You resigned.").first()).toBeVisible({ timeout: 15_000 });
   await expect(page.getByText(/error/i)).toHaveCount(0);
@@ -71,7 +80,7 @@ test("resign then New Game recovers cleanly — a fresh move gets a sane reply, 
   await startStandardGame(page);
   await throttleCpu(page, 20);
   await submitMove(page, "e4");
-  await page.getByRole("button", { name: /Resign/ }).click();
+  await resignGame(page);
   await expect(page.getByText("You resigned.").first()).toBeVisible({ timeout: 15_000 });
 
   await throttleCpu(page, 1);

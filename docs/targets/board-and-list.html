@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mind's Eye — board labels and position list, mockups v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg-base:#ece6dc; --bg-surface:#faf7f1; --bg-surface-alt:#efe9df; --bg-muted:#e2dacb;
+  --bg-primary:#f59e0b; --bg-primary-soft:#fef3c7;
+  --text-primary:#1c1917; --text-secondary:#57534e; --text-muted:#a8a29e; --text-accent:#d97706;
+  --border-default:#e7e5e4; --border-emphasis:#d6d3d1; --border-active:#f59e0b;
+  --sq-light:#e8d5b0; --sq-dark:#b08860; --board-edge:#44403c;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg-base:#171412; --bg-surface:#24201d; --bg-surface-alt:#2b2622; --bg-muted:#3a332e; --bg-primary-soft:#4a3418;
+    --text-primary:#f5f5f4; --text-secondary:#a8a29e; --text-muted:#78716c;
+    --border-default:#3a332e; --border-emphasis:#4a4139;
+    --sq-light:#b89968; --sq-dark:#7a5c3e; --board-edge:#78716c;
+  }
+}
+:root[data-theme="dark"]{
+  --bg-base:#171412; --bg-surface:#24201d; --bg-surface-alt:#2b2622; --bg-muted:#3a332e; --bg-primary-soft:#4a3418;
+  --text-primary:#f5f5f4; --text-secondary:#a8a29e; --text-muted:#78716c;
+  --border-default:#3a332e; --border-emphasis:#4a4139;
+  --sq-light:#b89968; --sq-dark:#7a5c3e; --board-edge:#78716c;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{font-size:17px}
+body{margin:0;background:var(--bg-base);color:var(--text-primary);font-family:"Nunito",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+.page{max-width:1700px;margin:0 auto;padding:24px}
+.topbar{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 20px;margin-bottom:20px}
+.topbar h1{margin:0;font-size:1.3rem;font-weight:800}
+.stamp{font-size:.8rem;color:var(--text-secondary)}
+.themebtn{margin-left:auto;min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--border-emphasis);background:var(--bg-surface-alt);color:var(--text-primary);font:inherit;font-size:.85rem;font-weight:600;cursor:pointer}
+.row{display:flex;flex-wrap:wrap;gap:28px;padding-bottom:16px;align-items:flex-start}
+.col{flex:0 0 auto}
+.cap{font-size:.85rem;font-weight:700;color:var(--text-secondary);margin:0 0 4px}
+.capsub{font-size:.8rem;color:var(--text-muted);margin:0 0 10px;max-width:380px}
+.phone{width:380px;height:720px;background:var(--bg-surface);border:2px solid var(--border-emphasis);border-radius:24px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);overflow:hidden;display:flex;flex-direction:column;position:relative}
+.scroll{flex:1;overflow-y:auto;padding:20px 22px 26px;display:flex;flex-direction:column;gap:16px}
+
+/* shared app pieces */
+.btn{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 16px;border-radius:12px;font:inherit;font-size:.82rem;font-weight:500;cursor:pointer;white-space:nowrap}
+.btn-primary{background:var(--bg-primary);color:#1c1917;border:0;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.btn-secondary{background:var(--bg-surface-alt);color:var(--text-primary);border:1px solid var(--border-emphasis)}
+.w-full{width:100%}
+.new-flag{outline:2px dashed var(--text-accent);outline-offset:3px}
+.screenhead{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border-default);padding:8px 0 16px}
+.back{width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--text-primary)}
+.screenhead h2{margin:0;font-size:1.06rem;font-weight:600;color:var(--text-accent)}
+.screenhead p{margin:2px 0 0;font-size:.82rem;color:var(--text-secondary)}
+.input{min-height:44px;width:100%;border-radius:12px;border:1px solid var(--border-default);background:var(--bg-surface);padding:0 12px 0 38px;font:inherit;font-size:.85rem;color:var(--text-primary)}
+.searchwrap{position:relative}
+.searchwrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted)}
+.input::placeholder{color:var(--text-muted)}
+.label{font-size:.82rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-secondary);margin:0 0 8px}
+.card{flex-shrink:0;border-radius:16px;border:1px solid var(--border-default);background:var(--bg-surface);box-shadow:0 1px 2px rgba(0,0,0,.05);overflow:hidden}
+.item{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 14px;border-top:1px solid var(--border-default)}
+.item:first-child{border-top:0}
+.item .t{flex:1;min-width:0}
+.item .n{font-size:.95rem;font-weight:700}
+.item .s{font-size:.78rem;color:var(--text-secondary);margin-top:1px}
+.count{font-size:.85rem;font-weight:700;color:var(--text-muted)}
+.chev{color:var(--text-muted);flex-shrink:0}
+.pill{font-size:.72rem;font-weight:800;padding:3px 9px;border-radius:999px;flex-shrink:0}
+.pill-win{background:var(--bg-primary-soft);color:var(--text-accent)}
+.pill-draw{background:var(--bg-muted);color:var(--text-secondary)}
+.grouphead{font-size:.82rem;font-weight:700;color:var(--text-secondary);margin:4px 0 8px;display:flex;justify-content:space-between}
+
+/* menu */
+.menu-scroll{padding:16px 24px 24px}
+.logo{width:112px;height:112px;border-radius:32px;margin:28px auto 0;background:linear-gradient(145deg,#2b2622,#1c1917);display:flex;align-items:center;justify-content:center;font-size:58px;color:#f59e0b;box-shadow:0 10px 15px -3px rgba(0,0,0,.2)}
+.title{text-align:center;margin:16px 0 0;font-size:2.1rem;font-weight:800;letter-spacing:-.02em;color:var(--text-accent)}
+.tag{text-align:center;margin:8px 0 0;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-secondary)}
+.newgame{height:64px;font-size:1.15rem;font-weight:800;text-transform:uppercase;letter-spacing:.2em;margin-top:28px;box-shadow:0 10px 15px -3px rgba(0,0,0,.1)}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.chip{min-height:64px;border-radius:12px;background:var(--bg-surface-alt);text-align:center;padding:8px}
+.chip .k{display:block;font-size:.7rem;font-weight:600;color:var(--text-muted)}
+.chip .v{display:block;font-size:.95rem;font-weight:700;margin-top:2px}
+.build{text-align:center;font-size:.78rem;color:var(--text-muted);margin-top:auto;padding-top:24px}
+
+/* board */
+.boardwrap{display:flex;flex-direction:column;align-items:center}
+.board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);width:300px;height:300px;border:2px solid var(--board-edge);border-radius:8px;overflow:hidden}
+.sq{display:flex;align-items:center;justify-content:center;font-size:30px;line-height:1}
+.sq.l{background:var(--sq-light)} .sq.d{background:var(--sq-dark)}
+.pw{color:#fff;text-shadow:0 0 1px #000,0 0 1px #000,0 0 1px #000}
+.pb{color:#1c1917}
+.files{display:grid;grid-template-columns:repeat(8,1fr);width:300px;font-family:ui-monospace,monospace;font-size:.75rem;color:var(--text-secondary);text-align:center;margin-top:4px}
+.posname{margin:0;font-size:1.25rem;font-weight:800}
+.goal{margin:4px 0 0;font-size:.95rem;font-weight:700;color:var(--text-accent)}
+.facts{font-size:.85rem;color:var(--text-secondary);margin:6px 0 0;line-height:1.5}
+.note{font-size:.78rem;color:var(--text-muted);margin:0}
+.decisions{max-width:900px;margin:8px 0 0;font-size:.9rem;line-height:1.55;color:var(--text-secondary)}
+.decisions h2{font-size:1rem;color:var(--text-primary);margin:20px 0 6px}
+.decisions ul{margin:0;padding-left:20px}
+
+.bw{width:300px;margin:0 auto}
+.bframe{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);width:100%;aspect-ratio:1;border:2px solid var(--board-edge);border-radius:8px;overflow:hidden}
+.sq2{position:relative;display:flex;align-items:center;justify-content:center;font-size:28px;line-height:1;min-width:0;min-height:0;overflow:hidden}
+.mini .sq2{font-size:15px}
+.sq2.l{background:var(--sq-light)} .sq2.d{background:var(--sq-dark)}
+.cr{position:absolute;top:2px;left:3px;font:700 12px ui-monospace,monospace}
+.cf{position:absolute;bottom:1px;right:3px;font:700 12px ui-monospace,monospace}
+.sq2.l .cr,.sq2.l .cf{color:var(--sq-dark)} .sq2.d .cr,.sq2.d .cf{color:var(--sq-light)}
+.outer{display:grid;grid-template-columns:18px 1fr;grid-template-rows:auto 18px;gap:4px}
+.ranks{display:grid;grid-template-rows:repeat(8,1fr);font:14px ui-monospace,monospace;color:var(--text-secondary);text-align:center;align-items:center}
+.filesrow{display:grid;grid-template-columns:repeat(8,1fr);font:14px ui-monospace,monospace;color:var(--text-secondary);text-align:center}
+.thumb{width:76px;height:76px;flex-shrink:0;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);border:1px solid var(--board-edge);border-radius:4px;overflow:hidden}
+.thumb div{display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1}
+.thumb .l{background:var(--sq-light)} .thumb .d{background:var(--sq-dark)}
+.rec{font-size:.78rem;font-weight:800;color:var(--text-accent);margin:0 0 4px}
+</style></head><body><div class="page">
+<div class="topbar"><h1>Board labels and position list — mockups v2</h1>
+<span class="stamp">Version 3, built 2026-10-07 18:05 PT. Approved: labels B, list L3. Square sizes fixed. Pieces are stand-ins; the real app uses its own piece set, which reads better at small sizes.</span>
+<button class="themebtn" id="themeBtn" type="button">Switch light/dark</button></div>
+
+<h2 style="font-size:1rem;margin:0 0 12px">Part 1. Board labels (Position 11, Black's view)</h2>
+<div class="row">
+ <div class="col"><p class="cap">Today</p><p class="capsub">Numbers inside the frame on a strip. Letters outside, below.</p><div class="phone" style="height:auto"><div class="scroll"><div class="bw" id="b0"></div></div></div></div>
+ <div class="col"><p class="cap">A. Both outside</p><p class="capsub">Numbers left of the frame, letters below. Same size, same colour.</p><div class="phone" style="height:auto"><div class="scroll"><div class="bw" id="bA"></div></div></div></div>
+ <div class="col"><p class="rec">Approved</p><p class="cap">B. Both inside</p><p class="capsub">Small labels on the edge squares, like Lichess. Bigger board.</p><div class="phone" style="height:auto"><div class="scroll"><div class="bw" id="bB"></div></div></div></div>
+ <div class="col"><p class="cap">C. No labels</p><p class="capsub">Clean board. You work out squares yourself.</p><div class="phone" style="height:auto"><div class="scroll"><div class="bw" id="bC"></div></div></div></div>
+</div>
+
+<h2 style="font-size:1rem;margin:28px 0 12px">Part 2. Choosing from the list</h2>
+<div class="row">
+ <div class="col"><p class="cap">L1. Picture in every row</p><p class="capsub">See each position before you tap. No hidden gesture.</p>
+  <div class="phone"><div class="scroll" id="l1"></div></div></div>
+ <div class="col"><p class="rec">Approved</p><p class="cap">L3. Two big boards per row</p><p class="capsub">Each board is about 165 points wide on a phone. Easy to tell apart. Tap one to open it.</p>
+  <div class="phone"><div class="scroll" id="l3"></div></div></div>
+ <div class="col"><p class="cap">L2. Press and hold</p><p class="capsub">Rows stay as today. Hold one to see a preview. Let go to close it.</p>
+  <div class="phone"><div class="scroll" id="l2"></div>
+   <div style="position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;padding:20px">
+    <div class="card" style="width:100%;padding:16px"><div class="bw" style="width:260px" id="l2b"></div>
+     <p class="posname" style="font-size:1.05rem;margin-top:12px">Position 3</p><p class="facts" style="margin:2px 0 0">Black to move. 3 pieces.</p></div></div></div></div>
+</div>
+
+<div class="decisions"><h2>Decisions you will see</h2><ul>
+<li>The label style you pick applies to every board in the app: endgame preview, set-up screen, and the peek board during a game.</li>
+<li>L1: each row gets a small board on the left, drawn from the side you would play.</li>
+<li>L3: the list becomes a grid of boards, two per row, each with its number, side to move and piece count underneath.</li>
+<li>L2: rows unchanged; holding a row shows a large preview until you let go.</li>
+</ul></div>
+</div>
+<script>
+var G={K:"♚",Q:"♛",R:"♜",B:"♝",N:"♞",P:"♟"};
+function parse(f){var b=[];f.split("/").forEach(function(r){var row=[];for(var ch of r){if(/\d/.test(ch))for(var i=0;i<+ch;i++)row.push(null);else row.push(ch);}b.push(row);});return b;}
+function cell(p){if(!p)return"";var w=p===p.toUpperCase();return '<span class="'+(w?"pw":"pb")+'">'+G[p.toUpperCase()]+'</span>';}
+var F="abcdefgh";
+function grid(f,flip,inner){var b=parse(f),rs=[0,1,2,3,4,5,6,7],cs=rs.slice();if(flip){rs.reverse();cs.reverse();}var h='<div class="bframe">';
+ rs.forEach(function(r,ri){cs.forEach(function(c,ci){var lab="";if(inner){if(ci===0)lab+='<span class="cr">'+(8-r)+'</span>';if(ri===7)lab+='<span class="cf">'+F[c]+'</span>';}
+ h+='<div class="sq2 '+((r+c)%2?"d":"l")+'">'+cell(b[r][c])+lab+'</div>';});});return h+'</div>';}
+function labels(flip){var rs=[0,1,2,3,4,5,6,7],cs=rs.slice();if(flip){rs.reverse();cs.reverse();}return{r:rs.map(function(r){return 8-r}),f:cs.map(function(c){return F[c]})};}
+var P11="8/8/8/8/1N3K1P/8/5kp1/8",flip=true,L=labels(flip);
+document.getElementById("bA").innerHTML='<div class="outer"><div class="ranks">'+L.r.map(function(x){return"<span>"+x+"</span>"}).join("")+'</div>'+grid(P11,flip,false)+'<span></span><div class="filesrow">'+L.f.map(function(x){return"<span>"+x+"</span>"}).join("")+'</div></div>';
+document.getElementById("bB").innerHTML=grid(P11,flip,true);
+document.getElementById("bC").innerHTML=grid(P11,flip,false);
+// today: strip inside frame
+(function(){var b=parse(P11),rs=[7,6,5,4,3,2,1,0],cs=rs.slice(),h='<div style="display:flex;border:2px solid var(--board-edge);border-radius:8px;overflow:hidden"><div style="width:24px;display:grid;grid-template-rows:repeat(8,1fr);background:var(--bg-surface);font:14px ui-monospace,monospace;color:var(--text-secondary);text-align:center;align-items:center">'+rs.map(function(r){return"<span>"+(8-r)+"</span>"}).join("")+'</div><div style="flex:1;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);aspect-ratio:1">';
+ rs.forEach(function(r){cs.forEach(function(c){h+='<div class="sq2 '+((r+c)%2?"d":"l")+'">'+cell(b[r][c])+'</div>';});});
+ h+='</div></div><div class="filesrow" style="padding-left:24px;margin-top:4px">'+cs.map(function(c){return"<span>"+F[c]+"</span>"}).join("")+'</div>';document.getElementById("b0").innerHTML=h;})();
+var rows=[["Position 1","Black to move",3,"8/8/8/4k3/8/4p3/8/4K3 b"],["Position 2","White to move",4,"8/8/3k4/3p4/3P4/3K4/8/8 w"],["Position 3","Black to move",3,"8/8/8/8/2k5/8/1P6/1K6 b"],["Position 4","White to move",3,"8/5k2/8/5P2/5K2/8/8/8 w"],["Position 5","Black to move",3,"8/8/8/8/8/k7/p7/K7 b"]];
+function thumb(f,flip){var b=parse(f),rs=[0,1,2,3,4,5,6,7],cs=rs.slice();if(flip){rs.reverse();cs.reverse();}var h='<div class="thumb">';rs.forEach(function(r){cs.forEach(function(c){h+='<div class="'+((r+c)%2?"d":"l")+'">'+cell(b[r][c])+'</div>';});});return h+'</div>';}
+var head='<div class="screenhead"><div class="back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div><div><h2>3 to 5 pieces</h2><p>66 positions</p></div></div><button class="btn btn-secondary w-full">Random, 3 to 5 pieces</button><p class="grouphead"><span>Pawn endings</span><span>10</span></p>';
+var l1=head+'<div class="card">'+rows.map(function(x){var fl=x[3].split(" ")[1]==="b";return '<div class="item">'+thumb(x[3].split(" ")[0],fl)+'<div class="t"><div class="n">'+x[0]+'</div><div class="s">'+x[1]+'</div></div><span class="count">'+x[2]+'</span></div>'}).join("")+'</div>';
+document.getElementById("l1").innerHTML=l1;
+var more=rows.concat([["Position 6","White to move",3,"8/8/8/2k5/8/2K5/2P5/8 w"]]);
+document.getElementById("l3").innerHTML=head+'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'+more.map(function(x){var fl=x[3].split(" ")[1]==="b";return '<div><div class="mini" style="width:100%">'+grid(x[3].split(" ")[0],fl,false)+'</div><div style="display:flex;justify-content:space-between;margin-top:4px"><span style="font-size:.85rem;font-weight:700">'+x[0].replace("Position ","#")+'</span><span class="count">'+x[2]+'</span></div><div class="s" style="font-size:.75rem;color:var(--text-secondary)">'+x[1]+'</div></div>'}).join("")+'</div>';
+document.getElementById("l2").innerHTML=head+'<div class="card">'+rows.map(function(x){return '<div class="item"><div class="t"><div class="n">'+x[0]+'</div><div class="s">'+x[1]+'</div></div><span class="count">'+x[2]+'</span></div>'}).join("")+'</div>';
+document.getElementById("l2b").innerHTML=grid("8/8/8/8/2k5/8/1P6/1K6",true,true);
+// fix glyph rendering: use filled glyphs for both colours (colour by class)
+document.getElementById("themeBtn").addEventListener("click",function(){var r=document.documentElement,d=r.getAttribute("data-theme")==="dark"||(!r.getAttribute("data-theme")&&matchMedia("(prefers-color-scheme: dark)").matches);r.setAttribute("data-theme",d?"light":"dark");});
+</script></body></html>

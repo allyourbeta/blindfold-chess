@@ -62,6 +62,7 @@ export interface GameState {
   retryEngine(): Promise<void>;
   startNewGame(): Promise<void>;
   startFromSetup(fen: string): Promise<void>;
+  clearSetupError(): void;
   startEndgame(id: string): Promise<void>;
   /** Keypad entries only: already-formed SAN, matched exactly against the legal moves. */
   submitKeypadMove(san: string): void;
@@ -119,6 +120,8 @@ export const useGameStore = create<GameState>((set, get) => {
         set({ setupError: err instanceof Error ? err.message : "Invalid position." });
       }
     },
+
+    clearSetupError: () => set({ setupError: null }),
 
     // The White/Black setting is ignored here on purpose: you always play
     // the side to move in an endgame, never the side the settings say.

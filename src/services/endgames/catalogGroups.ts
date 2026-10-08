@@ -99,3 +99,14 @@ export function displayNameFor(entry: EndgamePosition, catalog: EndgamePosition[
   const index = siblings.findIndex((e) => e.id === entry.id);
   return `Position ${index + 1}`;
 }
+
+/**
+ * The short label a grid card shows: a custom name unchanged, or "#N" for
+ * an unnamed entry. `displayNameFor` (and so "Position N") stays the name
+ * used everywhere else -- the position screen's title, its accessible
+ * name -- only the card shortens it.
+ */
+export function cardLabelFor(entry: EndgamePosition, catalog: EndgamePosition[] = ENDGAMES): string {
+  if (entry.name) return entry.name;
+  return displayNameFor(entry, catalog).replace(/^Position /, "#");
+}

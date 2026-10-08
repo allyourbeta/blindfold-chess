@@ -66,11 +66,6 @@ test("the setup board keeps its size after Clear Board", async ({ page }) => {
 });
 
 async function boardWidth(page: import("@playwright/test").Page) {
-  return page.evaluate(() => {
-    const label = Array.from(document.querySelectorAll("div")).find(
-      (d) => d.textContent?.trim() === "a" && d.className.includes("w-[12.5%]"),
-    );
-    const row = label?.parentElement?.parentElement;
-    return row ? row.getBoundingClientRect().width : null;
-  });
+  const box = await page.getByTestId("board").first().boundingBox();
+  return box?.width ?? null;
 }

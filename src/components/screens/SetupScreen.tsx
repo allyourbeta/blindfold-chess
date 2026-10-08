@@ -41,12 +41,14 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
 
   const playerColor = useSettingsStore((st) => st.playerColor);
   const startFromSetup = useGameStore((s) => s.startFromSetup);
+  const clearSetupError = useGameStore((s) => s.clearSetupError);
   const setupError = useGameStore((s) => s.setupError);
   const engineReady = useGameStore((s) => s.engineStatus === "ready");
 
   const castlingString = () => CASTLING_KEYS.filter((k) => castling[k]).join("") || "-";
 
   function handleSquareClick(row: number, col: number) {
+    clearSetupError();
     setBoard((prev) => {
       const next = prev.map((r) => [...r]);
       next[row][col] = next[row][col] ? null : selectedPiece;
@@ -58,6 +60,7 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
   }
 
   function handleReset() {
+    clearSetupError();
     setBoard(fenToBoard(STARTING_FEN));
     setTurn("w");
     setCastling({ K: true, Q: true, k: true, q: true });
@@ -69,6 +72,7 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
   }
 
   function handleClear() {
+    clearSetupError();
     setBoard(Array.from({ length: 8 }, () => Array(8).fill(null)));
     setCastling({ K: false, Q: false, k: false, q: false });
     setEnPassant("-");
@@ -77,6 +81,7 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
   }
 
   function handleLoadFen() {
+    clearSetupError();
     const fen = fenInput.trim();
     if (!fen) return;
     try {
@@ -107,7 +112,7 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
   }
 
   return (
-    <div className="flex h-full w-full flex-col gap-5 overflow-y-auto p-6 pb-10">
+    <div className="flex h-full w-full flex-col gap-5 overflow-y-auto px-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))]">
       <header className="flex items-center gap-3 border-b border-border-default pb-4 pt-2">
         <button onClick={onBack} aria-label="Back to menu" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt">
           <ArrowLeft className="h-5 w-5" />

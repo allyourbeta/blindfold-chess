@@ -49,8 +49,16 @@ export default function App() {
         shortscape the frame goes full-bleed again.
       */}
       <div
+        data-testid="app-frame"
         className={cn(
-          "flex h-dvh w-full max-w-lg flex-col overflow-hidden bg-bg-surface sm:h-full sm:max-h-[46rem] sm:rounded-3xl sm:border-2 sm:border-border-emphasis sm:shadow-2xl shortscape:h-dvh shortscape:max-h-none shortscape:max-w-none shortscape:rounded-none shortscape:border-0",
+          // `overflow-clip`, not `overflow-hidden`: both paint identically,
+          // but `overflow-hidden` is still a scroll container the browser
+          // can move programmatically (e.g. scrolling a tapped/focused
+          // descendant into view) even though nothing on screen lets the
+          // player scroll it back once it has. `overflow-clip` clips
+          // without creating a scrollport, so there is no scroll position
+          // for the browser to move in the first place.
+          "flex h-dvh w-full max-w-lg flex-col overflow-clip bg-bg-surface sm:h-full sm:max-h-[46rem] sm:rounded-3xl sm:border-2 sm:border-border-emphasis sm:shadow-2xl shortscape:h-dvh shortscape:max-h-none shortscape:max-w-none shortscape:rounded-none shortscape:border-0",
           // The menu holds half a screen of content; play and setup depend on
           // a definite height for the keypad and log. So only the menu hugs
           // its content on desktop, and only there.
