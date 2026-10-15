@@ -198,7 +198,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
               className="mx-auto mt-4 flex min-h-11 items-center gap-2 rounded-xl px-3 text-sm font-semibold text-text-accent hover:bg-bg-surface-alt"
             >
               <Download className="h-4 w-4" />
-              Add Mind&apos;s Eye to your home screen
+              Add Blindfold to your home screen
             </button>
           )}
         </section>
@@ -218,7 +218,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
               {/* Show the payoff: this icon is what lands on their home screen. */}
               <img src="/icons/icon-512.png" alt="" aria-hidden="true" className="h-20 w-20 rounded-3xl shadow-lg" />
               <p className="text-base font-semibold text-text-primary">
-                Mind&apos;s Eye can live on your home screen with its own icon, and works offline once installed.
+                Blindfold can live on your home screen with its own icon, and works offline once installed.
               </p>
 
               {advice.kind === "prompt" ? (
