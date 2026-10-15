@@ -1,4 +1,4 @@
-# ♚ Blindfold Chess Trainer
+# ♚ Blindfold — blindfold chess trainer
 
 A blindfold-chess trainer built with React, TypeScript, and Vite. Play
 against a self-hosted Stockfish without seeing the board, using typed or

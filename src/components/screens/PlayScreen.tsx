@@ -62,7 +62,7 @@ export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
         <button onClick={handleBack} aria-label="Back to menu" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt">
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <div className="text-3xl font-extrabold tracking-widest text-text-accent shortscape:text-xl">MIND'S EYE</div>
+        <div className="text-3xl font-extrabold tracking-widest text-text-accent shortscape:text-xl">BLINDFOLD</div>
         <div className="h-11 w-11" aria-hidden />
       </div>
 

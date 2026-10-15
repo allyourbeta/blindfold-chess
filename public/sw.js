@@ -1,6 +1,6 @@
 // Bump this whenever the app shell / precache list changes so browsers
 // pick up a fresh install instead of reusing a stale cache.
-const CACHE_NAME = 'blindfold-chess-v52';
+const CACHE_NAME = 'blindfold-chess-v53';
 
 // Must match AUDIO_VERSION in src/services/audio/clipPlayer.ts — the app and
 // the precache have to request the same URL or clips are fetched twice.
@@ -172,7 +172,7 @@ self.addEventListener('fetch', (event) => {
         const fallback = await caches.match('/');
         if (fallback) return fallback;
         return new Response(
-          '<h1>Offline</h1><p>Open Blindfold Chess once while connected so it can be cached for offline play.</p>',
+          '<h1>Offline</h1><p>Open Blindfold once while connected so it can be cached for offline play.</p>',
           { headers: { 'Content-Type': 'text/html; charset=utf-8' }, status: 503 },
         );
       }

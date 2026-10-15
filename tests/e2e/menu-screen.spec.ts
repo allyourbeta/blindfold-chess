@@ -5,7 +5,7 @@ test("home screen leads with the game and keeps settings out of the way", async 
   await openApp(page);
   await waitForEngineReady(page);
 
-  await expect(page.getByRole("heading", { name: "Mind's Eye" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Blindfold", exact: true })).toBeVisible();
   await expect(page.getByText("The ultimate test of cerebral fitness")).toBeVisible();
   // toBeVisible() alone passes for a broken <img> too — it has fixed width/
   // height classes, so its box is non-empty even at 404. Assert it actually

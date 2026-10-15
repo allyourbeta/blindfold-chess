@@ -130,7 +130,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
             aria-hidden="true"
             className="relative h-28 w-28 rounded-[2rem] shadow-lg"
           />
-          <h1 className="relative mt-4 text-4xl font-extrabold tracking-tight text-text-accent">Mind's Eye</h1>
+          <h1 className="relative mt-4 text-4xl font-extrabold tracking-tight text-text-accent">Blindfold</h1>
           {/* Small caps: lets the title dominate without shrinking it. */}
           <p className="relative mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary">
             The ultimate test of cerebral fitness
