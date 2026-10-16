@@ -22,9 +22,13 @@ Each position has a permanent `code` (E###). To delete one, remove it from
 
 **Test economy.** Run only the tests covering what you just changed. Run the full suite once, at the end of the session, not after every phase. Never re-run a passing tier to confirm it still passes. Live-model tests are the slowest and most expensive -- run each one once unless it failed or its input changed.
 
-## Adding endgame positions
+## Adding, deleting and listing endgame positions
 
-New positions go in `scripts/endgames/sources.json` with `extract.kind: "fen"`
-(a literal `placement` and `sideToMove`, validated but never fetched). Take
-the next code from `scripts/endgames/codes.json` and bump `next`; never reuse
-a retired code. Then run `npm run endgames:build`.
+```
+npm run pos -- add [image.png] [--black]
+npm run pos -- add --fen "<placement>" [--black]
+npm run pos -- delete E287
+npm run pos -- list
+```
+
+Chessdirbek must be running for image recognition.

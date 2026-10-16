@@ -5,6 +5,7 @@ import path from "node:path";
 import { Chess } from "chess.js";
 import { mirrorColors } from "./mirror";
 import { isQuiet } from "./quiet";
+import { isNearCopy } from "../../../scripts/endgames/nearCopy.mjs";
 import { ENDGAMES, materialKey, sizeOf } from "./catalog";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -118,61 +119,3 @@ describe("the shipped catalog (src/data/endgames.json)", () => {
     expect(duplicates).toEqual([]);
   });
 });
-
-function expandRank(rank: string): (string | null)[] {
-  const squares: (string | null)[] = [];
-  for (const ch of rank) {
-    if (/\d/.test(ch)) for (let i = 0; i < Number(ch); i++) squares.push(null);
-    else squares.push(ch);
-  }
-  return squares;
-}
-
-function collapseRank(squares: (string | null)[]): string {
-  let out = "";
-  let empties = 0;
-  for (const sq of squares) {
-    if (sq === null) empties++;
-    else {
-      if (empties) {
-        out += empties;
-        empties = 0;
-      }
-      out += sq;
-    }
-  }
-  if (empties) out += empties;
-  return out || "8";
-}
-
-function shiftFiles(placement: string, by: number): string {
-  return placement
-    .split("/")
-    .map((rank) => {
-      const squares = expandRank(rank);
-      const shifted = new Array<string | null>(8).fill(null);
-      for (let i = 0; i < 8; i++) {
-        const j = i + by;
-        if (j >= 0 && j < 8) shifted[j] = squares[i];
-      }
-      return collapseRank(shifted);
-    })
-    .join("/");
-}
-
-function mirrorFilesOf(placement: string): string {
-  return placement
-    .split("/")
-    .map((rank) => collapseRank(expandRank(rank).reverse()))
-    .join("/");
-}
-
-function isNearCopy(a: string, b: string): boolean {
-  if (a === b) return true;
-  for (let shift = -7; shift <= 7; shift++) {
-    if (shift !== 0 && shiftFiles(a, shift) === b) return true;
-  }
-  if (mirrorFilesOf(a) === b) return true;
-  if (mirrorColors(`${a} w - - 0 1`).split(" ")[0] === b) return true;
-  return false;
-}

@@ -14,7 +14,8 @@
     "test:all": "npm run typecheck && npm run build && npm run test:unit && npm run test:e2e",
     "audio:generate": "bash scripts/generate-speech-clips.sh",
     "endgames:build": "node scripts/endgames/build.mjs",
-    "endgames:verify": "node scripts/endgames/verify.mjs"
+    "endgames:verify": "node scripts/endgames/verify.mjs",
+    "pos": "node scripts/endgames/pos.mjs"
   },
   "dependencies": {
     "chess.js": "^1.4.0",
