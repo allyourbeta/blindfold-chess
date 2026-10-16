@@ -11,7 +11,9 @@ import {
   familiesInBucket,
   bucketEntries,
   favoriteEntries,
+  visibleBuckets,
 } from "./catalogGroups";
+import { LEGACY_ENTRIES } from "./fixtures/legacyFixtures";
 
 describe("countsByFamily / groupsForFamily, against the real shipped catalog", () => {
   it("counts add up to the full catalog, split the same way family() would", () => {
@@ -75,6 +77,18 @@ describe("familiesInBucket, against the real shipped catalog", () => {
   });
 });
 
+describe("visibleBuckets -- the home screen's 'By size' list hides an empty bucket", () => {
+  it("against the real shipped catalog, both buckets currently hold a position", () => {
+    expect(visibleBuckets().map((b) => b.label)).toEqual(SIZE_BUCKETS.map((b) => b.label));
+  });
+
+  it("with a catalog that has no 6-or-more-piece entry, only the 3 to 5 bucket shows", () => {
+    const smallOnly = ENDGAMES.filter((e) => sizeOf(e.fen) <= 5);
+    expect(smallOnly.length, "fixture needs at least one 3-to-5-piece entry").toBeGreaterThan(0);
+    expect(visibleBuckets(smallOnly).map((b) => b.label)).toEqual(["3 to 5 pieces"]);
+  });
+});
+
 describe("favoriteEntries", () => {
   it("resolves known codes to entries, sorted smallest first, and silently drops unknown codes", () => {
     const a = ENDGAMES[0];
@@ -99,9 +113,12 @@ describe("displayNameFor -- name, or the permanent code when there is none", () 
     if (unnamed) expect(displayNameFor(unnamed)).toBe(unnamed.code);
   });
 
+  // The hand-picked catalog has no named entry (SPEC_endgames_handpicked.md
+  // decision 6), so this reads the legacy fixture instead -- see
+  // fixtures/legacyFixtures.ts.
   it("uses the name, not the code, for a named entry", () => {
-    const named = ENDGAMES.find((e) => e.name);
-    expect(named, "the catalog should contain at least one named position").toBeTruthy();
+    const named = LEGACY_ENTRIES.find((e) => e.name);
+    expect(named, "the fixture should contain at least one named position").toBeTruthy();
     if (named) expect(displayNameFor(named)).toBe(named.name);
   });
 });

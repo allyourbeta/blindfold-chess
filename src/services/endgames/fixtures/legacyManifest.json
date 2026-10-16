@@ -1,0 +1,108 @@
+[
+  {
+    "id": "lucena-position",
+    "code": "E016",
+    "name": "Lucena position",
+    "themes": [],
+    "source": {
+      "title": "Lucena position",
+      "url": "https://en.wikipedia.org/wiki/Lucena_position"
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Lucena position",
+      "index": 6,
+      "sideToMove": "b"
+    },
+    "flip": false
+  },
+  {
+    "id": "3-to-5-pieces-minor",
+    "code": "E018",
+    "name": null,
+    "themes": [],
+    "source": {
+      "title": "Minor Piece endings",
+      "url": "https://en.wikibooks.org/wiki/Chess/The_Endgame/Minor_Piece_endings"
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikibooks.org",
+      "page": "Chess/The_Endgame/Minor_Piece_endings",
+      "index": 2,
+      "sideToMove": "w",
+      "style": "legacy-row"
+    },
+    "flip": true
+  },
+  {
+    "id": "12-to-16-pieces-minor-2",
+    "code": "E228",
+    "name": null,
+    "themes": [],
+    "source": {
+      "title": "PGN Mentor: New York 1924: Alekhine, Alexander vs. Tartakower, Saviely",
+      "url": "https://www.pgnmentor.com/events/NewYork1924.pgn"
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/NewYork1924.pgn",
+      "game": 95,
+      "ply": 62
+    },
+    "flip": false
+  },
+  {
+    "id": "12-to-16-pieces-mixed-2",
+    "code": "E245",
+    "name": null,
+    "themes": [],
+    "source": {
+      "title": "PGN Mentor: Hastings 1895: Von Bardeleben, Curt vs. Tarrasch, Siegbert",
+      "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 22,
+      "ply": 73
+    },
+    "flip": true
+  },
+  {
+    "id": "12-to-16-pieces-minor-6",
+    "code": "E232",
+    "name": null,
+    "themes": [],
+    "source": {
+      "title": "PGN Mentor: Hastings 1895: Marco, Georg vs. Von Bardeleben, Curt",
+      "url": "https://www.pgnmentor.com/events/Hastings1895.pgn"
+    },
+    "extract": {
+      "kind": "pgn-ply",
+      "pgnUrl": "https://www.pgnmentor.com/events/Hastings1895.pgn",
+      "game": 126,
+      "ply": 75
+    },
+    "flip": false
+  },
+  {
+    "id": "12-to-16-pieces-minor",
+    "code": "E227",
+    "name": null,
+    "themes": [],
+    "source": {
+      "title": "Opposite-colored bishops endgame",
+      "url": "https://en.wikipedia.org/wiki/Opposite-colored_bishops_endgame"
+    },
+    "extract": {
+      "kind": "wiki-diagram",
+      "host": "en.wikipedia.org",
+      "page": "Opposite-colored bishops endgame",
+      "index": 20,
+      "sideToMove": "b"
+    },
+    "flip": true
+  }
+]

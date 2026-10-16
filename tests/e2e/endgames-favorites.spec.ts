@@ -141,7 +141,7 @@ test.describe("screenshots for visual comparison", () => {
 
   test("endgames-size-ids.png", async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.screenshot({ path: "test-results/endgames-size-ids.png" });
   });
 
@@ -154,7 +154,7 @@ test.describe("screenshots for visual comparison", () => {
 
   test("endgames-position-unstarred.png and endgames-position-starred.png", async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.getByTestId("endgame-row").first().click();
     await page.screenshot({ path: "test-results/endgames-position-unstarred.png" });
 
@@ -164,7 +164,7 @@ test.describe("screenshots for visual comparison", () => {
 
   test("endgames-favorites.png and endgames-favorites-dark.png", async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.getByTestId("endgame-row").first().click();
     await page.getByRole("button", { name: "Add to favorites" }).click();
     await page.getByLabel("Back").click();

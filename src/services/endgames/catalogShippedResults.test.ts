@@ -3,29 +3,47 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { normalizeGameResult, swapScore } from "./resultScore";
-import { ENDGAMES, sizeOf } from "./catalog";
+import { sizeOf } from "./catalog";
+import { LEGACY_ENTRIES, LEGACY_MANIFEST } from "./fixtures/legacyFixtures";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const sources = JSON.parse(readFileSync(path.resolve(__dirname, "../../../scripts/endgames/sources.json"), "utf8")) as Array<{
-  id: string;
-  flip: boolean;
-  extract: { kind: string; [key: string]: unknown };
-}>;
 
-// SPEC_buttons_results.md Part 1: the computed `result` field, read from the
-// SHIPPED catalog (src/data/endgames.json) like catalogShipped.test.ts's own
-// checks -- split into its own file to keep that file under 300 lines.
-describe("the shipped catalog's results", () => {
+/**
+ * One game each, extracted verbatim from the real cached PGN the legacy
+ * catalog was built from (checklist rule 3 -- never hand-built), and
+ * committed here so this test doesn't depend on scripts/endgames/.cache/
+ * (gitignored, and no longer populated for these sources now that the
+ * hand-picked catalog's manifest doesn't fetch them).
+ */
+const FIXTURE_PGN_BY_ID: Record<string, string> = {
+  "12-to-16-pieces-minor-2": "fixtures/pgn/NewYork1924-game95.pgn",
+  "12-to-16-pieces-mixed-2": "fixtures/pgn/Hastings1895-game22.pgn",
+};
+
+function fixtureGameResult(entryId: string): string | null {
+  const file = FIXTURE_PGN_BY_ID[entryId];
+  if (!file) throw new Error(`${entryId}: no committed PGN fixture -- add one to FIXTURE_PGN_BY_ID`);
+  const pgn = readFileSync(path.resolve(__dirname, file), "utf8");
+  const m = /\[Result\s+"([^"]+)"\]/.exec(pgn);
+  return m ? m[1] : null;
+}
+
+// SPEC_buttons_results.md Part 1: the computed `result` field. The
+// hand-picked catalog (SPEC_endgames_handpicked.md) has no game-result or
+// flipped entry, so this reads the legacy fixture (see
+// fixtures/legacyFixtures.ts) instead of the shipped catalog -- split into
+// its own file to keep that file under 300 lines.
+describe("the computed result field, against the legacy fixture", () => {
   it("every entry with 7 pieces or fewer is perfect-or-null, never a game result -- the certain result wins", () => {
-    for (const entry of ENDGAMES) {
+    for (const entry of LEGACY_ENTRIES) {
       if (sizeOf(entry.fen) > 7) continue;
       expect(entry.result === null || entry.result.kind === "perfect", entry.id).toBe(true);
     }
   });
 
   it("every game-result entry has 8+ pieces and a pgn-ply extract recipe in the manifest", () => {
-    const manifestById = new Map(sources.map((e) => [e.id, e]));
-    for (const entry of ENDGAMES) {
+    const manifestById = new Map(LEGACY_MANIFEST.map((e) => [e.id, e]));
+    for (const entry of LEGACY_ENTRIES) {
       if (entry.result?.kind !== "game") continue;
       expect(sizeOf(entry.fen), entry.id).toBeGreaterThanOrEqual(8);
       expect(manifestById.get(entry.id)?.extract.kind, entry.id).toBe("pgn-ply");
@@ -33,44 +51,13 @@ describe("the shipped catalog's results", () => {
   });
 
   it("a flipped game-result entry's score is the source game's own result, swapped", () => {
-    const manifestById = new Map(sources.map((e) => [e.id, e]));
-    const flippedGames = ENDGAMES.filter((e) => e.flipped && e.result?.kind === "game");
-    expect(flippedGames.length, "no flipped game-result entries to check -- the manifest may have changed").toBeGreaterThan(0);
+    const flippedGames = LEGACY_ENTRIES.filter((e) => e.flipped && e.result?.kind === "game");
+    expect(flippedGames.length, "fixture needs at least one flipped game-result entry").toBeGreaterThan(0);
     for (const entry of flippedGames) {
-      const manifestEntry = manifestById.get(entry.id);
-      expect(manifestEntry, entry.id).toBeDefined();
-      const extract = manifestEntry!.extract as unknown as { pgnUrl: string; game: number };
-      const header = cachedGameResult(extract.pgnUrl, extract.game);
+      const header = fixtureGameResult(entry.id);
       const sourceScore = normalizeGameResult(header);
-      expect(sourceScore, `${entry.id}: no usable Result header in the cached source PGN`).not.toBeNull();
+      expect(sourceScore, `${entry.id}: no usable Result header in the fixture PGN`).not.toBeNull();
       expect(entry.result?.score, entry.id).toBe(swapScore(sourceScore!));
     }
   });
 });
-
-/** The same cache-key transform as scripts/endgames/fetchCache.mjs's `cacheKeyFor`. */
-function cacheKeyFor(url: string): string {
-  return `${url.replace(/[^a-zA-Z0-9]/g, "_").slice(0, 180)}.cache`;
-}
-
-/** The same multi-game split as scripts/endgames/extract.mjs's `splitPgnGames`. */
-function splitPgnGames(text: string): string[] {
-  return text
-    .split(/\n\s*\n(?=\[Event)/)
-    .map((b) => b.trim())
-    .filter(Boolean);
-}
-
-/**
- * Independently reads the cached PGN (scripts/endgames/.cache/raw/, already
- * populated by `npm run endgames:build`) and returns the `game`-th game's
- * `Result` header -- never the build's own `result` output (checklist rule 3).
- */
-function cachedGameResult(pgnUrl: string, game: number): string | null {
-  const cachePath = path.resolve(__dirname, "../../../scripts/endgames/.cache/raw", cacheKeyFor(pgnUrl));
-  const games = splitPgnGames(readFileSync(cachePath, "utf8"));
-  const pgn = games[game];
-  if (!pgn) throw new Error(`${pgnUrl}: no cached game at index ${game} (found ${games.length})`);
-  const m = /\[Result\s+"([^"]+)"\]/.exec(pgn);
-  return m ? m[1] : null;
-}

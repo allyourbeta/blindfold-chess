@@ -28,6 +28,13 @@ async function extractEmbeddedFen({ pageUrl, index }) {
   return { placement: fields[0], sideToMove: fields[1] === "b" ? "b" : "w" };
 }
 
+/** `kind: "fen"`. A literal, hand-picked placement -- validated with chess.js, never fetched. Throws on an illegal FEN. */
+function extractFen({ placement, sideToMove }) {
+  const chess = new Chess();
+  chess.load(`${placement} ${sideToMove} - - 0 1`);
+  return { placement, sideToMove, result: undefined };
+}
+
 /**
  * `kind: "pgn-ply"`. Replays a real PGN's `game`-th game to the position
  * after `ply` half-moves. Also returns the game's `Result` header (SPEC_buttons_results.md
@@ -64,6 +71,8 @@ export async function extractFromRecipe(extract) {
       return extractWikiDiagram(extract);
     case "embedded-fen":
       return extractEmbeddedFen(extract);
+    case "fen":
+      return extractFen(extract);
     case "pgn-ply":
       return extractPgnPly(extract);
     default:

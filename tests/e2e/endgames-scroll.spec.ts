@@ -28,11 +28,13 @@ async function assertNotStuck(page: Page, consoleErrors: string[]) {
   const frameScrollTop = await page.getByTestId("app-frame").evaluate((el) => el.scrollTop);
   expect(frameScrollTop).toBe(0);
 
-  // 3. The position page's own scroller still works: down to "Source:" and
-  // back up to the header.
+  // 3. The position page's own scroller still works: down to the bottom
+  // button and back up to the header. (The hand-picked catalog's entries
+  // have no "Source:" line -- SPEC_endgames_handpicked.md decision 5 --
+  // so "Another of this size" is the real bottom-most content now.)
   const scroller = page.getByTestId("endgame-scroll");
   await scroller.evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
-  await expect(page.getByText(/^Source:/)).toBeVisible();
+  await expect(page.getByRole("button", { name: "Another of this size" })).toBeVisible();
   await scroller.evaluate((el) => el.scrollTo({ top: 0 }));
   await expect(back.first()).toBeVisible();
 
@@ -63,7 +65,7 @@ test("opening the last position after scrolling the size list does not strand th
   await page.getByLabel("Back").click(); // position -> size
   await expect(page.getByTestId("endgame-row").first()).toBeVisible();
   await page.getByLabel("Back").click(); // size -> home
-  await expect(page.getByTestId("size-row")).toHaveCount(4);
+  await expect(page.getByTestId("size-row")).toHaveCount(2);
 });
 
 test("opening the last search result after scrolling does not strand the header", async ({ page }) => {

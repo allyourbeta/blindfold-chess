@@ -6,7 +6,7 @@ import { EndgamesHeader } from "./EndgamesHeader";
 import { EndgameCard } from "./EndgameCard";
 import { RandomButton } from "./RandomButton";
 import { SIZE_BUCKETS, search as searchCatalog, bucketOf, type SizeBucket, type EndgamePosition } from "@/services/endgames/catalog";
-import { countsByBucket, favoriteEntries } from "@/services/endgames/catalogGroups";
+import { countsByBucket, favoriteEntries, visibleBuckets } from "@/services/endgames/catalogGroups";
 import { useFavorites } from "@/state/favoritesStore";
 
 interface EndgamesHomeProps {
@@ -51,7 +51,7 @@ export function EndgamesHome({
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search: rook, Lucena, opposite bishops…"
+          placeholder="Search: rook, queen, pawn…"
           aria-label="Search endgames"
           className="min-h-11 w-full rounded-xl border border-border-default bg-bg-surface py-0 pl-9 pr-3 text-sm text-text-primary placeholder:text-text-muted focus:border-border-active focus:outline-none"
         />
@@ -80,7 +80,7 @@ export function EndgamesHome({
         <div>
           <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-text-secondary">By size</p>
           <Card>
-            {SIZE_BUCKETS.map((bucket) => (
+            {visibleBuckets().map((bucket) => (
               <button
                 key={bucket.label}
                 type="button"

@@ -91,7 +91,7 @@ export function EndgamesPosition({
 
       {startError && <p className="text-sm text-text-error">{startError}</p>}
 
-      <p className="text-sm text-text-muted">Source: {entry.source.title}.</p>
+      {entry.source && <p className="text-sm text-text-muted">Source: {entry.source.title}.</p>}
     </div>
   );
 }

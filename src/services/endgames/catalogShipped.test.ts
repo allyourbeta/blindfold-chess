@@ -5,7 +5,7 @@ import path from "node:path";
 import { Chess } from "chess.js";
 import { mirrorColors } from "./mirror";
 import { isQuiet } from "./quiet";
-import { ENDGAMES, materialKey, family, sizeOf, bucketOf, SIZE_BUCKETS } from "./catalog";
+import { ENDGAMES, materialKey, sizeOf } from "./catalog";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const codes = JSON.parse(
@@ -13,7 +13,10 @@ const codes = JSON.parse(
 ) as { next: number; retired: string[] };
 
 // Checklist rule 3: these read the SHIPPED catalog, never a hand-built
-// fixture. See SPEC_endgames_catalog.md Part 1e for every numbered rule.
+// fixture. Structural invariants only -- SPEC_endgames_handpicked.md Part 4
+// dropped the auto-curated-mix checks (total count, per-bucket ranges,
+// Black-to-move share, flipped share, source-host spread, family coverage)
+// that only made sense for the old 274-entry auto-curated set.
 describe("the shipped catalog (src/data/endgames.json)", () => {
   it("is non-empty", () => {
     expect(ENDGAMES.length).toBeGreaterThan(0);
@@ -59,54 +62,13 @@ describe("the shipped catalog (src/data/endgames.json)", () => {
     }
   });
 
-  it("has an https source url for every entry", () => {
+  // SPEC_endgames_handpicked.md decision 5: these hand-picked positions have
+  // no source, so there's no https-url rule to enforce -- only that a
+  // source, when one exists, is https.
+  it("has an https source url whenever an entry has a source", () => {
     for (const entry of ENDGAMES) {
+      if (entry.source === null) continue;
       expect(entry.source.url.startsWith("https://"), entry.id).toBe(true);
-    }
-  });
-
-  it("totals between 260 and 320 positions", () => {
-    expect(ENDGAMES.length).toBeGreaterThanOrEqual(260);
-    expect(ENDGAMES.length).toBeLessThanOrEqual(320);
-  });
-
-  it("keeps each size bucket within its target range", () => {
-    const ranges: Record<string, [number, number]> = {
-      "3 to 5 pieces": [60, 80],
-      "6 to 8 pieces": [70, 90],
-      "9 to 11 pieces": [60, 80],
-      "12 to 16 pieces": [50, 70],
-    };
-    const counts: Record<string, number> = {};
-    for (const entry of ENDGAMES) {
-      const label = bucketOf(entry.fen)?.label;
-      expect(label, `${entry.id}: not in any size bucket`).toBeDefined();
-      counts[label!] = (counts[label!] ?? 0) + 1;
-    }
-    for (const bucket of SIZE_BUCKETS) {
-      const [min, max] = ranges[bucket.label];
-      expect(counts[bucket.label] ?? 0, bucket.label).toBeGreaterThanOrEqual(min);
-      expect(counts[bucket.label] ?? 0, bucket.label).toBeLessThanOrEqual(max);
-    }
-  });
-
-  it("keeps Black-to-move between 40% and 60% in every size bucket", () => {
-    for (const bucket of SIZE_BUCKETS) {
-      const inBucket = ENDGAMES.filter((e) => bucketOf(e.fen)?.label === bucket.label);
-      const black = inBucket.filter((e) => e.fen.split(" ")[1] === "b").length;
-      const share = black / inBucket.length;
-      expect(share, bucket.label).toBeGreaterThanOrEqual(0.4);
-      expect(share, bucket.label).toBeLessThanOrEqual(0.6);
-    }
-  });
-
-  it("keeps flipped entries to at most 25% overall and 35% per bucket", () => {
-    const flippedTotal = ENDGAMES.filter((e) => e.flipped).length;
-    expect(flippedTotal / ENDGAMES.length).toBeLessThanOrEqual(0.25);
-    for (const bucket of SIZE_BUCKETS) {
-      const inBucket = ENDGAMES.filter((e) => bucketOf(e.fen)?.label === bucket.label);
-      const flipped = inBucket.filter((e) => e.flipped).length;
-      expect(flipped / inBucket.length, bucket.label).toBeLessThanOrEqual(0.35);
     }
   });
 
@@ -114,21 +76,6 @@ describe("the shipped catalog (src/data/endgames.json)", () => {
     for (const entry of ENDGAMES) {
       const expected = entry.flipped ? mirrorColors(entry.sourceFen) : entry.sourceFen;
       expect(entry.fen, entry.id).toBe(expected);
-    }
-  });
-
-  // Counted by host, not by source.title -- two articles on the same site
-  // still share a host, and the rule exists so no single SITE can quietly
-  // supply almost everything, the way en.wikipedia.org did before this round.
-  it("has at least 5 distinct source hosts, none supplying more than 40%", () => {
-    const byHost = new Map<string, number>();
-    for (const entry of ENDGAMES) {
-      const host = new URL(entry.source.url).host;
-      byHost.set(host, (byHost.get(host) ?? 0) + 1);
-    }
-    expect(byHost.size).toBeGreaterThanOrEqual(5);
-    for (const [host, count] of byHost) {
-      expect(count / ENDGAMES.length, host).toBeLessThanOrEqual(0.4);
     }
   });
 
@@ -146,24 +93,6 @@ describe("the shipped catalog (src/data/endgames.json)", () => {
   it("never reuses a name", () => {
     const names = ENDGAMES.map((e) => e.name).filter((n): n is string => n !== null);
     expect(new Set(names).size).toBe(names.length);
-  });
-
-  it("has every family in at least three of the four size buckets", () => {
-    const coverage: Record<string, Set<string>> = {
-      pawn: new Set(),
-      rook: new Set(),
-      minor: new Set(),
-      queen: new Set(),
-      mixed: new Set(),
-    };
-    for (const entry of ENDGAMES) {
-      const fam = family(materialKey(entry.fen));
-      const label = bucketOf(entry.fen)?.label;
-      if (label) coverage[fam].add(label);
-    }
-    for (const [fam, buckets] of Object.entries(coverage)) {
-      expect(buckets.size, fam).toBeGreaterThanOrEqual(3);
-    }
   });
 
   // SPEC_endgames_quiet.md: QUIET means the side to move has no capture

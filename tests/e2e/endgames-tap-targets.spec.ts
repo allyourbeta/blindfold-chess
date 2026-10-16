@@ -68,7 +68,7 @@ test.describe("tap targets: iphone portrait", () => {
 
   test("endgames size has no thin strip", async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     assertNoThinStrips(await tapTargets(page));
   });
 
@@ -80,7 +80,7 @@ test.describe("tap targets: iphone portrait", () => {
 
   test("endgames position has no thin strip", async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.getByTestId("endgame-row").first().click();
     assertNoThinStrips(await tapTargets(page));
   });
@@ -97,7 +97,7 @@ test.describe("screenshots for visual comparison", () => {
 
   test("endgames-size-random.png", async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.screenshot({ path: "test-results/endgames-size-random.png" });
   });
 

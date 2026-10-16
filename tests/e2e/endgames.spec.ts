@@ -1,5 +1,8 @@
 import { test, expect, type Page } from "@playwright/test";
 import { Chess } from "chess.js";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   openApp,
   waitForEngineReady,
@@ -13,6 +16,29 @@ import {
   leaveGame,
 } from "./helpers";
 
+// SPEC_endgames_handpicked.md: only two size buckets now ("3 to 5 pieces" and
+// "6 or more pieces"), read from the real shipped catalog so a test that
+// needs an entry kind the catalog no longer has (Black-to-move, here) can
+// skip itself instead of hard-coding an assumption about what's in it.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+interface ShippedEntry {
+  code: string;
+  fen: string;
+}
+const ENDGAMES = JSON.parse(
+  readFileSync(path.resolve(__dirname, "../../src/data/endgames.json"), "utf8"),
+) as ShippedEntry[];
+
+function pieceCount(fen: string): number {
+  return fen.split(" ")[0].replace(/[^a-zA-Z]/g, "").length;
+}
+
+function bucketFor(pieces: number): RegExp {
+  return pieces <= 5 ? /3 to 5 pieces/ : /6 or more pieces/;
+}
+
+const blackToMoveEntry = ENDGAMES.find((e) => e.fen.split(" ")[1] === "b");
+
 async function openEndgames(page: Page) {
   await openApp(page);
   await waitForEngineReady(page);
@@ -21,6 +47,11 @@ async function openEndgames(page: Page) {
 
 async function openSize(page: Page, name: RegExp) {
   await page.getByTestId("size-row").filter({ hasText: name }).click();
+}
+
+async function openByCode(page: Page, entry: ShippedEntry) {
+  await openSize(page, bucketFor(pieceCount(entry.fen)));
+  await page.getByTestId("endgame-row").filter({ hasText: entry.code }).click();
 }
 
 /** Opens the More sheet, reads the FEN message it adds, then closes the sheet again. */
@@ -40,16 +71,6 @@ function pickNonTerminalMove(fen: string): { san: string; endsGame: boolean } {
     if (!probe.isGameOver()) return { san, endsGame: false };
   }
   return { san: chess.moves()[0], endsGame: true };
-}
-
-/** Walks every size from the endgames home until it finds a Black-to-move row in `sizeName`, and opens it. */
-async function openABlackToMoveEntry(page: Page, sizeName: RegExp) {
-  await openSize(page, sizeName);
-  const rows = page.getByTestId("endgame-row");
-  const texts = await rows.allTextContents();
-  const index = texts.findIndex((t) => /Black to move/.test(t));
-  if (index === -1) throw new Error(`No Black-to-move entry found in ${sizeName} -- the catalog may be malformed.`);
-  await rows.nth(index).click();
 }
 
 test("Home -> 3 to 5 pieces -> first named entry -> Play Blindfold -> one move -> reply", async ({ page }) => {
@@ -86,11 +107,10 @@ test("Home -> 3 to 5 pieces -> first named entry -> Play Blindfold -> one move -
   }
 });
 
-test("a Black-to-move endgame from 12 to 16 pieces forces you onto Black, without changing the White setting", async ({
-  page,
-}) => {
+test("a Black-to-move endgame forces you onto Black, without changing the White setting", async ({ page }) => {
+  test.skip(!blackToMoveEntry, "no Black-to-move entry in the catalog -- re-enable when one is added");
   await openEndgames(page);
-  await openABlackToMoveEntry(page, /12 to 16 pieces/);
+  await openByCode(page, blackToMoveEntry!);
   await expect(page.getByText(/You play Black\. \d+ pieces\./)).toBeVisible();
 
   await page.getByRole("button", { name: "Play Blindfold" }).click();
@@ -126,14 +146,14 @@ test("search narrows the size list to matches; a no-match query offers Clear sea
   await expect(page.getByTestId("endgame-row")).toHaveCount(0);
 
   await page.getByRole("button", { name: "Clear search" }).click();
-  await expect(page.getByTestId("size-row")).toHaveCount(4);
+  await expect(page.getByTestId("size-row")).toHaveCount(2);
 });
 
 test("game over in an endgame: Try again replays the same position, Endgames lands on the size view", async ({
   page,
 }) => {
   await openEndgames(page);
-  await openSize(page, /6 to 8 pieces/);
+  await openSize(page, /6 or more pieces/);
   await page.getByTestId("endgame-row").first().click();
   await page.getByRole("button", { name: "Play Blindfold" }).click();
   await expect(keypad(page)).toBeVisible();
@@ -172,16 +192,16 @@ test("a normal game's game-over panel is unchanged by the endgame feature", asyn
 
 test("every back arrow returns where expected: position -> size -> home -> menu", async ({ page }) => {
   await openEndgames(page);
-  await openSize(page, /9 to 11 pieces/);
+  await openSize(page, /6 or more pieces/);
   await page.getByTestId("endgame-row").first().click();
   await expect(page.getByRole("button", { name: "Play Blindfold" })).toBeVisible();
 
   await page.getByLabel("Back").click(); // position -> size
   await expect(page.getByTestId("endgame-row").first()).toBeVisible();
-  await expect(page.getByRole("heading", { name: "9 to 11 pieces" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "6 or more pieces" })).toBeVisible();
 
   await page.getByLabel("Back").click(); // size -> home
-  await expect(page.getByTestId("size-row")).toHaveCount(4);
+  await expect(page.getByTestId("size-row")).toHaveCount(2);
 
   await page.getByLabel("Back").click(); // home -> menu
   await expect(page.getByRole("button", { name: /Practice an endgame/i })).toBeVisible();
@@ -221,13 +241,13 @@ function registerUiChecks(width: number, height: number) {
 
   test(`${width}x${height}: endgames size has no escaped or overlapping control`, async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await assertNoEscapeOrOverlap(page, width);
   });
 
   test(`${width}x${height}: endgames position has no escaped or overlapping control`, async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.getByTestId("endgame-row").first().click();
     await assertNoEscapeOrOverlap(page, width);
   });
@@ -250,7 +270,7 @@ test.describe("UI check: landscape", () => {
 function registerSquareBoardCheck(width: number, height: number) {
   test(`${width}x${height}: the endgame preview board is square`, async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.getByTestId("endgame-row").first().click();
     await assertBoardIsSquare(page);
   });
@@ -278,13 +298,13 @@ test.describe("screenshots for visual comparison", () => {
 
   test("endgames-size.png", async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.screenshot({ path: "test-results/endgames-size.png" });
   });
 
   test("endgames-position.png and endgames-position-dark.png", async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.getByTestId("endgame-row").first().click();
     await page.screenshot({ path: "test-results/endgames-position.png" });
 
@@ -292,14 +312,15 @@ test.describe("screenshots for visual comparison", () => {
     await page.reload();
     await waitForEngineReady(page);
     await page.getByRole("button", { name: /Practice an endgame/i }).click();
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.getByTestId("endgame-row").first().click();
     await page.screenshot({ path: "test-results/endgames-position-dark.png" });
   });
 
   test("endgames-position-black.png", async ({ page }) => {
+    test.skip(!blackToMoveEntry, "no Black-to-move entry in the catalog -- re-enable when one is added");
     await openEndgames(page);
-    await openABlackToMoveEntry(page, /12 to 16 pieces/);
+    await openByCode(page, blackToMoveEntry!);
     await page.screenshot({ path: "test-results/endgames-position-black.png" });
   });
 
@@ -320,20 +341,17 @@ test.describe("screenshots for visual comparison", () => {
     await page.screenshot({ path: "test-results/endgames-gameover.png" });
   });
 
-  // Part 5's named set, for board-and-list.html. endgames-size-grid.png
-  // doubles as the catalog-states check (rule 14): unnamed and named
-  // entries side by side -- "6 to 8 pieces" has both (SPEC's own
-  // decisions section).
+  // Part 5's named set, for board-and-list.html.
   test("endgames-size-grid.png and endgames-size-grid-dark.png", async ({ page }) => {
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.screenshot({ path: "test-results/endgames-size-grid.png" });
 
     await page.evaluate(() => localStorage.setItem("blindfoldTheme", "dark"));
     await page.reload();
     await waitForEngineReady(page);
     await page.getByRole("button", { name: /Practice an endgame/i }).click();
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.screenshot({ path: "test-results/endgames-size-grid-dark.png" });
   });
 
@@ -351,15 +369,16 @@ test.describe("screenshots for visual comparison", () => {
   test("endgames-position-labels.png", async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "webkit-iphone", "taken from real WebKit when it's installed");
     await openEndgames(page);
-    await openSize(page, /6 to 8 pieces/);
+    await openSize(page, /6 or more pieces/);
     await page.getByTestId("endgame-row").first().click();
     await page.screenshot({ path: "test-results/endgames-position-labels.png" });
   });
 
   test("endgames-position-black-labels.png", async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "webkit-iphone", "taken from real WebKit when it's installed");
+    test.skip(!blackToMoveEntry, "no Black-to-move entry in the catalog -- re-enable when one is added");
     await openEndgames(page);
-    await openABlackToMoveEntry(page, /12 to 16 pieces/);
+    await openByCode(page, blackToMoveEntry!);
     await page.screenshot({ path: "test-results/endgames-position-black-labels.png" });
   });
 });

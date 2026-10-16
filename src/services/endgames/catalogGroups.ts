@@ -50,6 +50,12 @@ export function countsByBucket(catalog: EndgamePosition[] = ENDGAMES): Record<st
   return counts;
 }
 
+/** Size buckets that hold at least one position -- the home screen's "By size" list hides an empty bucket entirely. */
+export function visibleBuckets(catalog: EndgamePosition[] = ENDGAMES): SizeBucket[] {
+  const counts = countsByBucket(catalog);
+  return SIZE_BUCKETS.filter((bucket) => counts[bucket.label] > 0);
+}
+
 export interface MaterialGroup {
   key: string;
   label: string;

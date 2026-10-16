@@ -11,7 +11,7 @@ export interface EndgamePosition {
   flipped: boolean;
   name: string | null;
   themes: string[];
-  source: { title: string; url: string };
+  source: { title: string; url: string } | null;
   /**
    * Computed at build time (SPEC_buttons_results.md) -- the app never calls
    * the network for this. `"perfect"` comes from the tablebase category of
@@ -46,9 +46,7 @@ export interface SizeBucket {
 /** Practice is organized by how many pieces (kings and pawns included) are on the board, not by family. */
 export const SIZE_BUCKETS: SizeBucket[] = [
   { min: 3, max: 5, label: "3 to 5 pieces", subtitle: "Kings and a few more" },
-  { min: 6, max: 8, label: "6 to 8 pieces", subtitle: "A small ending" },
-  { min: 9, max: 11, label: "9 to 11 pieces", subtitle: "A real ending" },
-  { min: 12, max: 16, label: "12 to 16 pieces", subtitle: "A heavy ending" },
+  { min: 6, max: 32, label: "6 or more pieces", subtitle: "A bigger ending" },
 ];
 
 /** Total pieces on the board, kings and pawns included. */

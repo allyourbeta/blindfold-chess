@@ -60,7 +60,7 @@ async function buildEntry(manifestEntry) {
     flipped: !!manifestEntry.flip,
     name: manifestEntry.name ?? null,
     themes: manifestEntry.themes ?? [],
-    source: manifestEntry.source,
+    source: manifestEntry.source ?? null,
     result,
   };
 }
