@@ -86,5 +86,45 @@
     "themes": [],
     "extract": { "kind": "fen", "placement": "8/4k3/8/4K3/8/4P3/8/8", "sideToMove": "w" },
     "flip": false
+  },
+  {
+    "id": "e286",
+    "code": "E286",
+    "name": null,
+    "themes": [],
+    "extract": { "kind": "fen", "placement": "4k3/ppp5/2b5/8/8/1B6/1P6/4K3", "sideToMove": "b" },
+    "flip": false
+  },
+  {
+    "id": "e287",
+    "code": "E287",
+    "name": null,
+    "themes": [],
+    "extract": { "kind": "fen", "placement": "4k2r/ppp4p/8/8/8/8/PPP4P/4K2R", "sideToMove": "b" },
+    "flip": false
+  },
+  {
+    "id": "e288",
+    "code": "E288",
+    "name": null,
+    "themes": [],
+    "extract": { "kind": "fen", "placement": "4k3/ppp5/8/8/8/8/PPP5/4K3", "sideToMove": "b" },
+    "flip": false
+  },
+  {
+    "id": "e289",
+    "code": "E289",
+    "name": null,
+    "themes": [],
+    "extract": { "kind": "fen", "placement": "8/6k1/6p1/8/2p1r3/7R/8/2K5", "sideToMove": "b" },
+    "flip": false
+  },
+  {
+    "id": "e290",
+    "code": "E290",
+    "name": null,
+    "themes": [],
+    "extract": { "kind": "fen", "placement": "R7/P7/5k2/2K5/8/8/8/r7", "sideToMove": "b" },
+    "flip": false
   }
 ]
