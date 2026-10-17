@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { BoardPanel } from "@/components/board/BoardPanel";
@@ -6,6 +7,8 @@ import { fenToBoard } from "@/services/chess/fen";
 import { pieceList, sizeOf, FAMILY_INFO, type EndgamePosition } from "@/services/endgames/catalog";
 import { sideToMove, displayNameFor, familyOf, bucketOfEntry, resultDisplay } from "@/services/endgames/catalogGroups";
 import { useFavorites } from "@/state/favoritesStore";
+import { useCreator } from "@/state/creatorStore";
+import { useRemovedStore } from "@/state/removedStore";
 
 interface EndgamesPositionProps {
   entry: EndgamePosition;
@@ -16,6 +19,8 @@ interface EndgamesPositionProps {
   onBack(): void;
   onPlayBlindfold(): void;
   onAnotherOfThisSize(): void;
+  /** Called after a successful Remove (decision 10) — navigates back to the list, same as onBack. */
+  onRemoved(): void;
 }
 
 export function EndgamesPosition({
@@ -25,6 +30,7 @@ export function EndgamesPosition({
   onBack,
   onPlayBlindfold,
   onAnotherOfThisSize,
+  onRemoved,
 }: EndgamesPositionProps) {
   const side = sideToMove(entry);
   const bucket = bucketOfEntry(entry);
@@ -32,6 +38,20 @@ export function EndgamesPosition({
   const isFavorite = useFavorites((s) => s.isFavorite(entry.code));
   const toggleFavorite = useFavorites((s) => s.toggle);
   const result = resultDisplay(entry);
+  const unlocked = useCreator((s) => s.password !== null);
+  const removeViaApi = useRemovedStore((s) => s.removeViaApi);
+  const [removing, setRemoving] = useState(false);
+  const [removeError, setRemoveError] = useState<string | null>(null);
+
+  async function handleRemove() {
+    if (!window.confirm(`Remove ${entry.code} from the app for everyone?`)) return;
+    setRemoving(true);
+    setRemoveError(null);
+    const removeResult = await removeViaApi(entry.code);
+    setRemoving(false);
+    if (removeResult.ok) onRemoved();
+    else setRemoveError(removeResult.error ?? "Could not remove.");
+  }
 
   return (
     <div
@@ -92,6 +112,15 @@ export function EndgamesPosition({
       {startError && <p className="text-sm text-text-error">{startError}</p>}
 
       {entry.source && <p className="text-sm text-text-muted">Source: {entry.source.title}.</p>}
+
+      {unlocked && (
+        <>
+          <Button variant="destructive" size="default" disabled={removing} onClick={() => void handleRemove()}>
+            Remove
+          </Button>
+          {removeError && <p className="text-sm text-text-error">{removeError}</p>}
+        </>
+      )}
     </div>
   );
 }

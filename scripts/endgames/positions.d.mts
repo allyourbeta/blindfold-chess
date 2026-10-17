@@ -31,3 +31,5 @@ export interface PositionRow {
 }
 
 export declare function listEntries(manifest: ManifestEntry[]): PositionRow[];
+
+export declare function rotate180(placement: string): string;

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Blindfold — add a position (target)</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#f6f5f2;color:#1d1d1b;margin:0;padding:32px}
+.card{max-width:420px;background:#fff;border:1px solid #e3e1da;border-radius:12px;padding:20px 22px}
+h1{font-size:18px;font-weight:600;margin:0 0 12px}
+.drop{border:1px dashed #b9b6ad;border-radius:8px;padding:10px 12px;font-size:14px;color:#6b6a65;margin-bottom:14px}
+.row{display:flex;gap:8px;margin:12px 0 8px}
+button{flex:1;font:inherit;font-size:14px;padding:8px 10px;border-radius:8px;border:1px solid #c9c6bd;background:#fff;cursor:pointer}
+button.on{background:#e6f1fb;border-color:#378add;color:#0c447c}
+button.primary{background:#185fa5;border-color:#185fa5;color:#fff;width:100%}
+input{width:100%;box-sizing:border-box;font-family:ui-monospace,monospace;font-size:13px;padding:8px;border:1px solid #c9c6bd;border-radius:8px}
+.ok{font-size:13px;color:#3b6d11;margin:8px 0 12px}
+.stamp{font-size:11px;color:#9a988f;margin-top:14px}
+</style></head><body>
+<div class="card">
+<h1>Add a position</h1>
+<div class="drop">Paste (⌘V) or drop a board image</div>
+<div id="board"></div>
+<div class="row"><button id="w">White to move</button><button id="b" class="on">Black to move</button></div>
+<div class="row"><button id="flip">Flip board</button></div>
+<input id="fen" value="4k3/ppp5/8/8/8/8/PPP5/4K3" aria-label="Position as FEN">
+<div class="ok">✓ Legal, quiet, not a duplicate</div>
+<button class="primary">Add as E291</button>
+<div class="stamp">Target v1 · 2026-10-16 17:05 PT · real page uses public/pieces/*.svg, not these glyphs</div>
+</div>
+<script>
+const G={K:"♔",Q:"♕",R:"♖",B:"♗",N:"♘",P:"♙",k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟"};
+let fromBlack=true;const fen=document.getElementById('fen');
+function rows(f){return f.split("/").map(r=>{let a=[];for(const c of r){if(/\d/.test(c))for(let k=0;k<+c;k++)a.push("");else a.push(c)}return a})}
+function toFen(g){return g.map(r=>{let s="",n=0;for(const c of r){if(!c)n++;else{if(n)s+=n;n=0;s+=c}}if(n)s+=n;return s}).join("/")}
+function draw(){const g=rows(fen.value),S=46,P=16;let h=`<svg width="${P+8*S}" height="${8*S+P}">`;
+for(let vr=0;vr<8;vr++)for(let vc=0;vc<8;vc++){const r=fromBlack?7-vr:vr,c=fromBlack?7-vc:vc;h+=`<rect x="${P+vc*S}" y="${vr*S}" width="${S}" height="${S}" fill="${(r+c)%2?'#B58863':'#F0D9B5'}"/>`;if(g[r][c])h+=`<text x="${P+vc*S+S/2}" y="${vr*S+S*.8}" text-anchor="middle" font-size="${S*.82}">${G[g[r][c]]}</text>`}
+const F="abcdefgh";for(let i=0;i<8;i++){h+=`<text x="3" y="${i*S+S*.6}" font-size="12" fill="#6b6a65">${fromBlack?i+1:8-i}</text><text x="${P+i*S+S/2}" y="${8*S+13}" text-anchor="middle" font-size="12" fill="#6b6a65">${fromBlack?F[7-i]:F[i]}</text>`}
+document.getElementById('board').innerHTML=h+"</svg>"}
+document.getElementById('w').onclick=e=>{e.target.classList.add('on');document.getElementById('b').classList.remove('on')};
+document.getElementById('b').onclick=e=>{e.target.classList.add('on');document.getElementById('w').classList.remove('on')};
+document.getElementById('flip').onclick=()=>{const g=rows(fen.value).reverse().map(r=>r.reverse());fen.value=toFen(g);fromBlack=!fromBlack;draw()};
+fen.oninput=draw;draw();
+</script></body></html>

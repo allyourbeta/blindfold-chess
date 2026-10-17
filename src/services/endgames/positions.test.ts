@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { addEntry, deleteEntry, listEntries, type Codes, type ManifestEntry } from "../../../scripts/endgames/positions.mjs";
+import {
+  addEntry,
+  deleteEntry,
+  listEntries,
+  rotate180,
+  type Codes,
+  type ManifestEntry,
+} from "../../../scripts/endgames/positions.mjs";
 
 // Two real entries, copied verbatim from scripts/endgames/sources.json at
 // the SHA this spec started from (a52cd19). Fixed here, never read from the
@@ -112,6 +119,19 @@ describe("deleteEntry", () => {
     expect(second.code).not.toBe(first.code);
     expect(codes.retired).toContain("E275");
     expect(second.manifest.some((e) => e.code === "E275")).toBe(false);
+  });
+});
+
+describe("rotate180", () => {
+  it("round-trips", () => {
+    const placement = "2K1N3/3P1n2/8/4k3/8/8/8/8";
+    expect(rotate180(rotate180(placement))).toBe(placement);
+  });
+
+  it("reverses rank order and file order within each rank, for a known example", () => {
+    // Rank 8 becomes rank 1 reversed, and vice versa; the middle ranks swap
+    // and reverse too. Pieces keep their own letter/colour -- only position moves.
+    expect(rotate180("4k3/8/8/8/8/8/8/4KBN1")).toBe("1NBK4/8/8/8/8/8/8/3k4");
   });
 });
 

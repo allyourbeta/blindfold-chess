@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useGameStore, engineStartFailedMessage } from "@/state/gameStore";
-import { ENDGAMES, getById, randomFrom, type SizeBucket, type EndgamePosition } from "@/services/endgames/catalog";
+import { getById, randomFrom, visibleEndgames, type SizeBucket, type EndgamePosition } from "@/services/endgames/catalog";
 import { bucketEntries, bucketOfEntry, entriesByBucket } from "@/services/endgames/catalogGroups";
 import { EndgamesHome } from "@/components/endgames/EndgamesHome";
 import { EndgamesSize } from "@/components/endgames/EndgamesSize";
 import { EndgamesPosition } from "@/components/endgames/EndgamesPosition";
 import { EndgamesFavorites } from "@/components/endgames/EndgamesFavorites";
+import { useRemovedStore } from "@/state/removedStore";
 
 type View =
   | { kind: "home" }
@@ -40,6 +41,16 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
   // button, with no other way back to a working engine from this screen.
   const canStart = engineStatus === "ready" || engineStatus === "failed";
   const startEndgame = useGameStore((s) => s.startEndgame);
+  const removalNote = useRemovedStore((s) => s.note);
+  const clearRemovalNote = useRemovedStore((s) => s.clearNote);
+
+  // The note from a just-completed Remove (decision 10) is read once and
+  // cleared -- it's not meant to reappear on a later visit to this screen.
+  useEffect(() => {
+    if (!removalNote) return;
+    const timer = setTimeout(clearRemovalNote, 5000);
+    return () => clearTimeout(timer);
+  }, [removalNote, clearRemovalNote]);
 
   function openPosition(entry: EndgamePosition, from: "favorites" | "other" = "other") {
     setStartError(false);
@@ -52,8 +63,10 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
     else setStartError(true);
   }
 
+  let content: ReactNode;
+
   if (view.kind === "home") {
-    return (
+    content = (
       <EndgamesHome
         key="home"
         engineReady={engineReady}
@@ -61,13 +74,11 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
         onOpenSize={(bucket) => setView({ kind: "size", bucket })}
         onOpenPosition={openPosition}
         onOpenFavorites={() => setView({ kind: "favorites" })}
-        onRandom={() => openPosition(randomFrom(ENDGAMES))}
+        onRandom={() => openPosition(randomFrom(visibleEndgames()))}
       />
     );
-  }
-
-  if (view.kind === "favorites") {
-    return (
+  } else if (view.kind === "favorites") {
+    content = (
       <EndgamesFavorites
         key="favorites"
         engineReady={engineReady}
@@ -75,11 +86,9 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
         onOpenPosition={(entry) => openPosition(entry, "favorites")}
       />
     );
-  }
-
-  if (view.kind === "size") {
+  } else if (view.kind === "size") {
     const bucket = view.bucket;
-    return (
+    content = (
       <EndgamesSize
         // Forces a fresh mount (and so a scroll reset) on every distinct
         // bucket -- without it, reaching this same `view.kind` from a
@@ -92,39 +101,53 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
         onRandom={() => openPosition(randomFrom(entriesByBucket(bucket)))}
       />
     );
-  }
-
-  const entry = getById(view.id);
-  if (!entry) {
-    // Shouldn't happen (a stale id), but never crash the screen over it.
-    return (
-      <EndgamesHome
-        key="home"
-        engineReady={engineReady}
-        onBack={onMenu}
-        onOpenSize={(bucket) => setView({ kind: "size", bucket })}
-        onOpenPosition={openPosition}
-        onOpenFavorites={() => setView({ kind: "favorites" })}
-        onRandom={() => openPosition(randomFrom(ENDGAMES))}
-      />
-    );
+  } else {
+    const entry = getById(view.id);
+    if (!entry) {
+      // Shouldn't happen (a stale id, or removed from under this view), but
+      // never crash the screen over it.
+      content = (
+        <EndgamesHome
+          key="home"
+          engineReady={engineReady}
+          onBack={onMenu}
+          onOpenSize={(bucket) => setView({ kind: "size", bucket })}
+          onOpenPosition={openPosition}
+          onOpenFavorites={() => setView({ kind: "favorites" })}
+          onRandom={() => openPosition(randomFrom(visibleEndgames()))}
+        />
+      );
+    } else {
+      const backToList = () =>
+        setView(view.from === "favorites" ? { kind: "favorites" } : { kind: "size", bucket: bucketOfEntry(entry) });
+      content = (
+        <EndgamesPosition
+          // Same reasoning as the size view's key: "Another of this size"
+          // swaps `entry` without changing `view.kind`, so without a key
+          // keyed to the id the position view would keep its old scroll
+          // position across positions instead of starting at the top
+          // (decision 5).
+          key={entry.id}
+          entry={entry}
+          canStart={canStart}
+          startError={startError ? engineStartFailedMessage("Play Blindfold") : null}
+          onBack={backToList}
+          onPlayBlindfold={() => void playBlindfold(entry.id)}
+          onAnotherOfThisSize={() => openPosition(randomFrom(bucketEntries(entry), entry.id))}
+          onRemoved={backToList}
+        />
+      );
+    }
   }
 
   return (
-    <EndgamesPosition
-      // Same reasoning as the size view's key: "Another of this size" swaps
-      // `entry` without changing `view.kind`, so without a key keyed to the
-      // id the position view would keep its old scroll position across
-      // positions instead of starting at the top (decision 5).
-      key={entry.id}
-      entry={entry}
-      canStart={canStart}
-      startError={startError ? engineStartFailedMessage("Play Blindfold") : null}
-      onBack={() =>
-        setView(view.from === "favorites" ? { kind: "favorites" } : { kind: "size", bucket: bucketOfEntry(entry) })
-      }
-      onPlayBlindfold={() => void playBlindfold(entry.id)}
-      onAnotherOfThisSize={() => openPosition(randomFrom(bucketEntries(entry), entry.id))}
-    />
+    <div className="relative flex h-full w-full flex-col">
+      {removalNote && (
+        <div className="absolute inset-x-0 top-0 z-10 bg-bg-primary px-4 py-2 text-center text-sm font-medium text-text-on-primary">
+          {removalNote}
+        </div>
+      )}
+      {content}
+    </div>
   );
 }

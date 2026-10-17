@@ -6,7 +6,9 @@ import { PlayScreen } from "@/components/screens/PlayScreen";
 import { EndgamesScreen } from "@/components/screens/EndgamesScreen";
 import { useGameStore } from "@/state/gameStore";
 import { useTheme } from "@/hooks/useTheme";
-import type { SizeBucket } from "@/services/endgames/catalog";
+import { ENDGAMES, type SizeBucket } from "@/services/endgames/catalog";
+import { useCreator } from "@/state/creatorStore";
+import { useRemovedStore } from "@/state/removedStore";
 
 type Screen = "menu" | "setup" | "play" | "endgames";
 
@@ -26,6 +28,35 @@ export default function App() {
   useEffect(() => {
     void initEngine();
   }, [initEngine]);
+
+  // A code this device had removed is dropped from removedStore once the
+  // shipped catalog itself no longer carries it (decision: Part 4.2's
+  // "codes no longer in the shipped catalog are pruned from the list").
+  useEffect(() => {
+    useRemovedStore.getState().prune(ENDGAMES.map((e) => e.code));
+  }, []);
+
+  // `#creator` (decision 8): unlock this device with a password prompt, or
+  // -- already unlocked -- offer to lock it again. Other users never see
+  // this; it's reached only by typing the hash in directly.
+  useEffect(() => {
+    function handleCreatorHash() {
+      if (window.location.hash !== "#creator") return;
+      const creator = useCreator.getState();
+      if (creator.password !== null) {
+        if (window.confirm("Lock this device?")) creator.lock();
+        return;
+      }
+      const entered = window.prompt("Password:");
+      if (entered === null) return;
+      void creator.unlock(entered).then((ok) => {
+        if (!ok) window.alert("Wrong password");
+      });
+    }
+    handleCreatorHash();
+    window.addEventListener("hashchange", handleCreatorHash);
+    return () => window.removeEventListener("hashchange", handleCreatorHash);
+  }, []);
 
   // Spacebar peeks at the board, but only on the play screen itself -- on
   // every other screen Space must behave like any other key and activate

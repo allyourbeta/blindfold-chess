@@ -1,6 +1,6 @@
 import { parseFenMoveContext } from "@/services/chess/fen";
 import {
-  ENDGAMES,
+  visibleEndgames,
   family,
   materialKey,
   groupLabel,
@@ -27,23 +27,23 @@ export function bucketOfEntry(entry: EndgamePosition): SizeBucket {
   return bucketOf(entry.fen) ?? SIZE_BUCKETS[0];
 }
 
-export function entriesByFamily(fam: Family, catalog: EndgamePosition[] = ENDGAMES): EndgamePosition[] {
+export function entriesByFamily(fam: Family, catalog: EndgamePosition[] = visibleEndgames()): EndgamePosition[] {
   return catalog.filter((e) => familyOf(e) === fam);
 }
 
 /** Family -> how many positions it holds. */
-export function countsByFamily(catalog: EndgamePosition[] = ENDGAMES): Record<Family, number> {
+export function countsByFamily(catalog: EndgamePosition[] = visibleEndgames()): Record<Family, number> {
   const counts: Record<Family, number> = { pawn: 0, rook: 0, minor: 0, queen: 0, mixed: 0 };
   for (const entry of catalog) counts[familyOf(entry)]++;
   return counts;
 }
 
-export function entriesByBucket(bucket: SizeBucket, catalog: EndgamePosition[] = ENDGAMES): EndgamePosition[] {
+export function entriesByBucket(bucket: SizeBucket, catalog: EndgamePosition[] = visibleEndgames()): EndgamePosition[] {
   return catalog.filter((e) => bucketOfEntry(e).label === bucket.label);
 }
 
 /** Bucket label -> how many positions it holds, for the home screen's count column. */
-export function countsByBucket(catalog: EndgamePosition[] = ENDGAMES): Record<string, number> {
+export function countsByBucket(catalog: EndgamePosition[] = visibleEndgames()): Record<string, number> {
   const counts: Record<string, number> = {};
   for (const bucket of SIZE_BUCKETS) counts[bucket.label] = 0;
   for (const entry of catalog) counts[bucketOfEntry(entry).label]++;
@@ -51,7 +51,7 @@ export function countsByBucket(catalog: EndgamePosition[] = ENDGAMES): Record<st
 }
 
 /** Size buckets that hold at least one position -- the home screen's "By size" list hides an empty bucket entirely. */
-export function visibleBuckets(catalog: EndgamePosition[] = ENDGAMES): SizeBucket[] {
+export function visibleBuckets(catalog: EndgamePosition[] = visibleEndgames()): SizeBucket[] {
   const counts = countsByBucket(catalog);
   return SIZE_BUCKETS.filter((bucket) => counts[bucket.label] > 0);
 }
@@ -63,7 +63,7 @@ export interface MaterialGroup {
 }
 
 /** Material groups within one family, in catalog file order of first appearance. */
-export function groupsForFamily(fam: Family, catalog: EndgamePosition[] = ENDGAMES): MaterialGroup[] {
+export function groupsForFamily(fam: Family, catalog: EndgamePosition[] = visibleEndgames()): MaterialGroup[] {
   const order: string[] = [];
   const byKey = new Map<string, EndgamePosition[]>();
   for (const entry of entriesByFamily(fam, catalog)) {
@@ -84,7 +84,7 @@ export interface FamilyGroup {
 }
 
 /** Families present within one size bucket, in FAMILY_ORDER; a family with no entries in this bucket is left out. */
-export function familiesInBucket(bucket: SizeBucket, catalog: EndgamePosition[] = ENDGAMES): FamilyGroup[] {
+export function familiesInBucket(bucket: SizeBucket, catalog: EndgamePosition[] = visibleEndgames()): FamilyGroup[] {
   const inBucket = entriesByBucket(bucket, catalog);
   return FAMILY_ORDER.map((fam) => ({
     family: fam,
@@ -94,7 +94,7 @@ export function familiesInBucket(bucket: SizeBucket, catalog: EndgamePosition[] 
 }
 
 /** The position's own bucket's entries, for "Another of this size" and the game-over "Endgames" button. */
-export function bucketEntries(entry: EndgamePosition, catalog: EndgamePosition[] = ENDGAMES): EndgamePosition[] {
+export function bucketEntries(entry: EndgamePosition, catalog: EndgamePosition[] = visibleEndgames()): EndgamePosition[] {
   return entriesByBucket(bucketOfEntry(entry), catalog);
 }
 
@@ -121,7 +121,7 @@ export function resultDisplay(entry: EndgamePosition): ResultDisplay | null {
  * code. A code with no matching entry (e.g. a deleted or retired position)
  * is silently dropped -- it's never counted and never shown.
  */
-export function favoriteEntries(codes: string[], catalog: EndgamePosition[] = ENDGAMES): EndgamePosition[] {
+export function favoriteEntries(codes: string[], catalog: EndgamePosition[] = visibleEndgames()): EndgamePosition[] {
   const favored = new Set(codes);
   return catalog
     .filter((e) => favored.has(e.code))

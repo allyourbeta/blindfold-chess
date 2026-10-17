@@ -195,3 +195,50 @@ export function setFavorites(codes: string[]): void {
     // ignore — favorites just won't persist across reloads
   }
 }
+
+const CREATOR_PASSWORD_KEY = "blindfoldCreatorPassword";
+
+/** The creator password this device unlocked with, or null when it's locked. Held in plain text — same trust level as the device itself. */
+export function getCreatorPassword(): string | null {
+  try {
+    return localStorage.getItem(CREATOR_PASSWORD_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function setCreatorPassword(password: string): void {
+  try {
+    localStorage.setItem(CREATOR_PASSWORD_KEY, password);
+  } catch {
+    // ignore — the unlock just won't persist across reloads
+  }
+}
+
+export function clearCreatorPassword(): void {
+  try {
+    localStorage.removeItem(CREATOR_PASSWORD_KEY);
+  } catch {
+    // ignore
+  }
+}
+
+const REMOVED_CODES_KEY = "blindfoldRemovedCodes";
+
+/** Catalog codes removed from the app, from this device's point of view -- see useRemovedStore. */
+export function getRemovedCodes(): string[] {
+  try {
+    const raw = localStorage.getItem(REMOVED_CODES_KEY);
+    return raw ? (JSON.parse(raw) as string[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function setRemovedCodes(codes: string[]): void {
+  try {
+    localStorage.setItem(REMOVED_CODES_KEY, JSON.stringify(codes));
+  } catch {
+    // ignore — the removal still took effect on the server
+  }
+}

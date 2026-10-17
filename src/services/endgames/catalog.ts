@@ -1,5 +1,6 @@
 import endgamesData from "@/data/endgames.json";
 import { fenToBoard, FILES } from "@/services/chess/fen";
+import { getRemovedCodes } from "@/api/localStore";
 
 export interface EndgamePosition {
   id: string;
@@ -24,7 +25,22 @@ export interface EndgamePosition {
 
 export type Family = "pawn" | "rook" | "minor" | "queen" | "mixed";
 
+/** The shipped catalog, exactly as built -- never filtered by on-device removal. See visibleEndgames for what the app actually shows. */
 export const ENDGAMES: EndgamePosition[] = endgamesData as EndgamePosition[];
+
+/**
+ * `ENDGAMES` minus whatever this device has removed via the Remove button
+ * (SPEC_pos_page_and_remove.md Part 4, decision 10) -- the one place this
+ * filter happens, so every screen agrees. Reads localStorage fresh on
+ * every call (through the API layer, never directly) rather than caching,
+ * so a removal is reflected the moment the removing screen re-renders.
+ */
+export function visibleEndgames(catalog: EndgamePosition[] = ENDGAMES): EndgamePosition[] {
+  const removed = getRemovedCodes();
+  if (removed.length === 0) return catalog;
+  const removedSet = new Set(removed);
+  return catalog.filter((entry) => !removedSet.has(entry.code));
+}
 
 export const FAMILY_ORDER: Family[] = ["pawn", "rook", "minor", "queen", "mixed"];
 
@@ -203,7 +219,7 @@ export function pieceList(fen: string, color: "w" | "b"): string {
  * those fields, AND'd across words. Results are sorted by piece count
  * ascending, then by permanent code.
  */
-export function search(query: string, catalog: EndgamePosition[] = ENDGAMES): EndgamePosition[] {
+export function search(query: string, catalog: EndgamePosition[] = visibleEndgames()): EndgamePosition[] {
   const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
   if (words.length === 0) return [];
   return catalog
@@ -227,10 +243,10 @@ export function randomFrom<T extends { id: string }>(list: T[], excludeId?: stri
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-export function getById(id: string, catalog: EndgamePosition[] = ENDGAMES): EndgamePosition | undefined {
+export function getById(id: string, catalog: EndgamePosition[] = visibleEndgames()): EndgamePosition | undefined {
   return catalog.find((e) => e.id === id);
 }
 
-export function getByCode(code: string, catalog: EndgamePosition[] = ENDGAMES): EndgamePosition | undefined {
+export function getByCode(code: string, catalog: EndgamePosition[] = visibleEndgames()): EndgamePosition | undefined {
   return catalog.find((e) => e.code === code);
 }

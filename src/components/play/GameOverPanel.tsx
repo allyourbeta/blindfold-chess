@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/Button";
 import { useGameStore, engineStartFailedMessage } from "@/state/gameStore";
 import { getById, randomFrom, type SizeBucket } from "@/services/endgames/catalog";
 import { bucketOfEntry, bucketEntries } from "@/services/endgames/catalogGroups";
+import { useCreator } from "@/state/creatorStore";
+import { useRemovedStore } from "@/state/removedStore";
 
 interface GameOverPanelProps {
   onNewGame(): void;
@@ -29,11 +31,16 @@ export function GameOverPanel({ onNewGame, onMenu, onEndgames }: GameOverPanelPr
   const startEndgame = useGameStore((s) => s.startEndgame);
   const [dismissed, setDismissed] = useState(false);
   const [startError, setStartError] = useState(false);
+  const unlocked = useCreator((s) => s.password !== null);
+  const removeViaApi = useRemovedStore((s) => s.removeViaApi);
+  const [removing, setRemoving] = useState(false);
+  const [removeError, setRemoveError] = useState<string | null>(null);
 
   // A new game (or a new game-over) resets the dismissal.
   useEffect(() => {
     setDismissed(false);
     setStartError(false);
+    setRemoveError(null);
   }, [gameOverFlag]);
 
   const entry = activeEndgame ? getById(activeEndgame.id) : null;
@@ -50,6 +57,17 @@ export function GameOverPanel({ onNewGame, onMenu, onEndgames }: GameOverPanelPr
     setStartError(false);
     const ok = await startEndgame(randomFrom(bucketEntries(entry), entry.id).id);
     if (!ok) setStartError(true);
+  }
+
+  async function handleRemove() {
+    if (!entry) return;
+    if (!window.confirm(`Remove ${entry.code} from the app for everyone?`)) return;
+    setRemoving(true);
+    setRemoveError(null);
+    const removeResult = await removeViaApi(entry.code);
+    setRemoving(false);
+    if (removeResult.ok) onEndgames(bucketOfEntry(entry));
+    else setRemoveError(removeResult.error ?? "Could not remove.");
   }
 
   return (
@@ -70,9 +88,20 @@ export function GameOverPanel({ onNewGame, onMenu, onEndgames }: GameOverPanelPr
             <Button variant="secondary" className="w-full" onClick={() => onEndgames(bucketOfEntry(entry))}>
               Endgames
             </Button>
+            {unlocked && (
+              <Button
+                variant="destructive"
+                className="w-full"
+                disabled={removing}
+                onClick={() => void handleRemove()}
+              >
+                Remove
+              </Button>
+            )}
             {startError && (
               <p className="text-center text-sm text-text-error">{engineStartFailedMessage("Try again")}</p>
             )}
+            {removeError && <p className="text-center text-sm text-text-error">{removeError}</p>}
           </>
         ) : (
           <>

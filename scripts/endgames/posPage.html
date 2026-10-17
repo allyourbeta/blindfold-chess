@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Blindfold — add a position</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#f6f5f2;color:#1d1d1b;margin:0;padding:32px}
+.card{max-width:420px;background:#fff;border:1px solid #e3e1da;border-radius:12px;padding:20px 22px}
+h1{font-size:18px;font-weight:600;margin:0 0 12px}
+.drop{border:1px dashed #b9b6ad;border-radius:8px;padding:10px 12px;font-size:14px;color:#6b6a65;margin-bottom:14px}
+.drop.over{border-color:#378add;color:#0c447c;background:#f3f8fd}
+.row{display:flex;gap:8px;margin:12px 0 8px}
+button{flex:1;font:inherit;font-size:14px;padding:8px 10px;border-radius:8px;border:1px solid #c9c6bd;background:#fff;cursor:pointer}
+button.on{background:#e6f1fb;border-color:#378add;color:#0c447c}
+button.primary{background:#185fa5;border-color:#185fa5;color:#fff;width:100%}
+button.primary:disabled{background:#c9c6bd;border-color:#c9c6bd;cursor:not-allowed}
+input{width:100%;box-sizing:border-box;font-family:ui-monospace,monospace;font-size:13px;padding:8px;border:1px solid #c9c6bd;border-radius:8px}
+.ok{font-size:13px;color:#3b6d11;margin:8px 0 12px}
+.bad{font-size:13px;color:#a3281f;margin:8px 0 12px}
+.result{font-size:13px;color:#0c447c;margin-top:10px}
+.error{font-size:13px;color:#a3281f;margin-top:10px}
+.stamp{font-size:11px;color:#9a988f;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Add a position</h1>
+<div class="drop" id="drop">Paste (⌘V) or drop a board image</div>
+<div id="board"></div>
+<div class="row"><button id="w">White to move</button><button id="b" class="on">Black to move</button></div>
+<div class="row"><button id="flip">Flip board</button></div>
+<input id="fen" value="4k3/ppp5/8/8/8/8/PPP5/4K3" aria-label="Position as FEN">
+<div id="status" class="bad">Checking…</div>
+<button id="addBtn" class="primary" disabled>Add</button>
+<div id="message"></div>
+</div>
+<script>
+let side = "b";
+let fromBlack = true;
+let checking = false;
+let checkTimer = null;
+const fen = document.getElementById("fen");
+const statusLine = document.getElementById("status");
+const addBtn = document.getElementById("addBtn");
+const message = document.getElementById("message");
+const drop = document.getElementById("drop");
+
+function rows(f) {
+  return f.split("/").map((r) => {
+    const a = [];
+    for (const c of r) {
+      if (/\d/.test(c)) for (let k = 0; k < +c; k++) a.push("");
+      else a.push(c);
+    }
+    return a;
+  });
+}
+
+function toFen(g) {
+  return g
+    .map((r) => {
+      let s = "";
+      let n = 0;
+      for (const c of r) {
+        if (!c) n++;
+        else {
+          if (n) s += n;
+          n = 0;
+          s += c;
+        }
+      }
+      if (n) s += n;
+      return s;
+    })
+    .join("/");
+}
+
+function draw() {
+  const g = rows(fen.value);
+  const S = 46;
+  const P = 16;
+  const size = S * 0.86;
+  const pad = (S - size) / 2;
+  let h = `<svg width="${P + 8 * S}" height="${8 * S + P}">`;
+  for (let vr = 0; vr < 8; vr++) {
+    for (let vc = 0; vc < 8; vc++) {
+      const r = fromBlack ? 7 - vr : vr;
+      const c = fromBlack ? 7 - vc : vc;
+      h += `<rect x="${P + vc * S}" y="${vr * S}" width="${S}" height="${S}" fill="${(r + c) % 2 ? "#B58863" : "#F0D9B5"}"/>`;
+      const piece = g[r][c];
+      if (piece) {
+        const file = (piece === piece.toUpperCase() ? "w" : "b") + piece.toUpperCase();
+        h += `<image href="/pieces/${file}.svg" x="${P + vc * S + pad}" y="${vr * S + pad}" width="${size}" height="${size}"/>`;
+      }
+    }
+  }
+  const F = "abcdefgh";
+  for (let i = 0; i < 8; i++) {
+    h += `<text x="3" y="${i * S + S * 0.6}" font-size="12" fill="#6b6a65">${fromBlack ? i + 1 : 8 - i}</text>`;
+    h += `<text x="${P + i * S + S / 2}" y="${8 * S + 13}" text-anchor="middle" font-size="12" fill="#6b6a65">${fromBlack ? F[7 - i] : F[i]}</text>`;
+  }
+  document.getElementById("board").innerHTML = h + "</svg>";
+}
+
+function loadPlacement(placement) {
+  fen.value = placement;
+  fromBlack = side === "b";
+  draw();
+  scheduleCheck(0);
+}
+
+async function scheduleCheck(delay = 250) {
+  if (checkTimer) clearTimeout(checkTimer);
+  checkTimer = setTimeout(runCheck, delay);
+}
+
+async function runCheck() {
+  checking = true;
+  addBtn.disabled = true;
+  try {
+    const res = await fetch("/check", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ placement: fen.value, sideToMove: side }),
+    });
+    const body = await res.json();
+    if (body.ok) {
+      statusLine.className = "ok";
+      statusLine.textContent = "✓ Legal, quiet, not a duplicate";
+      addBtn.textContent = `Add as ${body.code}`;
+      addBtn.disabled = false;
+      addBtn.dataset.code = body.code;
+    } else {
+      statusLine.className = "bad";
+      statusLine.textContent = `✗ ${body.reason}`;
+      addBtn.textContent = "Add";
+      addBtn.disabled = true;
+    }
+  } catch (err) {
+    statusLine.className = "bad";
+    statusLine.textContent = `✗ ${err.message}`;
+    addBtn.disabled = true;
+  } finally {
+    checking = false;
+  }
+}
+
+document.getElementById("w").onclick = (e) => {
+  side = "w";
+  e.target.classList.add("on");
+  document.getElementById("b").classList.remove("on");
+  scheduleCheck(0);
+};
+document.getElementById("b").onclick = (e) => {
+  side = "b";
+  e.target.classList.add("on");
+  document.getElementById("w").classList.remove("on");
+  scheduleCheck(0);
+};
+document.getElementById("flip").onclick = () => {
+  const g = rows(fen.value).reverse().map((r) => r.reverse());
+  fen.value = toFen(g);
+  fromBlack = !fromBlack;
+  draw();
+  scheduleCheck(0);
+};
+fen.oninput = () => {
+  draw();
+  scheduleCheck();
+};
+
+addBtn.onclick = async () => {
+  addBtn.disabled = true;
+  message.className = "";
+  message.textContent = "";
+  try {
+    const res = await fetch("/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ placement: fen.value, sideToMove: side }),
+    });
+    const body = await res.json();
+    if (res.ok) {
+      message.className = "result";
+      message.textContent = `Added as ${body.code} — committed and pushed.`;
+      addBtn.textContent = "Added";
+    } else {
+      message.className = "error";
+      message.textContent = body.error || "Add failed.";
+      addBtn.disabled = false;
+    }
+  } catch (err) {
+    message.className = "error";
+    message.textContent = err.message;
+    addBtn.disabled = false;
+  }
+};
+
+function base64FromBlob(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function recognizeBlob(blob) {
+  message.className = "";
+  message.textContent = "";
+  try {
+    const image_base64 = await base64FromBlob(blob);
+    const res = await fetch("/recognize", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image_base64 }),
+    });
+    const body = await res.json();
+    if (!res.ok) {
+      message.className = "error";
+      message.textContent = body.error || "Recognition failed.";
+      return;
+    }
+    loadPlacement(body.placement);
+  } catch (err) {
+    message.className = "error";
+    message.textContent = err.message;
+  }
+}
+
+document.addEventListener("paste", (e) => {
+  for (const item of e.clipboardData?.items ?? []) {
+    if (item.type.startsWith("image/")) {
+      void recognizeBlob(item.getAsFile());
+      return;
+    }
+  }
+});
+
+drop.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  drop.classList.add("over");
+});
+drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+drop.addEventListener("drop", (e) => {
+  e.preventDefault();
+  drop.classList.remove("over");
+  const file = e.dataTransfer?.files?.[0];
+  if (file) void recognizeBlob(file);
+});
+
+draw();
+runCheck();
+</script>
+</body>
+</html>

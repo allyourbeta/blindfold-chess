@@ -17,6 +17,47 @@ function codeFor(next) {
   return `E${String(next).padStart(3, "0")}`;
 }
 
+function expandRank(rank) {
+  const squares = [];
+  for (const ch of rank) {
+    if (/\d/.test(ch)) for (let i = 0; i < Number(ch); i++) squares.push(null);
+    else squares.push(ch);
+  }
+  return squares;
+}
+
+function collapseRank(squares) {
+  let out = "";
+  let empties = 0;
+  for (const sq of squares) {
+    if (sq === null) empties++;
+    else {
+      if (empties) {
+        out += empties;
+        empties = 0;
+      }
+      out += sq;
+    }
+  }
+  if (empties) out += empties;
+  return out || "8";
+}
+
+/**
+ * Rotates a placement 180 degrees (a1<->h8, etc.): rank order reverses and
+ * each rank's file order reverses with it. Pieces keep their own letter and
+ * colour -- SPEC_pos_page_and_remove.md's "Flip board" uses this together
+ * with reversing the view direction, so pieces stay visually put on screen
+ * while the stored placement comes to match the diagram's actual side.
+ */
+export function rotate180(placement) {
+  return placement
+    .split("/")
+    .reverse()
+    .map((rank) => collapseRank(expandRank(rank).reverse()))
+    .join("/");
+}
+
 /**
  * Validates a new position and, if it passes, returns the manifest and
  * codes with it added -- never mutates its inputs. Throws a plain-text

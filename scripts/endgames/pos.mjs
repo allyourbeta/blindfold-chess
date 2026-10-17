@@ -33,6 +33,19 @@ function runInherited(cmd, args) {
   if (res.status !== 0) throw new Error(`${cmd} ${args.join(" ")} exited ${res.status}`);
 }
 
+/**
+ * Pulled at the start of every write path (CLI add/delete, page add) --
+ * decision 12: a removal made from the phone must never leave the laptop's
+ * next add unable to push. A dirty tree or a diverged history both fail
+ * `--ff-only`, which is exactly when we want to stop rather than guess.
+ */
+function pullLatest() {
+  const res = spawnSync("git", ["pull", "--ff-only"], { cwd: REPO_ROOT, stdio: "pipe", encoding: "utf8" });
+  if (res.status !== 0) {
+    throw new Error("Couldn't update from GitHub. Commit or stash your changes first.");
+  }
+}
+
 function restoreFromGit() {
   runInherited("git", ["checkout", "--", "scripts/endgames/sources.json", "scripts/endgames/codes.json", "src/data/endgames.json"]);
 }
@@ -54,7 +67,9 @@ function finalizeChange(manifest, codes, commitMessage) {
     console.error(`\nBuild or data checks failed: ${err.message}`);
     console.error("Restoring sources.json, codes.json and src/data/endgames.json from git.");
     restoreFromGit();
-    process.exit(1);
+    // Thrown, not process.exit -- this runs inside the long-lived page
+    // server too (addFromPlacement), which must survive a failed add.
+    throw new Error(`Build or data checks failed: ${err.message}`);
   }
 
   runInherited("git", ["add", "scripts/endgames/sources.json", "scripts/endgames/codes.json", "src/data/endgames.json"]);
@@ -73,7 +88,28 @@ async function confirm(prompt) {
   }
 }
 
-async function ocrStatus() {
+/**
+ * The add flow's actual write: validate, build+test, commit and push.
+ * Shared by the CLI (after its own preview/confirm) and the local page's
+ * `/add` endpoint (which has already confirmed in the browser). Pulls
+ * first -- see pullLatest -- then re-reads the manifest fresh so a phone
+ * removal made since the CLI's own preview can never block this push.
+ * Returns `{ code, result }` or throws a plain-language error.
+ */
+export async function addFromPlacement({ placement, sideToMove }) {
+  pullLatest();
+  const { manifest, codes } = readManifestAndCodes();
+  let proposed;
+  try {
+    proposed = addEntry(manifest, codes, { placement, sideToMove });
+  } catch (err) {
+    throw new Error(err instanceof Error ? err.message : String(err));
+  }
+  finalizeChange(proposed.manifest, proposed.codes, `Endgames: add ${proposed.code}`);
+  return { code: proposed.code, result: "added" };
+}
+
+export async function ocrStatus() {
   try {
     const res = await fetch(`${OCR_BASE}/api/ocr/status`);
     if (!res.ok) return { ok: false };
@@ -84,8 +120,8 @@ async function ocrStatus() {
   }
 }
 
-async function recognize(imagePath) {
-  const image_base64 = readFileSync(imagePath).toString("base64");
+/** Takes an already-base64-encoded image -- the page server's `/recognize` gets one straight off the clipboard/drop, with no file on disk. */
+export async function recognizeBase64(image_base64) {
   const res = await fetch(`${OCR_BASE}/api/ocr`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -93,6 +129,10 @@ async function recognize(imagePath) {
   });
   if (!res.ok) throw new Error(`chessdirbek OCR failed: HTTP ${res.status}`);
   return res.json();
+}
+
+export async function recognize(imagePath) {
+  return recognizeBase64(readFileSync(imagePath).toString("base64"));
 }
 
 /** Writes the macOS clipboard's image (PNG, or TIFF as a fallback) to a temp file, or null when it holds no image. */
@@ -211,6 +251,7 @@ function parseAddArgs(args) {
 }
 
 async function cmdAdd(args) {
+  pullLatest();
   const { black, fen, imagePath } = parseAddArgs(args);
   const sideToMove = black ? "b" : "w";
 
@@ -248,10 +289,11 @@ async function cmdAdd(args) {
     return;
   }
 
-  finalizeChange(proposed.manifest, proposed.codes, `Endgames: add ${proposed.code}`);
+  await addFromPlacement({ placement, sideToMove });
 }
 
 async function cmdDelete(args) {
+  pullLatest();
   const code = args[0];
   if (!code) {
     console.error("Usage: npm run pos -- delete E287");
@@ -291,12 +333,20 @@ function cmdList() {
   }
 }
 
+async function cmdPage() {
+  // Dynamic import -- posPage.mjs imports addFromPlacement etc. back from
+  // this module, so a static top-of-file import would be circular.
+  const { startPosPage } = await import("./posPage.mjs");
+  await startPosPage();
+}
+
 async function main() {
   const [action, ...rest] = process.argv.slice(2);
   if (action === "add") return cmdAdd(rest);
   if (action === "delete") return cmdDelete(rest);
   if (action === "list") return cmdList();
-  console.error("Usage: npm run pos -- add|delete|list ...");
+  if (action === "page") return cmdPage();
+  console.error("Usage: npm run pos -- add|delete|list|page ...");
   process.exit(1);
 }
 
