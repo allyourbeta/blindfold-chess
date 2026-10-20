@@ -91,7 +91,8 @@ export function GameOverPanel({ onNewGame, onMenu, onEndgames }: GameOverPanelPr
             {unlocked && (
               <Button
                 variant="destructive"
-                className="w-full"
+                size="sm"
+                className="self-end"
                 disabled={removing}
                 onClick={() => void handleRemove()}
               >

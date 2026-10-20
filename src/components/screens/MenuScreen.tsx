@@ -195,7 +195,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
             <button
               type="button"
               onClick={() => setShowInstall(true)}
-              className="mx-auto mt-4 flex min-h-11 items-center gap-2 rounded-xl px-3 text-sm font-semibold text-text-accent hover:bg-bg-surface-alt"
+              className="mx-auto mt-4 flex min-h-11 items-center gap-2 rounded-xl px-3 text-base font-semibold text-text-accent hover:bg-bg-surface-alt"
             >
               <Download className="h-4 w-4" />
               Add Blindfold to your home screen

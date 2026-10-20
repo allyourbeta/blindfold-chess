@@ -115,7 +115,7 @@ export function EndgamesPosition({
 
       {unlocked && (
         <>
-          <Button variant="destructive" size="default" disabled={removing} onClick={() => void handleRemove()}>
+          <Button variant="destructive" size="sm" className="self-end" disabled={removing} onClick={() => void handleRemove()}>
             Remove
           </Button>
           {removeError && <p className="text-sm text-text-error">{removeError}</p>}

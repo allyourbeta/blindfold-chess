@@ -6,11 +6,39 @@ import { expect, type Page } from "@playwright/test";
  * strict) — strict-ticker.spec.ts covers those explicitly with a bare goto.
  */
 export async function openApp(page: Page) {
+  await openAppAt(page, "/");
+}
+
+/** Like openApp, but to any path -- e.g. "/#creator". */
+export async function openAppAt(page: Page, path: string) {
   await page.addInitScript(() => {
     localStorage.setItem("blindfoldShowTicker", "true");
     localStorage.setItem("blindfoldAssistMode", "assisted");
   });
-  await page.goto("/");
+  await page.goto(path);
+}
+
+/**
+ * Visits `#creator` and answers the password prompt. On a wrong password,
+ * chains a second one-shot handler for the "Wrong password" alert that
+ * follows it -- each handler only ever sees its own dialog, never both.
+ */
+export async function unlock(page: Page, password: string, expectAccepted: boolean) {
+  await page.route("**/api/positions/verify", (route) =>
+    route.fulfill({ status: expectAccepted ? 200 : 401, body: "{}" }),
+  );
+  let alertMessage = "";
+  page.once("dialog", (dialog) => {
+    void dialog.accept(password);
+    if (!expectAccepted) {
+      page.once("dialog", (alertDialog) => {
+        alertMessage = alertDialog.message();
+        void alertDialog.accept();
+      });
+    }
+  });
+  await openAppAt(page, "/#creator");
+  if (!expectAccepted) await expect.poll(() => alertMessage).toMatch(/Wrong password/);
 }
 
 /**
