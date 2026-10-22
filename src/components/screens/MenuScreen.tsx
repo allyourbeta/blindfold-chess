@@ -83,7 +83,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
           type="button"
           onClick={toggleTheme}
           aria-label="Toggle dark mode"
-          className="absolute right-4 top-[max(1rem,env(safe-area-inset-top))] inline-flex h-11 w-11 items-center justify-center rounded-full text-text-secondary hover:bg-bg-surface-alt"
+          className="absolute right-4 top-[max(1rem,env(safe-area-inset-top))] z-10 inline-flex h-11 w-11 items-center justify-center rounded-full text-text-secondary hover:bg-bg-surface-alt"
         >
           {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </button>

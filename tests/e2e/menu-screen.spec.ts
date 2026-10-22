@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { waitForEngineReady, openApp } from "./helpers";
+import { waitForEngineReady, openApp, PHONE_USABLE } from "./helpers";
 
 test("home screen leads with the game and keeps settings out of the way", async ({ page }) => {
   await openApp(page);
@@ -39,4 +39,40 @@ test("the how-to-play guide is gone", async ({ page }) => {
 
   await expect(page.getByRole("button", { name: "How to play" })).toHaveCount(0);
   await expect(page.getByText("Tap moves on the keypad")).toHaveCount(0);
+});
+
+test("the theme toggle is tappable across its whole button, not just a sliver at the top", async ({
+  page,
+}, testInfo) => {
+  if (testInfo.project.name === "iphone") await page.setViewportSize(PHONE_USABLE);
+
+  await openApp(page);
+  await waitForEngineReady(page);
+
+  const toggle = page.getByRole("button", { name: "Toggle dark mode" });
+  await expect(toggle).toBeVisible();
+  const box = await toggle.boundingBox();
+  if (!box) throw new Error("toggle has no bounding box");
+
+  const centerX = box.x + box.width / 2;
+  const centerY = box.y + box.height / 2;
+  const nearBottomY = box.y + box.height - 8;
+
+  const elementAtCenter = await page.evaluate(
+    ([x, y]) => document.elementFromPoint(x, y)?.closest('button[aria-label="Toggle dark mode"]') !== null,
+    [centerX, centerY],
+  );
+  expect(elementAtCenter, "center point should hit the toggle").toBe(true);
+
+  const elementNearBottom = await page.evaluate(
+    ([x, y]) => document.elementFromPoint(x, y)?.closest('button[aria-label="Toggle dark mode"]') !== null,
+    [centerX, nearBottomY],
+  );
+  expect(elementNearBottom, "point 8px above the toggle's bottom edge should hit the toggle").toBe(true);
+
+  await expect(page.locator("html")).not.toHaveClass(/dark/);
+  await page.mouse.click(centerX, centerY);
+  await expect(page.locator("html")).toHaveClass(/dark/);
+  await page.mouse.click(centerX, centerY);
+  await expect(page.locator("html")).not.toHaveClass(/dark/);
 });
