@@ -13,6 +13,8 @@ interface BoardPanelProps {
   highlightTo?: string | null;
   interactive?: boolean;
   onSquareClick?(row: number, col: number): void;
+  /** False hides the panel's own rotate button when a caller (the setup screen) puts its own in the header. */
+  showRotate?: boolean;
 }
 
 /**
@@ -33,6 +35,7 @@ export function BoardPanel({
   highlightTo,
   interactive,
   onSquareClick,
+  showRotate = true,
 }: BoardPanelProps) {
   const override = useSettingsStore((s) => s.boardFlipOverride);
   const toggleBoardFlip = useSettingsStore((s) => s.toggleBoardFlip);
@@ -49,15 +52,17 @@ export function BoardPanel({
         interactive={interactive}
         onSquareClick={onSquareClick}
       />
-      <button
-        type="button"
-        onClick={() => toggleBoardFlip(defaultFlipped)}
-        aria-label="Rotate the board 180 degrees"
-        className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-base font-semibold text-text-secondary hover:bg-bg-surface-alt"
-      >
-        <FlipVertical2 className="h-4 w-4" />
-        {flipped ? "Black's view" : "White's view"}
-      </button>
+      {showRotate && (
+        <button
+          type="button"
+          onClick={() => toggleBoardFlip(defaultFlipped)}
+          aria-label="Rotate the board 180 degrees"
+          className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-base font-semibold text-text-secondary hover:bg-bg-surface-alt"
+        >
+          <FlipVertical2 className="h-4 w-4" />
+          {flipped ? "Black's view" : "White's view"}
+        </button>
+      )}
     </div>
   );
 }

@@ -52,7 +52,7 @@ export function SetupBoard({ board, flipped, selectedPiece, onSelectPiece, onSqu
         <PaletteGroup pieces={WHITE_PIECES} selectedPiece={selectedPiece} onSelectPiece={onSelectPiece} />
         <PaletteGroup pieces={BLACK_PIECES} selectedPiece={selectedPiece} onSelectPiece={onSelectPiece} />
       </div>
-      <BoardPanel board={board} defaultFlipped={flipped} interactive onSquareClick={onSquareClick} />
+      <BoardPanel board={board} defaultFlipped={flipped} interactive onSquareClick={onSquareClick} showRotate={false} />
     </div>
   );
 }

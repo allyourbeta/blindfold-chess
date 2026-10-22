@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { SetupBoard } from "@/components/board/SetupBoard";
+import { PieceGlyph } from "@/components/board/PieceGlyph";
+import { cn } from "@/lib/cn";
 import {
   fenToBoard,
   boardToFEN,
@@ -40,6 +42,7 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
   const [fenError, setFenError] = useState<string | null>(null);
 
   const playerColor = useSettingsStore((st) => st.playerColor);
+  const toggleBoardFlip = useSettingsStore((st) => st.toggleBoardFlip);
   const startFromSetup = useGameStore((s) => s.startFromSetup);
   const clearSetupError = useGameStore((s) => s.clearSetupError);
   const setupError = useGameStore((s) => s.setupError);
@@ -116,15 +119,19 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
   }
 
   return (
-    <div className="flex h-full w-full flex-col gap-5 overflow-y-auto px-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))]">
+    <div className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))]">
       <header className="flex items-center gap-3 border-b border-border-default pb-4 pt-2">
         <button onClick={onBack} aria-label="Back to menu" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt">
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <div>
-          <h1 className="text-lg font-semibold text-text-accent">Position Setup</h1>
-          <p className="text-sm text-text-secondary">Click a piece, then click the board. Click again to remove.</p>
-        </div>
+        <h1 className="flex-1 text-lg font-semibold text-text-accent">Position Setup</h1>
+        <button
+          onClick={() => toggleBoardFlip(playerColor === "b")}
+          aria-label="Rotate the board 180 degrees"
+          className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt"
+        >
+          <ArrowUpDown className="h-5 w-5" />
+        </button>
       </header>
 
       <SetupBoard
@@ -135,17 +142,19 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
         onSquareClick={handleSquareClick}
       />
 
-      <div>
-        <span className="mb-2 block text-sm uppercase tracking-wide text-text-secondary">Side to move</span>
-        <SegmentedControl<"w" | "b">
-          aria-label="Side to move"
-          value={turn}
-          onChange={setTurn}
-          options={[
-            { value: "w", label: "White" },
-            { value: "b", label: "Black" },
-          ]}
-        />
+      <div className="flex items-center gap-2">
+        <span className="text-sm text-text-secondary">To move</span>
+        <div className="flex-1">
+          <SegmentedControl<"w" | "b">
+            aria-label="Side to move"
+            value={turn}
+            onChange={setTurn}
+            options={[
+              { value: "w", label: "White" },
+              { value: "b", label: "Black" },
+            ]}
+          />
+        </div>
       </div>
 
       <div className="flex gap-2">
@@ -162,33 +171,40 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
       </div>
       {fenError && <p className="-mt-3 text-sm text-text-error">{fenError}</p>}
 
-      <div className="rounded-xl border border-border-default bg-bg-surface-alt p-4">
-        <span className="mb-2 block text-sm uppercase tracking-wide text-text-secondary">Castling rights</span>
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
-          {CASTLING_KEYS.map((key) => (
-            <label key={key} className="flex min-h-11 cursor-pointer items-center gap-2 text-sm text-text-primary">
-              <input
-                type="checkbox"
-                checked={castling[key]}
-                onChange={(e) => setCastling((prev) => ({ ...prev, [key]: e.target.checked }))}
-                className="accent-[var(--color-border-active)]"
-              />
-              {CASTLING_LABELS[key]}
-            </label>
-          ))}
-        </div>
+      <div className="grid grid-cols-4 gap-1.5">
+        {CASTLING_KEYS.map((key) => (
+          <button
+            key={key}
+            type="button"
+            aria-pressed={castling[key]}
+            aria-label={CASTLING_LABELS[key]}
+            onClick={() => setCastling((prev) => ({ ...prev, [key]: !prev[key] }))}
+            className={cn(
+              "flex min-h-11 items-center justify-center gap-1 rounded-xl border px-1 text-sm font-medium transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring-focus)] focus-visible:ring-offset-2",
+              castling[key]
+                ? "border-transparent bg-bg-primary text-text-on-primary"
+                : "border-border-emphasis bg-bg-surface-alt text-text-primary hover:bg-bg-muted",
+            )}
+          >
+            <span className="flex h-4 w-4 items-center justify-center">
+              <PieceGlyph piece={key === "K" || key === "Q" ? "K" : "k"} />
+            </span>
+            {key === "K" || key === "k" ? "O-O" : "O-O-O"}
+          </button>
+        ))}
       </div>
 
       {setupError && <p className="text-sm text-text-error">{setupError}</p>}
 
-      <div className="flex flex-wrap justify-center gap-2">
-        <Button variant="secondary" size="sm" onClick={handleReset}>
-          Reset Standard
+      <div className="flex gap-2">
+        <Button type="button" variant="secondary" size="sm" onClick={handleReset}>
+          Reset
         </Button>
-        <Button variant="secondary" size="sm" onClick={handleClear}>
-          Clear Board
+        <Button type="button" variant="secondary" size="sm" onClick={handleClear}>
+          Clear
         </Button>
-        <Button variant="primary" disabled={!canStart} onClick={() => void handlePlay()}>
+        <Button type="button" variant="primary" disabled={!canStart} onClick={() => void handlePlay()} className="flex-1">
           Play Blindfold
         </Button>
       </div>

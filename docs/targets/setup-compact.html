@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blindfold — compact position setup (target)</title>
+<style>
+body{margin:0;padding:24px;background:#ece6dc;font-family:Nunito,system-ui,sans-serif;color:#1c1917}
+.phone{max-width:358px;margin:0 auto;background:#faf7f1;border:1px solid #e7e5e4;border-radius:16px;padding:16px}
+.hdr{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e7e5e4;padding-bottom:10px}
+.icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:22px}
+.title{flex:1;font-size:18px;font-weight:600;color:#d97706;margin-left:8px}
+.pal{display:flex;justify-content:center;gap:6px;margin-top:6px}
+.pc{width:44px;height:44px;border:1px solid #e7e5e4;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:26px;background:#faf7f1}
+.pc.on{border-color:#f59e0b;background:#fef3c7}
+#bd{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;margin-top:14px;border-radius:6px;overflow:hidden}
+.row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.lbl{font-size:14px;color:#57534e;white-space:nowrap}
+.seg{flex:1;display:flex;gap:8px}
+.seg span{flex:1;min-height:44px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:1px solid #e7e5e4;font-size:16px}
+.seg .on{background:#f59e0b;border-color:transparent}
+.cast{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.cast span{min-height:44px;display:flex;align-items:center;justify-content:center;gap:2px;border-radius:10px;border:1px solid #d6d3d1;background:#efe9df;font-size:14px}
+.cast .on{border-color:#f59e0b;background:#fef3c7}
+.fen{display:flex;gap:8px;margin-top:10px}
+.fen span{min-height:44px;display:flex;align-items:center;border-radius:12px;font-size:14px}
+.btn{border:1px solid #d6d3d1;background:#efe9df;padding:0 14px;border-radius:10px;min-height:44px;display:flex;align-items:center;font-size:14px}
+.play{flex:1;justify-content:center;background:#f59e0b;border-color:transparent;font-weight:600}
+.stamp{max-width:358px;margin:12px auto 0;font-size:11px;color:#78716c}
+</style></head><body>
+<div class="phone">
+ <div class="hdr"><span class="icon">←</span><span class="title">Position Setup</span><span class="icon" title="Rotate the board 180 degrees">⇅</span></div>
+ <div class="pal" style="margin-top:14px"><span class="pc on">♔</span><span class="pc">♕</span><span class="pc">♖</span><span class="pc">♗</span><span class="pc">♘</span><span class="pc">♙</span></div>
+ <div class="pal"><span class="pc">♚</span><span class="pc">♛</span><span class="pc">♜</span><span class="pc">♝</span><span class="pc">♞</span><span class="pc">♟</span></div>
+ <div id="bd"></div>
+ <div class="row"><span class="lbl">To move</span><div class="seg"><span class="on">White</span><span>Black</span></div></div>
+ <div class="cast"><span class="on">♔ O-O</span><span class="on">♔ O-O-O</span><span>♚ O-O</span><span>♚ O-O-O</span></div>
+ <div class="fen"><span style="flex:1;border:1px solid #e7e5e4;padding:0 12px;color:#a8a29e;font-family:ui-monospace,monospace">Paste FEN string...</span><span class="btn">Load</span></div>
+ <div class="row" style="margin-top:14px"><span class="btn">Reset</span><span class="btn">Clear</span><span class="btn play">Play Blindfold</span></div>
+</div>
+<div class="stamp">Target v1 · 2026-10-22 01:05 PT · approved mockup plus header rotate button. Real screen uses the app's Staunty SVG pieces, Button, SegmentedControl and theme tokens, not these glyphs or hex values. Castling toggles shown in their two states (White's on, Black's off).</div>
+<script>
+const s="rnbqkbnrpppppppp"+"".padEnd(32," ")+"PPPPPPPPRNBQKBNR",m={K:"♔",Q:"♕",R:"♖",B:"♗",N:"♘",P:"♙",k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟"},bd=document.getElementById("bd");
+for(let i=0;i<64;i++){const d=document.createElement("div"),dk=(Math.floor(i/8)+i%8)%2;d.style.cssText="display:flex;align-items:center;justify-content:center;font-size:26px;background:"+(dk?"#b58863":"#f0d9b5");d.textContent=m[s[i]]||"";bd.appendChild(d)}
+</script></body></html>
