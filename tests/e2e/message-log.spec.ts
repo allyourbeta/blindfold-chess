@@ -96,3 +96,52 @@ test("auto-scroll still reaches the newest message", async ({ page }) => {
   expect(band.lastBottom, JSON.stringify(band)).toBeLessThanOrEqual(band.logBottom + 0.5);
   expect(band.lastBottom, JSON.stringify(band)).toBeGreaterThan(band.logTop);
 });
+
+/** Same overflow loop as the test above, then scrolls up and checks a new message doesn't yank the view back down. */
+test("scrolling up to reread stays put when a new message arrives", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() => {
+    localStorage.setItem("blindfoldRandomness", "predictable");
+  });
+  await startStandardGame(page);
+
+  const playerMoves = ["e4", "Nf3", "Bc4", "d3", "c3", "Qb3"];
+  // A bare few pixels of overflow would fall inside AT_BOTTOM_THRESHOLD
+  // itself once scrolled up, making "at the top" indistinguishable from
+  // "at the bottom" -- comfortably more than that margin is required
+  // before the loop stops.
+  let full = false;
+  let playedCount = 0;
+  for (const move of playerMoves) {
+    await submitMove(page, move);
+    await expect(page.getByText(/^Black: /).last()).toBeVisible({ timeout: 15_000 });
+    playedCount++;
+    full = await page.evaluate(() => {
+      const log = document.querySelector('[data-testid="message-log"]') as HTMLElement;
+      return log.scrollHeight - log.clientHeight > 100;
+    });
+    if (full) break;
+  }
+  expect(full, "log never overflowed comfortably within 12 plies").toBe(true);
+  // At least one more prepared move is left in the sequence to play after
+  // scrolling up -- fails loudly here rather than submitting an unplanned
+  // (possibly illegal) move if the log fills before move 6.
+  expect(playedCount, "no move left in the prepared sequence to play after scrolling up").toBeLessThan(
+    playerMoves.length,
+  );
+
+  await page.evaluate(() => {
+    const log = document.querySelector('[data-testid="message-log"]') as HTMLElement;
+    log.scrollTop = 0;
+    log.dispatchEvent(new Event("scroll"));
+  });
+
+  await submitMove(page, playerMoves[playedCount]);
+  await expect(page.getByText(/^Black: /).last()).toBeVisible({ timeout: 15_000 });
+
+  const scrollTop = await page.evaluate(() => {
+    const log = document.querySelector('[data-testid="message-log"]') as HTMLElement;
+    return log.scrollTop;
+  });
+  expect(scrollTop).toBeLessThan(24);
+});

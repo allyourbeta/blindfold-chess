@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "Blindfold",
-  "short_name": "Blindfold",
+  "name": "Blindfolde",
+  "short_name": "Blindfolde",
   "description": "Play blindfold chess against Maia, a neural engine that plays like a human. Works offline.",
   "start_url": "/",
   "scope": "/",

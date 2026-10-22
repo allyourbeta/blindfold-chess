@@ -7,7 +7,9 @@ test("custom-position castling-right sanitation", async ({ page }) => {
   await page.getByRole("button", { name: /set up a position/i }).click();
 
   // Remove White's h1 rook — its kingside castling right becomes impossible
-  // even though the checkbox is left checked.
+  // even though the checkbox is left checked. One-tap replace means
+  // removing a square's piece requires selecting that same piece first.
+  await page.getByRole("button", { name: "white rook", exact: true }).click();
   await page.getByLabel("square h1").click();
 
   await page.getByRole("button", { name: "Play Blindfold" }).click();
@@ -70,6 +72,23 @@ async function boardWidth(page: import("@playwright/test").Page) {
   return box?.width ?? null;
 }
 
+/** Piece letter (or null) at a square, read from a FEN placement field. */
+function pieceAt(placement: string, square: string): string | null {
+  const file = square.charCodeAt(0) - "a".charCodeAt(0);
+  const rank = Number(square[1]);
+  const row = placement.split("/")[8 - rank];
+  let col = 0;
+  for (const ch of row) {
+    if ("12345678".includes(ch)) {
+      col += Number(ch);
+    } else {
+      if (col === file) return ch;
+      col++;
+    }
+  }
+  return null;
+}
+
 test("castling toggle turns a right off", async ({ page }) => {
   await openApp(page);
   await waitForEngineReady(page);
@@ -115,6 +134,60 @@ test("compact layout", async ({ page }, testInfo) => {
   expect(rotateBox).not.toBeNull();
   expect(board).not.toBeNull();
   expect(rotateBox!.y).toBeLessThan(board!.y);
+});
+
+test("the castling group sits above the FEN row", async ({ page }) => {
+  await openApp(page);
+  await waitForEngineReady(page);
+  await page.getByRole("button", { name: /set up a position/i }).click();
+
+  const castlingTop = (await page.getByRole("button", { name: "White O-O", exact: true }).boundingBox())?.y;
+  const fenTop = (await page.getByPlaceholder("Paste FEN string...").boundingBox())?.y;
+  expect(castlingTop).not.toBeUndefined();
+  expect(fenTop).not.toBeUndefined();
+  expect(castlingTop!).toBeLessThan(fenTop!);
+});
+
+test("tapping a square replaces its piece with the selected one", async ({ page }) => {
+  await openApp(page);
+  await waitForEngineReady(page);
+  await page.getByRole("button", { name: /set up a position/i }).click();
+
+  // a1 starts with the white rook. Selecting the black bishop and tapping
+  // a1 should REPLACE the rook with the bishop, not clear the square.
+  await page.getByRole("button", { name: "black bishop", exact: true }).click();
+  await page.getByLabel("square a1").click();
+
+  await page.getByRole("button", { name: "Play Blindfold" }).click();
+  await expect(keypad(page)).toBeVisible();
+
+  await tapMoreAction(page, /FEN/);
+  const fenMessage = page.locator("text=/^\\S+ w /");
+  await expect(fenMessage).toBeVisible();
+  const fen = (await fenMessage.textContent()) ?? "";
+  const placement = fen.split(" ")[0];
+  expect(pieceAt(placement, "a1")).toBe("b");
+});
+
+test("tapping a square holding the selected piece removes it", async ({ page }) => {
+  await openApp(page);
+  await waitForEngineReady(page);
+  await page.getByRole("button", { name: /set up a position/i }).click();
+
+  // a1 starts with the white rook. Selecting the white rook and tapping
+  // the square that already holds it should remove it.
+  await page.getByRole("button", { name: "white rook", exact: true }).click();
+  await page.getByLabel("square a1").click();
+
+  await page.getByRole("button", { name: "Play Blindfold" }).click();
+  await expect(keypad(page)).toBeVisible();
+
+  await tapMoreAction(page, /FEN/);
+  const fenMessage = page.locator("text=/^\\S+ w /");
+  await expect(fenMessage).toBeVisible();
+  const fen = (await fenMessage.textContent()) ?? "";
+  const placement = fen.split(" ")[0];
+  expect(pieceAt(placement, "a1")).toBeNull();
 });
 
 test("header rotate flips the board", async ({ page }) => {

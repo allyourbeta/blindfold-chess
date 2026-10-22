@@ -58,7 +58,7 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
     clearSetupError();
     setBoard((prev) => {
       const next = prev.map((r) => [...r]);
-      next[row][col] = next[row][col] ? null : selectedPiece;
+      next[row][col] = next[row][col] === selectedPiece ? null : selectedPiece;
       return next;
     });
     setEnPassant("-");
@@ -157,20 +157,6 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
         </div>
       </div>
 
-      <div className="flex gap-2">
-        <input
-          type="text"
-          value={fenInput}
-          onChange={(e) => setFenInput(e.target.value)}
-          placeholder="Paste FEN string..."
-          className="min-h-11 flex-1 rounded-xl border border-border-default bg-bg-surface px-3 font-mono text-sm text-text-primary placeholder:text-text-muted focus:border-border-active focus:outline-none"
-        />
-        <Button variant="secondary" size="sm" onClick={handleLoadFen}>
-          Load
-        </Button>
-      </div>
-      {fenError && <p className="-mt-3 text-sm text-text-error">{fenError}</p>}
-
       <div className="grid grid-cols-4 gap-1.5">
         {CASTLING_KEYS.map((key) => (
           <button
@@ -194,6 +180,20 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
           </button>
         ))}
       </div>
+
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={fenInput}
+          onChange={(e) => setFenInput(e.target.value)}
+          placeholder="Paste FEN string..."
+          className="min-h-11 flex-1 rounded-xl border border-border-default bg-bg-surface px-3 font-mono text-sm text-text-primary placeholder:text-text-muted focus:border-border-active focus:outline-none"
+        />
+        <Button variant="secondary" size="sm" onClick={handleLoadFen}>
+          Load
+        </Button>
+      </div>
+      {fenError && <p className="-mt-3 text-sm text-text-error">{fenError}</p>}
 
       {setupError && <p className="text-sm text-text-error">{setupError}</p>}
 

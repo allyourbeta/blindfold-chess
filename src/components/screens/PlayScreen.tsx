@@ -11,6 +11,7 @@ import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { useGameStore } from "@/state/gameStore";
 import { useSpeechOutput, unlockAudioOutput, resetSpeechQueue } from "@/hooks/useSpeechOutput";
+import { useHaptics } from "@/hooks/useHaptics";
 import type { SizeBucket } from "@/services/endgames/catalog";
 
 interface PlayScreenProps {
@@ -20,6 +21,7 @@ interface PlayScreenProps {
 
 export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
   useSpeechOutput();
+  useHaptics();
   const returnToMenu = useGameStore((s) => s.returnToMenu);
   const startNewGame = useGameStore((s) => s.startNewGame);
   const gameOverFlag = useGameStore((s) => s.gameOverFlag);
@@ -62,7 +64,7 @@ export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
         <button onClick={handleBack} aria-label="Back to menu" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt">
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <div className="text-3xl font-extrabold tracking-widest text-text-accent shortscape:text-xl">BLINDFOLD</div>
+        <div className="text-3xl font-extrabold tracking-widest text-text-accent shortscape:text-xl">BLINDFOLDE</div>
         <div className="h-11 w-11" aria-hidden />
       </div>
 

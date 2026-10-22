@@ -130,7 +130,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
             aria-hidden="true"
             className="relative h-28 w-28 rounded-[2rem] shadow-lg"
           />
-          <h1 className="relative mt-4 text-4xl font-extrabold tracking-tight text-text-accent">Blindfold</h1>
+          <h1 className="relative mt-4 text-4xl font-extrabold tracking-tight text-text-accent">Blindfolde</h1>
           {/* Small caps: lets the title dominate without shrinking it. */}
           <p className="relative mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary">
             The ultimate test of cerebral fitness
@@ -198,7 +198,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
               className="mx-auto mt-4 flex min-h-11 items-center gap-2 rounded-xl px-3 text-base font-semibold text-text-accent hover:bg-bg-surface-alt"
             >
               <Download className="h-4 w-4" />
-              Add Blindfold to your home screen
+              Add Blindfolde to your home screen
             </button>
           )}
         </section>
@@ -218,7 +218,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
               {/* Show the payoff: this icon is what lands on their home screen. */}
               <img src="/icons/icon-512.png" alt="" aria-hidden="true" className="h-20 w-20 rounded-3xl shadow-lg" />
               <p className="text-base font-semibold text-text-primary">
-                Blindfold can live on your home screen with its own icon, and works offline once installed.
+                Blindfolde can live on your home screen with its own icon, and works offline once installed.
               </p>
 
               {advice.kind === "prompt" ? (

@@ -5,6 +5,7 @@ import { PieceGlyph } from "@/components/board/PieceGlyph";
 import { useGameStore } from "@/state/gameStore";
 import { useSpeechStore } from "@/state/speechStore";
 import { useSettingsStore } from "@/state/settingsStore";
+import { hapticTap, hapticError } from "@/services/haptics";
 import { interpretDualTap } from "@/services/keypad/dual";
 import {
   computeEntryState,
@@ -75,7 +76,19 @@ export function MoveKeypad() {
 
   function play(san: string) {
     submitKeypadMove(san);
+    // Submitting is synchronous, so the audio event it just set is readable
+    // immediately -- this keeps the error buzz inside the tap gesture that
+    // caused it, which iOS's haptic switch requires.
+    if (useGameStore.getState().audioEvent?.kind === "illegal-move") hapticError();
     setTaps([]);
+  }
+
+  /** Wraps an on-screen key's own click handler with its tap buzz. Physical-keyboard input bypasses this on purpose. */
+  function tapAnd(fn: () => void) {
+    return () => {
+      hapticTap();
+      fn();
+    };
   }
 
   function pushTap(tap: Tap) {
@@ -177,7 +190,7 @@ export function MoveKeypad() {
         {chooser ? (
           <div role="group" aria-label="Move chooser" className="flex flex-nowrap items-center gap-2">
             {chooser.map((san) => (
-              <Button key={san} type="button" size="chooser" onClick={() => play(san)}>
+              <Button key={san} type="button" size="chooser" onClick={tapAnd(() => play(san))}>
                 {san}
               </Button>
             ))}
@@ -188,7 +201,7 @@ export function MoveKeypad() {
               const candidate = entry.candidates.find((c) => c.promotion === promotion);
               if (!candidate) return null;
               return (
-                <Button key={promotion} type="button" size="chooser" onClick={() => play(candidate.san)}>
+                <Button key={promotion} type="button" size="chooser" onClick={tapAnd(() => play(candidate.san))}>
                   {label}
                 </Button>
               );
@@ -214,7 +227,7 @@ export function MoveKeypad() {
             aria-label={PIECE_NAME[p]}
             className="disabled:!opacity-30"
             disabled={inert || anyChooser || !entry.enabled.pieces[p]}
-            onClick={() => pushPiece(p)}
+            onClick={tapAnd(() => pushPiece(p))}
           >
             <PieceGlyph piece={playerColor === "w" ? p : p.toLowerCase()} />
           </Button>
@@ -228,7 +241,7 @@ export function MoveKeypad() {
           size="keypadRow"
           className="disabled:!opacity-30"
           disabled={inert || anyChooser || !entry.enabled.castleKingside}
-          onClick={() => pushTap({ kind: "castle", value: "O-O" })}
+          onClick={tapAnd(() => pushTap({ kind: "castle", value: "O-O" }))}
         >
           O-O
         </Button>
@@ -238,7 +251,7 @@ export function MoveKeypad() {
           size="keypadRow"
           className="disabled:!opacity-30"
           disabled={inert || anyChooser || !entry.enabled.castleQueenside}
-          onClick={() => pushTap({ kind: "castle", value: "O-O-O" })}
+          onClick={tapAnd(() => pushTap({ kind: "castle", value: "O-O-O" }))}
         >
           O-O-O
         </Button>
@@ -249,7 +262,7 @@ export function MoveKeypad() {
           className="disabled:!opacity-30"
           aria-label="Undo last entry"
           disabled={inert || taps.length === 0}
-          onClick={undoTap}
+          onClick={tapAnd(undoTap)}
         >
           {/* Own element, so its size can't collide with the button's. */}
           <span className="text-xl">⌫</span>
@@ -271,7 +284,7 @@ export function MoveKeypad() {
             // dual key never replaces — once the file is set this key means
             // the rank. Ask the reader instead of inferring.
             disabled={inert || anyChooser || interpretDualTap(legalMoves, taps, file, rank, assistMode) === "none"}
-            onClick={() => pushDual(file, rank)}
+            onClick={tapAnd(() => pushDual(file, rank))}
           >
             <span className="flex items-baseline gap-1">
               <span className="text-2xl font-semibold">{file}</span>
