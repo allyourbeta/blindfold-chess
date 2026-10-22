@@ -12,20 +12,20 @@ const TYPE_CLASSES: Record<MessageType, string> = {
 
 export function MessageLog() {
   const messages = useGameStore((s) => s.messages);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const logRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ block: "end" });
+    const el = logRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
   }, [messages.length]);
 
   return (
-    <div className="mb-2 min-h-0 flex-1 overflow-y-auto py-1">
+    <div ref={logRef} data-testid="message-log" className="mb-2 min-h-0 flex-1 overflow-y-auto py-1">
       {messages.map((m) => (
         <div key={m.id} className={cn("whitespace-pre-line px-3 py-1.5 text-base", TYPE_CLASSES[m.type])}>
           {m.text}
         </div>
       ))}
-      <div ref={bottomRef} />
     </div>
   );
 }

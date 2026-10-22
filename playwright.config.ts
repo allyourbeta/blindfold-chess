@@ -102,7 +102,7 @@ export default defineConfig({
     // Chromium-only. Its own baseURL — see the second webServer entry above.
     {
       name: "webkit-iphone",
-      testMatch: ["endgames.spec.ts", "endgames-scroll.spec.ts"],
+      testMatch: ["endgames.spec.ts", "endgames-scroll.spec.ts", "message-log.spec.ts"],
       use: { ...devices["iPhone 13"], baseURL: "http://localhost:4191" },
     },
   ],
