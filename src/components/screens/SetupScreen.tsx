@@ -157,6 +157,20 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
         </div>
       </div>
 
+      <div className="flex gap-2">
+        <Button type="button" variant="secondary" size="sm" onClick={handleReset}>
+          Reset
+        </Button>
+        <Button type="button" variant="secondary" size="sm" onClick={handleClear}>
+          Clear
+        </Button>
+        <Button type="button" variant="primary" disabled={!canStart} onClick={() => void handlePlay()} className="flex-1">
+          Play Blindfold
+        </Button>
+      </div>
+
+      {setupError && <p className="text-sm text-text-error">{setupError}</p>}
+
       <div className="grid grid-cols-4 gap-1.5">
         {CASTLING_KEYS.map((key) => (
           <button
@@ -166,7 +180,7 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
             aria-label={CASTLING_LABELS[key]}
             onClick={() => setCastling((prev) => ({ ...prev, [key]: !prev[key] }))}
             className={cn(
-              "flex min-h-11 items-center justify-center gap-1 rounded-xl border px-1 text-sm font-medium transition-colors",
+              "flex min-h-11 items-center justify-center gap-1 rounded-xl border px-1 text-sm font-semibold transition-colors",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring-focus)] focus-visible:ring-offset-2",
               castling[key]
                 ? "border-transparent bg-bg-primary text-text-on-primary"
@@ -194,20 +208,6 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
         </Button>
       </div>
       {fenError && <p className="-mt-3 text-sm text-text-error">{fenError}</p>}
-
-      {setupError && <p className="text-sm text-text-error">{setupError}</p>}
-
-      <div className="flex gap-2">
-        <Button type="button" variant="secondary" size="sm" onClick={handleReset}>
-          Reset
-        </Button>
-        <Button type="button" variant="secondary" size="sm" onClick={handleClear}>
-          Clear
-        </Button>
-        <Button type="button" variant="primary" disabled={!canStart} onClick={() => void handlePlay()} className="flex-1">
-          Play Blindfold
-        </Button>
-      </div>
     </div>
   );
 }

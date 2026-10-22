@@ -12,6 +12,7 @@ import {
 import { getGameHistory } from "@/api/localStore";
 import { createEngineManager } from "@/engine/createEngineManager";
 import type { EngineStatus } from "@/engine/engineManager";
+import { useSettingsStore } from "./settingsStore";
 import { createGameFlow } from "./gameFlow";
 
 /** The one sentence a caller shows when beginGame returns false — `buttonLabel` names whatever button retries it. */
@@ -84,9 +85,10 @@ export interface GameState {
 export const useGameStore = create<GameState>((set, get) => {
   let peekTimerId: ReturnType<typeof setTimeout> | null = null;
 
-  const engineManager = createEngineManager({
-    onStatusChange: (status) => set({ engineStatus: status }),
-  });
+  const engineManager = createEngineManager(
+    { onStatusChange: (status) => set({ engineStatus: status }) },
+    () => useSettingsStore.getState().opponent,
+  );
   const flow = createGameFlow(set, get, engineManager);
 
   return {

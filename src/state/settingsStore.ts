@@ -12,17 +12,24 @@ import {
   setAssistMode as persistAssistMode,
   getRandomness,
   setRandomness as persistRandomness,
+  getOpponent,
+  setOpponent as persistOpponent,
+  getStockfishLevel,
+  setStockfishLevel as persistStockfishLevel,
   type ThemePreference,
   type FileNaming,
   type SpeechMode,
   type AssistMode,
 } from "@/api/localStore";
 import type { Color } from "chess.js";
-import type { RandomnessStop } from "@/engine/types";
+import type { OpponentKind, RandomnessStop } from "@/engine/types";
+import type { StockfishLevelKey } from "@/engine/stockfishLevels";
 
 interface SettingsState {
   playerColor: Color;
   randomness: RandomnessStop;
+  opponent: OpponentKind;
+  stockfishLevel: StockfishLevelKey;
   speechMode: SpeechMode;
   /** null = follow the side you're playing; true/false = you rotated it yourself. */
   boardFlipOverride: boolean | null;
@@ -34,6 +41,8 @@ interface SettingsState {
   toggleTicker(): void;
   setAssistMode(mode: AssistMode): void;
   setRandomness(stop: RandomnessStop): void;
+  setOpponent(opponent: OpponentKind): void;
+  setStockfishLevel(level: StockfishLevelKey): void;
   setFileNaming(mode: FileNaming): void;
   setSpeechMode(mode: SpeechMode): void;
   toggleBoardFlip(currentDefault: boolean): void;
@@ -50,6 +59,8 @@ function initialTheme(): ThemePreference {
 export const useSettingsStore = create<SettingsState>((set, get) => ({
   playerColor: "w",
   randomness: getRandomness(),
+  opponent: getOpponent(),
+  stockfishLevel: getStockfishLevel(),
   // NATO by default: b/c/d/e/g are indistinguishable as bare letters.
   fileNaming: getFileNaming() ?? "letters",
   speechMode: getSpeechMode() ?? "on",
@@ -70,6 +81,14 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   setRandomness: (stop) => {
     persistRandomness(stop);
     set({ randomness: stop });
+  },
+  setOpponent: (opponent) => {
+    persistOpponent(opponent);
+    set({ opponent });
+  },
+  setStockfishLevel: (level) => {
+    persistStockfishLevel(level);
+    set({ stockfishLevel: level });
   },
   setFileNaming: (mode) => {
     persistFileNaming(mode);

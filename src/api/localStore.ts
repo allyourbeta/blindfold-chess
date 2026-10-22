@@ -1,5 +1,6 @@
 import type { StoredGame } from "@/services/chess/gameSummary";
-import type { RandomnessStop } from "@/engine/types";
+import type { OpponentKind, RandomnessStop } from "@/engine/types";
+import type { StockfishLevelKey } from "@/engine/stockfishLevels";
 
 /**
  * The only module in the codebase allowed to touch localStorage. Everything
@@ -171,6 +172,46 @@ export function getRandomness(): RandomnessStop {
 export function setRandomness(stop: RandomnessStop): void {
   try {
     localStorage.setItem(RANDOMNESS_KEY, stop);
+  } catch {
+    // ignore — the choice just won't persist
+  }
+}
+
+const OPPONENT_KEY = "blindfoldOpponent";
+const VALID_OPPONENTS: readonly OpponentKind[] = ["maia", "stockfish"];
+
+export function getOpponent(): OpponentKind {
+  try {
+    const raw = localStorage.getItem(OPPONENT_KEY);
+    return (VALID_OPPONENTS as readonly string[]).includes(raw ?? "") ? (raw as OpponentKind) : "maia";
+  } catch {
+    return "maia";
+  }
+}
+
+export function setOpponent(opponent: OpponentKind): void {
+  try {
+    localStorage.setItem(OPPONENT_KEY, opponent);
+  } catch {
+    // ignore — the choice just won't persist
+  }
+}
+
+const STOCKFISH_LEVEL_KEY = "blindfoldStockfishLevel";
+const VALID_STOCKFISH_LEVELS: readonly StockfishLevelKey[] = ["easy", "club", "strong", "max"];
+
+export function getStockfishLevel(): StockfishLevelKey {
+  try {
+    const raw = localStorage.getItem(STOCKFISH_LEVEL_KEY);
+    return (VALID_STOCKFISH_LEVELS as readonly string[]).includes(raw ?? "") ? (raw as StockfishLevelKey) : "club";
+  } catch {
+    return "club";
+  }
+}
+
+export function setStockfishLevel(level: StockfishLevelKey): void {
+  try {
+    localStorage.setItem(STOCKFISH_LEVEL_KEY, level);
   } catch {
     // ignore — the choice just won't persist
   }

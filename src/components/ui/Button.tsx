@@ -14,7 +14,7 @@ const buttonVariants = cva(
   // rounded-xl vs rounded-2xl and whitespace-nowrap vs the wrap big/random
   // need, so every size variant below declares its own font size, rounding
   // and whitespace handling, and nothing else in this file sets any of them.
-  "inline-flex items-center justify-center gap-2 font-medium " +
+  "inline-flex items-center justify-center gap-2 font-semibold " +
     "transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 " +
     "focus-visible:ring-[var(--color-ring-focus)] focus-visible:ring-offset-2 " +
     "disabled:pointer-events-none disabled:opacity-50",
@@ -46,8 +46,8 @@ const buttonVariants = cva(
         icon: "h-11 w-11 shrink-0 whitespace-nowrap rounded-xl text-base",
         // The move keypad's two key sizes — piece keys read as the primary
         // control, file/rank keys pack eight to a row on a phone width.
-        keypadPiece: "h-20 whitespace-nowrap rounded-xl px-1 text-base shortscape:h-16",
-        keypadKey: "h-20 whitespace-nowrap rounded-xl px-1 text-2xl shortscape:h-16",
+        keypadPiece: "h-14 whitespace-nowrap rounded-xl px-1 text-base shortscape:h-16",
+        keypadKey: "h-16 whitespace-nowrap rounded-xl px-1 text-2xl shortscape:h-16",
         // The castle/backspace row — short, rarely tapped, but still has to
         // be read. Its own size rather than `default` plus a className.
         keypadRow: "h-9 whitespace-nowrap rounded-xl px-2 text-base",

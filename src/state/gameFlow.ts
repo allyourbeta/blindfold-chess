@@ -2,17 +2,10 @@ import { Chess, type Color, type Move } from "chess.js";
 import { detectGameOver, describeGameEnd, formatMovePairs, type GameEndReason } from "@/services/chess/gameSummary";
 import { saveGameToHistory } from "@/api/localStore";
 import type { EngineManager } from "@/engine/engineManager";
-import { RANDOMNESS_STOPS } from "@/engine/maia/policy";
+import { opponentName, levelLabel } from "@/engine/opponentLabel";
+import { STOCKFISH_LEVELS } from "@/engine/stockfishLevels";
 import { useSettingsStore } from "./settingsStore";
 import type { GameState, MessageType, MoveSource } from "./gameStore";
-
-/** The model's name, not a strength promise -- see SPEC_maia_integrate.md. */
-const OPPONENT_LABEL = "Maia 1900";
-
-function randomnessLabel(): string {
-  const stop = useSettingsStore.getState().randomness;
-  return RANDOMNESS_STOPS.find((s) => s.value === stop)?.label ?? "Human";
-}
 
 type SetState = (partial: Partial<GameState> | ((s: GameState) => Partial<GameState>)) => void;
 type GetState = () => GameState;
@@ -66,11 +59,17 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   }
 
   function requestEngineMove() {
-    addMessage("thinking", `${OPPONENT_LABEL} thinking...`);
+    const settings = useSettingsStore.getState();
+    addMessage("thinking", `${opponentName(settings.opponent)} thinking...`);
     set({ isThinking: true });
     replyFloorAt = Date.now() + MIN_REPLY_MS + Math.random() * (MAX_REPLY_MS - MIN_REPLY_MS);
     const requestGeneration = engineManager.getGeneration();
-    engineManager.setLevel({ label: OPPONENT_LABEL, randomness: useSettingsStore.getState().randomness });
+    if (settings.opponent === "stockfish") {
+      const level = STOCKFISH_LEVELS.find((l) => l.value === settings.stockfishLevel) ?? STOCKFISH_LEVELS[1];
+      engineManager.setLevel({ label: level.label, skill: level.skill, depth: level.depth });
+    } else {
+      engineManager.setLevel({ label: opponentName(settings.opponent), randomness: settings.randomness });
+    }
     void engineManager.requestMove(
       get().chess.fen(),
       get().moveHistory,
@@ -197,11 +196,17 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   async function beginGame(fen: string, opts?: { playerColor?: Color }): Promise<boolean> {
     const session = ++gameSession;
     cancelPendingReply(); // a reply held behind the floor must not outlive the game it was for
+    // Also restart when the loaded engine no longer matches the selected
+    // opponent (switched in settings since the last game) -- gated on "ever
+    // loaded" so a manager no unit test has called init() on doesn't
+    // spuriously restart over its placeholder adapter id.
+    const engineMismatch =
+      engineManager.getStatus() !== "idle" && engineManager.activeEngineId() !== useSettingsStore.getState().opponent;
     // Unconditional: a prior game's search must never survive into this one,
     // whether it's still running (isThinking) or was already ended (resign,
     // checkmate) — relying on isThinking here was the bug, since finishGame
     // clears it before a caller can ever reach this restart check.
-    if (get().isThinking) {
+    if (get().isThinking || engineMismatch) {
       try {
         await engineManager.restart();
       } catch {
@@ -219,14 +224,15 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
     if (session !== gameSession) return false;
 
     const chess = new Chess(fen);
+    const settings = useSettingsStore.getState();
     // An endgame practice position forces the player onto the side to
     // move, overriding the settings colour for this game only — the
     // setting itself is never written, so a normal game afterwards still
     // uses whatever the player had chosen.
-    const color = opts?.playerColor ?? useSettingsStore.getState().playerColor;
+    const color = opts?.playerColor ?? settings.playerColor;
     gameStartTime = Date.now();
     gameStartFen = fen;
-    opponentLabelAtStart = `${OPPONENT_LABEL} · ${randomnessLabel()}`;
+    opponentLabelAtStart = `${opponentName(settings.opponent)} · ${levelLabel(settings.opponent, settings.randomness, settings.stockfishLevel)}`;
 
     set({
       chess,

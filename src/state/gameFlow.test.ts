@@ -10,7 +10,11 @@ import type { EngineAdapter } from "@/engine/types";
 function fakeAdapter(): EngineAdapter & { resolveNext(uci: string): void } {
   const resolvers: Array<(uci: string) => void> = [];
   return {
-    id: "fake",
+    // "maia" -- matches the default settings opponent, so beginGame's new
+    // engine-mismatch check (SPEC_log_opponent_style.md Part B) never fires
+    // here; these tests are about the reply floor/session ordering, not
+    // opponent switching.
+    id: "maia",
     init: () => Promise.resolve(),
     isReady: () => true,
     setLevel: () => {},
@@ -105,7 +109,7 @@ function controllableAdapter(): EngineAdapter & {
   const initCalls: Array<{ resolve: () => void; reject: (err: Error) => void }> = [];
   const moveResolvers: Array<{ resolve: (uci: string) => void; reject: (err: Error) => void }> = [];
   const adapter = {
-    id: "fake",
+    id: "maia", // see the comment on fakeAdapter() above
     init: () =>
       new Promise<void>((resolve, reject) => {
         initCalls.push({ resolve, reject });

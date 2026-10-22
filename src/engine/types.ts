@@ -1,6 +1,9 @@
 /** The five worded stops on the randomness slider — see SPEC_maia_integrate.md. */
 export type RandomnessStop = "predictable" | "focused" | "human" | "loose" | "wild";
 
+/** Which engine plays the opponent's moves -- see SPEC_log_opponent_style.md Part B. */
+export type OpponentKind = "maia" | "stockfish";
+
 /**
  * `depth`/`skill` are Stockfish's dials; `randomness` is Maia's. Both are
  * optional so each adapter reads only the field it understands, rather than

@@ -8,6 +8,10 @@ import {
   setAssistMode,
   getRandomness,
   setRandomness,
+  getOpponent,
+  setOpponent,
+  getStockfishLevel,
+  setStockfishLevel,
 } from "./localStore";
 
 // This module runs under vitest's "node" environment, which has no global
@@ -92,5 +96,25 @@ describe("ticker and assist defaults", () => {
     }
     localStorage.setItem("blindfoldRandomness", "banana");
     expect(getRandomness()).toBe("human");
+  });
+
+  it("opponent defaults to maia, round-trips, and rejects junk", () => {
+    expect(getOpponent()).toBe("maia");
+    setOpponent("stockfish");
+    expect(getOpponent()).toBe("stockfish");
+    setOpponent("maia");
+    expect(getOpponent()).toBe("maia");
+    localStorage.setItem("blindfoldOpponent", "banana");
+    expect(getOpponent()).toBe("maia");
+  });
+
+  it("stockfish level defaults to club, round-trips through every stop, and rejects junk", () => {
+    expect(getStockfishLevel()).toBe("club");
+    for (const level of ["easy", "club", "strong", "max"] as const) {
+      setStockfishLevel(level);
+      expect(getStockfishLevel()).toBe(level);
+    }
+    localStorage.setItem("blindfoldStockfishLevel", "banana");
+    expect(getStockfishLevel()).toBe("club");
   });
 });

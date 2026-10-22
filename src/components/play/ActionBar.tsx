@@ -45,7 +45,7 @@ export function ActionBar() {
   }
 
   return (
-    <div className="flex flex-col gap-3 pt-1">
+    <div data-testid="action-bar" className="flex flex-col gap-3 pt-1">
       <div className="grid grid-cols-3 gap-2">
         <Button variant="secondary" disabled={gameOverFlag} onClick={doPeek} aria-label="Peek at the board" title="See the board for 3 seconds">
           <Eye className="h-4 w-4" /> Peek

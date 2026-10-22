@@ -39,6 +39,11 @@ export class EngineManager {
     return this.status === "ready" && this.adapter.isReady();
   }
 
+  /** The currently active adapter's id -- e.g. to detect that the loaded engine no longer matches the selected opponent. */
+  activeEngineId(): string {
+    return this.adapter.id;
+  }
+
   private setStatus(status: EngineStatus): void {
     this.status = status;
     this.callbacks.onStatusChange?.(status);

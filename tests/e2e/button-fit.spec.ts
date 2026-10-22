@@ -20,6 +20,24 @@ async function assertNoClippedButtons(page: Page) {
   expect(hasHorizontalScroll).toBe(false);
 }
 
+/**
+ * SPEC_log_opponent_style.md Part D, rule 11 -- every button's label is
+ * centered via CSS `text-box: trim-both cap alphabetic`, set once on
+ * `button` in src/index.css's base layer. Confirmed directly against the
+ * computed style (the Chromium this suite runs on, 151, supports the
+ * property) rather than the stylesheet-rule-text fallback the spec allows
+ * for an unsupporting test browser.
+ */
+async function assertButtonsAreTextBoxTrimmed(page: Page) {
+  const untrimmed = await page.evaluate(() =>
+    Array.from(document.querySelectorAll("button"))
+      .filter((el) => el.getBoundingClientRect().width > 0 || el.getBoundingClientRect().height > 0)
+      .filter((el) => getComputedStyle(el).textBoxTrim !== "trim-both")
+      .map((el) => (el.getAttribute("aria-label") || el.textContent || "?").trim().slice(0, 40)),
+  );
+  expect(untrimmed).toEqual([]);
+}
+
 test.describe("button fit at 360x740", () => {
   test.use({ viewport: { width: 360, height: 740 } });
 
@@ -27,6 +45,7 @@ test.describe("button fit at 360x740", () => {
     await openApp(page);
     await waitForEngineReady(page);
     await assertNoClippedButtons(page);
+    await assertButtonsAreTextBoxTrimmed(page);
     await page.screenshot({ path: "qa/button-text-16px-menu.png" });
   });
 
@@ -35,11 +54,13 @@ test.describe("button fit at 360x740", () => {
     await waitForEngineReady(page);
     await page.getByRole("button", { name: /set up a position/i }).click();
     await assertNoClippedButtons(page);
+    await assertButtonsAreTextBoxTrimmed(page);
   });
 
   test("play screen and the end-of-game panel", async ({ page }) => {
     await startStandardGame(page);
     await assertNoClippedButtons(page);
+    await assertButtonsAreTextBoxTrimmed(page);
     await page.screenshot({ path: "qa/button-text-16px-play.png" });
 
     await resignGame(page);

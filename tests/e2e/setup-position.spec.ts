@@ -136,15 +136,18 @@ test("compact layout", async ({ page }, testInfo) => {
   expect(rotateBox!.y).toBeLessThan(board!.y);
 });
 
-test("the castling group sits above the FEN row", async ({ page }) => {
+test("Reset/Clear/Play sit above the castling group, which sits above the FEN row", async ({ page }) => {
   await openApp(page);
   await waitForEngineReady(page);
   await page.getByRole("button", { name: /set up a position/i }).click();
 
+  const buttonsTop = (await page.getByRole("button", { name: "Reset", exact: true }).boundingBox())?.y;
   const castlingTop = (await page.getByRole("button", { name: "White O-O", exact: true }).boundingBox())?.y;
   const fenTop = (await page.getByPlaceholder("Paste FEN string...").boundingBox())?.y;
+  expect(buttonsTop).not.toBeUndefined();
   expect(castlingTop).not.toBeUndefined();
   expect(fenTop).not.toBeUndefined();
+  expect(buttonsTop!).toBeLessThan(castlingTop!);
   expect(castlingTop!).toBeLessThan(fenTop!);
 });
 

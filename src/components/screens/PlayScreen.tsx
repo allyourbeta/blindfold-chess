@@ -11,7 +11,6 @@ import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { useGameStore } from "@/state/gameStore";
 import { useSpeechOutput, unlockAudioOutput, resetSpeechQueue } from "@/hooks/useSpeechOutput";
-import { useHaptics } from "@/hooks/useHaptics";
 import type { SizeBucket } from "@/services/endgames/catalog";
 
 interface PlayScreenProps {
@@ -21,7 +20,6 @@ interface PlayScreenProps {
 
 export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
   useSpeechOutput();
-  useHaptics();
   const returnToMenu = useGameStore((s) => s.returnToMenu);
   const startNewGame = useGameStore((s) => s.startNewGame);
   const gameOverFlag = useGameStore((s) => s.gameOverFlag);
@@ -60,7 +58,7 @@ export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
 
   return (
     <div className="flex h-[100dvh] w-full flex-col overflow-hidden p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]">
-      <div className="mb-2 flex items-center justify-between border-b border-border-default pb-2 shortscape:mb-1 shortscape:pb-1">
+      <div className="mb-1 flex items-center justify-between border-b border-border-default pb-1 shortscape:mb-1 shortscape:pb-1">
         <button onClick={handleBack} aria-label="Back to menu" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt">
           <ArrowLeft className="h-5 w-5" />
         </button>

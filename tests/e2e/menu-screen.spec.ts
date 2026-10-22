@@ -17,12 +17,13 @@ test("home screen leads with the game and keeps settings out of the way", async 
     .toBeGreaterThan(0);
   await expect(page.getByRole("button", { name: "New Game" })).toBeVisible();
 
-  // The opponent's name lives on the play screen's status line; repeating it
-  // here was redundant. Falsifier: goes red if it comes back to the menu.
-  await expect(page.getByText("Maia 1900", { exact: true })).toHaveCount(0);
+  // The Opponent chip now surfaces this by design
+  // (SPEC_log_opponent_style.md Part B) -- it shows the opponent's name
+  // right on the menu, same place Color and Speech live.
+  await expect(page.getByText("Maia 1900", { exact: true })).toBeVisible();
 
-  // Three chips replace the old summary sentence and its disclosure row.
-  for (const chip of ["Color", "Variance", "Speech"]) {
+  // Four chips replace the old summary sentence and its disclosure row.
+  for (const chip of ["Color", "Opponent", "Variance", "Speech"]) {
     await expect(page.getByRole("button", { name: new RegExp(chip) })).toBeVisible();
   }
 

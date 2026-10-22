@@ -138,6 +138,13 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* Vertically centers a label's own glyphs within its line box, trimming
+     the font's internal leading above/below the cap height. Browsers
+     without support (everything but very recent Chromium/Safari) ignore it. */
+  button {
+    text-box: trim-both cap alphabetic;
+  }
+
   ::-webkit-scrollbar {
     width: 6px;
   }
