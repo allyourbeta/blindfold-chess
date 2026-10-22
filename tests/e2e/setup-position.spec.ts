@@ -1,5 +1,16 @@
-import { test, expect } from "@playwright/test";
-import { waitForEngineReady, keypad, openApp, tapMoreAction } from "./helpers";
+import { test, expect, type Page } from "@playwright/test";
+import { waitForEngineReady, keypad, openApp, tapMoreAction, startStandardGame, resignGame } from "./helpers";
+
+/** K+B vs K on an otherwise-empty board, via the setup screen's piece palette. */
+async function setUpInsufficientMaterial(page: Page) {
+  await page.getByRole("button", { name: "Clear", exact: true }).click();
+  await page.getByRole("button", { name: "white king", exact: true }).click();
+  await page.getByLabel("square e1").click();
+  await page.getByRole("button", { name: "white bishop", exact: true }).click();
+  await page.getByLabel("square c1").click();
+  await page.getByRole("button", { name: "black king", exact: true }).click();
+  await page.getByLabel("square e8").click();
+}
 
 test("custom-position castling-right sanitation", async ({ page }) => {
   await openApp(page);
@@ -208,4 +219,41 @@ test("header rotate flips the board", async ({ page }) => {
   expect(board).not.toBeNull();
   expect(a1After).not.toBeNull();
   expect(a1After!.y).toBeLessThan(board!.y + board!.height / 2);
+});
+
+test("game over after a set-up game: Edit position is the first button, and returns to the position as it was", async ({
+  page,
+}) => {
+  await openApp(page);
+  await waitForEngineReady(page);
+  await page.getByRole("button", { name: /set up a position/i }).click();
+  await setUpInsufficientMaterial(page);
+
+  await page.getByRole("button", { name: "Play Blindfold" }).click();
+
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  const buttonNames = await dialog.getByRole("button").allTextContents();
+  expect(buttonNames[0]).toBe("Edit position");
+
+  await dialog.getByRole("button", { name: "Edit position" }).click();
+
+  await expect(page.getByRole("heading", { name: "Position Setup" })).toBeVisible();
+  await expect(page.getByLabel("square e1").getByAltText("white king")).toBeVisible();
+  await expect(page.getByLabel("square c1").getByAltText("white bishop")).toBeVisible();
+  await expect(page.getByLabel("square e8").getByAltText("black king")).toBeVisible();
+  await expect(page.getByRole("radio", { name: "White", exact: true })).toHaveAttribute("aria-checked", "true");
+});
+
+test("game over after a normal game: New Game is the first button, and there's no Edit position", async ({
+  page,
+}) => {
+  await startStandardGame(page);
+  await resignGame(page);
+
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  const buttonNames = await dialog.getByRole("button").allTextContents();
+  expect(buttonNames[0]).toBe("New Game");
+  await expect(dialog.getByRole("button", { name: "Edit position" })).toHaveCount(0);
 });

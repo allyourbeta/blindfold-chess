@@ -19,6 +19,8 @@ import { unlockAudioOutput } from "@/hooks/useSpeechOutput";
 interface SetupScreenProps {
   onBack(): void;
   onPlay(): void;
+  /** Preloads the setup state from this FEN (e.g. returning via "Edit position") instead of the standard start. The FEN text box itself stays empty. */
+  initialFen?: string | null;
 }
 
 type CastlingKey = "K" | "Q" | "k" | "q";
@@ -30,14 +32,44 @@ const CASTLING_LABELS: Record<CastlingKey, string> = {
   q: "Black O-O-O",
 };
 
-export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
-  const [board, setBoard] = useState<BoardMatrix>(() => fenToBoard(STARTING_FEN));
+interface ParsedSetup {
+  board: BoardMatrix;
+  turn: "w" | "b";
+  castling: Record<CastlingKey, boolean>;
+  enPassant: string;
+  halfmove: number;
+  fullmove: number;
+}
+
+/** The one FEN parser for this screen -- used both for "Load" and for preloading from a prior set-up game's position. */
+function applyFen(fen: string): ParsedSetup {
+  const [, fenTurn, fenCastling, fenEp, fenHalf, fenFull] = fen.split(/\s+/);
+  return {
+    board: fenToBoard(fen),
+    turn: fenTurn === "b" ? "b" : "w",
+    castling: {
+      K: fenCastling.includes("K"),
+      Q: fenCastling.includes("Q"),
+      k: fenCastling.includes("k"),
+      q: fenCastling.includes("q"),
+    },
+    enPassant: fenEp || "-",
+    halfmove: Number.parseInt(fenHalf ?? "0", 10) || 0,
+    fullmove: Number.parseInt(fenFull ?? "1", 10) || 1,
+  };
+}
+
+export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
+  const [initialSetup] = useState<ParsedSetup | null>(() => (initialFen ? applyFen(initialFen) : null));
+  const [board, setBoard] = useState<BoardMatrix>(() => initialSetup?.board ?? fenToBoard(STARTING_FEN));
   const [selectedPiece, setSelectedPiece] = useState("P");
-  const [turn, setTurn] = useState<"w" | "b">("w");
-  const [castling, setCastling] = useState<Record<CastlingKey, boolean>>({ K: true, Q: true, k: true, q: true });
-  const [enPassant, setEnPassant] = useState("-");
-  const [halfmove, setHalfmove] = useState(0);
-  const [fullmove, setFullmove] = useState(1);
+  const [turn, setTurn] = useState<"w" | "b">(() => initialSetup?.turn ?? "w");
+  const [castling, setCastling] = useState<Record<CastlingKey, boolean>>(
+    () => initialSetup?.castling ?? { K: true, Q: true, k: true, q: true },
+  );
+  const [enPassant, setEnPassant] = useState(() => initialSetup?.enPassant ?? "-");
+  const [halfmove, setHalfmove] = useState(() => initialSetup?.halfmove ?? 0);
+  const [fullmove, setFullmove] = useState(() => initialSetup?.fullmove ?? 1);
   const [fenInput, setFenInput] = useState("");
   const [fenError, setFenError] = useState<string | null>(null);
 
@@ -93,18 +125,13 @@ export function SetupScreen({ onBack, onPlay }: SetupScreenProps) {
     if (!fen) return;
     try {
       validateFen(fen);
-      const [, fenTurn, fenCastling, fenEp, fenHalf, fenFull] = fen.split(/\s+/);
-      setBoard(fenToBoard(fen));
-      setTurn(fenTurn === "b" ? "b" : "w");
-      setCastling({
-        K: fenCastling.includes("K"),
-        Q: fenCastling.includes("Q"),
-        k: fenCastling.includes("k"),
-        q: fenCastling.includes("q"),
-      });
-      setEnPassant(fenEp || "-");
-      setHalfmove(Number.parseInt(fenHalf ?? "0", 10) || 0);
-      setFullmove(Number.parseInt(fenFull ?? "1", 10) || 1);
+      const parsed = applyFen(fen);
+      setBoard(parsed.board);
+      setTurn(parsed.turn);
+      setCastling(parsed.castling);
+      setEnPassant(parsed.enPassant);
+      setHalfmove(parsed.halfmove);
+      setFullmove(parsed.fullmove);
       setFenError(null);
     } catch (err) {
       setFenError(err instanceof Error ? err.message : "Invalid FEN string.");

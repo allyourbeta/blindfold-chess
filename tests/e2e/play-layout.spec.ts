@@ -1,19 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { keypad, waitForEngineReady } from "./helpers";
-
-/**
- * Stands in for Ashish's installed iPhone, which loses ~93px to the status
- * bar and home indicator that this project's `iphone` Playwright project
- * (390x844, no safe-area insets) never accounts for -- see
- * SPEC_log_opponent_style.md. Calibrated empirically against the OLD build
- * (before this spec's Part A fixes): at width 393, this is the height where
- * the message log (after a game starts and an illegal move is rejected)
- * measured 34-40px tall -- under 1.5 lines, matching his 2026-10-22 11:44
- * screenshot. Measured value at 393x742 on the old build: 36px. Never widen
- * this to the raw 390x844 device size; that has ~90px more room than his
- * phone and would hide this regression again.
- */
-const PHONE_USABLE = { width: 393, height: 742 };
+import { keypad, waitForEngineReady, PHONE_USABLE } from "./helpers";
 
 /**
  * A bare goto, same as strict-ticker.spec.ts: production defaults (ticker

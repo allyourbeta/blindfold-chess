@@ -48,6 +48,22 @@ async function assertLogNotClipped(page: Page) {
   }
 }
 
+test("at game start, the first message sits at the bottom of the log, not the top", async ({ page }) => {
+  // A desktop-sized viewport gives the log so little height that one message
+  // already overflows it, masking the bug (and the fix) behind auto-scroll.
+  // The phone viewport leaves real empty room above a single message, which
+  // is exactly where the old top-anchored layout showed it.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await startStandardGame(page);
+
+  const gap = await page.evaluate(() => {
+    const log = document.querySelector('[data-testid="message-log"]') as HTMLElement;
+    const first = log.querySelector(".whitespace-pre-line") as HTMLElement;
+    return log.getBoundingClientRect().bottom - first.getBoundingClientRect().bottom;
+  });
+  expect(gap).toBeLessThan(16);
+});
+
 test("log is never clipped and no ancestor is scrolled", async ({ page }) => {
   await startStandardGame(page);
   await assertLogNotClipped(page);

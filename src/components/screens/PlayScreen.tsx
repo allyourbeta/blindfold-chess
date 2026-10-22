@@ -16,13 +16,15 @@ import type { SizeBucket } from "@/services/endgames/catalog";
 interface PlayScreenProps {
   onMenu(): void;
   onEndgames(bucket: SizeBucket): void;
+  onEditPosition(fen: string): void;
 }
 
-export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
+export function PlayScreen({ onMenu, onEndgames, onEditPosition }: PlayScreenProps) {
   useSpeechOutput();
   const returnToMenu = useGameStore((s) => s.returnToMenu);
   const startNewGame = useGameStore((s) => s.startNewGame);
   const gameOverFlag = useGameStore((s) => s.gameOverFlag);
+  const setupFen = useGameStore((s) => s.setupFen);
   const [leaveConfirmOpen, setLeaveConfirmOpen] = useState(false);
 
   // Leaving a game, by any route, must not leave a move still being spoken
@@ -54,6 +56,12 @@ export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
   async function handleNewGame() {
     unlockAudioOutput();
     await startNewGame();
+  }
+
+  function handleEditPosition() {
+    if (setupFen === null) return;
+    leaveCurrentGame();
+    onEditPosition(setupFen);
   }
 
   return (
@@ -93,7 +101,12 @@ export function PlayScreen({ onMenu, onEndgames }: PlayScreenProps) {
         </div>
       </div>
 
-      <GameOverPanel onNewGame={() => void handleNewGame()} onMenu={handleMenu} onEndgames={handleEndgames} />
+      <GameOverPanel
+        onNewGame={() => void handleNewGame()}
+        onMenu={handleMenu}
+        onEndgames={handleEndgames}
+        onEditPosition={handleEditPosition}
+      />
 
       <Modal open={leaveConfirmOpen} onClose={() => setLeaveConfirmOpen(false)}>
         <p className="text-center text-base font-semibold text-text-primary">Leave this game?</p>

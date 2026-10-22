@@ -53,6 +53,8 @@ export interface GameState {
   gameOverFlag: boolean;
   /** Set only by startEndgame; cleared by startNewGame and startFromSetup. Null for a normal or set-up game. */
   activeEndgame: { id: string } | null;
+  /** The FEN a set-up game was started from — set only by startFromSetup once the game actually starts; cleared by startNewGame and startEndgame. Null for a normal game or an endgame. */
+  setupFen: string | null;
   /** Opponent + randomness stop the current game was started with — shown in the status line. */
   activeOpponentLabel: string;
   gameOverOutcome: GameEndOutcome | null;
@@ -101,6 +103,7 @@ export const useGameStore = create<GameState>((set, get) => {
     lastMove: null,
     gameOverFlag: false,
     activeEndgame: null,
+    setupFen: null,
     activeOpponentLabel: "",
     gameOverOutcome: null,
     isThinking: false,
@@ -114,7 +117,7 @@ export const useGameStore = create<GameState>((set, get) => {
     initEngine: () => engineManager.load(),
     retryEngine: () => engineManager.load(),
     startNewGame: async () => {
-      set({ activeEndgame: null });
+      set({ activeEndgame: null, setupFen: null });
       return flow.beginGame(STARTING_FEN);
     },
 
@@ -123,7 +126,8 @@ export const useGameStore = create<GameState>((set, get) => {
         validateFen(fen);
         set({ setupError: null, activeEndgame: null });
         const ok = await flow.beginGame(fen);
-        if (!ok) set({ setupError: engineStartFailedMessage("Play Blindfold") });
+        if (ok) set({ setupFen: fen });
+        else set({ setupError: engineStartFailedMessage("Play Blindfold") });
         return ok;
       } catch (err) {
         set({ setupError: err instanceof Error ? err.message : "Invalid position." });
@@ -140,7 +144,7 @@ export const useGameStore = create<GameState>((set, get) => {
       if (!entry) return false;
       const sideToMove = parseFenMoveContext(entry.fen).sideToMove;
       const ok = await flow.beginGame(entry.fen, { playerColor: sideToMove });
-      if (ok) set({ activeEndgame: { id } });
+      if (ok) set({ activeEndgame: { id }, setupFen: null });
       return ok;
     },
 

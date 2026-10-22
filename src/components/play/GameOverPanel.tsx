@@ -11,6 +11,7 @@ interface GameOverPanelProps {
   onNewGame(): void;
   onMenu(): void;
   onEndgames(bucket: SizeBucket): void;
+  onEditPosition(): void;
 }
 
 /**
@@ -19,15 +20,17 @@ interface GameOverPanelProps {
  * (backdrop tap / Escape) so the move log stays reachable underneath.
  *
  * An endgame in progress (activeEndgame) swaps the whole button row for the
- * practice-mode set — decision 6 (the "Goal was a win/draw" line is gone).
- * A normal or set-up game (activeEndgame null) keeps today's panel exactly,
- * unchanged.
+ * practice-mode set — decision 6 (the "Goal was a win/draw" line is gone). A
+ * set-up game (setupFen set, activeEndgame null) offers "Edit position" as
+ * the primary button instead of "New Game". A normal game (both null) keeps
+ * today's panel exactly, unchanged.
  */
-export function GameOverPanel({ onNewGame, onMenu, onEndgames }: GameOverPanelProps) {
+export function GameOverPanel({ onNewGame, onMenu, onEndgames, onEditPosition }: GameOverPanelProps) {
   const gameOverFlag = useGameStore((s) => s.gameOverFlag);
   const outcome = useGameStore((s) => s.gameOverOutcome);
   const copyPgn = useGameStore((s) => s.copyPgn);
   const activeEndgame = useGameStore((s) => s.activeEndgame);
+  const setupFen = useGameStore((s) => s.setupFen);
   const startEndgame = useGameStore((s) => s.startEndgame);
   const [dismissed, setDismissed] = useState(false);
   const [startError, setStartError] = useState(false);
@@ -103,6 +106,21 @@ export function GameOverPanel({ onNewGame, onMenu, onEndgames }: GameOverPanelPr
               <p className="text-center text-sm text-text-error">{engineStartFailedMessage("Try again")}</p>
             )}
             {removeError && <p className="text-center text-sm text-text-error">{removeError}</p>}
+          </>
+        ) : setupFen ? (
+          <>
+            <Button variant="primary" className="w-full" onClick={onEditPosition}>
+              Edit position
+            </Button>
+            <Button variant="secondary" className="w-full" onClick={onNewGame}>
+              New Game
+            </Button>
+            <Button variant="secondary" className="w-full" onClick={() => void copyPgn()}>
+              Copy PGN
+            </Button>
+            <Button variant="secondary" className="w-full" onClick={onMenu}>
+              Menu
+            </Button>
           </>
         ) : (
           <>

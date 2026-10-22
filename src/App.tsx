@@ -17,6 +17,10 @@ export default function App() {
   // The size bucket to land on when the endgames screen is reached from the
   // game-over panel's "Endgames" button -- null means start at its home view.
   const [endgamesBucket, setEndgamesBucket] = useState<SizeBucket | null>(null);
+  // The FEN to preload the setup screen with when it's reached via the
+  // game-over panel's "Edit position" button -- null means the standard
+  // start (menu -> Set up a position).
+  const [setupStartFen, setSetupStartFen] = useState<string | null>(null);
   const initEngine = useGameStore((s) => s.initEngine);
   useTheme();
 
@@ -105,13 +109,29 @@ export default function App() {
         {screen === "menu" && (
           <MenuScreen
             onPlay={() => setScreen("play")}
-            onSetup={() => setScreen("setup")}
+            onSetup={() => {
+              setSetupStartFen(null);
+              setScreen("setup");
+            }}
             onEndgames={() => openEndgames(null)}
           />
         )}
-        {screen === "setup" && <SetupScreen onBack={() => setScreen("menu")} onPlay={() => setScreen("play")} />}
+        {screen === "setup" && (
+          <SetupScreen
+            onBack={() => setScreen("menu")}
+            onPlay={() => setScreen("play")}
+            initialFen={setupStartFen}
+          />
+        )}
         {screen === "play" && (
-          <PlayScreen onMenu={() => setScreen("menu")} onEndgames={(bucket) => openEndgames(bucket)} />
+          <PlayScreen
+            onMenu={() => setScreen("menu")}
+            onEndgames={(bucket) => openEndgames(bucket)}
+            onEditPosition={(fen) => {
+              setSetupStartFen(fen);
+              setScreen("setup");
+            }}
+          />
         )}
         {screen === "endgames" && (
           <EndgamesScreen

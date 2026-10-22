@@ -157,6 +157,44 @@ describe("activeEndgame is cleared by every other way of starting a game", () =>
   });
 });
 
+describe("setupFen", () => {
+  afterEach(() => {
+    useSettingsStore.getState().setPlayerColor("w");
+  });
+
+  it("startFromSetup records the FEN once the game actually starts", async () => {
+    const fen = "8/8/8/4k3/8/8/4K3/7B w - - 0 1";
+    const ok = await useGameStore.getState().startFromSetup(fen);
+    expect(ok).toBe(true);
+    expect(useGameStore.getState().setupFen).toBe(fen);
+  });
+
+  it("does not record setupFen when the FEN is invalid", async () => {
+    useGameStore.setState({ setupFen: null });
+    await useGameStore.getState().startFromSetup("not a real fen");
+    expect(useGameStore.getState().setupFen).toBeNull();
+  });
+
+  it("startNewGame clears a previously recorded setupFen", async () => {
+    await useGameStore.getState().startFromSetup("8/8/8/4k3/8/8/4K3/7B w - - 0 1");
+    expect(useGameStore.getState().setupFen).not.toBeNull();
+
+    await useGameStore.getState().startNewGame();
+
+    expect(useGameStore.getState().setupFen).toBeNull();
+  });
+
+  it("startEndgame clears a previously recorded setupFen", async () => {
+    await useGameStore.getState().startFromSetup("8/8/8/4k3/8/8/4K3/7B w - - 0 1");
+    expect(useGameStore.getState().setupFen).not.toBeNull();
+
+    const entry = ENDGAMES[0];
+    await useGameStore.getState().startEndgame(entry.id);
+
+    expect(useGameStore.getState().setupFen).toBeNull();
+  });
+});
+
 describe("clearSetupError", () => {
   it("clears a setupError left over from a previous failed startFromSetup", async () => {
     await useGameStore.getState().startFromSetup("not a real fen");

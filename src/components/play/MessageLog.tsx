@@ -34,13 +34,15 @@ export function MessageLog() {
       ref={logRef}
       data-testid="message-log"
       onScroll={onScroll}
-      className="mb-2 min-h-0 flex-1 overflow-y-auto py-1"
+      className="mb-2 flex min-h-0 flex-1 flex-col overflow-y-auto py-1"
     >
-      {messages.map((m) => (
-        <div key={m.id} className={cn("whitespace-pre-line px-3 py-1.5 text-base", TYPE_CLASSES[m.type])}>
-          {m.text}
-        </div>
-      ))}
+      <div className="mt-auto">
+        {messages.map((m) => (
+          <div key={m.id} className={cn("whitespace-pre-line px-3 py-1.5 text-base", TYPE_CLASSES[m.type])}>
+            {m.text}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
