@@ -24,6 +24,8 @@ Each position has a permanent `code` (E###). To delete one, remove it from
 
 **Phone-layout checks** use `PHONE_USABLE` from `tests/e2e/helpers.ts`, never the raw 390x844 `iphone` project device size -- real iPhones lose ~93px to the status bar and home indicator that the Playwright device preset doesn't model.
 
+**Any UI change must pass `audit-walk.spec.ts` (all viewports/themes).** New screens, dialogs or controls get a checkpoint in it (`tests/e2e/auditWalkSteps.ts` or `tests/e2e/auditWalkLab.ts`) in the same commit.
+
 ## Adding, deleting and listing endgame positions
 
 ```

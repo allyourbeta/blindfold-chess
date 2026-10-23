@@ -35,6 +35,12 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   workers: WORKERS,
+  // SPEC_full_app_audit.md: audit-walk.spec.ts can't share an in-memory
+  // findings array across fullyParallel workers, so each of its tests
+  // writes its own file under test-results/audit-raw/ and these two merge
+  // them into the permanent outputs once, after every run.
+  globalSetup: "./tests/e2e/auditGlobalSetup.ts",
+  globalTeardown: "./tests/e2e/auditGlobalTeardown.ts",
   timeout: 60_000,
   expect: { timeout: 10_000 },
   reporter: "list",
@@ -102,7 +108,7 @@ export default defineConfig({
     // Chromium-only. Its own baseURL — see the second webServer entry above.
     {
       name: "webkit-iphone",
-      testMatch: ["endgames.spec.ts", "endgames-scroll.spec.ts", "message-log.spec.ts", "flicker.spec.ts"],
+      testMatch: ["endgames.spec.ts", "endgames-scroll.spec.ts", "message-log.spec.ts", "flicker.spec.ts", "audit-walk.spec.ts"],
       use: { ...devices["iPhone 13"], baseURL: "http://localhost:4191" },
     },
   ],

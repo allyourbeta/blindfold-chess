@@ -163,7 +163,8 @@ export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
           <ChevronLeft className="h-4 w-4" />
           Menu
         </button>
-        <h1 className="min-w-0 overflow-hidden text-center text-xl font-extrabold whitespace-nowrap text-text-accent">
+        {/* SPEC_full_app_audit.md: at a narrow phone width this title hard-clipped with no ellipsis -- EndgamesHeader.tsx already carries the same `max-[380px]:text-lg` step-down for this exact shape, so this title gets it too rather than a one-off fix. */}
+        <h1 className="min-w-0 overflow-hidden text-center text-xl font-extrabold whitespace-nowrap text-text-accent max-[380px]:text-lg">
           Position Setup
         </h1>
         <span

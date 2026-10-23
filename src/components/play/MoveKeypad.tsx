@@ -204,7 +204,8 @@ export function MoveKeypad() {
         )}
       </div>
 
-      <div className="grid grid-cols-6 gap-1.5">
+      {/* SPEC_full_app_audit.md: at the 742x393 landscape usable area the keypad's own column leaves this row ~276px wide -- six 44px keys at the normal 6px gap only just missed 44px each (41px). A tighter gap in shortscape alone (not portrait) is enough to clear 44px without touching the column split. */}
+      <div className="grid grid-cols-6 gap-1.5 shortscape:gap-0.5">
         {PIECE_LETTERS.map((p) => (
           <Button
             key={p}

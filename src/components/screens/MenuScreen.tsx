@@ -78,13 +78,24 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
           WebkitMaskImage: "linear-gradient(#000 0%, transparent 62%)",
         }}
       />
-      <header className="relative shrink-0 px-5 pb-2 pt-[max(1rem,env(safe-area-inset-top))]">
+      {/*
+        SPEC_full_app_audit.md: this button used to be `absolute`, which
+        left it out of the header's own auto height -- the header rendered
+        as padding alone (~24px) while the button it contained actually
+        occupied ~60px, so its bottom ~36px floated over whatever `<main>`
+        had scrolled up to meet it (reachable for real: a browser scrolling
+        a newly-focused settings control into view on this short a
+        viewport). A normal-flow, right-aligned child makes the header's
+        own box actually contain the button, so nothing below can ever
+        scroll under it.
+      */}
+      <header className="relative z-10 flex shrink-0 justify-end px-5 pb-2 pt-[max(1rem,env(safe-area-inset-top))]">
         <button
           type="button"
           onClick={toggleTheme}
           aria-label="Toggle dark mode"
           data-flat="icon"
-          className="absolute right-4 top-[max(1rem,env(safe-area-inset-top))] z-10 inline-flex h-11 w-11 items-center justify-center rounded-full text-text-secondary hover:bg-bg-surface-alt"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full text-text-secondary hover:bg-bg-surface-alt"
         >
           {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </button>
