@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blindfolde — target: one raised control style</title>
+<style>
+body{margin:0;padding:20px;background:#ece6dc;font-family:Nunito,system-ui,sans-serif;color:#1c1917}
+.ph{max-width:361px;margin:0 auto;background:#faf7f1;border:1px solid #e7e5e4;border-radius:16px;padding:14px}
+.row{display:flex;gap:6px;margin-top:8px;align-items:center}
+.r{display:flex;align-items:center;justify-content:center;font-weight:700;border-radius:12px;height:44px;
+ background:linear-gradient(#f7f3ec,#ebe4d8);border:1px solid #d6cfc3;border-bottom:2px solid #b9b0a2;box-shadow:0 1px 2px rgba(60,40,10,.08)}
+.r.on{background:linear-gradient(#fbbf3a,#f0a20a);border-color:#e0950a;border-bottom-color:#b8760a;box-shadow:0 1px 3px rgba(120,70,0,.25)}
+.r.pc{flex:1;height:44px;font-size:24px;font-weight:400}
+.stamp{max-width:361px;margin:12px auto 0;font-size:12px;color:#78716c}
+</style></head><body><div class="ph">
+<div class="row" style="margin-top:0"><span class="r pc on">♔</span><span class="r pc">♕</span><span class="r pc">♖</span><span class="r pc">♗</span><span class="r pc">♘</span><span class="r pc">♙</span></div>
+<div class="row"><span style="font-size:14px;color:#57534e;font-weight:600">To move</span><span class="r on" style="flex:1">White</span><span class="r" style="flex:1">Black</span><span class="r" style="width:44px">⇅</span></div>
+<div class="row"><span class="r" style="padding:0 14px">Reset</span><span class="r" style="padding:0 14px">Clear</span><span class="r on" style="flex:1">Play Blindfold</span></div>
+<div class="row"><span class="r on" style="flex:1;font-size:12px">♔ O-O</span><span class="r on" style="flex:1;font-size:12px">♔ O-O-O</span><span class="r" style="flex:1;font-size:12px">♚ O-O</span><span class="r" style="flex:1;font-size:12px">♚ O-O-O</span></div>
+</div>
+<div class="stamp">Target v1 · 2026-10-23 00:05 PT · approved by Ashish ("make it so", app-wide). Light mode shown. OFF = warm stone gradient, 1px border, 2px darker bottom edge, faint shadow. ON / primary = amber, same construction. One radius (12px) for all rectangular controls; pills stay fully rounded. Values here are illustrative; the real ones come from theme tokens.</div>
+</body></html>

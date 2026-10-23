@@ -93,6 +93,33 @@
   --radius-2xl: 20px;
 }
 
+/*
+ * "Light from above": every raised control (Button, SegmentedControl, and
+ * the few raw <button>s this covers) shares one construction -- a
+ * top-to-bottom gradient, a 1px border, a 2px darker bottom edge, and a
+ * faint shadow -- driven by these tokens so no hex lives outside this file.
+ * Three fills only: off (warm stone), on (amber), danger (existing red).
+ * See docs/specs/SPEC_raised_controls.md and docs/targets/raised-controls.html.
+ */
+:root {
+  --raised-off-top: #f7f3ec;
+  --raised-off-bottom: #ebe4d8;
+  --raised-off-border: #d6cfc3;
+  --raised-off-edge: #b9b0a2;
+
+  --raised-on-top: #fbbf3a;
+  --raised-on-bottom: #f0a20a;
+  --raised-on-border: #e0950a;
+  --raised-on-edge: #b8760a;
+
+  --raised-danger-top: #e6534f;
+  --raised-danger-bottom: #dc2626;
+  --raised-danger-border: #c42020;
+  --raised-danger-edge: #a11717;
+
+  --raised-shadow: 0 1px 2px rgba(60, 40, 10, 0.08);
+}
+
 :root.dark {
   --color-bg-base: #171412;
   --color-bg-surface: #24201d;
@@ -117,6 +144,23 @@
   --color-sq-dark: #7a5c3e;
   --color-sq-hl-light: #7ba876;
   --color-sq-hl-dark: #4a7a4e;
+
+  --raised-off-top: #3a332d;
+  --raised-off-bottom: #2b2622;
+  --raised-off-border: #4a4139;
+  --raised-off-edge: #1c1814;
+
+  --raised-on-top: #fbbf3a;
+  --raised-on-bottom: #f0a20a;
+  --raised-on-border: #e0950a;
+  --raised-on-edge: #8f5c06;
+
+  --raised-danger-top: #e6534f;
+  --raised-danger-bottom: #dc2626;
+  --raised-danger-border: #c42020;
+  --raised-danger-edge: #7a1010;
+
+  --raised-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 @layer base {
@@ -174,5 +218,67 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+}
+
+@layer components {
+  /*
+   * The one raised-control construction, in three fills. Corner radius is
+   * deliberately NOT set here -- it stays with whichever size/shape utility
+   * (rounded-xl, rounded-full for pills) the caller already applies.
+   */
+  .raised,
+  .raised-on,
+  .raised-danger {
+    transition:
+      background-color 0.15s,
+      transform 0.1s,
+      border-bottom-width 0.1s;
+  }
+
+  .raised {
+    background: linear-gradient(var(--raised-off-top), var(--raised-off-bottom));
+    border: 1px solid var(--raised-off-border);
+    border-bottom: 2px solid var(--raised-off-edge);
+    box-shadow: var(--raised-shadow);
+  }
+  .raised:hover:not(:disabled) {
+    background: linear-gradient(
+      color-mix(in srgb, var(--raised-off-top) 90%, white),
+      color-mix(in srgb, var(--raised-off-bottom) 90%, white)
+    );
+  }
+
+  .raised-on {
+    background: linear-gradient(var(--raised-on-top), var(--raised-on-bottom));
+    border: 1px solid var(--raised-on-border);
+    border-bottom: 2px solid var(--raised-on-edge);
+    box-shadow: var(--raised-shadow);
+  }
+  .raised-on:hover:not(:disabled) {
+    background: linear-gradient(
+      color-mix(in srgb, var(--raised-on-top) 90%, white),
+      color-mix(in srgb, var(--raised-on-bottom) 90%, white)
+    );
+  }
+
+  .raised-danger {
+    background: linear-gradient(var(--raised-danger-top), var(--raised-danger-bottom));
+    border: 1px solid var(--raised-danger-border);
+    border-bottom: 2px solid var(--raised-danger-edge);
+    box-shadow: var(--raised-shadow);
+  }
+  .raised-danger:hover:not(:disabled) {
+    background: linear-gradient(
+      color-mix(in srgb, var(--raised-danger-top) 90%, white),
+      color-mix(in srgb, var(--raised-danger-bottom) 90%, white)
+    );
+  }
+
+  .raised:active:not(:disabled),
+  .raised-on:active:not(:disabled),
+  .raised-danger:active:not(:disabled) {
+    transform: translateY(1px);
+    border-bottom-width: 1px;
   }
 }

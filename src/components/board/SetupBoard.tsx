@@ -32,10 +32,8 @@ function PaletteGroup({
           onClick={() => onSelectPiece(p)}
           aria-pressed={p === selectedPiece}
           className={cn(
-            "flex h-11 flex-1 items-center justify-center rounded-lg border transition-colors",
-            p === selectedPiece
-              ? "border-border-active bg-bg-primary-soft"
-              : "border-border-default bg-bg-surface hover:bg-bg-surface-alt",
+            "flex h-11 flex-1 items-center justify-center rounded-xl transition-colors",
+            p === selectedPiece ? "raised-on" : "raised",
           )}
         >
           <PieceGlyph piece={p} />

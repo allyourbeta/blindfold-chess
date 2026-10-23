@@ -148,20 +148,23 @@ export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
   return (
     <div className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))] [&>*]:shrink-0">
       <header className="grid grid-cols-[auto_1fr_auto] items-center gap-2 border-b border-border-default pb-1.5">
-        <button onClick={onBack} aria-label="Back to menu" className="flex h-11 items-center">
-          <span className="inline-flex h-9 items-center gap-1 rounded-full border border-border-default bg-bg-surface-alt py-0 pl-2 pr-3 text-sm font-bold text-text-primary">
-            <ChevronLeft className="h-4 w-4" />
-            Menu
-          </span>
+        <button
+          onClick={onBack}
+          aria-label="Back to menu"
+          className="raised flex h-11 items-center gap-1 rounded-full px-3 text-sm font-bold text-text-primary"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          Menu
         </button>
         <h1 className="min-w-0 overflow-hidden text-center text-xl font-extrabold whitespace-nowrap text-text-accent">
           Position Setup
         </h1>
-        <span aria-hidden="true" className="invisible flex h-11 items-center">
-          <span className="inline-flex h-9 items-center gap-1 rounded-full border py-0 pl-2 pr-3 text-sm font-bold">
-            <ChevronLeft className="h-4 w-4" />
-            Menu
-          </span>
+        <span
+          aria-hidden="true"
+          className="invisible flex h-11 items-center gap-1 rounded-full px-3 text-sm font-bold"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          Menu
         </span>
       </header>
 
@@ -220,11 +223,9 @@ export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
             aria-label={CASTLING_LABELS[key]}
             onClick={() => setCastling((prev) => ({ ...prev, [key]: !prev[key] }))}
             className={cn(
-              "flex min-h-11 items-center justify-center gap-1 rounded-xl border px-1 text-sm font-semibold transition-colors",
+              "flex min-h-11 items-center justify-center gap-1 rounded-xl px-1 text-sm font-semibold transition-colors",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring-focus)] focus-visible:ring-offset-2",
-              castling[key]
-                ? "border-transparent bg-bg-primary text-text-on-primary"
-                : "border-border-emphasis bg-bg-surface-alt text-text-primary hover:bg-bg-muted",
+              castling[key] ? "raised-on text-text-on-primary" : "raised text-text-primary",
             )}
           >
             <span className="flex h-4 w-4 items-center justify-center">

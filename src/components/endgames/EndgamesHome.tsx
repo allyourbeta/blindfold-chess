@@ -62,6 +62,7 @@ export function EndgamesHome({
           <button
             type="button"
             data-testid="favorites-row"
+            data-flat="card"
             onClick={onOpenFavorites}
             className="flex min-h-14 w-full items-center gap-3 px-4 py-2 text-left hover:bg-bg-surface-alt"
           >
@@ -85,6 +86,7 @@ export function EndgamesHome({
                 key={bucket.label}
                 type="button"
                 data-testid="size-row"
+                data-flat="card"
                 onClick={() => onOpenSize(bucket)}
                 className="flex min-h-14 w-full items-center gap-3 border-t border-border-default px-4 py-2 text-left first:border-t-0 hover:bg-bg-surface-alt"
               >

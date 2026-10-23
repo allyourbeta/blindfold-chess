@@ -67,7 +67,12 @@ export function PlayScreen({ onMenu, onEndgames, onEditPosition }: PlayScreenPro
   return (
     <div className="flex h-[100dvh] w-full flex-col overflow-hidden p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]">
       <div className="mb-1 flex items-center justify-between border-b border-border-default pb-1 shortscape:mb-1 shortscape:pb-1">
-        <button onClick={handleBack} aria-label="Back to menu" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt">
+        <button
+          onClick={handleBack}
+          aria-label="Back to menu"
+          data-flat="icon"
+          className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt"
+        >
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div className="text-3xl font-extrabold tracking-widest text-text-accent shortscape:text-xl">BLINDFOLDE</div>

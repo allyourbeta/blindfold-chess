@@ -47,3 +47,7 @@ that device, then use Remove on the position screen or the end-of-game
 panel. It takes effect on that device immediately and everywhere within
 about a minute (the removal is its own commit + redeploy). Visiting
 `#creator` again on an unlocked device offers to lock it.
+
+## Design
+
+Every control uses `.raised` / `.raised-on` / `.raised-danger` (via Button or SegmentedControl). A button that must be flat carries `data-flat`; `raised-controls.spec.ts` enforces it.

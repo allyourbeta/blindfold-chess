@@ -19,11 +19,13 @@ export function EndgamesHeader({
 }) {
   return (
     <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-b border-border-default pb-1.5">
-      <button onClick={onBack} aria-label="Back" className="flex h-11 items-center justify-self-start">
-        <span className="inline-flex h-9 items-center gap-1 rounded-full border border-border-default bg-bg-surface-alt py-0 pl-2 pr-3 text-sm font-bold text-text-primary">
-          <ChevronLeft className="h-4 w-4" />
-          {backLabel}
-        </span>
+      <button
+        onClick={onBack}
+        aria-label="Back"
+        className="raised flex h-11 items-center justify-self-start gap-1 rounded-full px-3 text-sm font-bold text-text-primary"
+      >
+        <ChevronLeft className="h-4 w-4" />
+        {backLabel}
       </button>
       <div className="min-w-0">
         <h1 className="text-center text-xl font-extrabold whitespace-nowrap text-text-accent max-[380px]:text-lg">

@@ -18,6 +18,7 @@ export function MoveList() {
       role="button"
       tabIndex={0}
       aria-label={showTicker ? "Move list — tap to hide" : "Move list hidden — tap to show"}
+      data-flat="ticker"
       onClick={toggleTicker}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") toggleTicker();

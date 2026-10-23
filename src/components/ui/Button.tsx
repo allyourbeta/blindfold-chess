@@ -21,13 +21,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-bg-primary text-text-on-primary hover:bg-bg-primary-hover shadow-sm",
-        // Shaded, not white-on-white — but NEUTRAL. The amber tint clashed
-        // with the amber accent; quiet warm grey keeps buttons visible while
-        // the accent stays reserved for the mic and primary actions.
-        secondary:
-          "bg-bg-surface-alt text-text-primary border border-border-emphasis hover:bg-bg-muted",
-        destructive: "bg-bg-danger text-text-on-dark hover:bg-bg-danger-hover",
+        // "Light from above" raised construction (src/index.css @layer
+        // components) -- one shared look for every button in the app,
+        // gradient/border/shadow and all. See SPEC_raised_controls.md.
+        primary: "raised-on text-text-on-primary",
+        secondary: "raised text-text-primary",
+        destructive: "raised-danger text-text-on-dark",
         ghost: "text-text-secondary hover:bg-bg-surface-alt hover:text-text-primary",
       },
       size: {
@@ -54,10 +53,10 @@ const buttonVariants = cva(
         // The endgames position screen's side-by-side pair
         // (SPEC_buttons_results.md): tall enough for a two-line label, so no
         // whitespace-nowrap -- the browser default (normal) lets it wrap.
-        big: "h-16 rounded-2xl px-2.5 text-center text-base font-bold leading-tight",
+        big: "h-16 rounded-xl px-2.5 text-center text-base font-bold leading-tight",
         // The square random-position button (SPEC_random_leave.md) -- icon
         // above a "Random" label, so it needs its own flex direction too.
-        random: "h-16 w-16 shrink-0 flex-col whitespace-nowrap rounded-2xl p-0 text-[13px] font-bold",
+        random: "h-16 w-16 shrink-0 flex-col whitespace-nowrap rounded-xl p-0 text-[13px] font-bold",
       },
       active: {
         true: "bg-bg-primary text-text-on-primary border-transparent",

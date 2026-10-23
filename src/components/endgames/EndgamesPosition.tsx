@@ -72,6 +72,7 @@ export function EndgamesPosition({
             onClick={() => toggleFavorite(entry.code)}
             aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
             aria-pressed={isFavorite}
+            data-flat="icon"
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-text-accent hover:bg-bg-surface-alt"
           >
             <Star className="h-6 w-6" fill={isFavorite ? "currentColor" : "none"} />

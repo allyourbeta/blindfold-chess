@@ -35,6 +35,7 @@ export function Square({
       role={interactive ? "button" : undefined}
       tabIndex={interactive ? 0 : undefined}
       aria-label={interactive && square ? `square ${square}` : undefined}
+      data-flat={interactive ? "square" : undefined}
       data-square={square}
       onKeyDown={interactive ? (e) => (e.key === "Enter" || e.key === " ") && onClick?.() : undefined}
       className={cn(

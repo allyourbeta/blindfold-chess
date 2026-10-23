@@ -83,6 +83,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
           type="button"
           onClick={toggleTheme}
           aria-label="Toggle dark mode"
+          data-flat="icon"
           className="absolute right-4 top-[max(1rem,env(safe-area-inset-top))] z-10 inline-flex h-11 w-11 items-center justify-center rounded-full text-text-secondary hover:bg-bg-surface-alt"
         >
           {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -145,7 +146,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
                 onClick={toggleSettings}
                 aria-expanded={showSettings}
                 aria-controls="game-settings"
-                className="min-h-16 rounded-xl bg-bg-surface-alt px-2 py-2 text-center hover:bg-bg-surface"
+                className="raised min-h-16 rounded-xl px-2 py-2 text-center"
               >
                 <span className="block text-xs font-semibold text-text-muted">{chip.label}</span>
                 <span className="mt-0.5 block text-base font-bold text-text-primary">{chip.value}</span>
@@ -172,7 +173,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
             <button
               type="button"
               onClick={() => setShowInstall(true)}
-              className="mx-auto mt-4 flex min-h-11 items-center gap-2 rounded-xl px-3 text-base font-semibold text-text-accent hover:bg-bg-surface-alt"
+              className="raised mx-auto mt-4 flex min-h-11 items-center gap-2 rounded-xl px-3 text-base font-semibold text-text-accent"
             >
               <Download className="h-4 w-4" />
               Add Blindfolde to your home screen

@@ -23,6 +23,7 @@ export function EndgameCard({ entry, onClick, showBucket }: EndgameCardProps) {
     <button
       type="button"
       data-testid="endgame-row"
+      data-flat="card"
       onClick={onClick}
       aria-label={`${entry.name ?? entry.code}, ${sideText}, ${count} pieces${isFavorite ? ", favorite" : ""}`}
       className="flex flex-col rounded-xl p-1 text-left hover:bg-bg-surface-alt"

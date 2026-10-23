@@ -25,10 +25,8 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 const STOP_BUTTON_CLASS = (selected: boolean) =>
-  "min-h-11 rounded-xl border px-2 text-base font-semibold transition-colors " +
-  (selected
-    ? "border-transparent bg-bg-primary text-text-on-primary"
-    : "border-border-default bg-bg-surface text-text-primary hover:bg-bg-surface-alt");
+  "min-h-11 rounded-xl px-2 text-base font-semibold transition-colors " +
+  (selected ? "raised-on text-text-on-primary" : "raised text-text-primary");
 
 /** The disclosed settings behind the menu's chips -- extracted from MenuScreen to keep both files under the 300-line cap. */
 export function GameSettingsPanel() {
