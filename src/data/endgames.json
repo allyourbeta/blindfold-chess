@@ -235,5 +235,19 @@
     "themes": [],
     "source": null,
     "result": null
+  },
+  {
+    "id": "e293",
+    "code": "E293",
+    "fen": "8/8/8/3k4/8/8/7B/1B4K1 w - - 0 1",
+    "sourceFen": "8/8/8/3k4/8/8/7B/1B4K1 w - - 0 1",
+    "flipped": false,
+    "name": null,
+    "themes": [],
+    "source": null,
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
+    }
   }
 ]

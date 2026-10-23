@@ -214,5 +214,17 @@
       "sideToMove": "w"
     },
     "flip": false
+  },
+  {
+    "id": "e293",
+    "code": "E293",
+    "name": null,
+    "themes": [],
+    "extract": {
+      "kind": "fen",
+      "placement": "8/8/8/3k4/8/8/7B/1B4K1",
+      "sideToMove": "w"
+    },
+    "flip": false
   }
 ]
