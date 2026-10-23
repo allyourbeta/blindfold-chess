@@ -4,7 +4,11 @@
     "code": "E275",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "2K1N3/3P1n2/8/4k3/8/8/8/8", "sideToMove": "w" },
+    "extract": {
+      "kind": "fen",
+      "placement": "2K1N3/3P1n2/8/4k3/8/8/8/8",
+      "sideToMove": "w"
+    },
     "flip": false
   },
   {
@@ -12,7 +16,11 @@
     "code": "E276",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "3k4/8/8/8/8/8/8/4KBN1", "sideToMove": "w" },
+    "extract": {
+      "kind": "fen",
+      "placement": "3k4/8/8/8/8/8/8/4KBN1",
+      "sideToMove": "w"
+    },
     "flip": false
   },
   {
@@ -20,7 +28,11 @@
     "code": "E277",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "4K3/4P2k/8/8/6R1/8/8/3r4", "sideToMove": "w" },
+    "extract": {
+      "kind": "fen",
+      "placement": "4K3/4P2k/8/8/6R1/8/8/3r4",
+      "sideToMove": "w"
+    },
     "flip": false
   },
   {
@@ -28,7 +40,11 @@
     "code": "E278",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "R7/P7/8/8/6K1/8/6k1/r7", "sideToMove": "w" },
+    "extract": {
+      "kind": "fen",
+      "placement": "R7/P7/8/8/6K1/8/6k1/r7",
+      "sideToMove": "w"
+    },
     "flip": false
   },
   {
@@ -36,7 +52,11 @@
     "code": "E279",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "R7/P2r4/3k4/8/2K5/8/8/8", "sideToMove": "w" },
+    "extract": {
+      "kind": "fen",
+      "placement": "R7/P2r4/3k4/8/2K5/8/8/8",
+      "sideToMove": "w"
+    },
     "flip": false
   },
   {
@@ -44,7 +64,11 @@
     "code": "E280",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "R7/P5k1/8/2K5/8/8/8/r7", "sideToMove": "w" },
+    "extract": {
+      "kind": "fen",
+      "placement": "R7/P5k1/8/2K5/8/8/8/r7",
+      "sideToMove": "w"
+    },
     "flip": false
   },
   {
@@ -52,7 +76,11 @@
     "code": "E281",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "3Q4/2K5/8/p7/8/8/p7/1k6", "sideToMove": "w" },
+    "extract": {
+      "kind": "fen",
+      "placement": "3Q4/2K5/8/p7/8/8/p7/1k6",
+      "sideToMove": "w"
+    },
     "flip": false
   },
   {
@@ -60,7 +88,11 @@
     "code": "E282",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "6k1/6p1/7p/3q4/1P3Q2/7P/6PK/8", "sideToMove": "w" },
+    "extract": {
+      "kind": "fen",
+      "placement": "6k1/6p1/7p/3q4/1P3Q2/7P/6PK/8",
+      "sideToMove": "w"
+    },
     "flip": false
   },
   {
@@ -68,7 +100,11 @@
     "code": "E283",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "2k5/8/p1P5/P2K4/8/8/8/8", "sideToMove": "w" },
+    "extract": {
+      "kind": "fen",
+      "placement": "2k5/8/p1P5/P2K4/8/8/8/8",
+      "sideToMove": "w"
+    },
     "flip": false
   },
   {
@@ -76,7 +112,11 @@
     "code": "E284",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "6k1/8/5P2/8/5PK1/8/8/8", "sideToMove": "w" },
+    "extract": {
+      "kind": "fen",
+      "placement": "6k1/8/5P2/8/5PK1/8/8/8",
+      "sideToMove": "w"
+    },
     "flip": false
   },
   {
@@ -84,7 +124,11 @@
     "code": "E285",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "8/4k3/8/4K3/8/4P3/8/8", "sideToMove": "w" },
+    "extract": {
+      "kind": "fen",
+      "placement": "8/4k3/8/4K3/8/4P3/8/8",
+      "sideToMove": "w"
+    },
     "flip": false
   },
   {
@@ -92,7 +136,11 @@
     "code": "E286",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "4k3/ppp5/2b5/8/8/1B6/1P6/4K3", "sideToMove": "b" },
+    "extract": {
+      "kind": "fen",
+      "placement": "4k3/ppp5/2b5/8/8/1B6/1P6/4K3",
+      "sideToMove": "b"
+    },
     "flip": false
   },
   {
@@ -100,7 +148,11 @@
     "code": "E287",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "4k2r/ppp4p/8/8/8/8/PPP4P/4K2R", "sideToMove": "b" },
+    "extract": {
+      "kind": "fen",
+      "placement": "4k2r/ppp4p/8/8/8/8/PPP4P/4K2R",
+      "sideToMove": "b"
+    },
     "flip": false
   },
   {
@@ -108,7 +160,11 @@
     "code": "E288",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "4k3/ppp5/8/8/8/8/PPP5/4K3", "sideToMove": "b" },
+    "extract": {
+      "kind": "fen",
+      "placement": "4k3/ppp5/8/8/8/8/PPP5/4K3",
+      "sideToMove": "b"
+    },
     "flip": false
   },
   {
@@ -116,7 +172,11 @@
     "code": "E289",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "8/6k1/6p1/8/2p1r3/7R/8/2K5", "sideToMove": "b" },
+    "extract": {
+      "kind": "fen",
+      "placement": "8/6k1/6p1/8/2p1r3/7R/8/2K5",
+      "sideToMove": "b"
+    },
     "flip": false
   },
   {
@@ -124,7 +184,23 @@
     "code": "E290",
     "name": null,
     "themes": [],
-    "extract": { "kind": "fen", "placement": "R7/P7/5k2/2K5/8/8/8/r7", "sideToMove": "b" },
+    "extract": {
+      "kind": "fen",
+      "placement": "R7/P7/5k2/2K5/8/8/8/r7",
+      "sideToMove": "b"
+    },
+    "flip": false
+  },
+  {
+    "id": "e291",
+    "code": "E291",
+    "name": null,
+    "themes": [],
+    "extract": {
+      "kind": "fen",
+      "placement": "1k6/1r6/2K5/Q7/8/8/8/8",
+      "sideToMove": "w"
+    },
     "flip": false
   }
 ]

@@ -210,5 +210,19 @@
       "kind": "perfect",
       "score": "1/2-1/2"
     }
+  },
+  {
+    "id": "e291",
+    "code": "E291",
+    "fen": "1k6/1r6/2K5/Q7/8/8/8/8 w - - 0 1",
+    "sourceFen": "1k6/1r6/2K5/Q7/8/8/8/8 w - - 0 1",
+    "flipped": false,
+    "name": null,
+    "themes": [],
+    "source": null,
+    "result": {
+      "kind": "perfect",
+      "score": "1-0"
+    }
   }
 ]
