@@ -19,6 +19,8 @@ interface EndgamesPositionProps {
   onBack(): void;
   onPlayBlindfold(): void;
   onAnotherOfThisSize(): void;
+  /** Opens Position Setup preloaded with this position. Nothing is saved to the lab. */
+  onEditPosition(): void;
   /** Called after a successful Remove (decision 10) — navigates back to the list, same as onBack. */
   onRemoved(): void;
 }
@@ -30,6 +32,7 @@ export function EndgamesPosition({
   onBack,
   onPlayBlindfold,
   onAnotherOfThisSize,
+  onEditPosition,
   onRemoved,
 }: EndgamesPositionProps) {
   const side = sideToMove(entry);
@@ -61,6 +64,7 @@ export function EndgamesPosition({
       <EndgamesHeader
         title={bucket.label}
         subtitle={FAMILY_INFO[family].label}
+        backLabel="Back"
         onBack={onBack}
         right={
           <button
@@ -95,12 +99,15 @@ export function EndgamesPosition({
         )}
       </div>
 
+      <Button variant="primary" size="big" disabled={!canStart} onClick={onPlayBlindfold}>
+        Play Blindfold
+      </Button>
       <div className="grid grid-cols-2 gap-3">
-        <Button variant="primary" size="big" disabled={!canStart} onClick={onPlayBlindfold}>
-          Play Blindfold
-        </Button>
         <Button variant="secondary" size="big" disabled={!canStart} onClick={onAnotherOfThisSize}>
           Another of this size
+        </Button>
+        <Button variant="secondary" size="big" onClick={onEditPosition}>
+          Edit position
         </Button>
       </div>
 

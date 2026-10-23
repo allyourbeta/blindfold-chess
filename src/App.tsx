@@ -138,6 +138,10 @@ export default function App() {
             initialBucket={endgamesBucket}
             onMenu={() => setScreen("menu")}
             onPlay={() => setScreen("play")}
+            onEditPosition={(fen) => {
+              setSetupStartFen(fen);
+              setScreen("setup");
+            }}
           />
         )}
       </div>

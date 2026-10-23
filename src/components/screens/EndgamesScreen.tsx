@@ -22,6 +22,8 @@ interface EndgamesScreenProps {
   initialBucket: SizeBucket | null;
   onMenu(): void;
   onPlay(): void;
+  /** Opens Position Setup preloaded with this FEN. Nothing is saved to the lab. */
+  onEditPosition(fen: string): void;
 }
 
 /**
@@ -31,7 +33,7 @@ interface EndgamesScreenProps {
  * reaching this screen in the first place, and leaving it for Play, cross
  * that boundary.
  */
-export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreenProps) {
+export function EndgamesScreen({ initialBucket, onMenu, onPlay, onEditPosition }: EndgamesScreenProps) {
   const [view, setView] = useState<View>(initialBucket ? { kind: "size", bucket: initialBucket } : { kind: "home" });
   const [startError, setStartError] = useState(false);
   const engineStatus = useGameStore((s) => s.engineStatus);
@@ -134,6 +136,7 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay }: EndgamesScreen
           onBack={backToList}
           onPlayBlindfold={() => void playBlindfold(entry.id)}
           onAnotherOfThisSize={() => openPosition(randomFrom(bucketEntries(entry), entry.id))}
+          onEditPosition={() => onEditPosition(entry.fen)}
           onRemoved={backToList}
         />
       );

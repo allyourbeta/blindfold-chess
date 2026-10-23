@@ -23,6 +23,7 @@ export function EndgamesFavorites({ engineReady, onBack, onOpenPosition }: Endga
       <EndgamesHeader
         title="Favorites"
         subtitle={entries.length === 0 ? "None yet" : `${entries.length} position${entries.length === 1 ? "" : "s"}`}
+        backLabel="Back"
         onBack={onBack}
         right={
           entries.length > 0 ? (

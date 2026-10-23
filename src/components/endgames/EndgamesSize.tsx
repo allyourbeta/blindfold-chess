@@ -24,6 +24,7 @@ export function EndgamesSize({ bucket, engineReady, onBack, onOpenPosition, onRa
       <EndgamesHeader
         title={bucket.label}
         subtitle={`${total} positions`}
+        backLabel="Back"
         onBack={onBack}
         right={<RandomButton ariaLabel={`Random, ${bucket.label}`} disabled={!engineReady} onClick={onRandom} />}
       />

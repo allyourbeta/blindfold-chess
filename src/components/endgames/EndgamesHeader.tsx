@@ -1,33 +1,39 @@
 import type { ReactNode } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
-/** Shared screenhead for every endgames view -- matches SetupScreen's header pattern. */
+/** Shared screenhead for every Endgame Lab view -- matches SetupScreen's header pattern. */
 export function EndgamesHeader({
   title,
   subtitle,
+  backLabel,
   onBack,
   right,
 }: {
   title: string;
-  subtitle: string;
+  subtitle?: string;
+  /** "Menu" on the lab home (it goes to the menu); "Back" on every inner lab screen. */
+  backLabel: "Menu" | "Back";
   onBack(): void;
   /** An optional control at the header's right edge, e.g. the position screen's favorite star. */
   right?: ReactNode;
 }) {
   return (
-    <header className="flex items-center gap-3 border-b border-border-default pb-4 pt-2">
-      <button
-        onClick={onBack}
-        aria-label="Back"
-        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full hover:bg-bg-surface-alt"
-      >
-        <ArrowLeft className="h-5 w-5" />
+    <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-b border-border-default pb-1.5">
+      <button onClick={onBack} aria-label="Back" className="flex h-11 items-center justify-self-start">
+        <span className="inline-flex h-9 items-center gap-1 rounded-full border border-border-default bg-bg-surface-alt py-0 pl-2 pr-3 text-sm font-bold text-text-primary">
+          <ChevronLeft className="h-4 w-4" />
+          {backLabel}
+        </span>
       </button>
-      <div className="min-w-0 flex-1">
-        <h1 className="text-lg font-semibold text-text-accent">{title}</h1>
-        <p className="text-sm text-text-secondary">{subtitle}</p>
+      <div className="min-w-0">
+        <h1 className="text-center text-xl font-extrabold whitespace-nowrap text-text-accent max-[380px]:text-lg">
+          {title}
+        </h1>
+        {subtitle && (
+          <p className="mx-auto max-w-[60vw] truncate text-center text-sm text-text-secondary">{subtitle}</p>
+        )}
       </div>
-      {right}
+      <div className="justify-self-end">{right}</div>
     </header>
   );
 }

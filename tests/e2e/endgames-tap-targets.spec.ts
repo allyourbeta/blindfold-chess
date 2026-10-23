@@ -24,14 +24,24 @@ interface TapTarget {
   isListItem: boolean;
 }
 
-/** Every visible button, plus whether it's a list row/card (data-testid "endgame-row" or inside a Card). */
+/**
+ * Every visible button, plus whether it's a control that legitimately runs
+ * the full width of the screen: a list row/card (data-testid "endgame-row"
+ * or inside a Card), or a button that is itself a direct child of a lab
+ * screen's scroll container (SPEC_lab_headers_edit.md's full-width Play
+ * Blindfold row) -- the flex column there stretches every direct child to
+ * its own full width, same as a list row does.
+ */
 async function tapTargets(page: Page): Promise<TapTarget[]> {
   return page.evaluate(() => {
     const out: TapTarget[] = [];
     document.querySelectorAll<HTMLElement>("button").forEach((el) => {
       const r = el.getBoundingClientRect();
       if (r.width === 0 && r.height === 0) return;
-      const isListItem = el.getAttribute("data-testid") === "endgame-row" || el.closest('[data-testid="card"]') !== null;
+      const isListItem =
+        el.getAttribute("data-testid") === "endgame-row" ||
+        el.closest('[data-testid="card"]') !== null ||
+        el.parentElement?.getAttribute("data-testid") === "endgame-scroll";
       out.push({
         label: (el.getAttribute("aria-label") || el.textContent || "?").trim().slice(0, 40),
         x: r.x,
