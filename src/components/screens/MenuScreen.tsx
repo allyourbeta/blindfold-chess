@@ -89,7 +89,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
         </button>
       </header>
 
-      <main className="relative flex flex-1 flex-col overflow-y-auto px-6 pb-6">
+      <main className="relative flex flex-1 flex-col overflow-y-auto px-6 pb-6 [&>*]:shrink-0">
         <section className="relative flex flex-col items-center text-center">
           {/* Warmth behind the logo so it sits in light rather than on a flat field. */}
           <div

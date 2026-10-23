@@ -146,7 +146,7 @@ export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
   }
 
   return (
-    <div className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))]">
+    <div className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))] [&>*]:shrink-0">
       <header className="grid grid-cols-[auto_1fr_auto] items-center gap-2 border-b border-border-default pb-1.5">
         <button onClick={onBack} aria-label="Back to menu" className="flex h-11 items-center">
           <span className="inline-flex h-9 items-center gap-1 rounded-full border border-border-default bg-bg-surface-alt py-0 pl-2 pr-3 text-sm font-bold text-text-primary">

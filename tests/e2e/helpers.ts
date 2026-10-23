@@ -205,6 +205,23 @@ export async function boxesOf(page: Page) {
 }
 
 /**
+ * No visible button may render shorter than 44px tall -- the app's minimum
+ * touch target. Shared by endgames-tap-targets.spec.ts (the thin-strip
+ * sweep's height half) and button-fit.spec.ts (the per-screen sweep this
+ * covers): SPEC_no_squeezed_buttons.md, both guard against a flex child
+ * silently shrinking below its button's own minimum height.
+ *
+ * `exempt` opts out labels that are short BY DESIGN, not by a squeeze --
+ * confirmed unaffected by viewport at any size (SPEC_no_squeezed_buttons.md
+ * investigation), unlike everything else this function checks.
+ */
+export async function assertNoButtonBelow44px(page: Page, exempt: RegExp[] = []) {
+  const boxes = await boxesOf(page);
+  const tooShort = boxes.filter((b) => b.h < 44 - 0.5 && !exempt.some((re) => re.test(b.label)));
+  expect(tooShort.map((b) => `${b.label} (${b.w.toFixed(0)}x${b.h.toFixed(0)})`)).toEqual([]);
+}
+
+/**
  * Every `Board` renders its own squares at `w-[12.5%]` of its own width, so
  * a board that isn't square stretches every square with it -- this is the
  * one check that would catch that regardless of which screen hosts it.
