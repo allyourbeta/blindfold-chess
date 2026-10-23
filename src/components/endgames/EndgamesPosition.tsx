@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { BoardPanel } from "@/components/board/BoardPanel";
 import { EndgamesHeader } from "./EndgamesHeader";
 import { fenToBoard } from "@/services/chess/fen";
-import { pieceList, sizeOf, FAMILY_INFO, type EndgamePosition } from "@/services/endgames/catalog";
+import { sizeOf, FAMILY_INFO, type EndgamePosition } from "@/services/endgames/catalog";
 import { sideToMove, displayNameFor, familyOf, bucketOfEntry, resultDisplay } from "@/services/endgames/catalogGroups";
 import { useFavorites } from "@/state/favoritesStore";
 import { useCreator } from "@/state/creatorStore";
@@ -93,11 +93,6 @@ export function EndgamesPosition({
             </span>
           </p>
         )}
-        <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">
-          White: {pieceList(entry.fen, "w")}
-          <br />
-          Black: {pieceList(entry.fen, "b")}
-        </p>
       </div>
 
       <div className="grid grid-cols-2 gap-3">

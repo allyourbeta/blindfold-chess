@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { materialKey, groupLabel, family, pieceList, search, randomFrom, sizeOf, ENDGAMES, type EndgamePosition } from "./catalog";
+import { materialKey, groupLabel, family, search, randomFrom, sizeOf, ENDGAMES, type EndgamePosition } from "./catalog";
 
 describe("materialKey", () => {
   it("puts the stronger side first and names it like KRPvKR", () => {
@@ -40,19 +40,6 @@ describe("family", () => {
     expect(family("KBNvK")).toBe("minor");
     expect(family("KQPvKQ")).toBe("queen");
     expect(family("KQvKR")).toBe("mixed");
-  });
-});
-
-describe("pieceList", () => {
-  it("lists K, Q, R, B, N, then pawns, in that order", () => {
-    const fen = "1K1k4/1P6/8/8/8/8/r7/2R5 w - - 0 1";
-    expect(pieceList(fen, "w")).toBe("Kb8, Rc1, pawn b7.");
-    expect(pieceList(fen, "b")).toBe("Kd8, Ra2.");
-  });
-
-  it("combines two or more pawns into one phrase", () => {
-    const fen = "4k3/8/8/8/8/8/P1P5/4K3 w - - 0 1";
-    expect(pieceList(fen, "w")).toBe("Ke1, pawns a2, c2.");
   });
 });
 

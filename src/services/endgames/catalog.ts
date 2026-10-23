@@ -1,5 +1,5 @@
 import endgamesData from "@/data/endgames.json";
-import { fenToBoard, FILES } from "@/services/chess/fen";
+import { fenToBoard } from "@/services/chess/fen";
 import { getRemovedCodes } from "@/api/localStore";
 
 export interface EndgamePosition {
@@ -179,38 +179,6 @@ export function family(key: string): Family {
   if (letters.size === 1 && letters.has("q")) return "queen";
   if ([...letters].every((l) => l === "b" || l === "n")) return "minor";
   return "mixed";
-}
-
-/** "Kb8, Rc1, pawn b7." -- the order a blindfolded player would hear it read. */
-export function pieceList(fen: string, color: "w" | "b"): string {
-  const board = fenToBoard(fen);
-  const squaresByLetter: Record<string, string[]> = {};
-  const pawnSquares: string[] = [];
-
-  for (let r = 0; r < 8; r++) {
-    for (let c = 0; c < 8; c++) {
-      const cell = board[r][c];
-      if (!cell) continue;
-      const isWhite = cell === cell.toUpperCase();
-      if ((color === "w") !== isWhite) continue;
-      const lower = cell.toLowerCase();
-      const square = `${FILES[c]}${8 - r}`;
-      if (lower === "p") pawnSquares.push(square);
-      else (squaresByLetter[cell.toUpperCase()] ??= []).push(square);
-    }
-  }
-
-  const parts: string[] = [];
-  for (const letter of ["K", "Q", "R", "B", "N"]) {
-    const squares = squaresByLetter[letter];
-    if (!squares) continue;
-    for (const square of squares.sort()) parts.push(`${letter}${square}`);
-  }
-  pawnSquares.sort();
-  if (pawnSquares.length === 1) parts.push(`pawn ${pawnSquares[0]}`);
-  else if (pawnSquares.length > 1) parts.push(`pawns ${pawnSquares.join(", ")}`);
-
-  return `${parts.join(", ")}.`;
 }
 
 /**

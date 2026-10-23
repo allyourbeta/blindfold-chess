@@ -107,6 +107,16 @@ test("Home -> 3 to 5 pieces -> first named entry -> Play Blindfold -> one move -
   }
 });
 
+test("the position screen no longer shows the White:/Black: piece list", async ({ page }) => {
+  await openEndgames(page);
+  await openSize(page, /3 to 5 pieces/);
+  await page.getByTestId("endgame-row").first().click();
+  await expect(page.getByText(/You play (White|Black)\. \d+ pieces\./)).toBeVisible();
+
+  await expect(page.getByText(/^White: K/)).toHaveCount(0);
+  await expect(page.getByText(/^Black: K/)).toHaveCount(0);
+});
+
 test("a Black-to-move endgame forces you onto Black, without changing the White setting", async ({ page }) => {
   test.skip(!blackToMoveEntry, "no Black-to-move entry in the catalog -- re-enable when one is added");
   await openEndgames(page);
