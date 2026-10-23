@@ -83,7 +83,7 @@ export function GameOverPanel({ onNewGame, onMenu, onEndgames, onEditPosition }:
               Try again
             </Button>
             <Button variant="secondary" className="w-full" onClick={() => void playAnotherOfThisSize()}>
-              Another of this size
+              Next
             </Button>
             <Button variant="secondary" className="w-full" onClick={() => void copyPgn()}>
               Copy PGN

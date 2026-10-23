@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ENDGAMES, sizeOf, FAMILY_ORDER, SIZE_BUCKETS } from "./catalog";
+import { ENDGAMES, sizeOf, FAMILY_ORDER, SIZE_BUCKETS, type EndgamePosition } from "./catalog";
 import {
   groupsForFamily,
   displayNameFor,
@@ -12,6 +12,7 @@ import {
   bucketEntries,
   favoriteEntries,
   visibleBuckets,
+  resultDisplay,
 } from "./catalogGroups";
 import { LEGACY_ENTRIES } from "./fixtures/legacyFixtures";
 
@@ -120,5 +121,45 @@ describe("displayNameFor -- name, or the permanent code when there is none", () 
     const named = LEGACY_ENTRIES.find((e) => e.name);
     expect(named, "the fixture should contain at least one named position").toBeTruthy();
     if (named) expect(displayNameFor(named)).toBe(named.name);
+  });
+});
+
+describe("resultDisplay -- the position screen's score chip (SPEC_position_info_line.md)", () => {
+  function withResult(result: EndgamePosition["result"]): EndgamePosition {
+    return { ...ENDGAMES[0], result };
+  }
+
+  it("returns null when the entry has no known result", () => {
+    expect(resultDisplay(withResult(null))).toBeNull();
+  });
+
+  it("perfect play: en-dash score and a 'best play' spoken label, per side", () => {
+    expect(resultDisplay(withResult({ kind: "perfect", score: "1-0" }))).toEqual({
+      score: "1–0",
+      spoken: "White wins with best play",
+    });
+    expect(resultDisplay(withResult({ kind: "perfect", score: "0-1" }))).toEqual({
+      score: "0–1",
+      spoken: "Black wins with best play",
+    });
+    expect(resultDisplay(withResult({ kind: "perfect", score: "1/2-1/2" }))).toEqual({
+      score: "½–½",
+      spoken: "Draw with best play",
+    });
+  });
+
+  it("game result: en-dash score and a 'won/drawn the game' spoken label, per side", () => {
+    expect(resultDisplay(withResult({ kind: "game", score: "1-0" }))).toEqual({
+      score: "1–0",
+      spoken: "White won the game",
+    });
+    expect(resultDisplay(withResult({ kind: "game", score: "0-1" }))).toEqual({
+      score: "0–1",
+      spoken: "Black won the game",
+    });
+    expect(resultDisplay(withResult({ kind: "game", score: "1/2-1/2" }))).toEqual({
+      score: "½–½",
+      spoken: "The game was drawn",
+    });
   });
 });

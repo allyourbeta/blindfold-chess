@@ -91,7 +91,7 @@ test("Home -> 3 to 5 pieces -> first named entry -> Play Blindfold -> one move -
   }
 
   await rows.nth(index).click();
-  await expect(page.getByText(/You play (White|Black)\. \d+ pieces\./)).toBeVisible();
+  await expect(page.getByText(/^(White|Black) to move$/)).toBeVisible();
 
   await page.getByRole("button", { name: "Play Blindfold" }).click();
   await expect(keypad(page)).toBeVisible();
@@ -111,7 +111,7 @@ test("the position screen no longer shows the White:/Black: piece list", async (
   await openEndgames(page);
   await openSize(page, /3 to 5 pieces/);
   await page.getByTestId("endgame-row").first().click();
-  await expect(page.getByText(/You play (White|Black)\. \d+ pieces\./)).toBeVisible();
+  await expect(page.getByText(/^(White|Black) to move$/)).toBeVisible();
 
   await expect(page.getByText(/^White: K/)).toHaveCount(0);
   await expect(page.getByText(/^Black: K/)).toHaveCount(0);
@@ -121,7 +121,7 @@ test("a Black-to-move endgame forces you onto Black, without changing the White 
   test.skip(!blackToMoveEntry, "no Black-to-move entry in the catalog -- re-enable when one is added");
   await openEndgames(page);
   await openByCode(page, blackToMoveEntry!);
-  await expect(page.getByText(/You play Black\. \d+ pieces\./)).toBeVisible();
+  await expect(page.getByText(/^Black to move$/)).toBeVisible();
 
   await page.getByRole("button", { name: "Play Blindfold" }).click();
   await expect(keypad(page)).toBeVisible();
@@ -173,7 +173,7 @@ test("game over in an endgame: Try again replays the same position, Endgames lan
   await resignGame(page);
   const dialog = page.getByRole("dialog");
   await expect(dialog.getByRole("button", { name: "Try again" })).toBeVisible();
-  await expect(dialog.getByRole("button", { name: "Another of this size" })).toBeVisible();
+  await expect(dialog.getByRole("button", { name: "Next" })).toBeVisible();
   await expect(dialog.getByRole("button", { name: "Copy PGN" })).toBeVisible();
   await expect(dialog.getByRole("button", { name: "Endgames" })).toBeVisible();
   await expect(dialog.getByText(/Goal was a/)).toHaveCount(0);

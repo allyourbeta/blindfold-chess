@@ -124,8 +124,8 @@ export function EndgamesScreen({ initialBucket, onMenu, onPlay, onEditPosition }
         setView(view.from === "favorites" ? { kind: "favorites" } : { kind: "size", bucket: bucketOfEntry(entry) });
       content = (
         <EndgamesPosition
-          // Same reasoning as the size view's key: "Another of this size"
-          // swaps `entry` without changing `view.kind`, so without a key
+          // Same reasoning as the size view's key: "Next" swaps `entry`
+          // without changing `view.kind`, so without a key
           // keyed to the id the position view would keep its old scroll
           // position across positions instead of starting at the top
           // (decision 5).

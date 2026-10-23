@@ -45,26 +45,31 @@ async function openByCode(page: Page, entry: ShippedEntry) {
   await page.getByTestId("endgame-row").filter({ hasText: entry.code }).click();
 }
 
-test("a 3-to-7-piece position shows 'Perfect play:' and its score", async ({ page }) => {
+const SCORE_RE = /^(1–0|0–1|½–½)$/;
+
+test("a 3-to-7-piece perfect-play position shows a score chip with a 'best play' aria-label", async ({ page }) => {
   expect(perfectEntry, "no perfect-play entry in the shipped catalog").toBeDefined();
   await openEndgames(page);
   await openByCode(page, perfectEntry!);
-  await expect(page.getByText("Perfect play:")).toBeVisible();
+  const chip = page.getByText(SCORE_RE);
+  await expect(chip).toBeVisible();
+  await expect(chip).toHaveAttribute("aria-label", /best play/);
 });
 
-test("an 8+-piece game position shows 'Game result:' and its score", async ({ page }) => {
+test("an 8+-piece game-result position shows a score chip with a 'game' aria-label", async ({ page }) => {
   test.skip(!gameEntry, "no game-result entry in the catalog -- re-enable when one is added");
   await openEndgames(page);
   await openByCode(page, gameEntry!);
-  await expect(page.getByText("Game result:")).toBeVisible();
+  const chip = page.getByText(SCORE_RE);
+  await expect(chip).toBeVisible();
+  await expect(chip).toHaveAttribute("aria-label", /game/);
 });
 
-test("an 8+-piece position with no known result shows neither result line", async ({ page }) => {
+test("an 8+-piece position with no known result shows no score chip", async ({ page }) => {
   expect(noneEntry, "no no-result 8+-piece entry in the shipped catalog").toBeDefined();
   await openEndgames(page);
   await openByCode(page, noneEntry!);
-  await expect(page.getByText("Perfect play:")).toHaveCount(0);
-  await expect(page.getByText("Game result:")).toHaveCount(0);
+  await expect(page.getByText(SCORE_RE)).toHaveCount(0);
 });
 
 // Part 5's screenshot set, for docs/targets/buttons-results.html.

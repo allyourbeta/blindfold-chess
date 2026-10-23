@@ -250,3 +250,24 @@ describe("beginGame: an explicit playerColor overrides the settings colour, with
     expect(useSettingsStore.getState().playerColor).toBe("w");
   });
 });
+
+describe("beginGame: flips are local (SPEC_position_info_line.md decision 7)", () => {
+  afterEach(() => {
+    useSettingsStore.getState().resetBoardFlip();
+  });
+
+  it("clears a flip carried over from whatever was on screen before this game started", async () => {
+    useSettingsStore.getState().toggleBoardFlip(false);
+    expect(useSettingsStore.getState().boardFlipOverride).not.toBeNull();
+
+    const adapter = fakeAdapter();
+    const engineManager = new EngineManager(adapter);
+    await engineManager.load();
+    const { get, set } = makeStore();
+    const flow = createGameFlow(set, get, engineManager);
+
+    await flow.beginGame(STARTING_FEN);
+
+    expect(useSettingsStore.getState().boardFlipOverride).toBeNull();
+  });
+});

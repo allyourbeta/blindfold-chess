@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blindfolde — target: lab position info line</title>
+<style>
+body{margin:0;padding:20px;background:#ece6dc;font-family:Nunito,system-ui,sans-serif;color:#1c1917}
+.wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;max-width:760px;margin:0 auto}
+.ph{background:#faf7f1;border:1px solid #e7e5e4;border-radius:16px;padding:14px}
+.r{display:flex;align-items:center;justify-content:center;font-weight:700;border-radius:12px;background:linear-gradient(#f7f3ec,#ebe4d8);border:1px solid #d6cfc3;border-bottom:2px solid #b9b0a2}
+.r.on{background:linear-gradient(#fbbf3a,#f0a20a);border-color:#e0950a;border-bottom-color:#b8760a}
+.chip{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:999px;background:#efe9df;border:1px solid #d6cfc3;font-weight:800;font-size:16px}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;border:1.5px solid #1c1917;vertical-align:-2px;margin-right:6px}
+.board{aspect-ratio:1;border-radius:6px;background:repeating-conic-gradient(#b58863 0 25%,#f0d9b5 0 50%) 0 0/25% 25%}
+.cap{font-size:13px;color:#57534e;text-align:center;margin:6px 0 0}
+.stamp{max-width:760px;margin:14px auto 0;font-size:12px;color:#78716c}
+</style></head><body><div class="wrap">
+<div><div class="ph">
+<div class="board"></div>
+<div style="display:flex;align-items:center;gap:10px;margin-top:12px;min-height:44px">
+<span style="font-size:16px;font-weight:700"><span class="dot" style="background:#fff"></span>White to move</span>
+<span class="chip">1–0</span><span style="flex:1"></span>
+<span style="font-family:ui-monospace,monospace;font-size:12px;color:#a8a29e">E285</span></div>
+<div class="r on" style="height:64px;margin-top:10px">Play Blindfold</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px"><span class="r" style="height:64px">Next</span><span class="r" style="height:64px">Edit</span></div>
+</div><p class="cap">Unnamed position, White to move. No flip button. Board from the side to move.</p></div>
+<div><div class="ph">
+<div class="board"></div>
+<p style="font-size:20px;font-weight:800;margin:12px 0 0">Philidor position</p>
+<div style="display:flex;align-items:center;gap:10px;margin-top:4px;min-height:44px">
+<span style="font-size:16px;font-weight:700"><span class="dot" style="background:#1c1917"></span>Black to move</span>
+<span class="chip">½–½</span><span style="flex:1"></span>
+<span style="font-family:ui-monospace,monospace;font-size:12px;color:#a8a29e">E212</span></div>
+<div class="r on" style="height:64px;margin-top:10px">Play Blindfold</div>
+</div><p class="cap">Named position: the name is a bold line above the info line. Black to move: board from Black's side.</p></div>
+</div>
+<div class="stamp">Target v1 · 2026-10-23 01:00 PT · approved by Ashish ("perfect"). Two additions not shown in the approved mockup and flagged to him: the name line for named positions, and the end-of-endgame panel's "Another of this size" also becoming "Next". Board coordinates are 14px (was 11px), on every board. Real screen uses the app's Board, Button (raised), tokens.</div>
+</body></html>

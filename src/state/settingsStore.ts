@@ -46,6 +46,8 @@ interface SettingsState {
   setFileNaming(mode: FileNaming): void;
   setSpeechMode(mode: SpeechMode): void;
   toggleBoardFlip(currentDefault: boolean): void;
+  /** Flips are local to whatever position/game is on screen -- called when a new one starts so it never inherits a flip from the last. */
+  resetBoardFlip(): void;
   setTheme(theme: ThemePreference): void;
   toggleTheme(): void;
 }
@@ -98,6 +100,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     const current = get().boardFlipOverride ?? currentDefault;
     set({ boardFlipOverride: !current });
   },
+  resetBoardFlip: () => set({ boardFlipOverride: null }),
 
   setSpeechMode: (mode) => {
     persistSpeechMode(mode);

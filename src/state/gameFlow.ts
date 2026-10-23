@@ -195,6 +195,7 @@ export function createGameFlow(set: SetState, get: GetState, engineManager: Engi
   /** Resolves true once the game is actually installed, false if the attempt was abandoned or superseded. */
   async function beginGame(fen: string, opts?: { playerColor?: Color }): Promise<boolean> {
     const session = ++gameSession;
+    useSettingsStore.getState().resetBoardFlip(); // flips are local (decision 7) -- never inherited from the previous game
     cancelPendingReply(); // a reply held behind the floor must not outlive the game it was for
     // Also restart when the loaded engine no longer matches the selected
     // opponent (switched in settings since the last game) -- gated on "ever

@@ -51,13 +51,13 @@ export function Square({
       )}
     >
       {rankLabel && (
-        <span className={cn("absolute left-[2px] top-0 font-mono text-[11px] font-bold leading-none", labelColor)}>
+        <span className={cn("absolute left-[2px] top-0 font-mono text-[14px] font-bold leading-none", labelColor)}>
           {rankLabel}
         </span>
       )}
       {fileLabel && (
         <span
-          className={cn("absolute bottom-0 right-[2px] font-mono text-[11px] font-bold leading-none", labelColor)}
+          className={cn("absolute bottom-0 right-[2px] font-mono text-[14px] font-bold leading-none", labelColor)}
         >
           {fileLabel}
         </span>

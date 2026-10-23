@@ -62,8 +62,10 @@ test("Remove on the position screen: confirm, the position disappears from the l
   await openEndgames(page);
   await openFirstPosition(page);
 
-  const title = await page.getByTestId("endgame-scroll").locator("p.text-xl").first().textContent();
-  const code = title!.trim().split(/\s+/)[0];
+  // The code (SPEC_position_info_line.md) is shown on every position,
+  // named or not -- unlike the name line above it, which only renders for a
+  // named entry, and the shipped catalog has none.
+  const code = (await page.getByText(/^E\d{3,}$/).first().textContent())!.trim();
 
   await page.route("**/api/positions/remove", (route) => route.fulfill({ status: 200, body: "{}" }));
   page.once("dialog", (dialog) => dialog.accept());

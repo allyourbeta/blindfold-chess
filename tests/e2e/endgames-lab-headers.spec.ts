@@ -98,8 +98,8 @@ function registerHeaderChecks(width: number, height: number) {
       await page.getByTestId("endgame-row").first().click();
 
       const play = await page.getByRole("button", { name: "Play Blindfold" }).boundingBox();
-      const another = await page.getByRole("button", { name: "Another of this size" }).boundingBox();
-      const edit = await page.getByRole("button", { name: "Edit position" }).boundingBox();
+      const another = await page.getByRole("button", { name: "Next" }).boundingBox();
+      const edit = await page.getByRole("button", { name: "Edit" }).boundingBox();
       expect(play).not.toBeNull();
       expect(another).not.toBeNull();
       expect(edit).not.toBeNull();
@@ -125,12 +125,12 @@ function registerHeaderChecks(width: number, height: number) {
       await page.getByTestId("size-row").first().click();
       await page.getByTestId("endgame-row").first().click();
 
-      const sideText = await page.getByText(/You play (White|Black)\. \d+ pieces\./).textContent();
-      const expectedSide = /You play White/.test(sideText ?? "") ? "White" : "Black";
+      const sideText = await page.getByText(/^(White|Black) to move$/).textContent();
+      const expectedSide = /^White/.test(sideText ?? "") ? "White" : "Black";
       const before = await boardPieceMap(page);
       expect(Object.keys(before).length).toBeGreaterThan(0);
 
-      await page.getByRole("button", { name: "Edit position" }).click();
+      await page.getByRole("button", { name: "Edit" }).click();
       await expect(page.getByRole("heading", { name: "Position Setup" })).toBeVisible();
 
       const after = await boardPieceMap(page);

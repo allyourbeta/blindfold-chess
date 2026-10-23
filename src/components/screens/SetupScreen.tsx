@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowDownUp, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
@@ -75,6 +75,13 @@ export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
 
   const playerColor = useSettingsStore((st) => st.playerColor);
   const toggleBoardFlip = useSettingsStore((st) => st.toggleBoardFlip);
+  const resetBoardFlip = useSettingsStore((st) => st.resetBoardFlip);
+
+  // Flips are local (decision 7): Position Setup always opens unflipped from
+  // the player's own side, even if the last position or game was flipped.
+  useEffect(() => {
+    resetBoardFlip();
+  }, [resetBoardFlip]);
   const startFromSetup = useGameStore((s) => s.startFromSetup);
   const clearSetupError = useGameStore((s) => s.clearSetupError);
   const setupError = useGameStore((s) => s.setupError);

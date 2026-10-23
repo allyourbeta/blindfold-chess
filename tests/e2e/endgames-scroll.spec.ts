@@ -31,10 +31,10 @@ async function assertNotStuck(page: Page, consoleErrors: string[]) {
   // 3. The position page's own scroller still works: down to the bottom
   // button and back up to the header. (The hand-picked catalog's entries
   // have no "Source:" line -- SPEC_endgames_handpicked.md decision 5 --
-  // so "Another of this size" is the real bottom-most content now.)
+  // so "Next" is the real bottom-most content now.)
   const scroller = page.getByTestId("endgame-scroll");
   await scroller.evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
-  await expect(page.getByRole("button", { name: "Another of this size" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Next" })).toBeVisible();
   await scroller.evaluate((el) => el.scrollTo({ top: 0 }));
   await expect(back.first()).toBeVisible();
 

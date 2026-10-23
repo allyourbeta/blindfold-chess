@@ -93,7 +93,7 @@ export function familiesInBucket(bucket: SizeBucket, catalog: EndgamePosition[] 
   })).filter((group) => group.entries.length > 0);
 }
 
-/** The position's own bucket's entries, for "Another of this size" and the game-over "Endgames" button. */
+/** The position's own bucket's entries, for "Next" and the game-over "Endgames" button. */
 export function bucketEntries(entry: EndgamePosition, catalog: EndgamePosition[] = visibleEndgames()): EndgamePosition[] {
   return entriesByBucket(bucketOfEntry(entry), catalog);
 }
@@ -104,16 +104,32 @@ export function displayNameFor(entry: EndgamePosition): string {
 }
 
 export interface ResultDisplay {
-  label: string;
+  /** "1–0" / "0–1" / "½–½" -- en dashes, for the position screen's score chip. */
   score: string;
+  /** The chip's aria-label: a full sentence, since the chip itself is too terse to announce on its own. */
+  spoken: string;
 }
 
-/** The position screen's result line (decision 4), or null when none is known. */
+const SPOKEN: Record<"perfect" | "game", Record<"w" | "b" | "draw", string>> = {
+  perfect: {
+    w: "White wins with best play",
+    b: "Black wins with best play",
+    draw: "Draw with best play",
+  },
+  game: {
+    w: "White won the game",
+    b: "Black won the game",
+    draw: "The game was drawn",
+  },
+};
+
+/** The position screen's result chip (decision 4), or null when none is known. */
 export function resultDisplay(entry: EndgamePosition): ResultDisplay | null {
   if (!entry.result) return null;
-  const label = entry.result.kind === "perfect" ? "Perfect play:" : "Game result:";
-  const score = entry.result.score === "1/2-1/2" ? "½-½" : entry.result.score;
-  return { label, score };
+  const { kind, score: rawScore } = entry.result;
+  const side = rawScore === "1-0" ? "w" : rawScore === "0-1" ? "b" : "draw";
+  const score = rawScore === "1/2-1/2" ? "½–½" : rawScore.replace("-", "–");
+  return { score, spoken: SPOKEN[kind][side] };
 }
 
 /**

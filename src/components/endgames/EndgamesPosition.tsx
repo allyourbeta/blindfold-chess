@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { BoardPanel } from "@/components/board/BoardPanel";
 import { EndgamesHeader } from "./EndgamesHeader";
 import { fenToBoard } from "@/services/chess/fen";
-import { sizeOf, FAMILY_INFO, type EndgamePosition } from "@/services/endgames/catalog";
-import { sideToMove, displayNameFor, familyOf, bucketOfEntry, resultDisplay } from "@/services/endgames/catalogGroups";
+import { FAMILY_INFO, type EndgamePosition } from "@/services/endgames/catalog";
+import { sideToMove, familyOf, bucketOfEntry, resultDisplay } from "@/services/endgames/catalogGroups";
 import { useFavorites } from "@/state/favoritesStore";
 import { useCreator } from "@/state/creatorStore";
 import { useRemovedStore } from "@/state/removedStore";
+import { useSettingsStore } from "@/state/settingsStore";
+import { cn } from "@/lib/cn";
 
 interface EndgamesPositionProps {
   entry: EndgamePosition;
@@ -45,6 +47,13 @@ export function EndgamesPosition({
   const removeViaApi = useRemovedStore((s) => s.removeViaApi);
   const [removing, setRemoving] = useState(false);
   const [removeError, setRemoveError] = useState<string | null>(null);
+  const resetBoardFlip = useSettingsStore((s) => s.resetBoardFlip);
+
+  // Flips are local (decision 7): a lab position always opens in its default
+  // orientation, even if the last position or game was flipped.
+  useEffect(() => {
+    resetBoardFlip();
+  }, [entry.code, resetBoardFlip]);
 
   async function handleRemove() {
     if (!window.confirm(`Remove ${entry.code} from the app for everyone?`)) return;
@@ -80,24 +89,30 @@ export function EndgamesPosition({
         }
       />
 
-      <BoardPanel board={fenToBoard(entry.fen)} defaultFlipped={side === "b"} />
+      <BoardPanel board={fenToBoard(entry.fen)} defaultFlipped={side === "b"} showRotate={false} />
 
       <div>
-        <p className="text-xl font-extrabold text-text-primary">
-          {displayNameFor(entry)}
-          {entry.name && <span className="ml-2 font-mono text-sm font-bold text-text-secondary">{entry.code}</span>}
-        </p>
-        <p className="mt-1 text-base font-bold text-text-accent">
-          You play {side === "w" ? "White" : "Black"}. {sizeOf(entry.fen)} pieces.
-        </p>
-        {result && (
-          <p className="mt-1.5 inline-flex items-baseline gap-2 text-sm text-text-secondary">
-            <span>{result.label}</span>
-            <span className="rounded-lg border border-border-emphasis bg-bg-surface-alt px-2 py-0.5 font-mono text-base font-extrabold text-text-primary">
+        {entry.name && <p className="text-xl font-extrabold text-text-primary">{entry.name}</p>}
+        <div className="mt-1 flex min-h-11 items-center gap-2.5">
+          <span className="inline-flex items-center text-base font-bold text-text-primary">
+            <span
+              className={cn(
+                "mr-1.5 inline-block h-3.5 w-3.5 shrink-0 rounded-full border-[1.5px] border-text-primary",
+                side === "w" ? "bg-white" : "bg-text-primary",
+              )}
+            />
+            {side === "w" ? "White to move" : "Black to move"}
+          </span>
+          {result && (
+            <span
+              aria-label={result.spoken}
+              className="inline-flex h-[30px] items-center rounded-full border border-border-emphasis bg-bg-surface-alt px-3 font-mono text-base font-extrabold text-text-primary"
+            >
               {result.score}
             </span>
-          </p>
-        )}
+          )}
+          <span className="ml-auto truncate font-mono text-xs text-text-muted">{entry.code}</span>
+        </div>
       </div>
 
       <Button variant="primary" size="big" disabled={!canStart} onClick={onPlayBlindfold}>
@@ -105,10 +120,10 @@ export function EndgamesPosition({
       </Button>
       <div className="grid grid-cols-2 gap-3">
         <Button variant="secondary" size="big" disabled={!canStart} onClick={onAnotherOfThisSize}>
-          Another of this size
+          Next
         </Button>
         <Button variant="secondary" size="big" onClick={onEditPosition}>
-          Edit position
+          Edit
         </Button>
       </div>
 
