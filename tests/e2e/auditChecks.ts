@@ -36,15 +36,13 @@ export function createErrorTracker(page: Page): ErrorTracker {
 // file isn't a spec, so the one real source of truth stays there; this is a
 // deliberate, documented duplication of a four-item constant, not a check
 // this audit loosened on its own judgment.
-const ALLOWED_FLAT = ["square", "card", "icon", "ticker"];
+const ALLOWED_FLAT = ["square", "card", "icon", "ticker", "stamp"];
 
-// docs/targets/round-log-opponent-style.html fixes the castle/backspace row
-// (Button.tsx's "keypadRow" size) at height:36px explicitly, and
-// MoveList.tsx's ticker row (data-flat="ticker") is `min-h-9` (36px) by the
-// same approved design -- Part 2's check B names this exact floor ("Visual
-// height >= 36 px") for exactly these, not the usual 44px. Not a widened
-// exemption invented by this audit: the mockup predates it.
-const SIZE_36_LABELS = new Set(["O-O", "O-O-O", "Undo last entry"]);
+// MoveList.tsx's ticker row (data-flat="ticker") is `min-h-9` (36px) by
+// approved design -- Part 2's check B names this exact floor ("Visual
+// height >= 36 px") for it, not the usual 44px. The castle/backspace row
+// (Button.tsx's "keypadRow" size) is full height everywhere except
+// `shortscape`, where the same 36px floor applies via `b.shortscape` below.
 
 export interface RunChecksOptions {
   /** During engine thinking or the peek timer -- G is expected to be noisy there. */
@@ -79,7 +77,7 @@ export async function runChecks(page: Page, ctx: AuditContext, checkpoint: strin
       if (!b.hit) record("A", b.label, "elementFromPoint at its center did not resolve to this control");
       else if (b.blocked) record("A", b.label, "pointer-events: none on this control or an ancestor");
     }
-    const heightFloor = SIZE_36_LABELS.has(b.label) || b.flat === "ticker" || b.shortscape ? 36 : 44;
+    const heightFloor = b.flat === "ticker" || b.shortscape ? 36 : 44;
     if (b.w < 44 - 0.5 || b.h < heightFloor - 0.5) {
       record("B", b.label, `hit box ${b.w.toFixed(0)}x${b.h.toFixed(0)}px, needs >= 44x${heightFloor}`);
     }

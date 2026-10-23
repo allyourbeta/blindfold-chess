@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   LoaderCircle,
   Moon,
@@ -14,7 +14,12 @@ import { Share, Plus, X, Download } from "lucide-react";
 import { opponentName, levelLabel } from "@/engine/opponentLabel";
 import { useTheme } from "@/hooks/useTheme";
 import { unlockAudioOutput } from "@/hooks/useSpeechOutput";
+import { promptCreatorUnlock } from "@/state/creatorPrompt";
 import { GameSettingsPanel } from "./GameSettingsPanel";
+
+/** Hidden creator unlock (SPEC_final_polish.md): 5 taps on the build line within this window. */
+const BUILD_LINE_TAP_WINDOW_MS = 3000;
+const BUILD_LINE_TAPS_TO_UNLOCK = 5;
 
 interface MenuScreenProps {
   onPlay(): void;
@@ -34,6 +39,19 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
   const [practiceStats] = useState(() => formatPracticeStats(getGameHistory()));
   const { advice, install } = useInstallPrompt();
   const [showInstall, setShowInstall] = useState(false);
+  const buildLineTaps = useRef<number[]>([]);
+
+  function handleBuildLineTap() {
+    const now = Date.now();
+    const recent = buildLineTaps.current.filter((t) => now - t < BUILD_LINE_TAP_WINDOW_MS);
+    recent.push(now);
+    if (recent.length >= BUILD_LINE_TAPS_TO_UNLOCK) {
+      buildLineTaps.current = [];
+      promptCreatorUnlock();
+    } else {
+      buildLineTaps.current = recent;
+    }
+  }
 
   const engineStatus = useGameStore((s) => s.engineStatus);
   const startNewGame = useGameStore((s) => s.startNewGame);
@@ -243,7 +261,14 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
         {practiceStats && (
           <p className="mt-auto pt-8 text-center text-sm text-text-secondary">{practiceStats}</p>
         )}
-        <p className="mt-auto pt-4 text-center text-sm text-text-muted">build {__GIT_COMMIT__} · {__BUILD_TIME__}</p>
+        <button
+          type="button"
+          data-flat="stamp"
+          onClick={handleBuildLineTap}
+          className="mt-auto min-h-11 w-full pt-4 text-center text-sm text-text-muted"
+        >
+          build {__GIT_COMMIT__} · {__BUILD_TIME__}
+        </button>
       </main>
     </div>
   );

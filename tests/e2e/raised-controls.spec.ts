@@ -8,7 +8,7 @@ import { waitForEngineReady, resignGame, submitMove, keypad, PHONE_USABLE } from
 // gradient + 1px border + 2px darker bottom edge + faint shadow) for every
 // button in the app. A control that genuinely can't carry it is marked
 // data-flat with one of a fixed set of reasons, enforced below.
-const ALLOWED_FLAT = ["square", "card", "icon", "ticker"];
+const ALLOWED_FLAT = ["square", "card", "icon", "ticker", "stamp"];
 
 async function openAppWithTheme(page: Page, theme: "light" | "dark") {
   await page.addInitScript((t: string) => {

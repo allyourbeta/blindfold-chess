@@ -49,7 +49,7 @@ const buttonVariants = cva(
         keypadKey: "h-16 whitespace-nowrap rounded-xl px-1 text-2xl shortscape:h-16",
         // The castle/backspace row — short, rarely tapped, but still has to
         // be read. Its own size rather than `default` plus a className.
-        keypadRow: "h-9 whitespace-nowrap rounded-xl px-2 text-base",
+        keypadRow: "h-11 shortscape:h-9 whitespace-nowrap rounded-xl px-2 text-base",
         // The endgames position screen's side-by-side pair
         // (SPEC_buttons_results.md): tall enough for a two-line label, so no
         // whitespace-nowrap -- the browser default (normal) lets it wrap.

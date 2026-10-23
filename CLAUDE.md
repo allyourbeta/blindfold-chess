@@ -50,6 +50,8 @@ panel. It takes effect on that device immediately and everywhere within
 about a minute (the removal is its own commit + redeploy). Visiting
 `#creator` again on an unlocked device offers to lock it.
 
+Unlock on any device, including the installed app: tap the build line on the menu 5 times.
+
 ## Design
 
 Every control uses `.raised` / `.raised-on` / `.raised-danger` (via Button or SegmentedControl). A button that must be flat carries `data-flat`; `raised-controls.spec.ts` enforces it.

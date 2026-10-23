@@ -6,6 +6,7 @@ import {
   resignGame,
   unlock,
   assertNoButtonBelow44px,
+  boxesOf,
   PHONE_USABLE,
 } from "./helpers";
 
@@ -160,16 +161,39 @@ for (const viewport of [PHONE_USABLE, NARROW_PHONE]) {
 
     test("play screen", async ({ page }) => {
       await startStandardGame(page);
-      // O-O / O-O-O / Undo last entry use Button's "keypadRow" size
-      // (h-9, src/components/ui/Button.tsx) -- a pre-existing, deliberate
-      // exception documented there ("short, rarely tapped, but still has
-      // to be read"), confirmed at 393x742, 390x844 and 1280x1200 to render
-      // at the same ~38px regardless of viewport. Unrelated to the
-      // flex-shrink squeeze this spec fixes: this screen isn't one of the
-      // six scroll containers that change touches, and nothing here
-      // shrinks with viewport height. Filed as bc-rqa4kb, not fixed in
-      // this round.
-      await assertNoButtonBelow44px(page, [/^O-O/, /^Undo last entry/]);
+      // O-O / O-O-O / Undo last entry grew to 44px in portrait
+      // (SPEC_final_polish.md, Button.tsx's "keypadRow" size) -- no
+      // exemption needed here any more. They're still 36px under
+      // `shortscape`, covered separately in auditChecks.ts's check B.
+      await assertNoButtonBelow44px(page);
     });
   });
 }
+
+// SPEC_final_polish.md Part 3: the castle/backspace row grows to 44px in
+// portrait but stays 36px under `shortscape` -- the message log, not these
+// keys, is what's supposed to shrink on a short landscape phone.
+test.describe("keypad row height", () => {
+  test("O-O / O-O-O / Undo last entry are 44px tall at PHONE_USABLE", async ({ page }) => {
+    await page.setViewportSize(PHONE_USABLE);
+    await startStandardGame(page);
+    const boxes = await boxesOf(page);
+    for (const label of ["O-O", "O-O-O", "Undo last entry"]) {
+      const box = boxes.find((b) => b.label === label);
+      expect(box, `no button labeled "${label}"`).toBeTruthy();
+      expect(box!.h, `${label} is ${box!.h}px tall`).toBeGreaterThanOrEqual(44 - 0.5);
+    }
+  });
+
+  test("O-O / O-O-O / Undo last entry are still 36px tall at 742x393 landscape", async ({ page }) => {
+    await page.setViewportSize({ width: 742, height: 393 });
+    await startStandardGame(page);
+    const boxes = await boxesOf(page);
+    for (const label of ["O-O", "O-O-O", "Undo last entry"]) {
+      const box = boxes.find((b) => b.label === label);
+      expect(box, `no button labeled "${label}"`).toBeTruthy();
+      expect(box!.h, `${label} is ${box!.h}px tall`).toBeLessThan(44 - 0.5);
+      expect(box!.h, `${label} is ${box!.h}px tall`).toBeGreaterThanOrEqual(36 - 0.5);
+    }
+  });
+});

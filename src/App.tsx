@@ -7,7 +7,7 @@ import { EndgamesScreen } from "@/components/screens/EndgamesScreen";
 import { useGameStore } from "@/state/gameStore";
 import { useTheme } from "@/hooks/useTheme";
 import { ENDGAMES, type SizeBucket } from "@/services/endgames/catalog";
-import { useCreator } from "@/state/creatorStore";
+import { promptCreatorUnlock } from "@/state/creatorPrompt";
 import { useRemovedStore } from "@/state/removedStore";
 
 type Screen = "menu" | "setup" | "play" | "endgames";
@@ -42,20 +42,12 @@ export default function App() {
 
   // `#creator` (decision 8): unlock this device with a password prompt, or
   // -- already unlocked -- offer to lock it again. Other users never see
-  // this; it's reached only by typing the hash in directly.
+  // this; it's reached only by typing the hash in directly, or by tapping
+  // the menu's build line 5 times (MenuScreen.tsx).
   useEffect(() => {
     function handleCreatorHash() {
       if (window.location.hash !== "#creator") return;
-      const creator = useCreator.getState();
-      if (creator.password !== null) {
-        if (window.confirm("Lock this device?")) creator.lock();
-        return;
-      }
-      const entered = window.prompt("Password:");
-      if (entered === null) return;
-      void creator.unlock(entered).then((ok) => {
-        if (!ok) window.alert("Wrong password");
-      });
+      promptCreatorUnlock();
     }
     handleCreatorHash();
     window.addEventListener("hashchange", handleCreatorHash);
