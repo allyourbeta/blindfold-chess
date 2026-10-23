@@ -32,6 +32,7 @@ export function PeekPanel() {
           defaultFlipped={playerColor === "b"}
           highlightFrom={lastMove?.from}
           highlightTo={lastMove?.to}
+          showRotate={false}
         />
       </div>
     </div>

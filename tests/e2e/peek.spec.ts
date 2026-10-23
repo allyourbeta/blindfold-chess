@@ -32,6 +32,12 @@ test("peek-labels.png", async ({ page }) => {
   await page.screenshot({ path: "test-results/peek-labels.png" });
 });
 
+test("the peek board has no rotate button -- it could never be tapped", async ({ page }) => {
+  await startStandardGame(page);
+  await page.getByLabel("Peek at the board").click();
+  expect(await page.getByLabel("Rotate the board 180 degrees").count()).toBe(0);
+});
+
 test("peek reveals the board and hides after three seconds", async ({ page }) => {
   await startStandardGame(page);
 
