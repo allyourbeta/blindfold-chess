@@ -1,7 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { waitForEngineReady, PHONE_USABLE } from "./helpers";
+import { waitForEngineReady, muteAudio, PHONE_USABLE } from "./helpers";
 import { createErrorTracker, runChecks, type AuditContext, type Finding } from "./auditChecks";
 import { walkMenu, walkSetupAndDraw, walkPlayFromMenu, walkPromotionChooser, walkLeaveConfirm, type RunFn } from "./auditWalkSteps";
 import { walkEndgameLab } from "./auditWalkLab";
@@ -26,6 +26,7 @@ const COMBOS: Combo[] = [
 ];
 
 async function openAppWithTheme(page: Page, theme: "light" | "dark") {
+  await muteAudio(page);
   await page.addInitScript((t: string) => {
     localStorage.setItem("blindfoldShowTicker", "true");
     localStorage.setItem("blindfoldAssistMode", "assisted");
@@ -76,19 +77,14 @@ for (const combo of COMBOS) {
         JSON.stringify({ findings, skippedImages: Array.from(ctx.imagesSkippedForContrast) }, null, 2),
       );
 
-      // SPEC_final_polish.md: check F (contrast) is now blocking like every
-      // other check. The darker text tokens it drove (src/index.css) clear
-      // every ratio this audit measures EXCEPT one pre-existing pair outside
-      // this round's stone/amber palette: a player-move log line
-      // (MessageLog.tsx's "player" type, text-text-success green) over the
-      // app's base surface, unchanged by and unreachable from this round's
-      // token move. Per the spec's own pre-answered guidance ("a failure
-      // this change can't touch? report it, don't call it stale"), it's
-      // named here by its exact ratio rather than fixed or silently dropped,
-      // and stays listed under "Needs Ashish" in docs/AUDIT_FINDINGS.md.
-      const PRE_EXISTING_UNFIXABLE_F = "contrast 3.08:1, needs >= 4.5:1 (font 17px)";
-      const blocking = findings.filter((f) => !(f.check === "F" && f.detail === PRE_EXISTING_UNFIXABLE_F));
-      expect(blocking, `${blocking.length} finding(s) -- see docs/AUDIT_FINDINGS.md`).toEqual([]);
+      // SPEC_last_quirks_and_mute.md Part E: the player-move log green
+      // (text-text-success) that SPEC_final_polish.md had to exempt here by
+      // exact ratio is now green-800 (#166534) -- dark enough to clear
+      // contrast on the beige page too. No exemption left: check F is
+      // blocking with zero exceptions except the board's own rank/file
+      // labels, which auditChecksDom.ts's collectContrast already excludes
+      // by design (Lichess's own convention, not a gap in this check).
+      expect(findings, `${findings.length} finding(s) -- see docs/AUDIT_FINDINGS.md`).toEqual([]);
     });
   });
 }

@@ -1,5 +1,5 @@
 import type { Page } from "@playwright/test";
-import { collectControlBoxes, collectOverflow, collectContrast, countMutations } from "./auditChecksDom";
+import { collectControlBoxes, collectOverflow, collectButtonTextOverflow, collectContrast, countMutations } from "./auditChecksDom";
 
 // SPEC_full_app_audit.md Part 2 -- the eight checks (A-H) run at every
 // checkpoint of the walk. Kept out of audit-walk.spec.ts (not matched by
@@ -112,6 +112,13 @@ export async function runChecks(page: Page, ctx: AuditContext, checkpoint: strin
   const overflow = await collectOverflow(page);
   if (overflow.htmlOverflow) record("C", "document", "horizontal page scroll: documentElement.scrollWidth > window.innerWidth");
   for (const o of overflow.items) record("C", o.label, o.detail);
+
+  // SPEC_last_quirks_and_mute.md Part D -- a button's text spilling past its
+  // own border box, regardless of `overflow`. Part of check C (overflow),
+  // not its own letter: same category, a different way an element's content
+  // can escape its box.
+  const textOverflow = await collectButtonTextOverflow(page);
+  for (const t of textOverflow.items) record("C", t.label, t.detail);
 
   const contrast = await collectContrast(page);
   for (const f of contrast.failures) record("F", f.label, f.detail);

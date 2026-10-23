@@ -9,7 +9,7 @@ const BLACK_PIECES = ["k", "q", "r", "b", "n", "p"];
 interface SetupBoardProps {
   board: BoardMatrix;
   flipped: boolean;
-  selectedPiece: string;
+  selectedPiece: string | null;
   onSelectPiece(piece: string): void;
   onSquareClick(row: number, col: number): void;
 }
@@ -20,7 +20,7 @@ function PaletteGroup({
   onSelectPiece,
 }: {
   pieces: string[];
-  selectedPiece: string;
+  selectedPiece: string | null;
   onSelectPiece(piece: string): void;
 }) {
   return (
@@ -32,8 +32,8 @@ function PaletteGroup({
           onClick={() => onSelectPiece(p)}
           aria-pressed={p === selectedPiece}
           className={cn(
-            "flex h-11 flex-1 items-center justify-center rounded-xl transition-colors",
-            p === selectedPiece ? "raised-on" : "raised",
+            "raised flex h-11 flex-1 items-center justify-center rounded-xl transition-colors",
+            p === selectedPiece && "outline outline-[2.5px] outline-offset-1 outline-text-accent",
           )}
         >
           <PieceGlyph piece={p} />

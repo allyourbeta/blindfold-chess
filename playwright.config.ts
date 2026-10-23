@@ -86,7 +86,11 @@ export default defineConfig({
     },
   ],
   projects: [
-    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
+    // `--mute-audio`: SPEC_last_quirks_and_mute.md -- a real test run must
+    // make no sound on Ashish's Mac. Chromium-only flag; webkit-iphone has
+    // no such switch, so it relies entirely on helpers.ts's muteAudio() init
+    // script instead. Never remove either -- see CLAUDE.md.
+    { name: "chromium", use: { ...devices["Desktop Chrome"], launchOptions: { args: ["--mute-audio"] } } },
     // Chromium at iPhone 13 dimensions rather than the WebKit device preset
     // — this is a mobile-viewport layout check, not a Safari-engine check
     // (real iOS behavior, especially speech, needs a physical device — see
@@ -99,6 +103,7 @@ export default defineConfig({
         deviceScaleFactor: 3,
         isMobile: true,
         hasTouch: true,
+        launchOptions: { args: ["--mute-audio"] },
       },
     },
     // Real WebKit (Safari's engine), not Chromium at iPhone dimensions --
@@ -108,7 +113,7 @@ export default defineConfig({
     // Chromium-only. Its own baseURL — see the second webServer entry above.
     {
       name: "webkit-iphone",
-      testMatch: ["endgames.spec.ts", "endgames-scroll.spec.ts", "message-log.spec.ts", "flicker.spec.ts", "audit-walk.spec.ts"],
+      testMatch: ["endgames.spec.ts", "endgames-scroll.spec.ts", "message-log.spec.ts", "flicker.spec.ts", "audit-walk.spec.ts", "mute.spec.ts"],
       use: { ...devices["iPhone 13"], baseURL: "http://localhost:4191" },
     },
   ],

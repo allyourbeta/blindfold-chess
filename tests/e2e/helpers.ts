@@ -17,6 +17,31 @@ import { expect, type Page } from "@playwright/test";
 export const PHONE_USABLE = { width: 393, height: 742 };
 
 /**
+ * SPEC_last_quirks_and_mute.md -- a test run must make no sound on Ashish's
+ * Mac. `--mute-audio` (playwright.config.ts) covers Chromium; webkit-iphone
+ * has no such flag, so this wraps the two APIs that can actually make noise
+ * at the source, inside the page itself, before any app code runs. Wrapping
+ * (not just setting `muted`/`volume` once) means every later `play()` or
+ * `speak()` call -- not just the first -- stays silent. Never remove.
+ */
+export async function muteAudio(page: Page) {
+  await page.addInitScript(() => {
+    const originalPlay = HTMLMediaElement.prototype.play;
+    HTMLMediaElement.prototype.play = function (this: HTMLMediaElement, ...args) {
+      this.muted = true;
+      return originalPlay.apply(this, args);
+    };
+    if (window.speechSynthesis) {
+      const originalSpeak = window.speechSynthesis.speak.bind(window.speechSynthesis);
+      window.speechSynthesis.speak = (utterance: SpeechSynthesisUtterance) => {
+        utterance.volume = 0;
+        return originalSpeak(utterance);
+      };
+    }
+  });
+}
+
+/**
  * Opens the app with the settings most e2e flows assume: ticker visible and
  * assisted keypad. The production DEFAULTS are the opposite (ticker hidden,
  * strict) — strict-ticker.spec.ts covers those explicitly with a bare goto.
@@ -27,6 +52,7 @@ export async function openApp(page: Page) {
 
 /** Like openApp, but to any path -- e.g. "/#creator". */
 export async function openAppAt(page: Page, path: string) {
+  await muteAudio(page);
   await page.addInitScript(() => {
     localStorage.setItem("blindfoldShowTicker", "true");
     localStorage.setItem("blindfoldAssistMode", "assisted");

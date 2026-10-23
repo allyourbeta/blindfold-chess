@@ -68,7 +68,7 @@ export function EndgamesPosition({
   return (
     <div
       data-testid="endgame-scroll"
-      className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))] [&>*]:shrink-0"
+      className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1.5rem,calc(env(safe-area-inset-top)+0.75rem))] pb-[max(2.5rem,env(safe-area-inset-bottom))] [&>*]:shrink-0"
     >
       <EndgamesHeader
         title={bucket.label}

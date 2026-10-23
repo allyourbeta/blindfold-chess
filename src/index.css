@@ -65,7 +65,7 @@
   --color-text-primary: var(--color-stone-900);
   --color-text-secondary: var(--color-stone-600);
   --color-text-muted: var(--color-stone-600);
-  --color-text-accent: var(--color-amber-700);
+  --color-text-accent: var(--color-amber-800);
   --color-text-on-primary: var(--color-stone-900);
   --color-text-on-dark: #ffffff;
 
@@ -75,9 +75,9 @@
 
   --color-ring-focus: var(--color-amber-500);
 
-  --color-text-success: #16a34a;
+  --color-text-success: #166534;
   --color-text-info: #2563eb;
-  --color-text-error: #dc2626;
+  --color-text-error: #b91c1c;
   --color-bg-error-soft: #fef2f2;
 
   /* Board */

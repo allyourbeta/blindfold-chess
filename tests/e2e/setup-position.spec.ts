@@ -164,6 +164,95 @@ test("Reset/Clear/Play sit above the castling group, which sits above the FEN ro
   expect(castlingTop!).toBeLessThan(fenTop!);
 });
 
+// SPEC_last_quirks_and_mute.md Part C -- no piece is pre-selected on entry.
+
+test("no palette piece is selected when the screen opens", async ({ page }) => {
+  await openApp(page);
+  await waitForEngineReady(page);
+  await page.getByRole("button", { name: /set up a position/i }).click();
+
+  // Accessible name comes from the nested piece glyph's <img alt>, not a
+  // button-level aria-label (PieceGlyph.tsx's `describe()`) -- this is what
+  // distinguishes an actual palette button from a castling toggle, which
+  // embeds the SAME glyph (for its own icon) but carries its own
+  // aria-label ("White O-O") that overrides it as the accessible name.
+  const { paletteCount, anyPressed } = await page.evaluate(() => {
+    const paletteButtons = Array.from(document.querySelectorAll("button")).filter((b) => {
+      const img = b.querySelector("img");
+      return !!img && !b.hasAttribute("aria-label") && /^(white|black) (king|queen|rook|bishop|knight|pawn)$/.test(img.alt);
+    });
+    return {
+      paletteCount: paletteButtons.length,
+      anyPressed: paletteButtons.some((b) => b.getAttribute("aria-pressed") === "true"),
+    };
+  });
+  expect(paletteCount).toBeGreaterThan(0); // sanity: the palette actually rendered
+  expect(anyPressed).toBe(false);
+});
+
+test("tapping an occupied square with nothing selected empties it", async ({ page }) => {
+  await openApp(page);
+  await waitForEngineReady(page);
+  await page.getByRole("button", { name: /set up a position/i }).click();
+
+  // a1 starts with the white rook. Nothing is selected -- tapping it should
+  // remove the rook, not place whatever used to be the default (a pawn).
+  await page.getByLabel("square a1").click();
+
+  await page.getByRole("button", { name: "Play Blindfold" }).click();
+  await expect(keypad(page)).toBeVisible();
+
+  await tapMoreAction(page, /FEN/);
+  const fenMessage = page.locator("text=/^\\S+ w /");
+  await expect(fenMessage).toBeVisible();
+  const fen = (await fenMessage.textContent()) ?? "";
+  const placement = fen.split(" ")[0];
+  expect(pieceAt(placement, "a1")).toBeNull();
+});
+
+test("tapping an empty square with nothing selected does nothing", async ({ page }) => {
+  await openApp(page);
+  await waitForEngineReady(page);
+  await page.getByRole("button", { name: /set up a position/i }).click();
+
+  // e4 starts empty. Nothing is selected -- tapping it must stay empty.
+  await page.getByLabel("square e4").click();
+
+  await page.getByRole("button", { name: "Play Blindfold" }).click();
+  await expect(keypad(page)).toBeVisible();
+
+  await tapMoreAction(page, /FEN/);
+  const fenMessage = page.locator("text=/^\\S+ w /");
+  await expect(fenMessage).toBeVisible();
+  const fen = (await fenMessage.textContent()) ?? "";
+  const placement = fen.split(" ")[0];
+  expect(pieceAt(placement, "e4")).toBeNull();
+});
+
+test("selecting a piece shows a thin outline, not the amber fill", async ({ page }) => {
+  await openApp(page);
+  await waitForEngineReady(page);
+  await page.getByRole("button", { name: /set up a position/i }).click();
+
+  const queenButton = page.getByRole("button", { name: "white queen", exact: true });
+  const rookButton = page.getByRole("button", { name: "white rook", exact: true }); // stays unselected, for comparison
+  await queenButton.click();
+  await page.mouse.move(0, 0); // off both buttons -- :hover repaints the gradient via color-mix()
+
+  await expect(queenButton).toHaveAttribute("aria-pressed", "true");
+  const outline = await queenButton.evaluate((el) => getComputedStyle(el).outlineStyle);
+  expect(outline).not.toBe("none");
+
+  // No amber gradient fill (that's what "raised-on" paints): the selected
+  // button's background must match an UNSELECTED palette button's --
+  // both stay on the plain "raised" off-fill, only the outline differs.
+  const [queenBg, rookBg] = await Promise.all([
+    queenButton.evaluate((el) => getComputedStyle(el).backgroundImage),
+    rookButton.evaluate((el) => getComputedStyle(el).backgroundImage),
+  ]);
+  expect(queenBg).toBe(rookBg);
+});
+
 test("tapping a square replaces its piece with the selected one", async ({ page }) => {
   await openApp(page);
   await waitForEngineReady(page);

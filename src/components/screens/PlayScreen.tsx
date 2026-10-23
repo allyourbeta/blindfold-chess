@@ -65,7 +65,7 @@ export function PlayScreen({ onMenu, onEndgames, onEditPosition }: PlayScreenPro
   }
 
   return (
-    <div className="flex h-[100dvh] w-full flex-col overflow-hidden p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]">
+    <div className="flex h-[100dvh] w-full flex-col overflow-hidden p-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,calc(env(safe-area-inset-top)+0.75rem))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]">
       <div className="mb-1 flex items-center justify-between border-b border-border-default pb-1 shortscape:mb-1 shortscape:pb-1">
         <button
           onClick={handleBack}

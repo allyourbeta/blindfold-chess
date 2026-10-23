@@ -26,6 +26,10 @@ Each position has a permanent `code` (E###). To delete one, remove it from
 
 **Any UI change must pass `audit-walk.spec.ts` (all viewports/themes).** New screens, dialogs or controls get a checkpoint in it (`tests/e2e/auditWalkSteps.ts` or `tests/e2e/auditWalkLab.ts`) in the same commit.
 
+**Testing is silent.** Test browsers are muted (`--mute-audio` in `playwright.config.ts`, `muteAudio()` in `tests/e2e/helpers.ts`). Never remove either.
+
+**Layout.** Top padding is always status bar + 12px: `pt-[max(1rem,calc(env(safe-area-inset-top)+0.75rem))]` (the four lab screens use `1.5rem` as the first argument instead of `1rem`).
+
 ## Adding, deleting and listing endgame positions
 
 ```

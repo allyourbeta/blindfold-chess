@@ -62,7 +62,7 @@ function applyFen(fen: string): ParsedSetup {
 export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
   const [initialSetup] = useState<ParsedSetup | null>(() => (initialFen ? applyFen(initialFen) : null));
   const [board, setBoard] = useState<BoardMatrix>(() => initialSetup?.board ?? fenToBoard(STARTING_FEN));
-  const [selectedPiece, setSelectedPiece] = useState("P");
+  const [selectedPiece, setSelectedPiece] = useState<string | null>(null);
   const [turn, setTurn] = useState<"w" | "b">(() => initialSetup?.turn ?? "w");
   const [castling, setCastling] = useState<Record<CastlingKey, boolean>>(
     () => initialSetup?.castling ?? { K: true, Q: true, k: true, q: true },
@@ -97,7 +97,7 @@ export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
     clearSetupError();
     setBoard((prev) => {
       const next = prev.map((r) => [...r]);
-      next[row][col] = next[row][col] === selectedPiece ? null : selectedPiece;
+      next[row][col] = selectedPiece === null ? null : next[row][col] === selectedPiece ? null : selectedPiece;
       return next;
     });
     setEnPassant("-");
@@ -153,7 +153,7 @@ export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
   }
 
   return (
-    <div className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))] [&>*]:shrink-0">
+    <div className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1rem,calc(env(safe-area-inset-top)+0.75rem))] pb-[max(2.5rem,env(safe-area-inset-bottom))] [&>*]:shrink-0">
       <header className="grid grid-cols-[auto_1fr_auto] items-center gap-2 border-b border-border-default pb-1.5">
         <button
           onClick={onBack}

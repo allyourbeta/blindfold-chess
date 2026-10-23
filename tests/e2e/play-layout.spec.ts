@@ -38,6 +38,26 @@ test.describe("phone-usable layout", () => {
     const actionBarBottom = await page.getByTestId("action-bar").evaluate((el) => el.getBoundingClientRect().bottom);
     expect(actionBarBottom).toBeLessThanOrEqual(PHONE_USABLE.height);
   });
+
+  // SPEC_last_quirks_and_mute.md Part B -- on phones the app frame's own
+  // background is now bg-base (the same beige as the OS bands above/below
+  // it), not bg-surface. Compared against a probe element holding the raw
+  // token rather than a hardcoded hex, so this stays correct if the token's
+  // value ever changes.
+  test("the app frame's background is bg-base, not bg-surface", async ({ page }) => {
+    await startAndRejectAMove(page);
+
+    const { frameBg, baseToken } = await page.evaluate(() => {
+      const frame = document.querySelector('[data-testid="app-frame"]') as HTMLElement;
+      const probe = document.createElement("div");
+      probe.style.background = "var(--color-bg-base)";
+      document.body.appendChild(probe);
+      const baseToken = getComputedStyle(probe).backgroundColor;
+      probe.remove();
+      return { frameBg: getComputedStyle(frame).backgroundColor, baseToken };
+    });
+    expect(frameBg).toBe(baseToken);
+  });
 });
 
 test.describe("small iPhone usable area", () => {

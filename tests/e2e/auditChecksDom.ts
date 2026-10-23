@@ -141,6 +141,87 @@ export async function collectControlBoxes(page: Page): Promise<ControlBox[]> {
   }, { selector: CONTROL_SELECTOR, shortscape });
 }
 
+export interface TextOverflowResult {
+  items: { label: string; detail: string }[];
+}
+
+/**
+ * SPEC_last_quirks_and_mute.md Part D -- a text node can spill past its own
+ * button's border box even when nothing has `overflow: hidden` (the bug
+ * collectOverflow's own check can't see: it only looks at elements that ARE
+ * clipping something). Walks every text node under every visible button and
+ * takes the union of its rendered Range rects, not the button's own
+ * scrollWidth -- a button's content box can be exactly as wide as its text
+ * and still report no overflow by that measure alone.
+ */
+export async function collectButtonTextOverflow(page: Page): Promise<TextOverflowResult> {
+  return page.evaluate(() => {
+    const TOLERANCE = 1;
+    const items: { label: string; detail: string }[] = [];
+    document.querySelectorAll<HTMLElement>("button, [role='button']").forEach((btn) => {
+      // Square.tsx's coordinate labels sit by design right at the square's
+      // own corner/edge (Lichess's convention) -- the same shape of
+      // "noisy on a legitimate design" case collectContrast already
+      // exempts for this exact element via `[data-square]`.
+      if (btn.getAttribute("data-flat") === "square") return;
+      const box = btn.getBoundingClientRect();
+      if (box.width === 0 || box.height === 0) return;
+      const cs = getComputedStyle(btn);
+      if (cs.visibility === "hidden" || cs.display === "none" || Number(cs.opacity) === 0) return;
+
+      // Tailwind's `truncate` (overflow-x: hidden + text-overflow: ellipsis)
+      // lays the full-width text box out before clipping it visually -- a
+      // Range over that text reports the UNCLIPPED width, which would
+      // otherwise look identical to a real overflow. collectOverflow's own
+      // check carries the same exemption for the same reason.
+      function isDeliberatelyTruncated(el: Element | null): boolean {
+        let n = el;
+        while (n && n !== btn.parentElement) {
+          if (getComputedStyle(n).textOverflow === "ellipsis") return true;
+          n = n.parentElement;
+        }
+        return false;
+      }
+
+      let minLeft = Infinity;
+      let minTop = Infinity;
+      let maxRight = -Infinity;
+      let maxBottom = -Infinity;
+      let found = false;
+      const walker = document.createTreeWalker(btn, NodeFilter.SHOW_TEXT);
+      let node = walker.nextNode();
+      while (node) {
+        if ((node.textContent ?? "").trim() && !isDeliberatelyTruncated(node.parentElement)) {
+          const range = document.createRange();
+          range.selectNodeContents(node);
+          for (const r of Array.from(range.getClientRects())) {
+            if (r.width === 0 && r.height === 0) continue;
+            found = true;
+            minLeft = Math.min(minLeft, r.left);
+            minTop = Math.min(minTop, r.top);
+            maxRight = Math.max(maxRight, r.right);
+            maxBottom = Math.max(maxBottom, r.bottom);
+          }
+        }
+        node = walker.nextNode();
+      }
+      if (!found) return;
+      const escapes =
+        minLeft < box.left - TOLERANCE ||
+        maxRight > box.right + TOLERANCE ||
+        minTop < box.top - TOLERANCE ||
+        maxBottom > box.bottom + TOLERANCE;
+      if (!escapes) return;
+      const label = (btn.getAttribute("aria-label") || btn.textContent || "?").trim().slice(0, 40);
+      items.push({
+        label,
+        detail: `text extent [${minLeft.toFixed(0)},${minTop.toFixed(0)},${maxRight.toFixed(0)},${maxBottom.toFixed(0)}] escapes border box [${box.left.toFixed(0)},${box.top.toFixed(0)},${box.right.toFixed(0)},${box.bottom.toFixed(0)}]`,
+      });
+    });
+    return { items };
+  });
+}
+
 export interface OverflowResult {
   htmlOverflow: boolean;
   items: { label: string; detail: string }[];

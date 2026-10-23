@@ -107,7 +107,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
         own box actually contain the button, so nothing below can ever
         scroll under it.
       */}
-      <header className="relative z-10 flex shrink-0 justify-end px-5 pb-2 pt-[max(1rem,env(safe-area-inset-top))]">
+      <header className="relative z-10 flex shrink-0 justify-end px-5 pb-2 pt-[max(1rem,calc(env(safe-area-inset-top)+0.75rem))]">
         <button
           type="button"
           onClick={toggleTheme}
@@ -175,10 +175,10 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
                 onClick={toggleSettings}
                 aria-expanded={showSettings}
                 aria-controls="game-settings"
-                className="raised min-h-16 rounded-xl px-2 py-2 text-center"
+                className="raised min-h-16 rounded-xl px-1 py-2 text-center"
               >
                 <span className="block text-xs font-semibold text-text-muted">{chip.label}</span>
-                <span className="mt-0.5 block text-base font-bold text-text-primary">{chip.value}</span>
+                <span className="mt-0.5 block break-words text-base font-bold text-text-primary">{chip.value}</span>
               </button>
             ))}
           </div>

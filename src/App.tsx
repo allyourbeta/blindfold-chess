@@ -91,7 +91,7 @@ export default function App() {
           // player scroll it back once it has. `overflow-clip` clips
           // without creating a scrollport, so there is no scroll position
           // for the browser to move in the first place.
-          "flex h-dvh w-full max-w-lg flex-col overflow-clip bg-bg-surface sm:h-full sm:max-h-[46rem] sm:rounded-3xl sm:border-2 sm:border-border-emphasis sm:shadow-2xl shortscape:h-dvh shortscape:max-h-none shortscape:max-w-none shortscape:rounded-none shortscape:border-0",
+          "flex h-dvh w-full max-w-lg flex-col overflow-clip bg-bg-base sm:bg-bg-surface sm:h-full sm:max-h-[46rem] sm:rounded-3xl sm:border-2 sm:border-border-emphasis sm:shadow-2xl shortscape:h-dvh shortscape:max-h-none shortscape:max-w-none shortscape:rounded-none shortscape:border-0 shortscape:bg-bg-base",
           // The menu holds half a screen of content; play and setup depend on
           // a definite height for the keypad and log. So only the menu hugs
           // its content on desktop, and only there.

@@ -1,28 +1,19 @@
 # AUDIT_FINDINGS.md
 
-Generated 10/23/2026, 3:37:27 PM at 73d63b9388d7985d64a948b3fa7786c573d15f83.
+Generated 10/23/2026, 4:58:12 PM at 216776a6ae1ca918e754fd3b2347e020571239e0.
 
-91 finding(s) across 9 viewport/theme/project run(s).
+0 finding(s) across 9 viewport/theme/project run(s).
 
 - A: 0
 - B: 0
 - C: 0
 - D: 0
 - E: 0
-- F: 91
+- F: 0
 - G: 0
 - H: 0
 
 No blocking (A-E, G, H) findings. The walk is mechanically clean.
-
-## Needs Ashish -- contrast on existing, already-shipped colour tokens (non-blocking)
-
-Every pair below is an existing design token this audit is not allowed to recolour (SPEC_full_app_audit.md Part 3.5). Reported per the spec's own pre-answered guidance, not auto-fixed.
-
-| element | detail | occurrences | seen in |
-|---|---|---|---|
-| White: e4 | contrast 3.08:1, needs >= 4.5:1 (font 17px) | 77 | landscape/light, phone-usable/light, small-iphone/light |
-| White: a8=Q+ | contrast 3.08:1, needs >= 4.5:1 (font 17px) | 14 | landscape/light, phone-usable/light, small-iphone/light |
 
 ## Contrast check skipped (text sits over an image/gradient background)
 - 1
