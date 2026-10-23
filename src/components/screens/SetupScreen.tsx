@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowUpDown } from "lucide-react";
+import { ArrowDownUp, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { SetupBoard } from "@/components/board/SetupBoard";
@@ -146,19 +146,23 @@ export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
   }
 
   return (
-    <div className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))]">
-      <header className="flex items-center gap-3 border-b border-border-default pb-4 pt-2">
-        <button onClick={onBack} aria-label="Back to menu" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt">
-          <ArrowLeft className="h-5 w-5" />
+    <div className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))]">
+      <header className="grid grid-cols-[auto_1fr_auto] items-center gap-2 border-b border-border-default pb-1.5">
+        <button onClick={onBack} aria-label="Back to menu" className="flex h-11 items-center">
+          <span className="inline-flex h-9 items-center gap-1 rounded-full border border-border-default bg-bg-surface-alt py-0 pl-2 pr-3 text-sm font-bold text-text-primary">
+            <ChevronLeft className="h-4 w-4" />
+            Menu
+          </span>
         </button>
-        <h1 className="flex-1 text-lg font-semibold text-text-accent">Position Setup</h1>
-        <button
-          onClick={() => toggleBoardFlip(playerColor === "b")}
-          aria-label="Rotate the board 180 degrees"
-          className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-bg-surface-alt"
-        >
-          <ArrowUpDown className="h-5 w-5" />
-        </button>
+        <h1 className="min-w-0 overflow-hidden text-center text-xl font-extrabold whitespace-nowrap text-text-accent">
+          Position Setup
+        </h1>
+        <span aria-hidden="true" className="invisible flex h-11 items-center">
+          <span className="inline-flex h-9 items-center gap-1 rounded-full border py-0 pl-2 pr-3 text-sm font-bold">
+            <ChevronLeft className="h-4 w-4" />
+            Menu
+          </span>
+        </span>
       </header>
 
       <SetupBoard
@@ -182,6 +186,15 @@ export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
             ]}
           />
         </div>
+        <Button
+          type="button"
+          variant="secondary"
+          size="icon"
+          aria-label="Rotate the board 180 degrees"
+          onClick={() => toggleBoardFlip(playerColor === "b")}
+        >
+          <ArrowDownUp className="h-5 w-5" />
+        </Button>
       </div>
 
       <div className="flex gap-2">

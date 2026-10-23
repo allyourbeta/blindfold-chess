@@ -24,7 +24,7 @@ function PaletteGroup({
   onSelectPiece(piece: string): void;
 }) {
   return (
-    <div className="flex gap-1.5">
+    <div className="flex w-full gap-1.5">
       {pieces.map((p) => (
         <button
           key={p}
@@ -32,7 +32,7 @@ function PaletteGroup({
           onClick={() => onSelectPiece(p)}
           aria-pressed={p === selectedPiece}
           className={cn(
-            "flex h-11 w-11 items-center justify-center rounded-lg border transition-colors",
+            "flex h-11 flex-1 items-center justify-center rounded-lg border transition-colors",
             p === selectedPiece
               ? "border-border-active bg-bg-primary-soft"
               : "border-border-default bg-bg-surface hover:bg-bg-surface-alt",
@@ -47,8 +47,8 @@ function PaletteGroup({
 
 export function SetupBoard({ board, flipped, selectedPiece, onSelectPiece, onSquareClick }: SetupBoardProps) {
   return (
-    <div className="flex w-full flex-col items-center gap-4">
-      <div className="flex flex-wrap justify-center gap-4">
+    <div className="mx-auto flex w-full min-w-[16rem] max-w-[400px] flex-col gap-2">
+      <div className="flex flex-col gap-1.5">
         <PaletteGroup pieces={WHITE_PIECES} selectedPiece={selectedPiece} onSelectPiece={onSelectPiece} />
         <PaletteGroup pieces={BLACK_PIECES} selectedPiece={selectedPiece} onSelectPiece={onSelectPiece} />
       </div>
