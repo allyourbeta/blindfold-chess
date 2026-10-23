@@ -224,5 +224,16 @@
       "kind": "perfect",
       "score": "1-0"
     }
+  },
+  {
+    "id": "e292",
+    "code": "E292",
+    "fen": "8/ppp5/8/PPP5/8/7k/8/7K w - - 0 1",
+    "sourceFen": "8/ppp5/8/PPP5/8/7k/8/7K w - - 0 1",
+    "flipped": false,
+    "name": null,
+    "themes": [],
+    "source": null,
+    "result": null
   }
 ]

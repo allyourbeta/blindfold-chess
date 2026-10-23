@@ -202,5 +202,17 @@
       "sideToMove": "w"
     },
     "flip": false
+  },
+  {
+    "id": "e292",
+    "code": "E292",
+    "name": null,
+    "themes": [],
+    "extract": {
+      "kind": "fen",
+      "placement": "8/ppp5/8/PPP5/8/7k/8/7K",
+      "sideToMove": "w"
+    },
+    "flip": false
   }
 ]
