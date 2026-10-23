@@ -249,5 +249,16 @@
       "kind": "perfect",
       "score": "1-0"
     }
+  },
+  {
+    "id": "e294",
+    "code": "E294",
+    "fen": "8/5k2/R7/5ppn/8/4KPP1/8/8 w - - 0 1",
+    "sourceFen": "8/5k2/R7/5ppn/8/4KPP1/8/8 w - - 0 1",
+    "flipped": false,
+    "name": null,
+    "themes": [],
+    "source": null,
+    "result": null
   }
 ]

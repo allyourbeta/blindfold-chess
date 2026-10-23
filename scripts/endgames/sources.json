@@ -226,5 +226,17 @@
       "sideToMove": "w"
     },
     "flip": false
+  },
+  {
+    "id": "e294",
+    "code": "E294",
+    "name": null,
+    "themes": [],
+    "extract": {
+      "kind": "fen",
+      "placement": "8/5k2/R7/5ppn/8/4KPP1/8/8",
+      "sideToMove": "w"
+    },
+    "flip": false
   }
 ]
