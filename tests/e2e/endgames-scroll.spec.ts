@@ -53,7 +53,7 @@ test("opening the last position after scrolling the size list does not strand th
   const consoleErrors = trackConsoleErrors(page);
   await openApp(page);
   await waitForEngineReady(page);
-  await page.getByRole("button", { name: /Practice an endgame/i }).click();
+  await page.getByRole("button", { name: /Endgame Lab/i }).click();
   await page.getByTestId("size-row").filter({ hasText: /3 to 5 pieces/ }).click();
 
   await scrollListToBottom(page);
@@ -72,7 +72,7 @@ test("opening the last search result after scrolling does not strand the header"
   const consoleErrors = trackConsoleErrors(page);
   await openApp(page);
   await waitForEngineReady(page);
-  await page.getByRole("button", { name: /Practice an endgame/i }).click();
+  await page.getByRole("button", { name: /Endgame Lab/i }).click();
   await page.getByLabel("Search endgames").fill("king");
 
   await scrollListToBottom(page);

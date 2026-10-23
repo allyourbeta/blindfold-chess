@@ -22,7 +22,7 @@ Each position has a permanent `code` (E###). To delete one, remove it from
 
 **Test economy.** Run only the tests covering what you just changed. Run the full suite once, at the end of the session, not after every phase. Never re-run a passing tier to confirm it still passes. Live-model tests are the slowest and most expensive -- run each one once unless it failed or its input changed.
 
-**Phone-layout checks** use `PHONE_USABLE` from `tests/e2e/play-layout.spec.ts`, never the raw 390x844 `iphone` project device size -- real iPhones lose ~93px to the status bar and home indicator that the Playwright device preset doesn't model.
+**Phone-layout checks** use `PHONE_USABLE` from `tests/e2e/helpers.ts`, never the raw 390x844 `iphone` project device size -- real iPhones lose ~93px to the status bar and home indicator that the Playwright device preset doesn't model.
 
 ## Adding, deleting and listing endgame positions
 

@@ -33,7 +33,7 @@ const noneEntry = ENDGAMES.find((e) => e.result === null && pieceCount(e.fen) >=
 async function openEndgames(page: Page) {
   await openApp(page);
   await waitForEngineReady(page);
-  await page.getByRole("button", { name: /Practice an endgame/i }).click();
+  await page.getByRole("button", { name: /Endgame Lab/i }).click();
 }
 
 async function openSize(page: Page, name: RegExp) {
@@ -79,7 +79,7 @@ test.describe("screenshots for visual comparison", () => {
     await page.evaluate(() => localStorage.setItem("blindfoldTheme", "dark"));
     await page.reload();
     await waitForEngineReady(page);
-    await page.getByRole("button", { name: /Practice an endgame/i }).click();
+    await page.getByRole("button", { name: /Endgame Lab/i }).click();
     await openByCode(page, perfectEntry!);
     await page.screenshot({ path: "test-results/endgames-position-perfect-dark.png" });
   });

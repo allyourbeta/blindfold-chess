@@ -4,7 +4,7 @@ import { openApp, waitForEngineReady } from "./helpers";
 async function openEndgames(page: Page) {
   await openApp(page);
   await waitForEngineReady(page);
-  await page.getByRole("button", { name: /Practice an endgame/i }).click();
+  await page.getByRole("button", { name: /Endgame Lab/i }).click();
 }
 
 async function openSize(page: Page, name: RegExp) {
@@ -36,7 +36,7 @@ test("star a position, it persists across reload, shows up in Favorites, and uns
   // setFavorites makes exactly this assertion fail).
   await page.reload();
   await waitForEngineReady(page);
-  await page.getByRole("button", { name: /Practice an endgame/i }).click();
+  await page.getByRole("button", { name: /Endgame Lab/i }).click();
   await expect(page.getByTestId("favorites-row")).toContainText("1");
 
   await page.getByTestId("favorites-row").click();
@@ -175,7 +175,7 @@ test.describe("screenshots for visual comparison", () => {
     await page.evaluate(() => localStorage.setItem("blindfoldTheme", "dark"));
     await page.reload();
     await waitForEngineReady(page);
-    await page.getByRole("button", { name: /Practice an endgame/i }).click();
+    await page.getByRole("button", { name: /Endgame Lab/i }).click();
     await page.getByTestId("favorites-row").click();
     await page.screenshot({ path: "test-results/endgames-favorites-dark.png" });
   });

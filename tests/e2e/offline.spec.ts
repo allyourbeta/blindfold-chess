@@ -41,7 +41,7 @@ test("plays an endgame offline after one online load", async ({ page, context })
 
   await context.setOffline(true);
 
-  await page.getByRole("button", { name: /Practice an endgame/i }).click();
+  await page.getByRole("button", { name: /Endgame Lab/i }).click();
   await page.getByTestId("size-row").filter({ hasText: /3 to 5 pieces/ }).click();
   await page.getByTestId("endgame-row").first().click();
   await page.getByRole("button", { name: "Play Blindfold" }).click();

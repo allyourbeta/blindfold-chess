@@ -135,7 +135,7 @@ test("a failed engine restart on Play Blindfold stays on the position screen and
   await leaveGame(page); // returnToMenu restarts (succeeds) but leaves isThinking stuck true
   await throttleCpu(page, 1);
 
-  await page.getByRole("button", { name: /Practice an endgame/ }).click();
+  await page.getByRole("button", { name: /Endgame Lab/ }).click();
   await page.getByTestId("size-row").filter({ hasText: /3 to 5 pieces/ }).click();
   await page.getByTestId("endgame-row").first().click();
 

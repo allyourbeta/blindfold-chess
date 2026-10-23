@@ -70,14 +70,14 @@ test.describe("button fit at 360x740", () => {
   test("endgames home", async ({ page }) => {
     await openApp(page);
     await waitForEngineReady(page);
-    await page.getByRole("button", { name: /Practice an endgame/i }).click();
+    await page.getByRole("button", { name: /Endgame Lab/i }).click();
     await assertNoClippedButtons(page);
   });
 
   test("an endgame list", async ({ page }) => {
     await openApp(page);
     await waitForEngineReady(page);
-    await page.getByRole("button", { name: /Practice an endgame/i }).click();
+    await page.getByRole("button", { name: /Endgame Lab/i }).click();
     await page.getByTestId("size-row").filter({ hasText: /6 or more pieces/ }).click();
     await assertNoClippedButtons(page);
   });
@@ -85,7 +85,7 @@ test.describe("button fit at 360x740", () => {
   test("a position screen, with #creator unlocked", async ({ page }) => {
     await unlock(page, "hunter2", true);
     await page.getByRole("button", { name: /New Game/ }).waitFor();
-    await page.getByRole("button", { name: /Practice an endgame/i }).click();
+    await page.getByRole("button", { name: /Endgame Lab/i }).click();
     await page.getByTestId("size-row").filter({ hasText: /6 or more pieces/ }).click();
     await page.getByTestId("endgame-row").first().click();
     await assertNoClippedButtons(page);

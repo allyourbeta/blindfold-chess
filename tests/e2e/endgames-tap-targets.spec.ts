@@ -8,7 +8,7 @@ import { openApp, waitForEngineReady } from "./helpers";
 async function openEndgames(page: Page) {
   await openApp(page);
   await waitForEngineReady(page);
-  await page.getByRole("button", { name: /Practice an endgame/i }).click();
+  await page.getByRole("button", { name: /Endgame Lab/i }).click();
 }
 
 async function openSize(page: Page, name: RegExp) {

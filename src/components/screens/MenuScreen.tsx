@@ -109,7 +109,8 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
           <h1 className="relative mt-4 text-4xl font-extrabold tracking-tight text-text-accent">Blindfolde</h1>
           {/* Small caps: lets the title dominate without shrinking it. */}
           <p className="relative mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary">
-            The ultimate test of cerebral fitness
+            <span className="block">The ultimate test</span>
+            <span className="block">of cerebral fitness</span>
           </p>
         </section>
 
@@ -152,12 +153,12 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
             ))}
           </div>
 
-          <Button className="mt-3 w-full" variant="secondary" disabled={!engineReady} onClick={onSetup}>
-            Set up a position
+          <Button className="mt-3 w-full" variant="secondary" disabled={!engineReady} onClick={onEndgames}>
+            Endgame Lab
           </Button>
 
-          <Button className="mt-3 w-full" variant="secondary" disabled={!engineReady} onClick={onEndgames}>
-            Practice an endgame
+          <Button className="mt-3 w-full" variant="secondary" disabled={!engineReady} onClick={onSetup}>
+            Set up a position
           </Button>
 
           {/*

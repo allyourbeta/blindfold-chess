@@ -6,7 +6,9 @@ test("home screen leads with the game and keeps settings out of the way", async 
   await waitForEngineReady(page);
 
   await expect(page.getByRole("heading", { name: "Blindfolde", exact: true })).toBeVisible();
-  await expect(page.getByText("The ultimate test of cerebral fitness")).toBeVisible();
+  // Tagline is now two lines (SPEC_menu_endgame_lab.md) -- matched per line below.
+  await expect(page.getByText("The ultimate test", { exact: true })).toBeVisible();
+  await expect(page.getByText("of cerebral fitness", { exact: true })).toBeVisible();
   // toBeVisible() alone passes for a broken <img> too — it has fixed width/
   // height classes, so its box is non-empty even at 404. Assert it actually
   // decoded a real image.
@@ -75,4 +77,38 @@ test("the theme toggle is tappable across its whole button, not just a sliver at
   await expect(page.locator("html")).toHaveClass(/dark/);
   await page.mouse.click(centerX, centerY);
   await expect(page.locator("html")).not.toHaveClass(/dark/);
+});
+
+// SPEC_menu_endgame_lab.md -- "Endgame Lab" moved above "Set up a position",
+// and the tagline now breaks into two lines.
+test.describe("endgame lab and tagline", () => {
+  test.use({ viewport: PHONE_USABLE });
+
+  test("Endgame Lab sits above Set up a position", async ({ page }) => {
+    await openApp(page);
+    await waitForEngineReady(page);
+
+    const endgameLab = page.getByRole("button", { name: /Endgame Lab/i });
+    const setup = page.getByRole("button", { name: /Set up a position/i });
+    await expect(endgameLab).toBeVisible();
+    await expect(setup).toBeVisible();
+
+    const endgameLabTop = await endgameLab.evaluate((el) => el.getBoundingClientRect().top);
+    const setupTop = await setup.evaluate((el) => el.getBoundingClientRect().top);
+    expect(endgameLabTop).toBeLessThan(setupTop);
+  });
+
+  test("the tagline renders as two lines", async ({ page }) => {
+    await openApp(page);
+    await waitForEngineReady(page);
+
+    const lines = page.locator("p").filter({ hasText: /cerebral fitness/i }).locator("span");
+    await expect(lines).toHaveCount(2);
+    await expect(lines.nth(0)).toHaveText(/the ultimate test/i);
+    await expect(lines.nth(1)).toHaveText(/of cerebral fitness/i);
+
+    const firstTop = await lines.nth(0).evaluate((el) => el.getBoundingClientRect().top);
+    const secondTop = await lines.nth(1).evaluate((el) => el.getBoundingClientRect().top);
+    expect(firstTop).toBeLessThan(secondTop);
+  });
 });

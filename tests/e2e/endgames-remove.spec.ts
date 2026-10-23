@@ -7,7 +7,7 @@ import { openAppAt, unlock } from "./helpers";
 
 async function openEndgames(page: Page) {
   await expect(page.getByRole("button", { name: /New Game/ })).toBeVisible({ timeout: 45_000 });
-  await page.getByRole("button", { name: /Practice an endgame/i }).click();
+  await page.getByRole("button", { name: /Endgame Lab/i }).click();
 }
 
 async function openFirstPosition(page: Page) {
@@ -76,7 +76,7 @@ test("Remove on the position screen: confirm, the position disappears from the l
   // storage, not just held in memory.
   await page.reload();
   await expect(page.getByRole("button", { name: /New Game/ })).toBeVisible({ timeout: 45_000 });
-  await page.getByRole("button", { name: /Practice an endgame/i }).click();
+  await page.getByRole("button", { name: /Endgame Lab/i }).click();
   await page.getByTestId("size-row").filter({ hasText: /6 or more pieces/ }).click();
   await expect(page.getByTestId("endgame-row").filter({ hasText: code })).toHaveCount(0);
 });

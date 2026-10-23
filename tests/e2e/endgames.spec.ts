@@ -42,7 +42,7 @@ const blackToMoveEntry = ENDGAMES.find((e) => e.fen.split(" ")[1] === "b");
 async function openEndgames(page: Page) {
   await openApp(page);
   await waitForEngineReady(page);
-  await page.getByRole("button", { name: /Practice an endgame/i }).click();
+  await page.getByRole("button", { name: /Endgame Lab/i }).click();
 }
 
 async function openSize(page: Page, name: RegExp) {
@@ -204,7 +204,7 @@ test("every back arrow returns where expected: position -> size -> home -> menu"
   await expect(page.getByTestId("size-row")).toHaveCount(2);
 
   await page.getByLabel("Back").click(); // home -> menu
-  await expect(page.getByRole("button", { name: /Practice an endgame/i })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Endgame Lab/i })).toBeVisible();
 });
 
 // Checklist rule 11: the overlap/viewport scan extended to the renamed size
@@ -311,7 +311,7 @@ test.describe("screenshots for visual comparison", () => {
     await page.evaluate(() => localStorage.setItem("blindfoldTheme", "dark"));
     await page.reload();
     await waitForEngineReady(page);
-    await page.getByRole("button", { name: /Practice an endgame/i }).click();
+    await page.getByRole("button", { name: /Endgame Lab/i }).click();
     await openSize(page, /6 or more pieces/);
     await page.getByTestId("endgame-row").first().click();
     await page.screenshot({ path: "test-results/endgames-position-dark.png" });
@@ -350,7 +350,7 @@ test.describe("screenshots for visual comparison", () => {
     await page.evaluate(() => localStorage.setItem("blindfoldTheme", "dark"));
     await page.reload();
     await waitForEngineReady(page);
-    await page.getByRole("button", { name: /Practice an endgame/i }).click();
+    await page.getByRole("button", { name: /Endgame Lab/i }).click();
     await openSize(page, /6 or more pieces/);
     await page.screenshot({ path: "test-results/endgames-size-grid-dark.png" });
   });
