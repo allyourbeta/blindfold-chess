@@ -88,3 +88,35 @@ for (const combo of COMBOS) {
     });
   });
 }
+
+// SPEC_opponent_chip_width.md -- 360px is narrower than any COMBOS viewport
+// above and is where "Stockfish" (the longest Opponent value) is most likely
+// to split or overflow its chip. Checks only the menu checkpoint, not the
+// full walk: no other screen's layout is in scope for this spec.
+test.describe("audit walk: menu-360 (Stockfish selected)", () => {
+  test.use({ viewport: { width: 360, height: 740 } });
+
+  test("menu checkpoint has no mechanical defect", async ({ page }) => {
+    await muteAudio(page);
+    await page.addInitScript(() => {
+      localStorage.setItem("blindfoldOpponent", "stockfish");
+    });
+    await page.goto("/");
+    await waitForEngineReady(page);
+
+    const findings: Finding[] = [];
+    const ctx: AuditContext = {
+      findings,
+      viewport: "menu-360",
+      theme: "light",
+      tracker: createErrorTracker(page),
+      errorCursor: { value: 0 },
+      imagesSkippedForContrast: new Set(),
+    };
+    const run: RunFn = (checkpoint, opts) => runChecks(page, ctx, checkpoint, opts);
+
+    await run("menu: home (Stockfish)");
+
+    expect(findings, `${findings.length} finding(s) -- see docs/AUDIT_FINDINGS.md`).toEqual([]);
+  });
+});

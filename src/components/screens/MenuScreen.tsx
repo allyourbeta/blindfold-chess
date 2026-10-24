@@ -162,7 +162,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
             than a sentence: scannable instead of readable, and each one taps
             straight into the settings.
           */}
-          <div className="mt-3 grid grid-cols-4 gap-2" id="game-settings-summary">
+          <div className="mt-3 grid grid-cols-[1fr_1.4fr_1fr_1fr] gap-2" id="game-settings-summary">
             {[
               { label: "Color", value: playerColor === "w" ? "White" : "Black" },
               { label: "Opponent", value: opponentDisplayName },
@@ -178,7 +178,7 @@ export function MenuScreen({ onPlay, onSetup, onEndgames }: MenuScreenProps) {
                 className="raised min-h-16 rounded-xl px-1 py-2 text-center"
               >
                 <span className="block text-xs font-semibold text-text-muted">{chip.label}</span>
-                <span className="mt-0.5 block break-words text-base font-bold text-text-primary">{chip.value}</span>
+                <span className="mt-0.5 block whitespace-nowrap text-base font-bold text-text-primary">{chip.value}</span>
               </button>
             ))}
           </div>

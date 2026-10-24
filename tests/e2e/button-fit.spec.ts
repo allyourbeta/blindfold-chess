@@ -51,6 +51,51 @@ async function assertButtonsAreTextBoxTrimmed(page: Page) {
   expect(untrimmed).toEqual([]);
 }
 
+// SPEC_opponent_chip_width.md -- "Stockfish" is the longest Opponent value
+// and must render as one line, inside the chip's own box, at every phone
+// width down to 360px. Not "no overflow" (button-fit's existing checks) but
+// specifically "no word broken across lines."
+async function assertOpponentChipFits(page: Page) {
+  const result = await page.evaluate(() => {
+    const chip = Array.from(document.querySelectorAll("button")).find(
+      (el) => (el.querySelector("span")?.textContent ?? "").trim() === "Opponent",
+    );
+    if (!chip) return { found: false, rectCount: 0, fits: false };
+    const valueEl = chip.querySelectorAll("span")[1] as HTMLElement | undefined;
+    const textNode = valueEl?.firstChild;
+    if (!textNode) return { found: false, rectCount: 0, fits: false };
+    const range = document.createRange();
+    range.selectNodeContents(textNode);
+    const rects = Array.from(range.getClientRects()).filter((r) => r.width > 0 && r.height > 0);
+    const chipBox = chip.getBoundingClientRect();
+    const fits = rects.every(
+      (r) =>
+        r.left >= chipBox.left - 1 &&
+        r.right <= chipBox.right + 1 &&
+        r.top >= chipBox.top - 1 &&
+        r.bottom <= chipBox.bottom + 1,
+    );
+    return { found: true, rectCount: rects.length, fits };
+  });
+  expect(result.found, "Opponent chip not found").toBe(true);
+  expect(result.rectCount, `Opponent chip value rendered across ${result.rectCount} line(s)`).toBe(1);
+  expect(result.fits, "Opponent chip value escapes the chip's own box").toBe(true);
+}
+
+test.describe("Opponent chip fits Stockfish without splitting a word", () => {
+  for (const width of [360, 375, 393]) {
+    test(`at ${width}px wide`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 740 });
+      await page.addInitScript(() => {
+        localStorage.setItem("blindfoldOpponent", "stockfish");
+      });
+      await openApp(page);
+      await waitForEngineReady(page);
+      await assertOpponentChipFits(page);
+    });
+  }
+});
+
 test.describe("button fit at 360x740", () => {
   test.use({ viewport: { width: 360, height: 740 } });
 

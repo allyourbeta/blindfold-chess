@@ -1,5 +1,6 @@
 import type { Page } from "@playwright/test";
 import { collectControlBoxes, collectOverflow, collectButtonTextOverflow, collectContrast, countMutations } from "./auditChecksDom";
+import { collectButtonWordSplit } from "./auditChecksWords";
 
 // SPEC_full_app_audit.md Part 2 -- the eight checks (A-H) run at every
 // checkpoint of the walk. Kept out of audit-walk.spec.ts (not matched by
@@ -119,6 +120,13 @@ export async function runChecks(page: Page, ctx: AuditContext, checkpoint: strin
   // can escape its box.
   const textOverflow = await collectButtonTextOverflow(page);
   for (const t of textOverflow.items) record("C", t.label, t.detail);
+
+  // SPEC_opponent_chip_width.md -- no word inside a button may be split
+  // across lines, even when the button has no overall overflow. Same
+  // category as the text-overflow check above, a different way content can
+  // escape its intended layout.
+  const wordSplit = await collectButtonWordSplit(page);
+  for (const w of wordSplit.items) record("C", w.label, w.detail);
 
   const contrast = await collectContrast(page);
   for (const f of contrast.failures) record("F", f.label, f.detail);

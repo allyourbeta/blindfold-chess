@@ -231,7 +231,7 @@ export function SetupScreen({ onBack, onPlay, initialFen }: SetupScreenProps) {
             aria-label={CASTLING_LABELS[key]}
             onClick={() => setCastling((prev) => ({ ...prev, [key]: !prev[key] }))}
             className={cn(
-              "flex min-h-11 items-center justify-center gap-1 rounded-xl px-1 text-sm font-semibold transition-colors",
+              "flex min-h-11 items-center justify-center gap-1 whitespace-nowrap rounded-xl px-1 text-sm font-semibold transition-colors",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring-focus)] focus-visible:ring-offset-2",
               castling[key] ? "raised-on text-text-on-primary" : "raised text-text-primary",
             )}
